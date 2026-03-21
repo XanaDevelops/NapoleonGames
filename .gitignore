@@ -6,4 +6,4 @@ export/
 
 # GUT ignores
 
-test/
+godot/test/xml_out/
