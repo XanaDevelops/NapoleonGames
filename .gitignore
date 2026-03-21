@@ -3,3 +3,7 @@
 /android/
 
 export/
+
+# GUT ignores
+
+test/
