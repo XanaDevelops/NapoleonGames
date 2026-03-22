@@ -1,16 +1,43 @@
+## Carta [br]
+##
+## Recurso que representa una carta jugable.[br]
+##
+## [br]
+##
+## Atributos:[br]
+## - name: Nombre de la carta.[br]
+## - desc: Descripción de la carta.[br]
+## - hp: Puntos de vida.[br]
+## - mana: Coste de maná.[br]
+## - speed: Velocidad de la carta.[br]
+## - dodge: Probabilidad de esquiva.[br]
+## - img: Imagen de la carta.[br]
+## - resistances: Resistencias por tipo de ataque.[br]
+## - habilities: Habilidades de la carta.[br]
+## - types: Tipos de carta.[br]
+##
 class_name CardRes
-extends Resource
+extends GameResource
 
-# recurso de una carta
-# valores asumidos del modelo de la BD
 
-@export var name: String
+
+## Nombre de la carta (identificador)
+@export var name: StringName
+## Descripción de la carta
 @export var desc: String
+## Puntos de vida
 @export var hp: int
+## Coste de maná
 @export var mana: int
+## Velocidad de la carta
 @export var speed: int  #valor de la velocidad
+## Probabilidad de esquiva
 @export var dodge: float
-@export var img: Texture2D
+## Imagen de la carta ([Texture2D](https://docs.godotengine.org/en/stable/classes/class_texture2d.html))
+@export var img: Texture2D #tambien podria ser path a la imagen
+## Resistencias por tipo de ataque (Dictionary[[AttackType](scripts/resources/attack_type_res.gd), int])
 @export var resistances: Dictionary[AttackType, int]
+## Habilidades de la carta (Array[[HabilityRes](scripts/resources/hability_res.gd)])
 @export var habilities: Array[HabilityRes]
-@export var types: Array[CardType]
+## Tipos de carta (Array[[CardTypeRes](scripts/resources/card_type_res.gd)])
+@export var types: Array[CardTypeRes]

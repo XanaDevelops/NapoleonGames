@@ -1,0 +1,75 @@
+[gd_resource type="Resource" script_class="UserRes" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="1_60u8k"]
+[ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="2_60kfa"]
+[ext_resource type="Script" path="res://scripts/resources/alter_state_res.gd" id="3_21rp5"]
+[ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="4_5ntk1"]
+[ext_resource type="Script" path="res://scripts/resources/stat_res.gd" id="5_htd5c"]
+[ext_resource type="Script" path="res://scripts/resources/card_type_res.gd" id="6_ud3q8"]
+[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="7_jtxlg"]
+[ext_resource type="Script" path="res://scripts/resources/user_res.gd" id="8_uhxhs"]
+[ext_resource type="Script" path="res://scripts/resources/army_res.gd" id="9_2vtnt"]
+
+[sub_resource type="Resource" id="Resource_pp1gj"]
+script = ExtResource("4_5ntk1")
+name = &"physical"
+
+[sub_resource type="Resource" id="Resource_kol4m"]
+script = ExtResource("5_htd5c")
+name = &"attack"
+desc = "Daño base"
+
+[sub_resource type="Resource" id="Resource_ee6a8"]
+script = ExtResource("2_60kfa")
+value = 5.0
+stat = SubResource("Resource_kol4m")
+attackType = SubResource("Resource_pp1gj")
+manaCost = 1
+
+[sub_resource type="Resource" id="Resource_plsva"]
+script = ExtResource("6_ud3q8")
+name = &"baseType"
+desc = "Tipo base para tests"
+
+[sub_resource type="Resource" id="Resource_5ufvp"]
+script = ExtResource("1_60u8k")
+name = &"meleCard"
+desc = "lorem ipsum"
+hp = 10
+speed = 2
+habilities = Array[ExtResource("2_60kfa")]([SubResource("Resource_ee6a8")])
+types = Array[ExtResource("6_ud3q8")]([SubResource("Resource_plsva")])
+
+[sub_resource type="Resource" id="Resource_hjr34"]
+script = ExtResource("2_60kfa")
+value = 8.0
+stat = SubResource("Resource_kol4m")
+attackType = SubResource("Resource_pp1gj")
+radius = 3
+manaCost = 2
+
+[sub_resource type="Resource" id="Resource_d7thh"]
+script = ExtResource("1_60u8k")
+name = &"rangedCard"
+desc = "arquero"
+hp = 6
+speed = 3
+dodge = 0.05
+habilities = Array[ExtResource("2_60kfa")]([SubResource("Resource_hjr34")])
+types = Array[ExtResource("6_ud3q8")]([SubResource("Resource_plsva")])
+
+[sub_resource type="Resource" id="Resource_2dqnr"]
+script = ExtResource("9_2vtnt")
+nom = &"Test Army"
+isActive = true
+agrupations = Dictionary[ExtResource("1_60u8k"), int]({
+SubResource("Resource_5ufvp"): 1,
+SubResource("Resource_d7thh"): 2
+})
+
+[resource]
+script = ExtResource("8_uhxhs")
+name = "Test User"
+username = &"testuser666"
+avariableCards = Array[ExtResource("1_60u8k")]([SubResource("Resource_5ufvp"), SubResource("Resource_d7thh")])
+userArmys = Array[ExtResource("9_2vtnt")]([SubResource("Resource_2dqnr")])

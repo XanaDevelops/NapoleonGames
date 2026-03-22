@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="StatData" format=3 uid="uid://cqixcxpnj7yxf"]
-
-[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="1_p0ib4"]
-
-[resource]
-script = ExtResource("1_p0ib4")
-name = &"hp"
-desc = "asd"
-metadata/_custom_type_script = "uid://bcsdfa1f5drbr"

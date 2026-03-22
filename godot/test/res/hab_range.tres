@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="HabilityRes" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/alter_state_res.gd" id="1_3e50k"]
+[ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="2_nm01w"]
+[ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="3_cbkqu"]
+[ext_resource type="Script" path="res://scripts/resources/stat_res.gd" id="4_l8slo"]
+
+[sub_resource type="Resource" id="Resource_pp1gj"]
+script = ExtResource("2_nm01w")
+name = &"physical"
+
+[sub_resource type="Resource" id="Resource_kol4m"]
+script = ExtResource("4_l8slo")
+name = &"attack"
+desc = "Daño base"
+
+[resource]
+script = ExtResource("3_cbkqu")
+value = 8.0
+stat = SubResource("Resource_kol4m")
+attackType = SubResource("Resource_pp1gj")
+radius = 3
+manaCost = 2
