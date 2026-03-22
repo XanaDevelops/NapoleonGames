@@ -22,3 +22,5 @@ extends GameResource
 @export var tamX: int
 ## Tamaño vertical
 @export var tamY: int
+## datos de las casillas
+@export var mapData: Array[Array] # Godot no permite tipar Array[Array[TileRes]]

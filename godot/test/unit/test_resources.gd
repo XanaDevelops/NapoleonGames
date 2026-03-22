@@ -10,6 +10,12 @@ var _army: ArmyRes
 var _user: UserRes
 var _hab_range: HabilityRes
 var _card_ranged: CardRes
+var _tile_type: TileTypeRes
+var _tile_mod: TileModRes
+var _tile: TileRes
+var _all_stats: AllStatsRes
+var _metadata: MetadataRes
+var _map: MapRes
 
 ## Crea los recursos para los tests
 func before_all():
@@ -105,6 +111,57 @@ func before_all():
 	self._hab_range = hab_range
 	self._card_ranged = cardRanged
 
+	# --- Recursos de mapa y casillas ---
+
+	# Modificador de casilla
+	var tile_mod := TileModRes.new()
+	tile_mod.value = 1.5
+	tile_mod.stat = stat
+	tile_mod.affectType = cardType
+
+	# Tipo de casilla
+	var tile_type := TileTypeRes.new()
+	tile_type.name = "grass"
+	tile_type.desc = "Casilla de hierba"
+	tile_type.mods = [tile_mod]
+
+	# Casilla
+	var tile := TileRes.new()
+	tile.height = 0
+	tile.type = tile_type
+
+	# Conjunto de estadísticas
+	var all_stats := AllStatsRes.new()
+	all_stats.stats = [stat]
+
+	# Metadatos
+	var metadata := MetadataRes.new()
+	metadata.version = 1
+	metadata.lastModified = 0
+
+	# Mapa
+	var map := MapRes.new()
+	map.name = "test_map"
+	map.desc = "Mapa de prueba"
+	map.tamX = 10
+	map.tamY = 10
+
+	# Exponer nuevas referencias
+	self._tile_mod = tile_mod
+	self._tile_type = tile_type
+	self._tile = tile
+	self._all_stats = all_stats
+	self._metadata = metadata
+	self._map = map
+
+	# Guardar recursos de mapa y casillas
+	ResourceSaver.save(tile_mod, _folder + "tile_mod.tres")
+	ResourceSaver.save(tile_type, _folder + "tile_type.tres")
+	ResourceSaver.save(tile, _folder + "tile.tres")
+	ResourceSaver.save(all_stats, _folder + "all_stats.tres")
+	ResourceSaver.save(metadata, _folder + "metadata.tres")
+	ResourceSaver.save(map, _folder + "map.tres")
+
 	# Guardar recursos en disco (res://test/res/)
 	ResourceSaver.save(cardType, _folder + "card_type.tres")
 	ResourceSaver.save(stat, _folder + "stat_attack.tres")
@@ -138,3 +195,18 @@ func test_saved_resources_load_and_compare():
 	# Comparar usuario y sus cartas
 	assert_eq(user_loaded.username, self._user.username)
 	assert_eq(user_loaded.avariableCards.size(), self._user.avariableCards.size())
+
+	# Cargar y comparar recursos de mapa y casillas
+	var tile_mod_loaded := ResourceLoader.load(_folder + "tile_mod.tres")
+	var tile_type_loaded := ResourceLoader.load(_folder + "tile_type.tres")
+	var tile_loaded := ResourceLoader.load(_folder + "tile.tres")
+	var all_stats_loaded := ResourceLoader.load(_folder + "all_stats.tres")
+	var metadata_loaded := ResourceLoader.load(_folder + "metadata.tres")
+	var map_loaded := ResourceLoader.load(_folder + "map.tres")
+
+	assert_eq(tile_type_loaded.name, self._tile_type.name)
+	assert_eq(tile_mod_loaded.value, self._tile_mod.value)
+	assert_eq(tile_loaded.height, self._tile.height)
+	assert_eq(all_stats_loaded.stats.size(), self._all_stats.stats.size())
+	assert_eq(metadata_loaded.version, self._metadata.version)
+	assert_eq(map_loaded.name, self._map.name)

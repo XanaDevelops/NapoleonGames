@@ -11,7 +11,7 @@
 script = ExtResource("3_5dxqm")
 name = &"physical"
 
-[sub_resource type="Resource" id="Resource_kol4m"]
+[sub_resource type="Resource" id="Resource_c8eja"]
 script = ExtResource("4_kf2if")
 name = &"attack"
 desc = "Daño base"
@@ -19,11 +19,11 @@ desc = "Daño base"
 [sub_resource type="Resource" id="Resource_ee6a8"]
 script = ExtResource("1_pfcjx")
 value = 5.0
-stat = SubResource("Resource_kol4m")
+stat = SubResource("Resource_c8eja")
 attackType = SubResource("Resource_pp1gj")
 manaCost = 1
 
-[sub_resource type="Resource" id="Resource_plsva"]
+[sub_resource type="Resource" id="Resource_vticf"]
 script = ExtResource("6_rwlnx")
 name = &"baseType"
 desc = "Tipo base para tests"
@@ -35,4 +35,4 @@ desc = "lorem ipsum"
 hp = 10
 speed = 2
 habilities = Array[ExtResource("1_pfcjx")]([SubResource("Resource_ee6a8")])
-types = Array[ExtResource("6_rwlnx")]([SubResource("Resource_plsva")])
+types = Array[ExtResource("6_rwlnx")]([SubResource("Resource_vticf")])

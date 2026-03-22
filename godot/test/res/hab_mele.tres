@@ -9,7 +9,7 @@
 script = ExtResource("2_4c60k")
 name = &"physical"
 
-[sub_resource type="Resource" id="Resource_kol4m"]
+[sub_resource type="Resource" id="Resource_c8eja"]
 script = ExtResource("4_6dtw2")
 name = &"attack"
 desc = "Daño base"
@@ -17,6 +17,6 @@ desc = "Daño base"
 [resource]
 script = ExtResource("3_pa5h8")
 value = 5.0
-stat = SubResource("Resource_kol4m")
+stat = SubResource("Resource_c8eja")
 attackType = SubResource("Resource_pp1gj")
 manaCost = 1
