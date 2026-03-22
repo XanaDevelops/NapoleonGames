@@ -12,7 +12,7 @@
 class_name TileRes
 extends GameResource
 
-## Altura o nivel del mar
-@export var height:= 0 #nivel del mar
+## Altura,  0 nivel del mar
+@export var height:= 0 
 ## Tipo de casilla ([TileTypeRes](scripts/resources/tile_type_res.gd))
 @export var type: TileTypeRes
