@@ -13,9 +13,10 @@ var _card_ranged: CardRes
 var _tile_type: TileTypeRes
 var _tile_mod: TileModRes
 var _tile: TileRes
-var _all_stats: AllStatsRes
 var _metadata: MetadataRes
 var _map: MapRes
+var _tile_stone_type: TileTypeRes
+var _tile_stone: TileRes
 
 ## Crea los recursos para los tests
 func before_all():
@@ -130,10 +131,6 @@ func before_all():
 	tile.height = 0
 	tile.type = tile_type
 
-	# Conjunto de estadísticas
-	var all_stats := AllStatsRes.new()
-	all_stats.stats = [stat]
-
 	# Metadatos
 	var metadata := MetadataRes.new()
 	metadata.version = 1
@@ -146,11 +143,52 @@ func before_all():
 	map.tamX = 10
 	map.tamY = 10
 
+	# Crear tipo de casilla piedra y su tile
+	var tile_type_stone := TileTypeRes.new()
+	tile_type_stone.name = "stone"
+	tile_type_stone.desc = "Casilla de piedra"
+
+	var tile_stone := TileRes.new()
+	tile_stone.height = 0
+	tile_stone.type = tile_type_stone
+
+	# Rellenar mapData 10x10 con el patrón ("#" = grass, "X" = stone)
+	var pattern := [
+		"XXXXXXXXXX",
+		"X########X",
+		"X#X####X#X",
+		"X#X####X#X",
+		"X########X",
+		"X#X####X#X",
+		"X#XXXXXX#X",
+		"X########X",
+		"X########X",
+		"XXXXXXXXXX",
+		]
+
+	# Inicializar fondo con piedra y luego pintar pasto donde corresponda
+	map.mapData = []
+	for y in pattern.size():
+		var row := []
+		for x in pattern[y].length():
+			var ch : String = pattern[y][x]
+			var cell := TileRes.new()
+			cell.height = 0
+			if ch == "X":
+				cell.type = tile_type_stone
+			else:
+				cell.type = tile_type
+			row.append(cell)
+		map.mapData.append(row)
+
+	# Exponer piedra
+	self._tile_stone_type = tile_type_stone
+	self._tile_stone = tile_stone
+
 	# Exponer nuevas referencias
 	self._tile_mod = tile_mod
 	self._tile_type = tile_type
 	self._tile = tile
-	self._all_stats = all_stats
 	self._metadata = metadata
 	self._map = map
 
@@ -158,7 +196,7 @@ func before_all():
 	ResourceSaver.save(tile_mod, _folder + "tile_mod.tres")
 	ResourceSaver.save(tile_type, _folder + "tile_type.tres")
 	ResourceSaver.save(tile, _folder + "tile.tres")
-	ResourceSaver.save(all_stats, _folder + "all_stats.tres")
+	ResourceSaver.save(tile_type_stone, _folder + "tile_type_stone.tres")
 	ResourceSaver.save(metadata, _folder + "metadata.tres")
 	ResourceSaver.save(map, _folder + "map.tres")
 
@@ -172,6 +210,24 @@ func before_all():
 	ResourceSaver.save(cardRanged, _folder + "card_ranged.tres")
 	ResourceSaver.save(army, _folder + "army.tres")
 	ResourceSaver.save(userRes, _folder + "user.tres")
+
+	# Crear y guardar recurso agregado que contiene todas las colecciones
+	var all_res := GameResources.new()
+	all_res.metadata = metadata
+	all_res.users = [userRes]
+	all_res.card_types = [cardType]
+	all_res.cards = [cardMele, cardRanged]
+	all_res.attack_types = [attack_type]
+	all_res.habilities = [hab1, hab_range]
+	all_res.tile_mods = [tile_mod]
+	all_res.tile_types = [tile_type]
+	all_res.tiles = [tile]
+	all_res.maps = [map]
+	all_res.armies = [army]
+	all_res.stats = [stat]
+	all_res.alter_states = []
+
+	ResourceSaver.save(all_res, _folder + "all_game_res.tres")
 
 
 func test_saved_resources_load_and_compare():
@@ -200,13 +256,27 @@ func test_saved_resources_load_and_compare():
 	var tile_mod_loaded := ResourceLoader.load(_folder + "tile_mod.tres")
 	var tile_type_loaded := ResourceLoader.load(_folder + "tile_type.tres")
 	var tile_loaded := ResourceLoader.load(_folder + "tile.tres")
-	var all_stats_loaded := ResourceLoader.load(_folder + "all_stats.tres")
 	var metadata_loaded := ResourceLoader.load(_folder + "metadata.tres")
 	var map_loaded := ResourceLoader.load(_folder + "map.tres")
 
 	assert_eq(tile_type_loaded.name, self._tile_type.name)
 	assert_eq(tile_mod_loaded.value, self._tile_mod.value)
 	assert_eq(tile_loaded.height, self._tile.height)
-	assert_eq(all_stats_loaded.stats.size(), self._all_stats.stats.size())
 	assert_eq(metadata_loaded.version, self._metadata.version)
 	assert_eq(map_loaded.name, self._map.name)
+
+	# Cargar y comprobar el recurso agregado que contiene todas las colecciones
+	var all_game_loaded := ResourceLoader.load(_folder + "all_game_res.tres")
+	assert_ne(all_game_loaded, null)
+	assert_eq(all_game_loaded.metadata.version, self._metadata.version)
+	assert_eq(all_game_loaded.users.size(), 1)
+	assert_eq(all_game_loaded.cards.size(), 2)
+	assert_eq(all_game_loaded.habilities.size(), 2)
+	assert_eq(all_game_loaded.tile_types.size(), 1)
+	assert_eq(all_game_loaded.maps.size(), 1)
+
+	# Comprobar algunos valores del mapa cargado (patrón)
+	# esquina superior izquierda (0,0) debe ser piedra
+	assert_eq(map_loaded.mapData[0][0].type.name, self._tile_stone_type.name)
+	# posición (1,1) interior debe ser hierba
+	assert_eq(map_loaded.mapData[1][1].type.name, self._tile_type.name)

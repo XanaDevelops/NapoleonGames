@@ -15,3 +15,5 @@ extends GameResource
 @export var desc: String
 ## Modificadores aplicados a la casilla (Array[[TileModRes](scripts/resources/tile_mod_res.gd)])
 @export var mods: Array[TileModRes] = []
+## Textura de la casilla
+@export var texture: Texture2D
