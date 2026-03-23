@@ -1,0 +1,44 @@
+name: RC Validation
+
+on:
+  pull_request:
+    branches:
+      - 'rc/**'
+
+jobs:
+  validate-rc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Commit ancestry against test
+        run: bash scripts/check_commit_ancestry.sh "${{ github.event.pull_request.head.sha }}" test
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Backend verify
+        working-directory: backend
+        run: mvn clean verify
+
+      - name: Build backend image
+        working-directory: backend
+        run: docker build -t napoleon-backend:rc .
+
+      - name: Godot RC export
+        working-directory: frontend
+        run: |
+          echo "Aquí va l'export headless RC de Godot"
+
+      - name: Create RC tag
+        run: |
+          VERSION="${GITHUB_BASE_REF#rc/}"
+          git tag "rc-${VERSION}-${GITHUB_SHA::7}"
+          git push origin "rc-${VERSION}-${GITHUB_SHA::7}"

@@ -1,0 +1,52 @@
+name: Develop Validation
+
+on:
+  pull_request:
+    branches: [develop]
+
+jobs:
+  validate-develop:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Backend tests
+        working-directory: backend
+        run: mvn clean test
+
+      - name: Backend build
+        working-directory: backend
+        run: mvn clean package -DskipTests
+
+      - name: Validate docker compose
+        run: docker compose config
+
+      - name: Start backend + db
+        run: docker compose up -d --build
+
+      - name: Wait for backend
+        run: |
+          for i in {1..30}; do
+            if curl -f http://localhost:8080/actuator/health; then exit 0; fi
+            sleep 5
+          done
+          exit 1
+
+      - name: Godot smoke check
+        working-directory: frontend
+        run: |
+          echo "Aquí va el headless check/export de Godot"
+
+      - name: Shutdown
+        if: always()
+        run: docker compose down -v

@@ -1,0 +1,52 @@
+name: Main Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Backend verify
+        working-directory: backend
+        run: mvn clean verify
+
+      - name: Build backend image
+        working-directory: backend
+        run: docker build -t napoleon-backend:latest .
+
+      - name: Push backend image
+        run: |
+          echo "docker login + docker push"
+
+      - name: Deploy backend
+        run: |
+          echo "deploy a VPS o Render"
+
+      - name: Godot production export
+        working-directory: frontend
+        run: |
+          echo "export final Godot headless"
+
+      - name: Publish Itch / Steam
+        run: |
+          echo "butler o SteamPipe"
+
+      - name: Stable tag
+        run: |
+          VERSION=$(date +%Y.%m.%d)-${GITHUB_SHA::7}
+          git tag "v${VERSION}"
+          git push origin "v${VERSION}"
