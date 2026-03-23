@@ -24,6 +24,10 @@ jobs:
         working-directory: backend
         run: mvn clean verify
 
+      - name: Build backend package
+        working-directory: backend
+        run: mvn clean package -DskipTests
+
       - name: Build backend image
         working-directory: backend
         run: docker build -t napoleon-backend:latest .
@@ -37,7 +41,7 @@ jobs:
           echo "deploy a VPS o Render"
 
       - name: Godot production export
-        working-directory: frontend
+        working-directory: godot
         run: |
           echo "export final Godot headless"
 
