@@ -24,10 +24,6 @@ jobs:
         working-directory: backend
         run: mvn clean verify
 
-      - name: Build backend package
-        working-directory: backend
-        run: mvn clean package -DskipTests
-
       - name: Build backend image
         working-directory: backend
         run: docker build -t napoleon-backend:latest .
