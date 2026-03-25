@@ -25,13 +25,31 @@ jobs:
         working-directory: backend
         run: mvn clean verify
 
+      - name: Detect docker compose file
+        id: compose
+        run: |
+          if [ -f docker-compose.yml ]; then
+            echo "file=docker-compose.yml" >> $GITHUB_OUTPUT
+          elif [ -f compose.yml ]; then
+            echo "file=compose.yml" >> $GITHUB_OUTPUT
+          else
+            echo "file=" >> $GITHUB_OUTPUT
+          fi
+
       - name: Validate docker compose
-        run: docker compose config
+        if: ${{ steps.compose.outputs.file != '' }}
+        run: docker compose -f "${{ steps.compose.outputs.file }}" config
+
+      - name: Docker compose skipped
+        if: ${{ steps.compose.outputs.file == '' }}
+        run: echo "No hay docker-compose.yml ni compose.yml; se omiten los pasos de compose"
 
       - name: Start backend + db
-        run: docker compose up -d --build
+        if: ${{ steps.compose.outputs.file != '' }}
+        run: docker compose -f "${{ steps.compose.outputs.file }}" up -d --build
 
       - name: Wait for backend
+        if: ${{ steps.compose.outputs.file != '' }}
         run: |
           for i in {1..30}; do
             if curl -fsS http://localhost:8080/actuator/health; then
@@ -50,5 +68,5 @@ jobs:
           echo "Aquí va el headless check/export de Godot"
 
       - name: Shutdown
-        if: always()
-        run: docker compose down -v
+        if: ${{ always() && steps.compose.outputs.file != '' }}
+        run: docker compose -f "${{ steps.compose.outputs.file }}" down -v
