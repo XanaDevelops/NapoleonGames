@@ -5,6 +5,9 @@ on:
     branches:
       - 'rc/**'
 
+permissions:
+  contents: write
+
 jobs:
   validate-rc:
     runs-on: ubuntu-latest
@@ -14,6 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       - name: Commit ancestry against test
         run: bash scripts/check_commit_ancestry.sh "${{ github.event.pull_request.head.sha }}" test
@@ -23,6 +27,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+          cache: maven
 
       - name: Backend verify
         working-directory: backend
@@ -33,12 +38,17 @@ jobs:
         run: docker build -t napoleon-backend:rc .
 
       - name: Godot RC export
-        working-directory: frontend
+        working-directory: godot
         run: |
           echo "Aquí va l'export headless RC de Godot"
 
       - name: Create RC tag
         run: |
           VERSION="${GITHUB_BASE_REF#rc/}"
-          git tag "rc-${VERSION}-${GITHUB_SHA::7}"
-          git push origin "rc-${VERSION}-${GITHUB_SHA::7}"
+          TAG="rc-${VERSION}-${GITHUB_SHA::7}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG ya existe"
+          else
+            git tag "$TAG"
+            git push origin "$TAG"
+          fi

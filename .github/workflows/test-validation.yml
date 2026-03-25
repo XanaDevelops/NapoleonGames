@@ -22,6 +22,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+          cache: maven
 
       - name: Run tests with coverage
         working-directory: backend
@@ -42,11 +43,15 @@ jobs:
           awk "BEGIN {exit !($COVERAGE >= 70)}"
 
       - name: SonarQube
+        if: ${{ secrets.SONAR_HOST_URL != '' && secrets.SONAR_TOKEN != '' }}
         working-directory: backend
         run: mvn sonar:sonar \
           -Dsonar.projectKey=napoleon-games \
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+      - name: Validate docker compose
+        run: docker compose config
 
       - name: Start backend + db
         run: docker compose up -d --build
@@ -54,13 +59,18 @@ jobs:
       - name: Wait for backend
         run: |
           for i in {1..30}; do
-            if curl -f http://localhost:8080/actuator/health; then exit 0; fi
+            if curl -fsS http://localhost:8080/actuator/health; then
+              echo "Backend OK"
+              exit 0
+            fi
+            echo "Esperando backend... intento $i"
             sleep 5
           done
+          echo "Backend no respondió a tiempo"
           exit 1
 
       - name: Godot smoke check
-        working-directory: frontend
+        working-directory: godot
         run: |
           echo "Aquí va el headless check/export de Godot"
 

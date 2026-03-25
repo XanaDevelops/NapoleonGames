@@ -19,14 +19,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+          cache: maven
 
-      - name: Backend tests
+      - name: Backend verify
         working-directory: backend
-        run: mvn clean test
-
-      - name: Backend build
-        working-directory: backend
-        run: mvn clean package -DskipTests
+        run: mvn clean verify
 
       - name: Validate docker compose
         run: docker compose config
@@ -37,13 +34,18 @@ jobs:
       - name: Wait for backend
         run: |
           for i in {1..30}; do
-            if curl -f http://localhost:8080/actuator/health; then exit 0; fi
+            if curl -fsS http://localhost:8080/actuator/health; then
+              echo "Backend OK"
+              exit 0
+            fi
+            echo "Esperando backend... intento $i"
             sleep 5
           done
+          echo "Backend no respondió a tiempo"
           exit 1
 
       - name: Godot smoke check
-        working-directory: frontend
+        working-directory: godot
         run: |
           echo "Aquí va el headless check/export de Godot"
 
