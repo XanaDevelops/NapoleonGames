@@ -7,6 +7,9 @@ on:
 jobs:
   validate-test:
     runs-on: ubuntu-latest
+    env:
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     steps:
       - name: Checkout
@@ -43,15 +46,15 @@ jobs:
           awk "BEGIN {exit !($COVERAGE >= 70)}"
 
       - name: SonarQube
-        if: ${{ secrets.SONAR_HOST_URL != '' && secrets.SONAR_TOKEN != '' }}
+        if: ${{ env.SONAR_HOST_URL != '' && env.SONAR_TOKEN != '' }}
         working-directory: backend
         run: mvn sonar:sonar \
           -Dsonar.projectKey=napoleon-games \
-          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.host.url=$SONAR_HOST_URL \
+          -Dsonar.login=$SONAR_TOKEN
 
       - name: SonarQube skipped
-        if: ${{ secrets.SONAR_HOST_URL == '' || secrets.SONAR_TOKEN == '' }}
+        if: ${{ env.SONAR_HOST_URL == '' || env.SONAR_TOKEN == '' }}
         run: echo "SonarQube no configurado, se omite"
 
       - name: Detect docker compose file
