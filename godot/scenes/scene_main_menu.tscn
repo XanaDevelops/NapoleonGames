@@ -2,10 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://cecnrsydavur1" path="res://fondo inicial.jpeg" id="1_wqhsr"]
 [ext_resource type="StyleBox" uid="uid://cothf0hj3oyyv" path="res://estilo_menu_de_opciones_de_juego_normal.tres" id="2_1movh"]
-[ext_resource type="Texture2D" uid="uid://blgbfj648idjb" path="res://iconoUsuario.svg" id="2_h0bn6"]
 [ext_resource type="StyleBox" uid="uid://detrauuhca4v7" path="res://estilo_menu_opciones_de_juego_pressed.tres" id="3_v0kd0"]
 [ext_resource type="StyleBox" uid="uid://dr3826hw8hi80" path="res://estilo_menu_de_opciones_de_juego_hover.tres" id="4_3re45"]
 [ext_resource type="Script" uid="uid://cikn58w4fmhfw" path="res://scenes/menu_desplegable.gd" id="5_1movh"]
+[ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://iconoUsuario.png" id="6_1movh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tk4wt"]
 bg_color = Color(1, 1, 1, 0.6)
@@ -16,35 +16,63 @@ bg_color = Color(1, 1, 1, 0.9)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1movh"]
 bg_color = Color(1, 1, 1, 0.75)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqhsr"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3kjnk"]
 bg_color = Color(1, 1, 1, 0.6)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toqhm"]
+bg_color = Color(1, 1, 1, 0.9019608)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kuy75"]
+bg_color = Color(1, 1, 1, 0.7490196)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0kd0"]
+bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.54901963, 0.42745098, 0.24313726, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+anti_aliasing_size = 1.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3re45"]
+bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.72156864, 0.5254902, 0.043137256, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l67cq"]
-bg_color = Color(1, 1, 1, 0.9)
+bg_color = Color(0.99215686, 0.9647059, 0.8901961, 1)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+border_color = Color(1, 0.84313726, 0, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0kd0"]
-bg_color = Color(1, 1, 1, 0.7490196)
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3kjnk"]
-bg_color = Color(1, 1, 1, 0.6)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toqhm"]
-bg_color = Color(1, 1, 1, 0.9019608)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kuy75"]
-bg_color = Color(1, 1, 1, 0.7490196)
+shadow_color = Color(0, 0, 0, 0.5019608)
+shadow_size = 12
+shadow_offset = Vector2(4, 4)
+anti_aliasing_size = 1.5
 
 [node name="SceneMainMenu" type="Control" unique_id=730536926]
 layout_mode = 3
@@ -135,33 +163,6 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_6k25j")
 theme_override_styles/hover = SubResource("StyleBoxFlat_1movh")
 text = "Opciones"
 
-[node name="MenuUsuario" type="Button" parent="." unique_id=1653914096]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -100.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 100.0
-grow_horizontal = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_wqhsr")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_l67cq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_v0kd0")
-
-[node name="IconoUsuario" type="TextureRect" parent="MenuUsuario" unique_id=2107305190]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -35.0
-offset_right = 35.0
-offset_bottom = 70.0
-grow_horizontal = 2
-texture = ExtResource("2_h0bn6")
-expand_mode = 1
-stretch_mode = 6
-
 [node name="CanviarMenuEjercito" type="Button" parent="." unique_id=1887575840]
 layout_mode = 1
 anchors_preset = 4
@@ -177,3 +178,36 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_3kjnk")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_toqhm")
 theme_override_styles/hover = SubResource("StyleBoxFlat_kuy75")
 text = "<"
+
+[node name="MenuUsuario" type="Button" parent="." unique_id=1337531751]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 120.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_v0kd0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3re45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_l67cq")
+
+[node name="IconoUsuario" type="TextureRect" parent="MenuUsuario" unique_id=1285921050]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_1movh")
+expand_mode = 1
+stretch_mode = 6
