@@ -3,9 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://cecnrsydavur1" path="res://fondo inicial.jpeg" id="1_wqhsr"]
 [ext_resource type="StyleBox" uid="uid://cothf0hj3oyyv" path="res://estilo_menu_de_opciones_de_juego_normal.tres" id="2_1movh"]
 [ext_resource type="Texture2D" uid="uid://blgbfj648idjb" path="res://iconoUsuario.svg" id="2_h0bn6"]
-[ext_resource type="Script" uid="uid://kdwusl7cuflq" path="res://scenes/opcions_game_menu.gd" id="2_tk4wt"]
 [ext_resource type="StyleBox" uid="uid://detrauuhca4v7" path="res://estilo_menu_opciones_de_juego_pressed.tres" id="3_v0kd0"]
 [ext_resource type="StyleBox" uid="uid://dr3826hw8hi80" path="res://estilo_menu_de_opciones_de_juego_hover.tres" id="4_3re45"]
+[ext_resource type="Script" uid="uid://cikn58w4fmhfw" path="res://scenes/menu_desplegable.gd" id="5_1movh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tk4wt"]
 bg_color = Color(1, 1, 1, 0.6)
@@ -81,29 +81,51 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 100
 
-[node name="MenuButton" type="MenuButton" parent="VBoxContainer" unique_id=513826854]
+[node name="Button2" type="Button" parent="VBoxContainer" unique_id=831253883]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 theme_override_styles/normal = ExtResource("2_1movh")
 theme_override_styles/pressed = ExtResource("3_v0kd0")
 theme_override_styles/hover = ExtResource("4_3re45")
-text = "Juego Local"
-flat = false
-item_count = 1
-popup/item_0/text = "J vs J"
-popup/item_0/id = 1
-script = ExtResource("2_tk4wt")
+text = "Juego Local
+"
+script = ExtResource("5_1movh")
 
-[node name="SideMenuButton" type="MenuButton" parent="VBoxContainer" unique_id=922601496]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Button2" unique_id=1550129767]
+layout_mode = 0
+offset_right = 280.0
+offset_bottom = 50.0
+
+[node name="Button" type="Button" parent="VBoxContainer/Button2/VBoxContainer" unique_id=2027286477]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("2_1movh")
+theme_override_styles/pressed = ExtResource("3_v0kd0")
+theme_override_styles/hover = ExtResource("4_3re45")
+text = "J vs J"
+
+[node name="Button3" type="Button" parent="VBoxContainer" unique_id=467713305]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 theme_override_styles/normal = ExtResource("2_1movh")
 theme_override_styles/pressed = ExtResource("3_v0kd0")
 theme_override_styles/hover = ExtResource("4_3re45")
-text = "Juego Online"
-flat = false
-script = ExtResource("2_tk4wt")
-metadata/_custom_type_script = "uid://kdwusl7cuflq"
+text = "Juego online
+"
+script = ExtResource("5_1movh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Button3" unique_id=961097025]
+layout_mode = 0
+offset_right = 280.0
+offset_bottom = 50.0
+
+[node name="Button" type="Button" parent="VBoxContainer/Button3/VBoxContainer" unique_id=1969486302]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("2_1movh")
+theme_override_styles/pressed = ExtResource("3_v0kd0")
+theme_override_styles/hover = ExtResource("4_3re45")
+text = "Enemigo Aleatorio"
 
 [node name="Button" type="Button" parent="VBoxContainer" unique_id=410175949]
 layout_mode = 2

@@ -1,0 +1,17 @@
+[gd_resource type="Theme" format=3 uid="uid://bos10x53ho2li"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_una6y"]
+content_margin_left = 50.0
+content_margin_right = 50.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_leibg"]
+bg_color = Color(0.1, 0.1, 0.1, 0.85)
+
+[resource]
+PopupMenu/colors/font_color = Color(1, 1, 1, 1)
+PopupMenu/constants/title_outline_size = 0
+PopupMenu/font_sizes/font_separator_size = 16
+PopupMenu/font_sizes/font_size = 40
+PopupMenu/font_sizes/title_font_size = 16
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_una6y")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_leibg")
