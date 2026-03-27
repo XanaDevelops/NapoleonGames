@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dbvfn3475ma44"]
 
 [ext_resource type="Texture2D" uid="uid://dwcsqv5dddx4o" path="res://fondoPantallaUsuario.png" id="1_b6b30"]
+[ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://estilo_botones.tres" id="3_feuqc"]
 [ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://InputsUserMenu.tres" id="3_w8jpj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feuqc"]
@@ -13,45 +14,6 @@ corner_radius_top_left = 50
 corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8jpj"]
-bg_color = Color(0.54509807, 0, 0, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7dwk"]
-content_margin_top = 10.0
-bg_color = Color(0.3529412, 0, 0, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.72156864, 0.5254902, 0.043137256, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k70rf"]
-bg_color = Color(0.64705884, 0, 0, 1)
-border_width_left = 7
-border_width_top = 7
-border_width_right = 7
-border_width_bottom = 7
-border_color = Color(1, 0.84313726, 0, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-shadow_color = Color(0, 0, 0, 0.5019608)
-shadow_size = 8
 
 [node name="SceneCrearCuentaMenu" type="Control" unique_id=1059517667]
 layout_mode = 3
@@ -147,9 +109,7 @@ offset_right = 65.0
 offset_bottom = -49.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_w8jpj")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_h7dwk")
-theme_override_styles/hover = SubResource("StyleBoxFlat_k70rf")
+theme = ExtResource("3_feuqc")
 text = "Iniciar Sesión"
 
 [node name="Button2" type="Button" parent="Panel" unique_id=609249428]

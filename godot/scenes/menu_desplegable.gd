@@ -6,11 +6,11 @@ enum Lado { DERECHA, IZQUIERDA, ARRIBA, ABAJO }
 @export var posicion_menu: Lado = Lado.DERECHA 
 @export var separacion: float = 5.0           
 
-var menu_interno: VBoxContainer = null
+var menu_interno: Panel = null
 
 func _ready():
 	for hijo in get_children():
-		if hijo is VBoxContainer:
+		if hijo is Panel:
 			menu_interno = hijo
 			break
 	

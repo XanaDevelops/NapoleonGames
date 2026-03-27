@@ -1,19 +1,10 @@
 [gd_scene format=3 uid="uid://cb7tokacenp4o"]
 
 [ext_resource type="Texture2D" uid="uid://dwcsqv5dddx4o" path="res://fondoPantallaUsuario.png" id="1_e0t1c"]
+[ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://estilo_menu_panels.tres" id="2_4v1p0"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://iconoUsuario.png" id="2_e0t1c"]
 [ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://InputsUserMenu.tres" id="3_m7uid"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feuqc"]
-bg_color = Color(0.0627451, 0.078431375, 0.11372549, 0.74509805)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
+[ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://estilo_botones.tres" id="5_m7uid"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6imr"]
 bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
@@ -56,45 +47,6 @@ shadow_size = 12
 shadow_offset = Vector2(4, 4)
 anti_aliasing_size = 1.5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8jpj"]
-bg_color = Color(0.54509807, 0, 0, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7dwk"]
-content_margin_top = 10.0
-bg_color = Color(0.3529412, 0, 0, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.72156864, 0.5254902, 0.043137256, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k70rf"]
-bg_color = Color(0.64705884, 0, 0, 1)
-border_width_left = 7
-border_width_top = 7
-border_width_right = 7
-border_width_bottom = 7
-border_color = Color(1, 0.84313726, 0, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-shadow_color = Color(0, 0, 0, 0.5019608)
-shadow_size = 8
-
 [node name="SceneCrearCuentaMenu" type="Control" unique_id=1059517667]
 layout_mode = 3
 anchors_preset = 15
@@ -124,7 +76,7 @@ offset_right = 250.0
 offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_feuqc")
+theme_override_styles/panel = ExtResource("2_4v1p0")
 
 [node name="Label" type="Label" parent="Panel" unique_id=2120296050]
 layout_mode = 1
@@ -241,7 +193,5 @@ offset_right = 71.0
 offset_bottom = -19.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_w8jpj")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_h7dwk")
-theme_override_styles/hover = SubResource("StyleBoxFlat_k70rf")
+theme = ExtResource("5_m7uid")
 text = "Volver al menu"
