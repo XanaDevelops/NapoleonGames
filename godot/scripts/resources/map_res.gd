@@ -1,5 +1,5 @@
 
-## Mapa del juego ([MapRes](scripts/resources/map_res.gd))[br]
+## Mapa del juego ([MapRes])[br]
 ##
 ## Define un mapa jugable y sus dimensiones.[br]
 ##

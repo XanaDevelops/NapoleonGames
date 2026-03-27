@@ -1,12 +1,12 @@
 
-## Estado alterado ([AlterStateRes](scripts/resources/alter_state_res.gd))[br]
+## Estado alterado ([AlterStateRes])[br]
 ##
 ## Define un estado alterado que puede afectar a una carta o unidad.[br]
 ##
 ## [br]
 ##
 ## Atributos:[br]
-## - objectiu: Objetivo del estado alterado ([HabilityRes.HAB_DEST](scripts/resources/hability_res.gd)).[br]
+## - objectiu: Objetivo del estado alterado ([HabilityRes.HAB_DEST]).[br]
 ## - value: Valor del estado alterado.[br]
 ## - hitP: Probabilidad de aplicación.[br]
 ## - duration: Duración en turnos.[br]
@@ -14,7 +14,7 @@
 class_name AlterStateRes
 extends GameResource
 
-## Objetivo del estado alterado ([HabilityRes.HAB_DEST](scripts/resources/hability_res.gd))
+## Objetivo del estado alterado ([HabilityRes.HAB_DEST])
 @export var objectiu := HabilityRes.HAB_DEST.SELF #Si nos ponemos creativos puede ser diferente a self
 ## Valor del estado alterado
 @export var value: float

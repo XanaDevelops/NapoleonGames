@@ -1,5 +1,5 @@
 
-## Recurso base del juego ([GameResource](scripts/resources/game_res.gd))[br]
+## Recurso base del juego ([GameResource])[br]
 ##
 ## Clase base para agrupar recursos personalizados en el editor.[br]
 ##

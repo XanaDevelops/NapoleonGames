@@ -1,5 +1,5 @@
 
-## Metadatos del proyecto ([MetadataRes](scripts/resources/metadata_res.gd))[br]
+## Metadatos del proyecto ([MetadataRes])[br]
 ##
 ## Contiene información de versión y fecha de modificación.[br]
 ##

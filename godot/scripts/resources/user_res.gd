@@ -1,4 +1,4 @@
-## Recurso de usuario ([UserRes](scripts/resources/user_res.gd))[br]
+## Recurso de usuario ([UserRes])[br]
 ##
 ## Representa la información de un usuario en el juego.[br]
 ##
@@ -7,12 +7,12 @@
 ## Atributos:[br]
 ## - name: Nombre real del usuario.[br]
 ## - username: Nombre de usuario único.[br]
-## - img: Imagen o avatar del usuario ([Texture2D](https://docs.godotengine.org/en/stable/classes/class_texture2d.html)).[br]
+## - img: Imagen o avatar del usuario ([Texture2D]).[br]
 ## - token: Token de autenticación del usuario.[br]
-## - avariableCards: Cartas disponibles para el usuario (Array[[CardRes](scripts/resources/card_res.gd)]).[br]
-## - avariableMaps: Mapas disponibles para el usuario (Array[[MapRes](scripts/resources/map_res.gd)]).[br]
-## - userArmys: Ejércitos del usuario (Array[[ArmyRes](scripts/resources/army_res.gd)]).[br]
-## - friends: Lista de amigos del usuario (Array[[UserRes](scripts/resources/user_res.gd)]).[br]
+## - avariableCards: Cartas disponibles para el usuario (Array[[CardRes]]).[br]
+## - avariableMaps: Mapas disponibles para el usuario (Array[[MapRes]]).[br]
+## - userArmys: Ejércitos del usuario (Array[[ArmyRes]]).[br]
+## - friends: Lista de amigos del usuario (Array[[UserRes]]).[br]
 ##
 class_name UserRes
 extends GameResource
@@ -21,7 +21,7 @@ extends GameResource
 @export var name: String
 ## Nombre de usuario único
 @export var username: StringName
-## Imagen o avatar del usuario ([Texture2D](https://docs.godotengine.org/en/stable/classes/class_texture2d.html))
+## Imagen o avatar del usuario ([Texture2D])
 @export var img: Texture2D
 
 ## TODO: rol (rol del usuario, pendiente de implementar)
@@ -29,12 +29,12 @@ extends GameResource
 ## Token de autenticación del usuario
 @export var token: String
 
-## Cartas disponibles para el usuario (Array[[CardRes](scripts/resources/card_res.gd)])
+## Cartas disponibles para el usuario (Array[[CardRes]])
 @export var avariableCards: Array[CardRes] = []
-## Mapas disponibles para el usuario (Array[[MapRes](scripts/resources/map_res.gd)])
+## Mapas disponibles para el usuario (Array[[MapRes]])
 @export var avariableMaps: Array[MapRes] = []
-## Ejércitos del usuario (Array[[ArmyRes](scripts/resources/army_res.gd)])
+## Ejércitos del usuario (Array[[ArmyRes]])
 @export var userArmys: Array[ArmyRes] = []
 
-## Lista de amigos del usuario (Array[[UserRes](scripts/resources/user_res.gd)])
+## Lista de amigos del usuario (Array[[UserRes]])
 @export var friends: Array[UserRes] = []

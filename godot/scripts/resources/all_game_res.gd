@@ -1,23 +1,23 @@
-## Todos los recursos del juego ([GameResources](scripts/resources/all_game_res.gd))[br]
+## Todos los recursos del juego ([GameResources])[br]
 ##
 ## Recurso contenedor que agrupa colecciones de todos los recursos principales usados en el juego.[br]
 ##
 ## [br]
 ##
 ## Atributos:[br]
-## - metadata: Metadatos del proyecto ([MetadataRes](scripts/resources/metadata_res.gd)).[br]
-## - users: Lista de usuarios ([UserRes](scripts/resources/user_res.gd)).[br]
-## - card_types: Tipos de carta ([CardTypeRes](scripts/resources/card_type_res.gd)).[br]
-## - cards: Cartas jugables ([CardRes](scripts/resources/card_res.gd)).[br]
-## - attack_types: Tipos de ataque ([AttackType](scripts/resources/attack_type_res.gd)).[br]
-## - habilities: Habilidades ([HabilityRes](scripts/resources/hability_res.gd)).[br]
-## - tile_mods: Modificadores de casilla ([TileModRes](scripts/resources/tile_mod_res.gd)).[br]
-## - tile_types: Tipos de casilla ([TileTypeRes](scripts/resources/tile_type_res.gd)).[br]
-## - tiles: Casillas ([TileRes](scripts/resources/tile_res.gd)).[br]
-## - maps: Mapas ([MapRes](scripts/resources/map_res.gd)).[br]
-## - armies: Ejércitos ([ArmyRes](scripts/resources/army_res.gd)).[br]
-## - stats: Estadísticas ([StatData](scripts/resources/stat_res.gd)).[br]
-## - alter_states: Estados alterados ([AlterStateRes](scripts/resources/alter_state_res.gd)).[br]
+## - metadata: Metadatos del proyecto ([MetadataRes]).[br]
+## - users: Lista de usuarios ([UserRes]).[br]
+## - card_types: Tipos de carta ([CardTypeRes]).[br]
+## - cards: Cartas jugables ([CardRes]).[br]
+## - attack_types: Tipos de ataque ([AttackType]).[br]
+## - habilities: Habilidades ([HabilityRes]).[br]
+## - tile_mods: Modificadores de casilla ([TileModRes]).[br]
+## - tile_types: Tipos de casilla ([TileTypeRes]).[br]
+## - tiles: Casillas ([TileRes]).[br]
+## - maps: Mapas ([MapRes]).[br]
+## - armies: Ejércitos ([ArmyRes]).[br]
+## - stats: Estadísticas ([StatData]).[br]
+## - alter_states: Estados alterados ([AlterStateRes]).[br]
 ##
 class_name GameResources
 extends GameResource

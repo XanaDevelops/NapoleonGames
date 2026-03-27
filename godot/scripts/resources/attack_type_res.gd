@@ -1,5 +1,5 @@
 
-## Tipo de ataque ([AttackType](scripts/resources/attack_type_res.gd))[br]
+## Tipo de ataque ([AttackType])[br]
 ##
 ## Define un tipo de ataque disponible en el juego.[br]
 ##

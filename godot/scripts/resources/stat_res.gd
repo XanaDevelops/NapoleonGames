@@ -1,5 +1,5 @@
 
-## Estadística ([StatData](scripts/resources/stat_res.gd))[br]
+## Estadística ([StatData])[br]
 ##
 ## Define una estadística que puede ser modificada en el juego.[br]
 ##

@@ -33,11 +33,11 @@ extends GameResource
 @export var speed: int  #valor de la velocidad
 ## Probabilidad de esquiva
 @export var dodge: float
-## Imagen de la carta ([Texture2D](https://docs.godotengine.org/en/stable/classes/class_texture2d.html))
+## Imagen de la carta ([Texture2D])
 @export var img: Texture2D #tambien podria ser path a la imagen
-## Resistencias por tipo de ataque (Dictionary[[AttackType](scripts/resources/attack_type_res.gd), int])
+## Resistencias por tipo de ataque (Dictionary[[AttackType], int])
 @export var resistances: Dictionary[AttackType, int]
-## Habilidades de la carta (Array[[HabilityRes](scripts/resources/hability_res.gd)])
+## Habilidades de la carta (Array[[HabilityRes]])
 @export var habilities: Array[HabilityRes]
-## Tipos de carta (Array[[CardTypeRes](scripts/resources/card_type_res.gd)])
+## Tipos de carta (Array[[CardTypeRes]])
 @export var types: Array[CardTypeRes]
