@@ -20,33 +20,32 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - name: Restore docker image cache
-        id: cache-docker-image
+      - name: Cache Godot binary
+        id: cache-godot-bin
         uses: actions/cache@v4
         with:
           path: |
-            ~/.cache/godot-ci-image
-          key: ${{ runner.os }}-godot-image-${{ env.GODOT_VERSION }}
+            ~/godot-linux
+          key: ${{ runner.os }}-godot-bin-${{ env.GODOT_VERSION }}
           restore-keys: |
-            ${{ runner.os }}-godot-image-
+            ${{ runner.os }}-godot-bin-
 
-      - name: Load docker image from cache
-        if: steps.cache-docker-image.outputs.cache-hit == 'true'
+      - name: Download Godot binary (if cache miss)
+        if: steps.cache-godot-bin.outputs.cache-hit != 'true'
         run: |
-          CACHE_DIR=~/.cache/godot-ci-image
-          echo "Loading docker image from cache"
-          docker load -i "$CACHE_DIR/godot-image.tar"
-
-      - name: Pull and save docker image
-        if: steps.cache-docker-image.outputs.cache-hit != 'true'
-        run: |
-          IMAGE=barichello/godot-ci:${{ env.GODOT_VERSION }}
-          CACHE_DIR=~/.cache/godot-ci-image
-          mkdir -p "$CACHE_DIR"
-          echo "Pulling docker image $IMAGE"
-          docker pull "$IMAGE"
-          echo "Saving docker image to cache"
-          docker save "$IMAGE" -o "$CACHE_DIR/godot-image.tar"
+          set -e
+          mkdir -p ~/godot-linux
+          chmod 770 ~/godot-linux
+          DOWNLOAD_URL="https://downloads.godotengine.org/?version=${GODOT_VERSION}&flavor=stable&slug=linux.x86_64.zip&platform=linux.64"
+          echo "Downloading Godot from $DOWNLOAD_URL"
+          wget -q -O ~/godot-linux/godot.zip "$DOWNLOAD_URL"
+          unzip -q ~/godot-linux/godot.zip -d ~/godot-linux
+          EXE=$(find ~/godot-linux -maxdepth 1 -type f -name "Godot_v${GODOT_VERSION}-stable_linux.x86_64" -print -quit)
+          if [ -z "$EXE" ]; then EXE=$(find ~/godot-linux -type f -perm /u+x -name 'Godot*' -print -quit); fi
+          if [ -z "$EXE" ]; then echo "Could not find Godot executable after extraction"; ls -la ~/godot-linux; exit 1; fi
+          mv "$EXE" ~/godot-linux/godot || true
+          chmod +x ~/godot-linux/godot
+          rm -f ~/godot-linux/godot.zip || true
 
       - name: Cache Godot export templates
         id: cache-godot
@@ -55,13 +54,13 @@ jobs:
           path: |
             ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable
             ~/.config/godot
-          key: ${{ runner.os }}-godot-${{ env.GODOT_VERSION }}
+          key: ${{ runner.os }}-godot-templates-${{ env.GODOT_VERSION }}
           restore-keys: |
-            ${{ runner.os }}-godot-
+            ${{ runner.os }}-godot-templates-
 
       - name: Note about export templates
         run: |
-          echo "Using the cached/loaded 'barichello/godot-ci:${{ env.GODOT_VERSION }}' image; export templates are provided inside the image." 
+          echo "Using cached Godot binary at ~/godot-linux/godot if available; export templates are cached separately." 
 
       - name: Verify committed class registry
         working-directory: ${{ env.PROJECT_PATH }}
@@ -73,23 +72,26 @@ jobs:
             echo "Warning: .godot/global_script_class_cache.cfg not found in repo. Import will be attempted."
           fi
 
-      - name: Import Godot resources (headless) via docker
+      - name: Import Godot resources (headless)
+        working-directory: ${{ env.PROJECT_PATH }}
         run: |
-          echo "Importando recursos de Godot dentro del contenedor..."
-          IMAGE=barichello/godot-ci:${{ env.GODOT_VERSION }}
-          timeout 60s docker run --user $(id -u):$(id -g) --rm -v "$GITHUB_WORKSPACE":"$GITHUB_WORKSPACE" -w "$GITHUB_WORKSPACE/${{ env.PROJECT_PATH }}" "$IMAGE" bash -lc "godot --headless --path . --import --quit" || echo "Import exited (timeout or non-zero exit)"
-          if [ -f $GITHUB_WORKSPACE/${{ env.PROJECT_PATH }}/.godot/global_script_class_cache.cfg ]; then
+          echo "Importando recursos de Godot usando binario descargado..."
+          timeout 60s ~/godot-linux/godot --headless --path . --import --quit || echo "Import exited (timeout or non-zero exit)"
+          if [ -f .godot/global_script_class_cache.cfg ]; then
             echo "Class registry present after import"
           else
             echo "No class registry generated after import"
           fi
 
-      - name: Run GUT (headless) via docker
+      - name: Run GUT (headless)
+        working-directory: ${{ env.PROJECT_PATH }}
+        env:
+          GODOT_LOG_LEVEL: "warn"
+          GODOT_DISABLE_DEPRECATED_WARNINGS: "1"
         run: |
-          IMAGE=barichello/godot-ci:${{ env.GODOT_VERSION }}
-          mkdir -p $GITHUB_WORKSPACE/${{ env.PROJECT_PATH }}/test/xml_out
+          mkdir -p test/xml_out
           set +e
-          timeout 60s docker run --user $(id -u):$(id -g) --rm -v "$GITHUB_WORKSPACE":"$GITHUB_WORKSPACE" -w "$GITHUB_WORKSPACE/${{ env.PROJECT_PATH }}" -e GODOT_LOG_LEVEL=warn -e GODOT_DISABLE_DEPRECATED_WARNINGS=1 "$IMAGE" bash -lc "godot --headless --path . --script addons/gut/gut_cmdln.gd -- -gconfig=ci_GUT_config.cfg -gexit -gjunit_xml_file=test/xml_out/gut-results.xml"
+          timeout 60s ~/godot-linux/godot --headless --path . --script addons/gut/gut_cmdln.gd -- -gconfig=ci_GUT_config.cfg -gexit -gjunit_xml_file=test/xml_out/gut-results.xml
           exit_code=$?
           set -e
           echo "GUT exit code: $exit_code"
