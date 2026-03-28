@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="StatData" format=3]
-
-[ext_resource type="Script" path="res://scripts/resources/stat_res.gd" id="1_1hbfc"]
-
-[resource]
-script = ExtResource("1_1hbfc")
-name = &"attack"
-desc = "Daño base"

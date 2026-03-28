@@ -22,6 +22,9 @@
 class_name GameResources
 extends GameResource
 
+# Path por defecto
+const _path := "res://resources/all_game_res.tres"
+
 ## Metadatos del conjunto de recursos
 @export var metadata: MetadataRes
 ## Lista de usuarios
@@ -48,3 +51,14 @@ extends GameResource
 @export var stats: Array[StatData] = []
 ## Estados alterados
 @export var alter_states: Array[AlterStateRes] = []
+
+# Guarda este `GameResources` en `path`. Devuelve el código de error de ResourceSaver.
+func save_to(path:= _path) -> int:
+	return ResourceSaver.save(self, path)
+
+# Carga y retorna un `GameResources` desde `path` o `null` si no existe o no es del tipo esperado.
+static func load_from(path: = _path) -> GameResources:
+	var res := ResourceLoader.load(path)
+	if res is GameResources:
+		return res
+	return null

@@ -9,3 +9,6 @@ export/
 godot/test/xml_out/
 
 .vscode/
+
+godot/test/res/
+godot/test/res/*.tres
