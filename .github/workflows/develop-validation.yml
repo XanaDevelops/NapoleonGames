@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [dev]
 
+env:
+  GODOT_VERSION: 4.6.1
+  PROJECT_PATH: .
+  
 jobs:
   validate-develop:
     runs-on: ubuntu-latest
