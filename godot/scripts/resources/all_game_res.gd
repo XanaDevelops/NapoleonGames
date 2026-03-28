@@ -62,3 +62,4 @@ static func load_from(path: = _path) -> GameResources:
 	if res is GameResources:
 		return res
 	return null
+

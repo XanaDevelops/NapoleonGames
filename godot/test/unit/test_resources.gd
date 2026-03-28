@@ -302,3 +302,4 @@ func test_io_funcs() -> void:
 
 	# Comprobar un valor interno concreto
 	assert_eq(loaded.users[0].username, self._user.username)
+
