@@ -72,14 +72,7 @@ jobs:
             echo "Warning: .godot/global_script_class_cache.cfg not found in repo. Import will be attempted."
           fi
 
-      - name: Test folders
-        working-directory: ${{ env.PROJECT_PATH}}
-        run: |
-          echo "probando"
-          whoami
-          ls -l
-
-
+      
       - name: Import Godot resources (headless)
         working-directory: ${{ env.PROJECT_PATH }}
         run: |
