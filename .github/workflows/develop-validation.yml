@@ -65,7 +65,19 @@ jobs:
       - name: Godot smoke check
         working-directory: godot
         run: |
-          echo "Aquí va el headless check/export de Godot"
+          # Instala Godot (headless) usando la acción de game-ci y ejecuta GUT
+      - name: Setup Godot (headless)
+        uses: game-ci/setup-godot@v2
+        with:
+          version: '4.6.0'
+
+      - name: Run GUT (headless)
+        working-directory: godot
+        run: |
+          # Directorio para resultados de pruebas
+          mkdir -p test_results
+          # Ejecuta GUT en modo headless, exporta JUnit a test_results/gut-results.xml
+          godot --headless --path . --script addons/gut/gut_cmdln.gd -- -gexit -gjunit_xml_file=test_results/gut-results.xml
 
       - name: Shutdown
         if: ${{ always() && steps.compose.outputs.file != '' }}
