@@ -84,7 +84,7 @@ jobs:
           IMAGE=barichello/godot-ci:${{ env.GODOT_VERSION }}
           mkdir -p $GITHUB_WORKSPACE/${{ env.PROJECT_PATH }}/test/xml_out
           set +e
-          timeout 60s docker run --rm -v "$GITHUB_WORKSPACE":"$GITHUB_WORKSPACE" -w "$GITHUB_WORKSPACE/${{ env.PROJECT_PATH }}" -e GODOT_LOG_LEVEL=warn -e GODOT_DISABLE_DEPRECATED_WARNINGS=1 "$IMAGE" bash -lc "godot --headless --path . --script addons/gut/gut_cmdln.gd -- -gconfig=.gutconfig.json -gexit -gjunit_xml_file=test/xml_out/gut-results.xml"
+          timeout 60s docker run --rm -v "$GITHUB_WORKSPACE":"$GITHUB_WORKSPACE" -w "$GITHUB_WORKSPACE/${{ env.PROJECT_PATH }}" -e GODOT_LOG_LEVEL=warn -e GODOT_DISABLE_DEPRECATED_WARNINGS=1 "$IMAGE" bash -lc "godot --headless --path . --script addons/gut/gut_cmdln.gd -- -gconfig=ci_GUT_config.cfg -gexit -gjunit_xml_file=test/xml_out/gut-results.xml"
           exit_code=$?
           set -e
           echo "GUT exit code: $exit_code"
