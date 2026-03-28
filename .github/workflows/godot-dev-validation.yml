@@ -1,0 +1,109 @@
+name: Godot Dev Validation
+
+on:
+  pull_request:
+    branches: [dev]
+
+env:
+  GODOT_VERSION: 4.6.1
+  PROJECT_PATH: godot
+  
+jobs:
+  validate-godot:
+    runs-on: ubuntu-latest
+    # Usaremos Docker manualmente para poder cachear la imagen entre ejecuciones
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Cache Godot binary
+        id: cache-godot-bin
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/godot-linux
+          key: ${{ runner.os }}-godot-bin-${{ env.GODOT_VERSION }}
+          restore-keys: |
+            ${{ runner.os }}-godot-bin-
+
+      - name: Download Godot binary (if cache miss)
+        if: steps.cache-godot-bin.outputs.cache-hit != 'true'
+        run: |
+          set -e
+          mkdir -p ~/godot-linux
+          chmod 770 ~/godot-linux
+          DOWNLOAD_URL="https://downloads.godotengine.org/?version=${GODOT_VERSION}&flavor=stable&slug=linux.x86_64.zip&platform=linux.64"
+          echo "Downloading Godot from $DOWNLOAD_URL"
+          wget -q -O ~/godot-linux/godot.zip "$DOWNLOAD_URL"
+          unzip -q ~/godot-linux/godot.zip -d ~/godot-linux
+          EXE=$(find ~/godot-linux -maxdepth 1 -type f -name "Godot_v${GODOT_VERSION}-stable_linux.x86_64" -print -quit)
+          if [ -z "$EXE" ]; then EXE=$(find ~/godot-linux -type f -perm /u+x -name 'Godot*' -print -quit); fi
+          if [ -z "$EXE" ]; then echo "Could not find Godot executable after extraction"; ls -la ~/godot-linux; exit 1; fi
+          mv "$EXE" ~/godot-linux/godot || true
+          chmod +x ~/godot-linux/godot
+          rm -f ~/godot-linux/godot.zip || true
+
+      - name: Cache Godot export templates
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable
+            ~/.config/godot
+          key: ${{ runner.os }}-godot-templates-${{ env.GODOT_VERSION }}
+          restore-keys: |
+            ${{ runner.os }}-godot-templates-
+
+      - name: Note about export templates
+        run: |
+          echo "Using cached Godot binary at ~/godot-linux/godot if available; export templates are cached separately." 
+
+      - name: Verify committed class registry
+        working-directory: ${{ env.PROJECT_PATH }}
+        run: |
+          if [ -f .godot/global_script_class_cache.cfg ]; then
+            echo ".godot/global_script_class_cache.cfg found"
+            head -n 10 .godot/global_script_class_cache.cfg || true
+          else
+            echo "Warning: .godot/global_script_class_cache.cfg not found in repo. Import will be attempted."
+          fi
+
+      
+      - name: Import Godot resources (headless)
+        working-directory: ${{ env.PROJECT_PATH }}
+        run: |
+          echo "Importando recursos de Godot usando binario descargado..."
+          timeout 60s ~/godot-linux/godot --headless --path . --import --quit || echo "Import exited (timeout or non-zero exit)"
+          if [ -f .godot/global_script_class_cache.cfg ]; then
+            echo "Class registry present after import"
+          else
+            echo "No class registry generated after import"
+          fi
+
+      - name: Run GUT (headless)
+        working-directory: ${{ env.PROJECT_PATH }}
+        env:
+          GODOT_LOG_LEVEL: "warn"
+          GODOT_DISABLE_DEPRECATED_WARNINGS: "1"
+        run: |
+          mkdir -p test/xml_out
+          set +e
+          timeout 60s ~/godot-linux/godot --headless --path . --script addons/gut/gut_cmdln.gd -- -gconfig=ci_GUT_config.cfg -gexit -gjunit_xml_file=test/xml_out/gut-results.xml
+          exit_code=$?
+          set -e
+          echo "GUT exit code: $exit_code"
+          if [ $exit_code -ne 0 ]; then
+            echo "❌ GUT reported failures"
+            exit $exit_code
+          fi
+
+      - name: Upload GUT results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gut-test-results
+          path: ${{ env.PROJECT_PATH }}/test/xml_out/gut-results.xml
