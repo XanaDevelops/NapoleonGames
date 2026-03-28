@@ -2,7 +2,7 @@ name: Godot Dev Validation
 
 on:
   pull_request:
-    branches: [test]
+    branches: [dev]
 
 env:
   GODOT_VERSION: 4.6.1
