@@ -67,9 +67,9 @@ jobs:
         run: |
           # Instala Godot (headless) usando la acción de game-ci y ejecuta GUT
       - name: Setup Godot (headless)
-        uses: game-ci/setup-godot@v2
+        uses: abarichello/godot-ci@4.6.1-stable
         with:
-          version: '4.6.0'
+          version: '4.6.1'
 
       - name: Run GUT (headless)
         working-directory: godot
