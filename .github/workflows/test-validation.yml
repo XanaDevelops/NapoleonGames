@@ -1,0 +1,104 @@
+name: Test Validation
+
+on:
+  pull_request:
+    branches: [test]
+
+jobs:
+  validate-test:
+    runs-on: ubuntu-latest
+    env:
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Commit ancestry against dev
+        run: bash scripts/check_commit_ancestry.sh "${{ github.event.pull_request.head.sha }}" dev
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Run tests with coverage
+        working-directory: backend
+        run: mvn clean verify jacoco:report
+
+      - name: Enforce coverage >= 70%
+        working-directory: backend
+        run: |
+          COVERAGE=$(python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          root = ET.parse('target/site/jacoco/jacoco.xml').getroot()
+          c = [x for x in root.findall('counter') if x.attrib['type']=='LINE'][0]
+          missed = int(c.attrib['missed']); covered = int(c.attrib['covered'])
+          print(covered * 100 / (missed + covered))
+          PY
+          )
+          echo "Coverage: $COVERAGE"
+          awk "BEGIN {exit !($COVERAGE >= 70)}"
+
+      - name: SonarQube
+        if: ${{ env.SONAR_HOST_URL != '' && env.SONAR_TOKEN != '' }}
+        working-directory: backend
+        run: mvn sonar:sonar \
+          -Dsonar.projectKey=napoleon-games \
+          -Dsonar.host.url=$SONAR_HOST_URL \
+          -Dsonar.login=$SONAR_TOKEN
+
+      - name: SonarQube skipped
+        if: ${{ env.SONAR_HOST_URL == '' || env.SONAR_TOKEN == '' }}
+        run: echo "SonarQube no configurado, se omite"
+
+      - name: Detect docker compose file
+        id: compose
+        run: |
+          if [ -f docker-compose.yml ]; then
+            echo "file=docker-compose.yml" >> $GITHUB_OUTPUT
+          elif [ -f compose.yml ]; then
+            echo "file=compose.yml" >> $GITHUB_OUTPUT
+          else
+            echo "file=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate docker compose
+        if: ${{ steps.compose.outputs.file != '' }}
+        run: docker compose -f "${{ steps.compose.outputs.file }}" config
+
+      - name: Docker compose skipped
+        if: ${{ steps.compose.outputs.file == '' }}
+        run: echo "No hay docker-compose.yml ni compose.yml; se omiten los pasos de compose"
+
+      - name: Start backend + db
+        if: ${{ steps.compose.outputs.file != '' }}
+        run: docker compose -f "${{ steps.compose.outputs.file }}" up -d --build
+
+      - name: Wait for backend
+        if: ${{ steps.compose.outputs.file != '' }}
+        run: |
+          for i in {1..30}; do
+            if curl -fsS http://localhost:8080/actuator/health; then
+              echo "Backend OK"
+              exit 0
+            fi
+            echo "Esperando backend... intento $i"
+            sleep 5
+          done
+          echo "Backend no respondió a tiempo"
+          exit 1
+
+      - name: Godot smoke check
+        working-directory: godot
+        run: |
+          echo "Aquí va el headless check/export de Godot"
+
+      - name: Shutdown
+        if: ${{ always() && steps.compose.outputs.file != '' }}
+        run: docker compose -f "${{ steps.compose.outputs.file }}" down -v
