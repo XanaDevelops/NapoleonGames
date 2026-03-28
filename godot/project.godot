@@ -15,6 +15,10 @@ run/main_scene="uid://ckdof4q0k3o7x"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameManagerNode="*uid://crfipueiwb0h0"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"

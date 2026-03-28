@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://7np40cgmy80w"]
+
+[ext_resource type="Script" uid="uid://cpqdhsyw0vgg1" path="res://scenes/ingame/map_visualizer.gd" id="1_7udv5"]
+
+[node name="MapVisualizer" type="Node2D" unique_id=1182903281]
+script = ExtResource("1_7udv5")
