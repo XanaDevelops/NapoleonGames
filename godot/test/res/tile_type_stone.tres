@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="TileTypeRes" format=3]
-
-[ext_resource type="Script" path="res://scripts/resources/tile_mod_res.gd" id="1_xpha1"]
-[ext_resource type="Script" path="res://scripts/resources/tile_type_res.gd" id="2_whmrv"]
-
-[resource]
-script = ExtResource("2_whmrv")
-name = &"stone"
-desc = "Casilla de piedra"

@@ -280,3 +280,25 @@ func test_saved_resources_load_and_compare():
 	assert_eq(map_loaded.mapData[0][0].type.name, self._tile_stone_type.name)
 	# posición (1,1) interior debe ser hierba
 	assert_eq(map_loaded.mapData[1][1].type.name, self._tile_type.name)
+
+
+func test_io_funcs() -> void:
+	# Guardar una copia del recurso agregado `all_game_res.tres` en un nuevo path
+	var save_path := _folder + "io_test_all_game_res.tres"
+	var original := GameResources.load_from(_folder + "all_game_res.tres")
+	assert_ne(original, null)
+
+	# Intentar guardar y comprobar que el save devuelve OK usando la función de la clase
+	var err := original.save_to(save_path)
+	assert_eq(err, OK)
+
+	# Cargar la copia guardada usando la función de la clase
+	var loaded := GameResources.load_from(save_path)
+	assert_ne(loaded, null)
+
+	assert_eq(loaded.metadata.version, original.metadata.version)
+	assert_eq(loaded.users.size(), original.users.size())
+	assert_eq(loaded.cards.size(), original.cards.size())
+
+	# Comprobar un valor interno concreto
+	assert_eq(loaded.users[0].username, self._user.username)

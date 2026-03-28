@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="CardTypeRes" format=3]
-
-[ext_resource type="Script" path="res://scripts/resources/card_type_res.gd" id="1_eei33"]
-
-[resource]
-script = ExtResource("1_eei33")
-name = &"baseType"
-desc = "Tipo base para tests"
