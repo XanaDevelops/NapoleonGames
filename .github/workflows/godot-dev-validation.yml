@@ -1,0 +1,46 @@
+name: Godot Dev Validation
+
+on:
+  pull_request:
+    branches: [dev]
+
+env:
+  GODOT_VERSION: 4.6.1
+  PROJECT_PATH: godot
+  
+jobs:
+  validate-godot:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.6.1-stable
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Setup container (export templates)
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          if [ -d /root/.config/godot ]; then
+            mv /root/.config/godot ~/.config/godot || true
+          fi
+          if [ -d /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ]; then
+            mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable || true
+          fi
+
+      - name: Run GUT (headless)
+        working-directory: ${{ env.PROJECT_PATH }}
+        run: |
+          mkdir -p test_results
+          godot --headless --path . --script addons/gut/gut_cmdln.gd -- -gexit -gjunit_xml_file=test_results/gut-results.xml
+
+      - name: Upload GUT results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gut-test-results
+          path: ${{ env.PROJECT_PATH }}/test_results/gut-results.xml

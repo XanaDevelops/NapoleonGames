@@ -4,10 +4,6 @@ on:
   pull_request:
     branches: [dev]
 
-env:
-  GODOT_VERSION: 4.6.1
-  PROJECT_PATH: .
-  
 jobs:
   validate-develop:
     runs-on: ubuntu-latest
@@ -65,23 +61,6 @@ jobs:
           done
           echo "Backend no respondió a tiempo"
           exit 1
-
-      - name: Godot smoke check
-        working-directory: godot
-        run: |
-          # Instala Godot (headless) usando la acción de game-ci y ejecuta GUT
-      - name: Setup Godot (headless)
-        uses: abarichello/godot-ci@4.6.1-stable
-        with:
-          version: '4.6.1'
-
-      - name: Run GUT (headless)
-        working-directory: godot
-        run: |
-          # Directorio para resultados de pruebas
-          mkdir -p test_results
-          # Ejecuta GUT en modo headless, exporta JUnit a test_results/gut-results.xml
-          godot --headless --path . --script addons/gut/gut_cmdln.gd -- -gexit -gjunit_xml_file=test_results/gut-results.xml
 
       - name: Shutdown
         if: ${{ always() && steps.compose.outputs.file != '' }}
