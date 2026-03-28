@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dbvfn3475ma44"]
 
-[ext_resource type="Texture2D" uid="uid://dwcsqv5dddx4o" path="res://fondoPantallaUsuario.png" id="1_b6b30"]
-[ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://estilo_botones.tres" id="3_feuqc"]
-[ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://InputsUserMenu.tres" id="3_w8jpj"]
+[ext_resource type="Texture2D" uid="uid://dwcsqv5dddx4o" path="res://assets/sprites/ui/fondos_de_pantalla/fondoPantallaUsuario.png" id="1_b6b30"]
+[ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://assets/themes/ui/estilo_botones.tres" id="3_feuqc"]
+[ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://assets/themes/ui/InputsUserMenu.tres" id="3_w8jpj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feuqc"]
 bg_color = Color(0.0627451, 0.078431375, 0.11372549, 0.74509805)
