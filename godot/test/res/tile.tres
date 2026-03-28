@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="TileRes" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/tile_res.gd" id="1_1ce71"]
+[ext_resource type="Script" path="res://scripts/resources/tile_mod_res.gd" id="2_saywt"]
+[ext_resource type="Script" path="res://scripts/resources/card_type_res.gd" id="3_xyvgy"]
+[ext_resource type="Script" path="res://scripts/resources/stat_res.gd" id="4_hgu3n"]
+[ext_resource type="Script" path="res://scripts/resources/tile_type_res.gd" id="5_bfqe0"]
+
+[sub_resource type="Resource" id="Resource_vticf"]
+script = ExtResource("3_xyvgy")
+name = &"baseType"
+desc = "Tipo base para tests"
+
+[sub_resource type="Resource" id="Resource_c8eja"]
+script = ExtResource("4_hgu3n")
+name = &"attack"
+desc = "Daño base"
+
+[sub_resource type="Resource" id="Resource_iqd1c"]
+script = ExtResource("2_saywt")
+value = 1.5
+stat = SubResource("Resource_c8eja")
+affectType = SubResource("Resource_vticf")
+
+[sub_resource type="Resource" id="Resource_r6hpm"]
+script = ExtResource("5_bfqe0")
+name = &"grass"
+desc = "Casilla de hierba"
+mods = Array[ExtResource("2_saywt")]([SubResource("Resource_iqd1c")])
+
+[resource]
+script = ExtResource("1_1ce71")
+type = SubResource("Resource_r6hpm")

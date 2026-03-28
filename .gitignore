@@ -7,3 +7,5 @@ export/
 # GUT ignores
 
 godot/test/xml_out/
+
+.vscode/
