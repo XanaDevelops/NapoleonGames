@@ -76,8 +76,9 @@ jobs:
         working-directory: ${{ env.PROJECT_PATH}}
         run: |
           echo "probando"
+          whoami
           ls -l
-          
+
 
       - name: Import Godot resources (headless)
         working-directory: ${{ env.PROJECT_PATH }}
