@@ -57,6 +57,8 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 		else:
 			defense += state.value
 			
+		state
+			
 		## PLACEHOLDER!
 		self._currentHealth -= maxi(0, damage-defense)
 	return self._currentHealth <= 0
