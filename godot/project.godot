@@ -18,6 +18,13 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameManagerNode="*uid://crfipueiwb0h0"
+UiManager="*uid://c7x52jkqmybks"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
 
 [editor]
 
@@ -28,10 +35,10 @@ version_control/autoload_on_startup=true
 
 enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 
+[global_group]
+
+botones_navegacion=""
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
-
-[rendering]
-
-rendering_device/driver.windows="d3d12"

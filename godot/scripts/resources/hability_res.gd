@@ -21,6 +21,11 @@ enum HAB_DEST {SELF,
 	SINGLE_ANY, MULTIPLE_ANY, 
 	EVERYONE}
 
+enum CONDITION {
+	LT, GT, EQ, LE, GE, NE,
+	NA ## Not Aplicable
+}
+
 ## Objetivo de la habilidad (enum HAB_DEST)
 @export var objective := HAB_DEST.SINGLE_ENEMY
 ## Valor de la habilidad
@@ -39,9 +44,12 @@ enum HAB_DEST {SELF,
 @export var isPassive := false
 ## Estados alterados aplicados (Array[[AlterStateRes]])
 @export var alter_states: Array[AlterStateRes]
-
-## var condition
-## car condition_stat
+## tipo de condicion de la habilidad
+@export var condition:= CONDITION.NA
+## estadistica a comparar
+@export var condition_stat : StatData = null
+## valor a comparar
+@export var condition_value := 0.0
 
 ## true si la habilidad afecta a uno mismo
 static func inflicts_self(obj: HAB_DEST) -> bool:
