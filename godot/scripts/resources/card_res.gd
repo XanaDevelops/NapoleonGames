@@ -43,3 +43,5 @@ extends GameResource
 @export var habilities: Array[HabilityRes]
 ## Tipos de carta (Array[[CardTypeRes]])
 @export var types: Array[CardTypeRes]
+## Peso de la carta para el mazo
+@export var weight:= 1
