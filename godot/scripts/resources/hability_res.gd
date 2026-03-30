@@ -44,11 +44,9 @@ enum CONDITION {
 @export var isPassive := false
 ## Estados alterados aplicados (Array[[AlterStateRes]])
 @export var alter_states: Array[AlterStateRes]
-## tipo de condicion
+## tipo de condicion de la habilidad
 @export var condition:= CONDITION.NA
 ## estadistica a comparar
 @export var condition_stat : StatData = null
 ## valor a comparar
 @export var condition_value := 0.0
-## estado alterado por si se cumple la condicion
-@export var alter_state_conditio : AlterStateRes
