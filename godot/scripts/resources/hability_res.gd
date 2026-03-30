@@ -39,3 +39,7 @@ enum HAB_DEST {SELF,
 @export var isPassive := false
 ## Estados alterados aplicados (Array[[AlterStateRes]])
 @export var alter_states: Array[AlterStateRes]
+
+## true si la habilidad afecta a uno mismo
+static func inflicts_self(obj: HAB_DEST) -> bool:
+	return obj == HAB_DEST.SELF or obj == HAB_DEST.EVERYONE

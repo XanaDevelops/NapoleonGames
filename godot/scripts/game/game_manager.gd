@@ -1,7 +1,6 @@
 class_name GameManager
 extends Node
 
-
 @export var _gameMap: MapGame
 
 enum APP_STATE {
