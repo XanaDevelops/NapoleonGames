@@ -18,9 +18,11 @@ func _init(mapRes: MapRes) -> void:
 func get_tile_at(pos : Vector2i) -> TileGame:
 	return self._map[pos.y][pos.x]
 
-func move_unit(start: Vector2i, end: Vector2i) -> bool:
+func move_unit(start: Vector2i, end: Vector2i) -> void:
 	assert(self._map[start.y][start.x].has_unit(), "Casilla vacia")
 	assert(!self._map[end.y][end.y].has_unit(), "Casilla ocupada")
+	
+	 
 	
 	
 	
