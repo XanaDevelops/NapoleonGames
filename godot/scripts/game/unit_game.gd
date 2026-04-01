@@ -7,23 +7,46 @@ extends Node
 
 ## Vida actual, si <=0 estas muerto
 @export var _currentHealth: int
+## Manà actual
+@export var _currentMana: int
 
 ## estados alterados en activo con su duración restante
 @export var _currentAlterStates: Dictionary[AlterStateRes, int] = {}
-
+## habilidades disponibles con su tiempo de espera (0 se puede usar)
+@export var _habilities: Dictionary[HabilityRes, int] = {}
 
 ## TODO estados alterados y toda la pesca
 
 func _init(cardRes: CardRes) -> void:
 	self._cardRes = cardRes
 	
-	self.currentHealth = cardRes.hp
+	self._currentHealth = cardRes.hp
+	self._currentMana = cardRes.mana
+	
+	for h in self._cardRes.habilities:
+		self._habilities.set(h, 0)
+		
+	
 
+## Avanza los contadores de habilidades y estados alterados
+func _tick() -> void:
+	for key in self._currentAlterStates.keys():
+		var cd : int = self._currentAlterStates.get(key)
+		cd-=1
+		if cd <= 0:
+			self._currentAlterStates.erase(key)
+		else:
+			self._currentAlterStates.set(key, cd)
+			
+	for key in self._habilities.keys():
+		var cd: int = self._habilities.get(key)
+		cd -= 1
+		self._habilities.set(key, maxi(0, cd))
 
 ## se debe llamar cada turno
 ## TODO preguntar si cooldowns bajan por turno (global) o turno (jugador)
 func advance_turn() -> void:
-	pass
+	_tick()
 	
 	
 ## funcion que calcula el daño recibido
@@ -56,8 +79,6 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 			defense *= state.value
 		else:
 			defense += state.value
-			
-		state
 			
 		## PLACEHOLDER!
 		self._currentHealth -= maxi(0, damage-defense)

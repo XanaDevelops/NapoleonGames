@@ -23,3 +23,9 @@ extends GameResource
 ## Para diferenciar si un AlterStateRes es a la resistencia a ese valor o al ataque 
 ## la StatData se llama &"defense" o &"attack"
 static var DEFENSE := &"defense"
+
+
+## Placeholder de script de traducir nombres de estadisticas que la BD al interno del juego
+## Si hiciera falta...
+static func translate_name(name: StringName) -> StringName:
+	return &""

@@ -54,3 +54,21 @@ enum CONDITION {
 ## true si la habilidad afecta a uno mismo
 static func inflicts_self(obj: HAB_DEST) -> bool:
 	return obj == HAB_DEST.SELF or obj == HAB_DEST.EVERYONE
+	
+## Comprueba si se cumple la condición dado el valor de entrada
+func applies(value_check: float) -> bool:
+	match self.condition:
+		CONDITION.LT:
+			return value_check < self.condition_value
+		CONDITION.LE:
+			return value_check <= self.condition_value
+		CONDITION.GT:
+			return value_check > self.condition_value
+		CONDITION.GE:
+			return value_check >= self.condition_value
+		CONDITION.EQ:
+			return value_check == self.condition_value
+		CONDITION.NE:
+			return value_check != self.condition_value
+		_: # NA
+			return false
