@@ -13,4 +13,4 @@ func _init(cardRes: CardRes) -> void:
 	self.currentHealth = cardRes.hp
 	
 func get_texture2D() -> Texture2D:
-	return self._card_res.img
+	return self._cardRes.img
