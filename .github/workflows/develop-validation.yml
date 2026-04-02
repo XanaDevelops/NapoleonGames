@@ -62,11 +62,6 @@ jobs:
           echo "Backend no respondió a tiempo"
           exit 1
 
-      - name: Godot smoke check
-        working-directory: godot
-        run: |
-          echo "Aquí va el headless check/export de Godot"
-
       - name: Shutdown
         if: ${{ always() && steps.compose.outputs.file != '' }}
         run: docker compose -f "${{ steps.compose.outputs.file }}" down -v
