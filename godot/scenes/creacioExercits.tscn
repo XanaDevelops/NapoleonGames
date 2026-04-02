@@ -1,0 +1,197 @@
+[gd_scene format=3 uid="uid://ju3tc1svmput"]
+
+[ext_resource type="Texture2D" uid="uid://cmwpg7ag1lk2x" path="res://assets/sprites/ui/fondos_de_pantalla/fondoExercit.png" id="1_n8s6x"]
+[ext_resource type="StyleBox" uid="uid://k2idkull1v2y" path="res://assets/themes/ui/estilo_menu_panel_desplegable.tres" id="2_iwjn0"]
+[ext_resource type="Theme" uid="uid://cm4kqhsqnukx" path="res://assets/themes/ui/botones_cassillas.tres" id="3_iwjn0"]
+
+[node name="Control" type="Control" unique_id=456382028]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=537773588]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_n8s6x")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=951885934]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 200.0
+offset_top = -400.0
+offset_right = 950.0
+offset_bottom = 400.0
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=447232201]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1708797902]
+layout_mode = 2
+text = "Ejercit 1
+"
+
+[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=291470653]
+layout_mode = 2
+text = "Ejercit 2
+"
+
+[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=570528193]
+layout_mode = 2
+text = "Ejercit 3
+"
+
+[node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1709866022]
+layout_mode = 2
+text = "Ejercit 4
+"
+
+[node name="Panel" type="Panel" parent="VBoxContainer" unique_id=725706832]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("2_iwjn0")
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/Panel" unique_id=987638071]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -360.0
+offset_right = 350.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+columns = 5
+
+[node name="Button" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=1998304991]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button2" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=1795690473]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button3" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=1247838365]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button4" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=427402688]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button5" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=1582128600]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button6" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=964355158]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button7" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=1800791467]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button8" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=823627563]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button9" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=770132325]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button10" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=198751771]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button11" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=909615151]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button12" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=1828828441]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button13" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=987767594]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button14" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=362833702]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button15" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=993687900]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button16" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=25160486]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button17" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=1314979270]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button18" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=313018405]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button19" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=1432352240]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
+
+[node name="Button20" type="Button" parent="VBoxContainer/Panel/GridContainer" unique_id=1142531680]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_iwjn0")
