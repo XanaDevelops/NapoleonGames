@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://ju3tc1svmput"]
+[gd_scene format=3 uid="uid://cw4m7083vlm3w"]
 
 [ext_resource type="Texture2D" uid="uid://cmwpg7ag1lk2x" path="res://assets/sprites/ui/fondos_de_pantalla/fondoExercit.png" id="1_n8s6x"]
 [ext_resource type="StyleBox" uid="uid://k2idkull1v2y" path="res://assets/themes/ui/estilo_menu_panel_desplegable.tres" id="2_iwjn0"]
-[ext_resource type="Theme" uid="uid://cm4kqhsqnukx" path="res://assets/themes/ui/botones_cassillas.tres" id="3_iwjn0"]
+[ext_resource type="Theme" path="res://assets/themes/ui/botones_cassillas.tres" id="3_iwjn0"]
 
 [node name="Control" type="Control" unique_id=456382028]
 layout_mode = 3
