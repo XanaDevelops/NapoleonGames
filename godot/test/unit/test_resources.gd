@@ -59,14 +59,19 @@ func before_all():
 	var army := ArmyRes.new()
 	army.nom = "Test Army"
 	army.isActive = true
-	army.agrupations = {cardMele: 1}
+	# agrupations ahora es Array[CardArmyGroup]
+	var group1 := CardArmyGroup.new()
+	group1.cardType = cardMele
+	group1.n = 1
+	army.agrupations = [group1]
 
 	# Crear usuario
 	var userRes := UserRes.new()
 	userRes.name = "Test User"
 	userRes.username = "testuser666"
 	userRes.friends = []
-	userRes.avariableCards = [cardMele]
+	# avariableCards ahora es Dictionary[CardRes, int]
+	userRes.avariableCards = {cardMele: 1}
 	userRes.userArmys = [army]
 	userRes.avariableMaps = []
 
@@ -102,11 +107,18 @@ func before_all():
 	cardRanged.resistances = {}
 	cardRanged.habilities = [hab_range]
 
-	# Expandir ejército con la carta a distancia
-	army.agrupations[cardRanged] = 2
+	# Expandir ejército con la carta a distancia (añadir como CardArmyGroup)
+	var group2 := CardArmyGroup.new()
+	group2.cardType = cardRanged
+	group2.n = 2
+	army.agrupations.append(group2)
 
 	# Añadir la carta a usuario
-	userRes.avariableCards.append(cardRanged)
+	# avariableCards es un Dictionary[CardRes, int], incrementar o crear entrada
+	if userRes.avariableCards.has(cardRanged):
+		userRes.avariableCards[cardRanged] += 1
+	else:
+		userRes.avariableCards[cardRanged] = 1
 
 	# Exponer nuevas referencias
 	self._hab_range = hab_range

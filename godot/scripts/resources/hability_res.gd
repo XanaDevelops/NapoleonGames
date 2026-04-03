@@ -26,6 +26,10 @@ enum CONDITION {
 	NA ## Not Aplicable
 }
 
+## Nombre de la habilidad
+@export var name : StringName
+##Descripción de la habilidad
+@export var desc : String
 ## Objetivo de la habilidad (enum HAB_DEST)
 @export var objective := HAB_DEST.SINGLE_ENEMY
 ## Valor de la habilidad

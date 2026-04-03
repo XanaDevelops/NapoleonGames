@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://b7f5no07n21x2"]
+
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="1_rqypc"]
+[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="2_7q5ya"]
+[ext_resource type="Resource" uid="uid://rvs1tm6mhbbb" path="res://resources/hability_res/hability_0001.tres" id="2_owhyk"]
+[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="3_3w6t3"]
+[ext_resource type="Resource" uid="uid://dcbdn27fddhbq" path="res://resources/attack_type_res/attack_type_0001.tres" id="3_74c6u"]
+[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="4_74c6u"]
+[ext_resource type="Resource" uid="uid://bk4gxlq3c4kdq" path="res://resources/attack_type_res/attack_type_0002.tres" id="4_owhyk"]
+[ext_resource type="Resource" uid="uid://djccx5x2f6n5v" path="res://resources/card_type_res/card_type_0001.tres" id="6_owhyk"]
+
+[resource]
+script = ExtResource("3_3w6t3")
+name = &"Mele Unit"
+desc = "unidad a mele"
+hp = 20
+speed = 5
+dodge = 0.35
+resistances = Dictionary[ExtResource("2_7q5ya"), int]({
+ExtResource("3_74c6u"): 15,
+ExtResource("4_owhyk"): 5
+})
+habilities = Array[ExtResource("1_rqypc")]([ExtResource("2_owhyk")])
+types = Array[ExtResource("4_74c6u")]([ExtResource("6_owhyk")])
+uid = 1
+metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

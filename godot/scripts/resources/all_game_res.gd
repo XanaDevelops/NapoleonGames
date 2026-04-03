@@ -23,7 +23,8 @@ class_name GameResources
 extends GameResource
 
 # Path por defecto
-const _path := "res://resources/all_game_res.tres"
+const _folder := "res://resources/"
+const _path := _folder + "all_game_res.tres"
 
 ## Metadatos del conjunto de recursos
 @export var metadata: MetadataRes
@@ -62,3 +63,11 @@ static func load_from(path: = _path) -> GameResources:
 	if res is GameResources:
 		return res
 	return null
+	
+## Extrae los recursos contenidos en la carpeta destino
+func unpack(folder := _folder) -> void:
+	pass
+	
+## Importar desde la carpeta
+func pack(folder := _folder) -> void:
+	pass
