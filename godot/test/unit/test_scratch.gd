@@ -12,7 +12,7 @@ func test_scratch() -> void:
 	var otro_test := UserRes.new()
 	otro_test.uid = 123
 	
-	gut.logger.log(str(carta_test.get_script()))
+	gut.logger.log(str(carta_test.get_script().get_global_name()))
 	gut.logger.log(str(otro_test.get_script()))
 	
 	assert_true(carta_test.compare(carta_test))

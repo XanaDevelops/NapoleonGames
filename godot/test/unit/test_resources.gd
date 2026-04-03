@@ -236,7 +236,7 @@ func before_all():
 	all_res.tiles = [tile]
 	all_res.maps = [map]
 	all_res.armies = [army]
-	all_res.stats = [stat]
+	all_res.stat_datas = [stat]
 	all_res.alter_states = []
 
 	ResourceSaver.save(all_res, _folder + "all_game_res.tres")
