@@ -26,10 +26,11 @@ func before_all():
 			tile.type = gr.tile_types[t]
 			aux.append(tile)
 		map.mapData.append(aux)
-
+		
+	map.mapData[0][4].height = 100
+	map.mapData[3][4].height = 100
 
 func test_dijkstra() -> void:
-	
 	var mapGame := MapGame.new(map)
 	var unit := UnitGame.new(gr.cards[0])
 	mapGame.get_tile_at(Vector2i(2,2)).set_unit(unit)
@@ -44,3 +45,5 @@ func test_dijkstra() -> void:
 		
 	var avariable := mapGame.get_accesible_moves(Vector2i(2,2))
 	print(avariable)
+	
+	assert_eq(avariable.size(), 13)

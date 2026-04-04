@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_sn381")
-value = 1.0
+value = 999.0
 stat = ExtResource("3_cdg0l")
 affectType = ExtResource("1_hv8fm")
 uid = 1

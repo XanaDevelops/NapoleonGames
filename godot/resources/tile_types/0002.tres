@@ -9,5 +9,4 @@ script = ExtResource("2_4up12")
 name = &"rocas"
 desc = "no tan facil"
 mods = Array[ExtResource("1_g6i62")]([ExtResource("2_3bhnw")])
-cost = 99
 metadata/_custom_type_script = "uid://d4fyta6ugot35"

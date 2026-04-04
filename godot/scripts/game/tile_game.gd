@@ -24,3 +24,6 @@ func has_unit() -> bool:
 func get_cost(unit: UnitGame) -> int:
 	return _tileRes.get_cost(unit._cardRes)
 	
+func get_height_penalty(tile: TileGame) -> int:
+	return absi(self._tileRes.height - tile._tileRes.height) / 5
+	

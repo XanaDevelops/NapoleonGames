@@ -86,8 +86,10 @@ func _calculate_distances(pos: Vector2i, unit: UnitGame) -> Dictionary[Vector2i,
 		if _dist > distances.get(_pos, 9223372036854775807):
 			continue
 		
-		for neight in get_neightbours(pos):
+		for neight in get_neightbours(_pos):
 			var _cost := get_tile_at(neight).get_cost(unit)
+			# penalización altura
+			_cost += get_tile_at(_pos).get_height_penalty(get_tile_at(neight))
 			if distances.get(_pos) + _cost < distances.get(neight, 9223372036854775807):
 				distances.set(neight, distances.get(_pos) + _cost)
 				queue.insert({neight: distances.get(_pos) + _cost})
