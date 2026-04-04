@@ -43,7 +43,9 @@ enum CONDITION {
 ## Coste de maná
 @export var manaCost := 0
 ## Duración en turnos
-@export var duration := 0  #duracion en turnos 0 inmediato 
+@export var duration := 0  # (0 solo actua ese turno)
+## Cooldown en turnos
+@export var cooldown := 1 # (1, en el siguiente está disponible
 ## Indica si es pasiva
 @export var isPassive := false
 ## Estados alterados aplicados (Array[[AlterStateRes]])

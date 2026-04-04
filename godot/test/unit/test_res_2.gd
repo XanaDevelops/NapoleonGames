@@ -14,7 +14,7 @@ func test_name() -> void:
 
 func test_pack() -> void:
 	var gameResources := GameResources.new()
-	
+	print("test")
 	gameResources.pack()
 	gameResources.save_to()
 	assert_true(true)

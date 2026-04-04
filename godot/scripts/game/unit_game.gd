@@ -52,7 +52,7 @@ func advance_turn() -> void:
 ## funcion que calcula el daño recibido
 ## true si la mata
 func recieve_attack(damage: int, type: AttackType) -> bool:
-	
+	push_warning("HOLA")
 	# Calcular defensa base a ese tipo
 	var defense: int
 	if self._cardRes.resistances.has(type):
@@ -80,8 +80,10 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 		else:
 			defense += state.value
 			
-		## PLACEHOLDER!
-		self._currentHealth -= maxi(0, damage-defense)
+	## PLACEHOLDER!
+	var inflict_damage := maxi(0, damage-defense)
+	print("inflicted_damage: " + str(inflict_damage))
+	self._currentHealth -= inflict_damage
 	return self._currentHealth <= 0
 	
 ## mata a la unidad
@@ -91,6 +93,19 @@ func kill() -> void:
 func _get_tile() -> TileGame:
 	return null
 	
+## Devuelve las habilidades que se pueden usar
+func get_avariable_habilities() -> Array[HabilityRes]:
+	var ret : Array[HabilityRes] = []
+	for key in self._habilities:
+		var cd := _habilities[key]
+		if cd > 0:
+			continue
+			
+		## TODO comprobar si aplica
+		
+		ret.append(key)
+
+	return ret
 func get_texture2D() -> Texture2D:
 	return self._card_res.img
 	

@@ -10,9 +10,6 @@ func _init(tileRes: TileRes) -> void:
 	
 ## Devuelve la textura del tile, o de la tropa que contenga
 func get_texture2D() -> Texture2D:
-	if self._unit != null:
-		return self._unit.get_texture2D()
-		
 	return self._tileRes.type.texture
 	
 func set_unit(unit: UnitGame) -> void:
