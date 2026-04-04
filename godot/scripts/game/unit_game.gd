@@ -4,7 +4,7 @@ extends RuntimeResource
 @export var _cardRes: CardRes
 
 @export var _owner: UserRes
-
+@export var _tile: TileGame
 ## Vida actual, si <=0 estas muerto
 @export var _currentHealth: int
 ## Manà actual
@@ -90,8 +90,8 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 func kill() -> void:
 	pass
 ## devuelve la casilla donde se encuentra
-func _get_tile() -> TileGame:
-	return null
+func _get_height() -> int:
+	return _tile.get_height()
 	
 ## Devuelve las habilidades que se pueden usar
 func get_avariable_habilities() -> Array[HabilityRes]:

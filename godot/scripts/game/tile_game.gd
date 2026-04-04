@@ -15,6 +15,7 @@ func get_texture2D() -> Texture2D:
 func set_unit(unit: UnitGame) -> void:
 	assert(!self._unit, "[TileGame] se ha intentado asignar una unidad a una casilla ocupada")
 	self._unit = unit
+	self._unit._tile = self
 	
 func get_unit() -> UnitGame:
 	return self._unit
@@ -27,3 +28,5 @@ func get_cost(unit: UnitGame) -> int:
 func get_height_penalty(tile: TileGame) -> int:
 	return absi(self._tileRes.height - tile._tileRes.height) / 5
 	
+func get_height() -> int:
+	return _tileRes.height
