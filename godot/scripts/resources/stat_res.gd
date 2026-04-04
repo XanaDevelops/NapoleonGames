@@ -23,7 +23,7 @@ extends GameResource
 ## Para diferenciar si un AlterStateRes es a la resistencia a ese valor o al ataque 
 ## la StatData se llama &"defense" o &"attack"
 static var DEFENSE := &"defense"
-
+static var SPEED := &"speed"
 
 ## Placeholder de script de traducir nombres de estadisticas que la BD al interno del juego
 ## Si hiciera falta...

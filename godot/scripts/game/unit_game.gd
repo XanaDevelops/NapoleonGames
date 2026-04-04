@@ -1,5 +1,5 @@
 class_name UnitGame
-extends Node
+extends RuntimeResource
 
 @export var _cardRes: CardRes
 
@@ -109,3 +109,5 @@ func get_avariable_habilities() -> Array[HabilityRes]:
 func get_texture2D() -> Texture2D:
 	return self._card_res.img
 	
+func get_speed() -> int:
+	return self._cardRes.speed
