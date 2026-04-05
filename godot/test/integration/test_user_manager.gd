@@ -15,10 +15,8 @@ func test_cargar_datos_de_prueba() -> void:
 	carta_elfo.weight = 1
 	carta_elfo.img = preload("res://assets/sprites/imagenes_de_cartas/elfo.jpg")
 	
-	usuario_prueba.availableCards = {
-		carta_esqueleto: 10,
-		carta_elfo: 10
-	}
+	usuario_prueba.availableCards[carta_esqueleto] = 10
+	usuario_prueba.availableCards[carta_elfo] = 10
 	
 	var ejercito_inicial = ArmyRes.new()
 	ejercito_inicial.nom = "Horda Inicial"
