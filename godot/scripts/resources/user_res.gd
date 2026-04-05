@@ -9,8 +9,8 @@
 ## - username: Nombre de usuario único.[br]
 ## - img: Imagen o avatar del usuario ([Texture2D]).[br]
 ## - token: Token de autenticación del usuario.[br]
-## - avariableCards: Cartas disponibles para el usuario (Array[[CardRes]]).[br]
-## - avariableMaps: Mapas disponibles para el usuario (Array[[MapRes]]).[br]
+## - availableCards: Cartas disponibles para el usuario (Array[[CardRes]]).[br]
+## - availableMaps: Mapas disponibles para el usuario (Array[[MapRes]]).[br]
 ## - userArmys: Ejércitos del usuario (Array[[ArmyRes]]).[br]
 ## - friends: Lista de amigos del usuario (Array[[UserRes]]).[br]
 ##
@@ -30,11 +30,10 @@ extends GameResource
 
 ## Token de autenticación del usuario
 @export var token: String
-
 ## Cartas disponibles para el usuario (Dictionary[CardRes, int])
-@export var avariableCards: Dictionary[CardRes, int] = {}
+@export var availableCards: Dictionary[CardRes, int] = {}
 ## Mapas disponibles para el usuario (Array[[MapRes]])
-@export var avariableMaps: Array[MapRes] = []
+@export var availableMaps: Array[MapRes] = []
 ## Ejércitos del usuario (Array[[ArmyRes]])
 @export var userArmys: Array[ArmyRes] = []
 

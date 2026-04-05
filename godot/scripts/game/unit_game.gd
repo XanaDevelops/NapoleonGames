@@ -94,7 +94,7 @@ func _get_height() -> int:
 	return _tile.get_height()
 	
 ## Devuelve las habilidades que se pueden usar
-func get_avariable_habilities() -> Array[HabilityRes]:
+func get_available_habilities() -> Array[HabilityRes]:
 	var ret : Array[HabilityRes] = []
 	for key in self._habilities:
 		var cd := _habilities[key]

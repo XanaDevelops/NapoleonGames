@@ -48,7 +48,7 @@ func test_dijkstra() -> void:
 	for test in test_neight:
 		assert_true(test in neight)
 		
-	var avariable := mapGame.get_accesible_moves(Vector2i(2,2))
-	print(avariable)
+	var available := mapGame.get_accesible_moves(Vector2i(2,2))
+	print(available)
 	
-	assert_eq(avariable.size(), 13)
+	assert_eq(available.size(), 13)
