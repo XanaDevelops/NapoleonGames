@@ -21,6 +21,8 @@ extends GameResource
 @export var name: String
 ## Nombre de usuario único
 @export var username: StringName
+## correo
+@export var email: String
 ## Imagen o avatar del usuario ([Texture2D])
 @export var img: Texture2D
 
