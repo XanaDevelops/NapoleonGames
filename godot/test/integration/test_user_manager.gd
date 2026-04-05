@@ -23,7 +23,7 @@ func test_cargar_datos_de_prueba() -> void:
 	cartas_temporales[carta_elfo] = 10
 	
 	
-	usuario_prueba.availableCards = cartas_temporales
+	usuario_prueba.avariableCards = cartas_temporales
 	
 	var ejercito_inicial = ArmyRes.new()
 	ejercito_inicial.nom = "Horda Inicial"
