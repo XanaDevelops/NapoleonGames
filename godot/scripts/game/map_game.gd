@@ -8,12 +8,13 @@ var _map: Array[Array] = []
 
 func _init(mapRes: MapRes) -> void:
 	self._mapRes = mapRes
-	
-	for row in _mapRes.mapData:
-		var temp: Array[TileGame] = []
-		for t in row:
-			temp.append(TileGame.new(t))
-		_map.append(temp)
+	for i in range(mapRes.mapData.size()):
+			var row = mapRes.mapData[i]
+			var temp: Array = []
+			for j in range(row.size()):
+				var t = row[j]
+				temp.append(TileGame.new(t))
+			_map.append(temp)
 
 func get_tile_at(pos : Vector2i) -> TileGame:
 	return self._map[pos.y][pos.x]

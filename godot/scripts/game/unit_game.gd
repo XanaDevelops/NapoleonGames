@@ -107,7 +107,7 @@ func get_available_habilities() -> Array[HabilityRes]:
 
 	return ret
 func get_texture2D() -> Texture2D:
-	return self._card_res.img
+	return self._cardRes.img
 	
 func get_speed() -> int:
 	return self._cardRes.speed
