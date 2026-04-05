@@ -43,3 +43,15 @@ func test_cargar_datos_de_prueba() -> void:
 	assert_not_null(usuario_guardado)
 	assert_eq(usuario_guardado.name, "Jugador Local")
 	assert_eq(usuario_guardado.userArmys.size(), 2)
+	
+	
+func test_armi_ui() -> void:
+	test_cargar_datos_de_prueba()
+	
+	var scene := preload("res://scenes/creacioExercits.tscn")
+	var instance := scene.instantiate()
+	
+	add_child_autoqfree(instance)
+	
+	gut.pause_before_teardown()
+	
