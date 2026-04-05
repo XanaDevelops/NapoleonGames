@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="CardRes" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="1_csg87"]
+[ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="2_5u1va"]
+[ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="3_5tldn"]
+[ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="4_xdvve"]
+[ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="5_21faa"]
+[ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="6_s2s4f"]
+[ext_resource type="Script" path="res://scripts/resources/card_type_res.gd" id="7_c5dnp"]
+[ext_resource type="Resource" path="res://resources/card_types/0001.tres" id="8_slsko"]
+
+[resource]
+script = ExtResource("6_s2s4f")
+name = &"Ranged Unit"
+desc = "Unidad a distancia"
+hp = 10
+mana = 10
+speed = 6
+dodge = 0.1
+resistances = Dictionary[ExtResource("3_5tldn"), int]({
+ExtResource("4_xdvve"): 5,
+ExtResource("5_21faa"): 5
+})
+habilities = Array[ExtResource("1_csg87")]([ExtResource("2_5u1va")])
+types = Array[ExtResource("7_c5dnp")]([ExtResource("8_slsko")])
+uid = 2
+metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

@@ -16,3 +16,6 @@ extends GameResource
 @export var height:= 0 
 ## Tipo de casilla ([TileTypeRes])
 @export var type: TileTypeRes
+
+func get_cost(card: CardRes) -> int:
+	return self.type.get_total_cost(card)

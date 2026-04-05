@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AttackType" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="1_6wekp"]
+
+[resource]
+script = ExtResource("1_6wekp")
+name = &"magic"
+uid = 2
+metadata/_custom_type_script = "uid://bycnnamk3t4f0"

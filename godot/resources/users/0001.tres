@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="UserRes" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="1_1luw5"]
+[ext_resource type="Resource" path="res://resources/cards/0001.tres" id="2_5oa5q"]
+[ext_resource type="Resource" path="res://resources/cards/0002.tres" id="3_aq2ka"]
+[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="4_0url1"]
+[ext_resource type="Script" path="res://scripts/resources/user_res.gd" id="5_m3u0r"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="6_i5a77"]
+[ext_resource type="Script" path="res://scripts/resources/army_res.gd" id="7_w8ttf"]
+
+[resource]
+script = ExtResource("5_m3u0r")
+name = "Lord Xana"
+username = &"lordxana"
+img = ExtResource("6_i5a77")
+token = "666"
+avariableCards = Dictionary[ExtResource("1_1luw5"), int]({
+ExtResource("2_5oa5q"): 3,
+ExtResource("3_aq2ka"): 2
+})
+uid = 1
+metadata/_custom_type_script = "uid://ce5uvgu640fxr"
