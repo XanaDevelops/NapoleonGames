@@ -15,8 +15,15 @@ func test_cargar_datos_de_prueba() -> void:
 	carta_elfo.weight = 1
 	carta_elfo.img = preload("res://assets/sprites/imagenes_de_cartas/elfo.jpg")
 	
-	usuario_prueba.availableCards[carta_esqueleto] = 10
-	usuario_prueba.availableCards[carta_elfo] = 10
+
+	var cartas_temporales: Dictionary[CardRes, int] = {}
+	
+	
+	cartas_temporales[carta_esqueleto] = 10
+	cartas_temporales[carta_elfo] = 10
+	
+	
+	usuario_prueba.availableCards = cartas_temporales
 	
 	var ejercito_inicial = ArmyRes.new()
 	ejercito_inicial.nom = "Horda Inicial"
