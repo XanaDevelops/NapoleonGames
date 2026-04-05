@@ -34,7 +34,9 @@ extends GameResource
 ## Probabilidad de esquiva
 @export var dodge: float
 ## Imagen de la carta ([Texture2D])
-@export var img: Texture2D #tambien podria ser path a la imagen
+@export var portrait: Texture2D #tambien podria ser path a la imagen
+## Imagen para dentro del juego
+@export var img: Texture2D
 ## Resistencias por tipo de ataque (Dictionary[[AttackType], int])
 @export var resistances: Dictionary[AttackType, int]
 ## Habilidades de la carta (Array[[HabilityRes]])
