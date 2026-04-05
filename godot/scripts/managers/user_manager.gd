@@ -2,40 +2,7 @@ extends Node
 
 var usuario_actual: UserRes
 
-func _ready() -> void:
-	_cargar_datos_de_prueba()
 
-func _cargar_datos_de_prueba() -> void:
-	var usuario_prueba = UserRes.new()
-	usuario_prueba.name = "Jugador Local"
-	usuario_prueba.username = "test_user"
-	
-	var carta_esqueleto = CardRes.new()
-	carta_esqueleto.name = "Guerrero Esqueleto" 
-	carta_esqueleto.weight = 2                  
-	carta_esqueleto.img = preload("res://assets/sprites/imagenes_de_cartas/esqueleto.jpg") 
-	
-	var carta_elfo = CardRes.new()
-	carta_elfo.name = "Arquero Elfo"
-	carta_elfo.weight = 1
-	carta_elfo.img = preload("res://assets/sprites/imagenes_de_cartas/elfo.jpg")
-	
-	usuario_prueba.availableCards = {
-		carta_esqueleto: 10,
-		carta_elfo: 10
-	}
-	
-	var ejercito_inicial = ArmyRes.new()
-	ejercito_inicial.nom = "Horda Inicial"
-	ejercito_inicial.isActive = false
-	usuario_prueba.userArmys.append(ejercito_inicial)
-	
-	var ejercito_final = ArmyRes.new()
-	ejercito_final.nom = "Horda final"
-	ejercito_final.isActive = true
-	usuario_prueba.userArmys.append(ejercito_final)
-	
-	establecer_usuario_actual(usuario_prueba)
 
 func establecer_usuario_actual(nuevo_usuario: UserRes) -> void:
 	usuario_actual = nuevo_usuario
