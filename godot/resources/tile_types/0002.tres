@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="TileTypeRes" format=3 uid="uid://30i4m7j7frg4"]
+[gd_resource type="Resource" script_class="TileTypeRes" format=3]
 
-[ext_resource type="Script" uid="uid://cnh4gjirdr73b" path="res://scripts/resources/tile_mod_res.gd" id="1_g6i62"]
-[ext_resource type="Resource" uid="uid://bx4sw5jbxohh4" path="res://resources/tile_mods/0001.tres" id="2_3bhnw"]
-[ext_resource type="Script" uid="uid://d4fyta6ugot35" path="res://scripts/resources/tile_type_res.gd" id="2_4up12"]
+[ext_resource type="Script" path="res://scripts/resources/tile_mod_res.gd" id="1_g6i62"]
+[ext_resource type="Resource" path="res://resources/tile_mods/0001.tres" id="2_3bhnw"]
+[ext_resource type="Script" path="res://scripts/resources/tile_type_res.gd" id="2_4up12"]
 
 [resource]
 script = ExtResource("2_4up12")
 name = &"rocas"
 desc = "no tan facil"
 mods = Array[ExtResource("1_g6i62")]([ExtResource("2_3bhnw")])
+uid = 2
 metadata/_custom_type_script = "uid://d4fyta6ugot35"

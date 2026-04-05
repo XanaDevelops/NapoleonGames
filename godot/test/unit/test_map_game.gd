@@ -29,6 +29,11 @@ func before_all():
 		
 	map.mapData[0][4].height = 100
 	map.mapData[3][4].height = 100
+	
+	gr.maps.append(map)
+	
+	gr.save_to()
+	
 
 func test_dijkstra() -> void:
 	var mapGame := MapGame.new(map)
