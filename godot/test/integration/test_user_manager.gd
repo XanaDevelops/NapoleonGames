@@ -23,7 +23,7 @@ func test_cargar_datos_de_prueba() -> void:
 	cartas_temporales[carta_elfo] = 10
 	
 	
-	usuario_prueba.avariableCards = cartas_temporales
+	usuario_prueba.availableCards = cartas_temporales
 	
 	var ejercito_inicial = ArmyRes.new()
 	ejercito_inicial.nom = "Horda Inicial"
@@ -38,8 +38,8 @@ func test_cargar_datos_de_prueba() -> void:
 	UserManager.establecer_usuario_actual(usuario_prueba)
 	
 	var usuario_guardado = UserManager.usuario_actual
-	assert_eq(usuario_guardado.avariableCards[carta_esqueleto], 10, "Debería haber guardado 10 Guerreros Esqueleto")
-	assert_eq(usuario_guardado.avariableCards[carta_elfo], 10, "Debería haber guardado 5 Arqueros Elfo")
+	assert_eq(usuario_guardado.availableCards[carta_esqueleto], 10, "Debería haber guardado 10 Guerreros Esqueleto")
+	assert_eq(usuario_guardado.availableCards[carta_elfo], 10, "Debería haber guardado 5 Arqueros Elfo")
 	assert_not_null(usuario_guardado)
 	assert_eq(usuario_guardado.name, "Jugador Local")
 	assert_eq(usuario_guardado.userArmys.size(), 2)

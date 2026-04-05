@@ -14,7 +14,7 @@ name = "Lord Xana"
 username = &"lordxana"
 img = ExtResource("6_i5a77")
 token = "666"
-avariableCards = Dictionary[ExtResource("1_1luw5"), int]({
+availableCards = Dictionary[ExtResource("1_1luw5"), int]({
 ExtResource("2_5oa5q"): 3,
 ExtResource("3_aq2ka"): 2
 })

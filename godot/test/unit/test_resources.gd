@@ -70,10 +70,10 @@ func before_all():
 	userRes.name = "Test User"
 	userRes.username = "testuser666"
 	userRes.friends = []
-	# avariableCards ahora es Dictionary[CardRes, int]
-	userRes.avariableCards = {cardMele: 1}
+	# availableCards ahora es Dictionary[CardRes, int]
+	userRes.availableCards = {cardMele: 1}
 	userRes.userArmys = [army]
-	userRes.avariableMaps = []
+	userRes.availableMaps = []
 
 	# Exponer recursos para otros tests
 	self._card_type = cardType
@@ -114,11 +114,11 @@ func before_all():
 	army.agrupations.append(group2)
 
 	# Añadir la carta a usuario
-	# avariableCards es un Dictionary[CardRes, int], incrementar o crear entrada
-	if userRes.avariableCards.has(cardRanged):
-		userRes.avariableCards[cardRanged] += 1
+	# availableCards es un Dictionary[CardRes, int], incrementar o crear entrada
+	if userRes.availableCards.has(cardRanged):
+		userRes.availableCards[cardRanged] += 1
 	else:
-		userRes.avariableCards[cardRanged] = 1
+		userRes.availableCards[cardRanged] = 1
 
 	# Exponer nuevas referencias
 	self._hab_range = hab_range
@@ -262,7 +262,7 @@ func test_saved_resources_load_and_compare():
 
 	# Comparar usuario y sus cartas
 	assert_eq(user_loaded.username, self._user.username)
-	assert_eq(user_loaded.avariableCards.size(), self._user.avariableCards.size())
+	assert_eq(user_loaded.availableCards.size(), self._user.availableCards.size())
 
 	# Cargar y comparar recursos de mapa y casillas
 	var tile_mod_loaded := ResourceLoader.load(_folder + "tile_mod.tres")

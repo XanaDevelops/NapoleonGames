@@ -13,7 +13,7 @@ func test_damage() -> void:
 		
 	var currentHP := defender._currentHealth
 	
-	var h := atacker.get_avariable_habilities()[0]
+	var h := atacker.get_available_habilities()[0]
 	
 	defender.recieve_attack(h.value, h.attackType)
 	
