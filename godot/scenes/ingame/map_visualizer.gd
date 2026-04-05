@@ -29,8 +29,11 @@ func _setup_highlight_tiles() -> void:
 		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#map = GameManagerNode.get_map()
-	map = TestMapGame.create_test_map()  
+	map = GameManagerNode.get_map()
+	if map == null:
+		push_error("GameManager no tiene mapa, por ahora, usar el de test!!")
+		map = TestMapGame.new().create_test_map()
+		
 	tileset = _setup_tileset()
 	for tml in [tile_map_layer_texture, tile_map_layer_units,
 				tile_map_layer_selection, tile_map_layer_highlight]:

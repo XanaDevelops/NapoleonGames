@@ -1,6 +1,29 @@
 class_name TestMapGame
-extends Node
-static func create_test_map() -> MapGame:
+extends GutTest
+
+const map_scene: String = "res://scenes/ingame/ingame_map.tscn"
+
+func test_visualizer() -> void:
+	var map := create_test_map()
+	GameManagerNode._gameMap = map
+	var prev_add_target = gut.add_children_to
+	gut.add_children_to = get_tree().get_root()
+	var scene := preload(map_scene)
+	var instance := scene.instantiate()
+	add_child_autoqfree(instance)
+
+	await wait_until(func ():
+		return instance.is_inside_tree(), 5)
+	# allow a short time for the engine to paint the scene so it's visible
+	await wait_seconds(gut.paint_after)
+
+	# Pausa antes del teardown para permitir inspección/interacción
+	gut.pause_before_teardown()
+
+	pass_test("ok, check UI")
+	gut.add_children_to = prev_add_target
+
+func create_test_map() -> MapGame:
 	var map_res = MapRes.new()
 	map_res.name = "Test Map"
 	map_res.desc = "Mapa de prueba"
@@ -37,7 +60,7 @@ static func create_test_map() -> MapGame:
 	
 	return map
 
-static func get_unit_texture(sheet_path: String) -> Texture2D:
+func get_unit_texture(sheet_path: String) -> Texture2D:
 	var texture = load(sheet_path) as Texture2D
 	if texture == null:
 		push_error("No se puede cargar: " + sheet_path)
@@ -54,7 +77,7 @@ static func get_unit_texture(sheet_path: String) -> Texture2D:
 	
 
 
-static func get_random_tile_texture(folder_path: String) -> Texture2D:
+func get_random_tile_texture(folder_path: String) -> Texture2D:
 	var dir = DirAccess.open(folder_path)
 	if dir == null:
 		push_error("No se puede abrir la carpeta: " + folder_path)
