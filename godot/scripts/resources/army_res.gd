@@ -26,3 +26,16 @@ const MAX_SIZE := 20
 func get_weight() -> int:
 	return agrupations.map(func(elem: CardArmyGroup): return elem.get_weight()) \
 						.reduce(func(el, ac): return el+ac, 0)
+
+func clonar() -> ArmyRes:
+	var copia = ArmyRes.new()
+	copia.nom = self.nom
+	copia.isActive = self.isActive
+	
+	for grupo in self.agrupations:
+		var nuevo_grupo = CardArmyGroup.new()
+		nuevo_grupo.cardType = grupo.cardType 
+		nuevo_grupo.n = grupo.n              
+		copia.agrupations.append(nuevo_grupo)
+		
+	return copia

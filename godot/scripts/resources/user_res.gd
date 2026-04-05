@@ -30,7 +30,7 @@ extends GameResource
 @export var token: String
 
 ## Cartas disponibles para el usuario (Array[[CardRes]])
-@export var avariableCards: Array[CardRes] = []
+@export var availableCards: Dictionary = {}
 ## Mapas disponibles para el usuario (Array[[MapRes]])
 @export var avariableMaps: Array[MapRes] = []
 ## Ejércitos del usuario (Array[[ArmyRes]])
