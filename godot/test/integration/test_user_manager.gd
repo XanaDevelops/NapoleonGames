@@ -38,8 +38,8 @@ func test_cargar_datos_de_prueba() -> void:
 	UserManager.establecer_usuario_actual(usuario_prueba)
 	
 	var usuario_guardado = UserManager.usuario_actual
-	
+	assert_eq(usuario_guardado.avariableCards[carta_esqueleto], 10, "Debería haber guardado 10 Guerreros Esqueleto")
+	assert_eq(usuario_guardado.avariableCards[carta_elfo], 10, "Debería haber guardado 5 Arqueros Elfo")
 	assert_not_null(usuario_guardado)
 	assert_eq(usuario_guardado.name, "Jugador Local")
-	assert_eq(usuario_guardado.availableCards.size(), 2)
 	assert_eq(usuario_guardado.userArmys.size(), 2)
