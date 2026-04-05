@@ -1,0 +1,148 @@
+[gd_resource type="Resource" script_class="GameResources" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/alter_state_res.gd" id="1_7pwyr"]
+[ext_resource type="Script" path="res://scripts/resources/army_res.gd" id="2_quie6"]
+[ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="3_80616"]
+[ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="4_y6jhn"]
+[ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="5_t0j3a"]
+[ext_resource type="Script" path="res://scripts/resources/card_type_res.gd" id="6_vwhd4"]
+[ext_resource type="Resource" path="res://resources/card_types/0001.tres" id="7_df45x"]
+[ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="8_q7fox"]
+[ext_resource type="Resource" path="res://resources/cards/0001.tres" id="9_lsxbk"]
+[ext_resource type="Resource" path="res://resources/cards/0002.tres" id="10_r0ky1"]
+[ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="11_60c35"]
+[ext_resource type="Resource" path="res://resources/habilities/0001.tres" id="12_e07fo"]
+[ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="13_8e42l"]
+[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="14_wh2kh"]
+[ext_resource type="Script" path="res://scripts/resources/all_game_res.gd" id="15_y3xpg"]
+[ext_resource type="Script" path="res://scripts/resources/stat_res.gd" id="16_qmt1m"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0001.tres" id="17_ioe74"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0002.tres" id="18_nbaek"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0003.tres" id="19_ub2ig"]
+[ext_resource type="Script" path="res://scripts/resources/tile_mod_res.gd" id="20_0eyc4"]
+[ext_resource type="Resource" path="res://resources/tile_mods/0001.tres" id="21_ujolu"]
+[ext_resource type="Script" path="res://scripts/resources/tile_type_res.gd" id="22_p1cgm"]
+[ext_resource type="Resource" path="res://resources/tile_types/0001.tres" id="23_ridsy"]
+[ext_resource type="Resource" path="res://resources/tile_types/0002.tres" id="24_iuvtm"]
+[ext_resource type="Script" path="res://scripts/resources/tile_res.gd" id="25_c8v8g"]
+[ext_resource type="Script" path="res://scripts/resources/user_res.gd" id="26_k5wek"]
+[ext_resource type="Resource" path="res://resources/users/0001.tres" id="27_mj3bk"]
+
+[sub_resource type="Resource" id="Resource_7pwyr"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_quie6"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_80616"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_y6jhn"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_t0j3a"]
+script = ExtResource("25_c8v8g")
+height = 100
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_vwhd4"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_df45x"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("24_iuvtm")
+
+[sub_resource type="Resource" id="Resource_q7fox"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_lsxbk"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("24_iuvtm")
+
+[sub_resource type="Resource" id="Resource_r0ky1"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_60c35"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_e07fo"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("24_iuvtm")
+
+[sub_resource type="Resource" id="Resource_8e42l"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_wh2kh"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("24_iuvtm")
+
+[sub_resource type="Resource" id="Resource_y3xpg"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_qmt1m"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_ioe74"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_nbaek"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_ub2ig"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_0eyc4"]
+script = ExtResource("25_c8v8g")
+height = 100
+type = ExtResource("23_ridsy")
+
+[sub_resource type="Resource" id="Resource_ujolu"]
+script = ExtResource("14_wh2kh")
+name = &"test_map_01"
+tamX = 5
+tamY = 4
+mapData = Array[Array]([Array[ExtResource("25_c8v8g")]([SubResource("Resource_7pwyr"), SubResource("Resource_quie6"), SubResource("Resource_80616"), SubResource("Resource_y6jhn"), SubResource("Resource_t0j3a")]), Array[ExtResource("25_c8v8g")]([SubResource("Resource_vwhd4"), SubResource("Resource_df45x"), SubResource("Resource_q7fox"), SubResource("Resource_lsxbk"), SubResource("Resource_r0ky1")]), Array[ExtResource("25_c8v8g")]([SubResource("Resource_60c35"), SubResource("Resource_e07fo"), SubResource("Resource_8e42l"), SubResource("Resource_wh2kh"), SubResource("Resource_y3xpg")]), Array[ExtResource("25_c8v8g")]([SubResource("Resource_qmt1m"), SubResource("Resource_ioe74"), SubResource("Resource_nbaek"), SubResource("Resource_ub2ig"), SubResource("Resource_0eyc4")])])
+
+[resource]
+script = ExtResource("15_y3xpg")
+users = Array[ExtResource("26_k5wek")]([ExtResource("27_mj3bk")])
+card_types = Array[ExtResource("6_vwhd4")]([ExtResource("7_df45x")])
+cards = Array[ExtResource("8_q7fox")]([ExtResource("9_lsxbk"), ExtResource("10_r0ky1")])
+attack_types = Array[ExtResource("3_80616")]([ExtResource("4_y6jhn"), ExtResource("5_t0j3a")])
+habilities = Array[ExtResource("11_60c35")]([ExtResource("12_e07fo"), ExtResource("13_8e42l")])
+tile_mods = Array[ExtResource("20_0eyc4")]([ExtResource("21_ujolu")])
+tile_types = Array[ExtResource("22_p1cgm")]([ExtResource("23_ridsy"), ExtResource("24_iuvtm")])
+maps = Array[ExtResource("14_wh2kh")]([SubResource("Resource_ujolu")])
+stat_datas = Array[ExtResource("16_qmt1m")]([ExtResource("17_ioe74"), ExtResource("18_nbaek"), ExtResource("19_ub2ig")])

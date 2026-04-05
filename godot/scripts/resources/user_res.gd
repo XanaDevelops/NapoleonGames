@@ -21,6 +21,8 @@ extends GameResource
 @export var name: String
 ## Nombre de usuario único
 @export var username: StringName
+## correo
+@export var email: String
 ## Imagen o avatar del usuario ([Texture2D])
 @export var img: Texture2D
 
@@ -29,8 +31,8 @@ extends GameResource
 ## Token de autenticación del usuario
 @export var token: String
 
-## Cartas disponibles para el usuario (Array[[CardRes]])
-@export var avariableCards: Array[CardRes] = []
+## Cartas disponibles para el usuario (Dictionary[CardRes, int])
+@export var avariableCards: Dictionary[CardRes, int] = {}
 ## Mapas disponibles para el usuario (Array[[MapRes]])
 @export var avariableMaps: Array[MapRes] = []
 ## Ejércitos del usuario (Array[[ArmyRes]])

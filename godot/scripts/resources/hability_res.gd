@@ -21,6 +21,15 @@ enum HAB_DEST {SELF,
 	SINGLE_ANY, MULTIPLE_ANY, 
 	EVERYONE}
 
+enum CONDITION {
+	LT, GT, EQ, LE, GE, NE,
+	NA ## Not Aplicable
+}
+
+## Nombre de la habilidad
+@export var name : StringName
+##Descripción de la habilidad
+@export var desc : String
 ## Objetivo de la habilidad (enum HAB_DEST)
 @export var objective := HAB_DEST.SINGLE_ENEMY
 ## Valor de la habilidad
@@ -34,8 +43,38 @@ enum HAB_DEST {SELF,
 ## Coste de maná
 @export var manaCost := 0
 ## Duración en turnos
-@export var duration := 0  #duracion en turnos 0 inmediato 
+@export var duration := 0  # (0 solo actua ese turno)
+## Cooldown en turnos
+@export var cooldown := 1 # (1, en el siguiente está disponible
 ## Indica si es pasiva
 @export var isPassive := false
 ## Estados alterados aplicados (Array[[AlterStateRes]])
 @export var alter_states: Array[AlterStateRes]
+## tipo de condicion de la habilidad
+@export var condition:= CONDITION.NA
+## estadistica a comparar
+@export var condition_stat : StatData = null
+## valor a comparar
+@export var condition_value := 0.0
+
+## true si la habilidad afecta a uno mismo
+static func inflicts_self(obj: HAB_DEST) -> bool:
+	return obj == HAB_DEST.SELF or obj == HAB_DEST.EVERYONE
+	
+## Comprueba si se cumple la condición dado el valor de entrada
+func applies(value_check: float) -> bool:
+	match self.condition:
+		CONDITION.LT:
+			return value_check < self.condition_value
+		CONDITION.LE:
+			return value_check <= self.condition_value
+		CONDITION.GT:
+			return value_check > self.condition_value
+		CONDITION.GE:
+			return value_check >= self.condition_value
+		CONDITION.EQ:
+			return value_check == self.condition_value
+		CONDITION.NE:
+			return value_check != self.condition_value
+		_: # NA
+			return false
