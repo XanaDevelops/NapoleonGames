@@ -94,7 +94,7 @@ func _get_height() -> int:
 	return _tile.get_height()
 	
 ## Devuelve las habilidades que se pueden usar
-func get_avariable_habilities() -> Array[HabilityRes]:
+func get_available_habilities() -> Array[HabilityRes]:
 	var ret : Array[HabilityRes] = []
 	for key in self._habilities:
 		var cd := _habilities[key]
@@ -107,7 +107,7 @@ func get_avariable_habilities() -> Array[HabilityRes]:
 
 	return ret
 func get_texture2D() -> Texture2D:
-	return self._card_res.img
+	return self._cardRes.img
 	
 func get_speed() -> int:
 	return self._cardRes.speed
