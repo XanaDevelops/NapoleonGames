@@ -15,5 +15,5 @@ func _init(mapRes: MapRes) -> void:
 				temp.append(TileGame.new(t))
 			_map.append(temp)
 
-func get_tile_at(x:int, y:int) -> TileGame:
-		return self._map[x][y]
+func get_tile_at(col:int, row:int) -> TileGame:
+		return self._map[row][col]

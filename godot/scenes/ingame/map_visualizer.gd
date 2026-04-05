@@ -20,7 +20,8 @@ const HIGHLIGHT_TEXTURES: Dictionary = {
     HighlightType.ATTACK:   "res://assets/tiles/highlights/hl_attack.png",
     HighlightType.SELECTED: "res://assets/tiles/highlights/hl_selected.png",
 }
-const TILE_SIZE = 64
+const TILE_SIZE_HEIGHT = 64
+const TILE_SIZE_WIDTH = 55 # TILE_SIZE_HEIGHT/2 * root(3)
 func _setup_highlight_tiles() -> void:
     for type in HIGHLIGHT_TEXTURES.keys():
         var tex := load(HIGHLIGHT_TEXTURES[type]) as Texture2D
@@ -42,13 +43,13 @@ func _setup_tileset() -> TileSet:
     tileset.tile_shape = TileSet.TILE_SHAPE_HEXAGON
     tileset.tile_layout = TileSet.TILE_LAYOUT_STACKED        
     tileset.tile_offset_axis = TileSet.TILE_OFFSET_AXIS_HORIZONTAL  
-    tileset.tile_size = Vector2i(TILE_SIZE, TILE_SIZE)
+    tileset.tile_size = Vector2i(TILE_SIZE_WIDTH, TILE_SIZE_HEIGHT)
     return tileset
     
 
 func _setup_map():
-    for x in range(map._mapRes.tamX):
-        for y in range(map._mapRes.tamY):
+    for y in range(map._mapRes.tamY):
+        for x in range(map._mapRes.tamX):
             draw_tile(x, y, map.get_tile_at(x, y))
             
 
@@ -63,10 +64,6 @@ func draw_tile(i: int, y:int, tile:TileGame) -> void:
             var unit_source_id = add_texture_to_tileset(tile.get_unit().get_texture2D())
             tile_map_layer_units.set_cell(coords, unit_source_id, Vector2i.ZERO)
 
-func _scale_texture(texture: Texture2D) -> ImageTexture:
-    var img := texture.get_image()
-    img.resize(TILE_SIZE, TILE_SIZE, Image.INTERPOLATE_NEAREST)
-    return ImageTexture.create_from_image(img)
     
 func add_texture_to_tileset(texture: Texture2D) -> int:
         for tex_id in texture_to_source_id.keys():
@@ -75,7 +72,10 @@ func add_texture_to_tileset(texture: Texture2D) -> int:
         
         var source_id = texture_to_source_id.size()
         var tile_set_source = TileSetAtlasSource.new()
-        var texture_resized = _scale_texture(texture)
+        var texture_resized = texture
+        if texture.get_height()!=TILE_SIZE_HEIGHT:
+            texture_resized= _scale_texture(texture)
+
         tile_set_source.texture= texture_resized
         tile_set_source.texture_region_size= Vector2i(texture_resized.get_width(), texture_resized.get_height())
         tile_set_source.create_tile(Vector2i.ZERO)
@@ -84,6 +84,10 @@ func add_texture_to_tileset(texture: Texture2D) -> int:
         texture_to_source_id[source_id]= texture_resized
         return source_id
     
+func _scale_texture(texture: Texture2D) -> ImageTexture:
+    var img := texture.get_image()
+    img.resize(TILE_SIZE_HEIGHT, TILE_SIZE_HEIGHT, Image.INTERPOLATE_NEAREST)
+    return ImageTexture.create_from_image(img)
     
 func plot_unit_moved(src: Vector2i, target:Vector2i) -> void:
         var source_id = tile_map_layer_units.get_cell_source_id(src)

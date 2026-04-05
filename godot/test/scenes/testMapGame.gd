@@ -4,12 +4,12 @@ static func create_test_map() -> MapGame:
 	var map_res = MapRes.new()
 	map_res.name = "Test Map"
 	map_res.desc = "Mapa de prueba"
-	map_res.tamX = 5
-	map_res.tamY = 5
+	map_res.tamX = 15
+	map_res.tamY = 10
 	
-	for y in range(map_res.tamX):
+	for y in range(map_res.tamY):
 		var row: Array = []
-		for x in range(map_res.tamY):
+		for x in range(map_res.tamX):
 			var tile_res = TileRes.new()
 			tile_res.height = 0
 			
@@ -24,8 +24,8 @@ static func create_test_map() -> MapGame:
 	
 	var map = MapGame.new(map_res)
 	
-	for y in range(map_res.tamX):
-		for x in range(map_res.tamY):
+	for y in range(map_res.tamY):
+		for x in range(map_res.tamX):
 			if randi() % 2 == 0:
 				var card_res = CardRes.new()
 				card_res.name = "Warrior"
