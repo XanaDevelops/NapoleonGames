@@ -4,10 +4,12 @@
 
 [node name="Node2D" type="Node2D" unique_id=594307947]
 
-[node name="mapVisualizer" type="Node2D" parent="." unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units")]
+[node name="mapVisualizer" type="Node2D" parent="." unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight")]
 script = ExtResource("1_7udv5")
 tile_map_layer_texture = NodePath("../TileMapLayer_texture")
 tile_map_layer_units = NodePath("../TileMapLayer_units")
+tile_map_layer_selection = NodePath("../TileMapLayer_selection")
+tile_map_layer_highlight = NodePath("../TileMapLayer_highlights")
 metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
 
 [node name="TileMapLayer_texture" type="TileMapLayer" parent="." unique_id=479184065]
@@ -15,3 +17,7 @@ position = Vector2(0, -3)
 tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAUAAAAAAAIAAAAAAAUAAAAAAAAAAAABAAcAAAAAAP//AAAAAAcAAAABAP//AAABAAcAAAD/////AAAAAAcAAAD//wAAAAAAAAgAAAD+/wAAAAAGAAIAAAD9////AAAGAAIAAAD+////AAAGAAIAAAD8/wAAAAAAAAUAAAADAP//AAAAAAgAAAAEAP//AAAGAAIAAAA=")
 
 [node name="TileMapLayer_units" type="TileMapLayer" parent="." unique_id=1642646471]
+
+[node name="TileMapLayer_selection" type="TileMapLayer" parent="." unique_id=1342848487]
+
+[node name="TileMapLayer_highlights" type="TileMapLayer" parent="." unique_id=739722248]
