@@ -4,7 +4,7 @@ static func create_test_map() -> MapGame:
 	var map_res = MapRes.new()
 	map_res.name = "Test Map"
 	map_res.desc = "Mapa de prueba"
-	map_res.tamX = 15
+	map_res.tamX = 17
 	map_res.tamY = 10
 	
 	for y in range(map_res.tamY):
@@ -33,7 +33,7 @@ static func create_test_map() -> MapGame:
 				card_res.img = get_unit_texture("res://assets/tiles/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png")
 				
 				var unit = UnitGame.new(card_res)
-				map.get_tile_at(x, y).set_unit(unit)
+				map.get_tile_at(Vector2i(x, y)).set_unit(unit)
 	
 	return map
 

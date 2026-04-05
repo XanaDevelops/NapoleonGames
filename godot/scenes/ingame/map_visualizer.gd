@@ -20,8 +20,8 @@ const HIGHLIGHT_TEXTURES: Dictionary = {
     HighlightType.ATTACK:   "res://assets/tiles/highlights/hl_attack.png",
     HighlightType.SELECTED: "res://assets/tiles/highlights/hl_selected.png",
 }
-const TILE_SIZE_HEIGHT = 64
-const TILE_SIZE_WIDTH = 55 # TILE_SIZE_HEIGHT/2 * root(3)
+const TILE_SIZE_HEIGHT = 64*2
+const TILE_SIZE_WIDTH = 55*2 # TILE_SIZE_HEIGHT/2 * root(3)
 func _setup_highlight_tiles() -> void:
     for type in HIGHLIGHT_TEXTURES.keys():
         var tex := load(HIGHLIGHT_TEXTURES[type]) as Texture2D
@@ -37,6 +37,8 @@ func _ready() -> void:
         tml.tile_set = tileset
     _setup_highlight_tiles()
     _setup_map()
+    
+    
   
 func _setup_tileset() -> TileSet:
     var tileset = TileSet.new()
@@ -50,7 +52,7 @@ func _setup_tileset() -> TileSet:
 func _setup_map():
     for y in range(map._mapRes.tamY):
         for x in range(map._mapRes.tamX):
-            draw_tile(x, y, map.get_tile_at(x, y))
+            draw_tile(x, y, map.get_tile_at(Vector2i(x, y)))
             
 
 func draw_tile(i: int, y:int, tile:TileGame) -> void:
@@ -109,5 +111,7 @@ func plot_mov_range(positions: Array[Vector2i]):
 func _process(delta: float) -> void:
     #recibe señales
     #update stuff
+   pass
+
+                
     
-    pass
