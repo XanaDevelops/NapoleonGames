@@ -41,7 +41,7 @@ func _process_array(array: Array) -> Array:
 	
 func _get_key_repr(key: Variant) -> Variant:
 	if key is GameResource:
-		return (key as GameResource).uid
+		return {GR_MARK+(key.get_script() as Script).get_global_name() :key.uid}
 	
 	if typeof(key) <= TYPE_STRING or typeof(key) == TYPE_STRING_NAME:
 		return key
@@ -103,8 +103,7 @@ func to_json_dict() -> Dictionary[String, Variant]:
 						else:
 							body.set(prop.name, _process_dict_value(dict))
 					elif type_key.get_base_script() == GameResource:
-						body.set(prop.name, 
-							{GR_MARK+type_key.get_global_name(): _process_dict_value(dict)})
+						body.set(prop.name, _process_dict_value(dict))
 					else:
 						push_warning("TODO: Dictionary[Object, _] ", prop.name)
 				TYPE_OBJECT:

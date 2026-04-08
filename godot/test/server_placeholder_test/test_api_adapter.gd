@@ -16,8 +16,20 @@ func test_post_res() -> void:
 	
 	print(scr.get_base_script() == GameResource)
 	var aux := res_test.to_json_dict()
-	print(JSON.stringify(aux, "\t"))
-	print(JSON.stringify(res_test2.to_json_dict(), "\t"))
-	print(JSON.stringify(res_test3.to_json_dict(), "\t"))
+	var text_hab := JSON.stringify(aux, "\t")
+	var text_card := JSON.stringify(res_test2.to_json_dict(), "\t")
+	var text_map := JSON.stringify(res_test3.to_json_dict(), "\t")
+	print(text_hab)
+	print(text_card)
+	print(text_map)
+	
+	var dict_card : Dictionary = JSON.parse_string(text_card)
+	var dict_map : Dictionary= JSON.parse_string(text_map)
+	print(dict_card)
+	print(dict_card["resistances"])
+	for key : String in dict_card["resistances"]:
+		print(JSON.parse_string(key))
+	print(dict_map)
+	
 	pass_test("OK?")
 	
