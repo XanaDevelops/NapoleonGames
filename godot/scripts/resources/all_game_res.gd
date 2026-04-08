@@ -65,7 +65,7 @@ static func load_from(path: = _path) -> GameResources:
 	return null
 	
 # Orden manual de packeo: lista de etiquetas de tipo (carpetas)
-var pack_order: Array[Script] = [
+static var game_resources: Array[Script] = [
 	StatData,
 	AttackType,
 	CardTypeRes,
@@ -130,7 +130,7 @@ static func _pad_left_zeros(val, width := 4) -> String:
 ## Extrae los recursos contenidos en la carpeta destino
 ## TODO: metadata
 func unpack(folder := _folder) -> void:
-	for scr : Script in self.pack_order:
+	for scr : Script in self.game_resources:
 		var folder_name := get_folder_name(scr)
 		if scr == MetadataRes:
 			pass
@@ -150,7 +150,7 @@ func unpack(folder := _folder) -> void:
 ## Importar desde la carpeta folder
 ## TODO: metadata
 func pack(folder := _folder) -> void:
-	for scr : Script in self.pack_order:
+	for scr : Script in self.game_resources:
 		var folder_name := get_folder_name(scr)
 		if scr == MetadataRes:
 			pass
