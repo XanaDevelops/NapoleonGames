@@ -26,6 +26,8 @@ extends GameResource
 const _folder := "res://resources/"
 const _path := _folder + "all_game_res.tres"
 
+var _cache : Dictionary[Script, Dictionary] = {}
+
 ## Metadatos del conjunto de recursos
 @export var metadata: MetadataRes
 ## Lista de usuarios
@@ -53,6 +55,24 @@ const _path := _folder + "all_game_res.tres"
 ## Estados alterados
 @export var alter_states: Array[AlterStateRes] = []
 
+# Actualiza la cache desde las variables
+func _update_cache() -> void:
+	# TODO: Placeholder de cache
+	for prop in get_property_list():
+		# filtrar
+		if prop.usage & PropertyUsageFlags.PROPERTY_USAGE_DEFAULT and \
+			prop.usage & PropertyUsageFlags.PROPERTY_USAGE_SCRIPT_VARIABLE:
+				if prop.type >= TYPE_ARRAY:
+					var elems : Array = get(prop.name)
+					var scr : Script = elems.get_typed_script()
+					for e: GameResource in elems:
+						if scr not in _cache:
+							_cache.set(scr, {})
+						_cache.get(scr).set(e.uid, e)
+				else:
+					# metadata
+					pass
+
 # Guarda este `GameResources` en `path`. Devuelve el código de error de ResourceSaver.
 func save_to(path:= _path) -> int:
 	return ResourceSaver.save(self, path)
@@ -61,6 +81,7 @@ func save_to(path:= _path) -> int:
 static func load_from(path: = _path) -> GameResources:
 	var res := ResourceLoader.load(path)
 	if res is GameResources:
+		res._update_cache()
 		return res
 	return null
 	
@@ -110,7 +131,8 @@ static func get_folder_name_for_resource(res: GameResource) -> StringName:
 		return &""
 		
 	return get_folder_name(res.get_script())
-
+	
+## FIXME, usa .to_snake_case()!
 static func _camel_to_snake(name: String) -> String:
 	var out := ""
 	var i := 0
@@ -173,6 +195,9 @@ func pack(folder := _folder) -> void:
 					#pass
 				else:
 					push_warning("Recurso duplicado??")
+	_update_cache()
 
-	
-		
+## Devuelve el GameRes que coincida con el tipo y uid
+## si no, devuelve null
+func get_res_from_uid(uid: int, gameRes : Script) -> GameResource:
+	return _cache.get(gameRes).get(uid)

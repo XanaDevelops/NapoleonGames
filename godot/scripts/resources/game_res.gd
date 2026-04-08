@@ -48,7 +48,8 @@ func _get_key_repr(key: Variant) -> Variant:
 		
 	push_warning("TODO acabar _get_key_repr ")
 	return key
-		
+
+## auxiliar a to_json_dict()
 func _process_dict_value(dict: Dictionary) -> Dictionary:
 	var ret : Dictionary[Variant, Variant] = {}
 	var type_val : Script = dict.get_typed_value_script()
@@ -113,14 +114,102 @@ func to_json_dict() -> Dictionary[String, Variant]:
 						continue
 						
 					var typed : Script = obj.get_script()
-					if typed.get_base_script() == GameResource:
+					if typed != null and typed.get_base_script() == GameResource:
 						body.set(prop.name, {GR_MARK+typed.get_global_name(): (obj as GameResource).uid})
 					else:
 						push_warning("No es un GameResource ", typed)
 				_:
 					push_error("what? GameResource tiene: ", prop.type)
-	return body
+	return {GR_MARK+(get_script() as Script).get_global_name(): body}
 	
+## Auxiliar a parse_json()
+static func _parse_dictionary(dict: Dictionary) -> Variant:
+	var keys : Array = dict.keys()
+	var key0 : String = keys[0]
+	# Si tenemos la referencia a un GameResource
+	if keys.size() == 1 and get_script_from_json_text(key0) != null and dict[key0] is float:
+		return GameManagerNode.get_game_resources().get_res_from_uid(dict[key0], get_script_from_json_text(key0))
+	
+	var res : Dictionary = {}
+	for key in keys:
+		var key_type := typeof(key)
+		var _key
+		#Comprobar si es un GameRes (se parsea como string)
+		if key_type == TYPE_STRING:
+			var _aux = JSON.parse_string(key)
+			if _aux != null:
+				var _res = _parse_dictionary(_aux)
+				if _res is GameResource:
+					_key = _res
+				else:
+					_key = key
+			else:
+				_key = key
+		
+		var value : Variant = dict[key]
+		var value_type := typeof(value)
+		
+		if value_type == TYPE_DICTIONARY:
+			res.set(_key, _parse_dictionary(value))
+		elif value_type >= TYPE_ARRAY:
+			res.set(_key, _parse_array(value))
+		else:
+			res.set(_key, value)
+	return res
+	
+## Auxiliar de parse_json
+static func _parse_array(array: Array) -> Array:
+	var type = array.get_typed_builtin()
+	if type >= TYPE_ARRAY:
+		return array.map(func (a:Array): return _parse_array(a))
+	if type == TYPE_DICTIONARY:
+		return array.map(func (d: Dictionary):
+				return _parse_dictionary(d))
+	return array
+	
+## Parsea un texto JSON a un GameResource
+static func parse_json(json_text : String) -> GameResource:
+	var json : Dictionary = JSON.parse_string(json_text)
+	var key : String = json.keys()[0]
+	var game_res_scr : Script = get_script_from_json_text(key)
+	print("parseando un ", game_res_scr)
+	var game_res : GameResource = game_res_scr.new()
+
+	for param in json[key]:
+		if param not in game_res:
+			push_error("JSON malformado, no existe ", param)
+			return null
+		var value : Variant = json[key][param]
+		
+		# Si es diccionario o GameRes
+		if typeof(value) == TYPE_DICTIONARY:
+			value = (value as Dictionary)
+			var set_val = _parse_dictionary(value)
+			# ya que puede devolver un GameRes o un Dict
+			if typeof(set_val) == TYPE_DICTIONARY:
+				game_res.get(param).assign(set_val) # ayuda con el casting
+			else:
+				game_res.set(param, set_val)
+		# array
+		elif typeof(value) >= TYPE_ARRAY:
+			value = (value as Array)
+			game_res.get(param).assign(_parse_array(value))
+			
+		else:
+			game_res.set(param, value)
+	return game_res
+	
+static func get_script_from_json_text(text: String) -> Script:
+	if !text.begins_with(GR_MARK):
+		push_error(text, " no tiene la marca de un GameResource")
+		return null
+	var scr_name := text.trim_prefix(GR_MARK)
+	for res in GameResources.game_resources:
+		if scr_name == res.get_global_name():
+			return res
+	
+	push_error("No se reconoce ", text, " como GameResource")
+	return null
 	
 func compare(res: GameResource) -> bool:
 	return self.get_script() == res.get_script() and self.uid == res.uid
