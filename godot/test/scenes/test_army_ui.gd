@@ -48,7 +48,7 @@ func test_cargar_datos_de_prueba() -> void:
 func test_armi_ui() -> void:
 	test_cargar_datos_de_prueba()
 	
-	var scene := preload("res://scenes/creacioExercits.tscn")
+	var scene := preload("res://scenes/creacio_de_exercits.tscn")
 	var instance := scene.instantiate()
 	
 	add_child_autoqfree(instance)
