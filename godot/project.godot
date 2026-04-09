@@ -37,10 +37,6 @@ version_control/autoload_on_startup=true
 
 enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 
-[global_group]
-
-botones_navegacion=""
-
 [physics]
 
 3d/physics_engine="Jolt Physics"
