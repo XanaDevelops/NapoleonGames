@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="MapRes" format=3]
+[gd_resource type="Resource" script_class="MapRes" format=3 uid="uid://bok1j8n1qdj2b"]
 
-[ext_resource type="Script" path="res://scripts/resources/tile_res.gd" id="1_xrrky"]
+[ext_resource type="Script" uid="uid://bmy17ix6av5bg" path="res://scripts/resources/tile_res.gd" id="1_xrrky"]
 [ext_resource type="Resource" path="res://resources/tile_types/0001.tres" id="2_vpur5"]
 [ext_resource type="Resource" path="res://resources/tile_types/0002.tres" id="3_ya6ot"]
-[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="4_ovfxl"]
+[ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="4_ovfxl"]
 
 [sub_resource type="Resource" id="Resource_7pwyr"]
 script = ExtResource("1_xrrky")

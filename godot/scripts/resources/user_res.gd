@@ -39,3 +39,10 @@ extends GameResource
 
 ## Lista de amigos del usuario (Array[[UserRes]])
 @export var friends: Array[UserRes] = []
+
+func obtener_ejercito_activo() -> ArmyRes:
+	for ejercito in userArmys:
+		if ejercito.isActive:
+			return ejercito
+			
+	return null 

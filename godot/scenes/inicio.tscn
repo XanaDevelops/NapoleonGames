@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://ckdof4q0k3o7x"]
 
 [ext_resource type="Texture2D" uid="uid://cecnrsydavur1" path="res://assets/sprites/ui/fondos_de_pantalla/fondo inicial.jpeg" id="1_4xtsl"]
-[ext_resource type="Script" uid="uid://c4s8vrg1nh5oe" path="res://scripts/ui/menu_principal_controller.gd" id="1_bxgl6"]
 [ext_resource type="StyleBox" uid="uid://k2idkull1v2y" path="res://assets/themes/ui/estilo_menu_panel_desplegable.tres" id="2_xg841"]
 [ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://assets/themes/ui/estilo_botones.tres" id="3_bxgl6"]
 [ext_resource type="Script" uid="uid://cikn58w4fmhfw" path="res://scripts/ui/menu_desplegable.gd" id="4_rfvtk"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="5_xg841"]
 [ext_resource type="Theme" uid="uid://bxefl0wcs215u" path="res://assets/themes/ui/estilo_botones_circulares_carrusel.tres" id="5_y25s7"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="6_ru1hr"]
+[ext_resource type="PackedScene" uid="uid://c385migrg8vjo" path="res://scenes/panel_usuario.tscn" id="8_bxgl6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0kd0"]
 bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
@@ -50,14 +50,13 @@ shadow_size = 12
 shadow_offset = Vector2(4, 4)
 anti_aliasing_size = 1.5
 
-[node name="SceneMainMenu" type="Control" unique_id=730536926 groups=["botones_navegacion"]]
+[node name="SceneMainMenu" type="Control" unique_id=730536926]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_bxgl6")
 
 [node name="FondoDePantalla" type="TextureRect" parent="." unique_id=23116586]
 layout_mode = 1
@@ -130,13 +129,13 @@ offset_bottom = 28.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="J vs J" type="Button" parent="Panel/ContenedorDeMenu/JuegoLocal/Panel/ContenedorDesplegable" unique_id=1066952919 groups=["botones_navegacion"]]
+[node name="J vs J" type="Button" parent="Panel/ContenedorDeMenu/JuegoLocal/Panel/ContenedorDesplegable" unique_id=1066952919]
 layout_mode = 2
 theme = ExtResource("3_bxgl6")
 theme_override_font_sizes/font_size = 30
 text = "J vs J"
 script = ExtResource("5_xg841")
-id_escena = "login"
+id_escena = "mapas"
 metadata/_custom_type_script = "uid://ct2doijn7j323"
 
 [node name="JuegoOnline" type="Button" parent="Panel/ContenedorDeMenu" unique_id=467713305]
@@ -180,7 +179,7 @@ theme = ExtResource("3_bxgl6")
 theme_override_font_sizes/font_size = 60
 text = "Opciones"
 
-[node name="CanviarMenuEjercito" type="Button" parent="." unique_id=1887575840]
+[node name="CanviarMenuEjercito" type="Button" parent="." unique_id=1454433896]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -193,20 +192,25 @@ grow_vertical = 2
 theme = ExtResource("5_y25s7")
 theme_override_font_sizes/font_size = 60
 text = "<"
+script = ExtResource("5_xg841")
+id_escena = "ejercitos"
+metadata/_custom_type_script = "uid://ct2doijn7j323"
 
 [node name="MenuUsuario" type="Button" parent="." unique_id=1337531751]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -120.0
+offset_left = -220.0
 offset_top = 20.0
-offset_right = -20.0
+offset_right = -120.0
 offset_bottom = 120.0
 grow_horizontal = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_v0kd0")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_3re45")
 theme_override_styles/hover = SubResource("StyleBoxFlat_l67cq")
+script = ExtResource("4_rfvtk")
+posicion_menu = 3
 
 [node name="IconoUsuario" type="TextureRect" parent="MenuUsuario" unique_id=1285921050]
 texture_filter = 1
@@ -226,3 +230,6 @@ grow_vertical = 2
 texture = ExtResource("6_ru1hr")
 expand_mode = 1
 stretch_mode = 6
+
+[node name="PanelUsuario" parent="MenuUsuario" unique_id=1116297954 instance=ExtResource("8_bxgl6")]
+layout_mode = 0

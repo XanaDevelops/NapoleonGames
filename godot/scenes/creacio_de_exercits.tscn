@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://cw4m7083vlm3w"]
 
-[ext_resource type="Script" uid="uid://djt5ks2sqpqrb" path="res://scripts/ui/creacio_exercits.gd" id="1_iwjn0"]
-[ext_resource type="Texture2D" uid="uid://cmwpg7ag1lk2x" path="res://assets/sprites/ui/fondos_de_pantalla/fondoExercit.png" id="1_n8s6x"]
-[ext_resource type="PackedScene" uid="uid://did61qto33dha" path="res://scenes/card_ui.tscn" id="2_23tcq"]
-[ext_resource type="StyleBox" uid="uid://k2idkull1v2y" path="res://assets/themes/ui/estilo_menu_panel_desplegable.tres" id="2_iwjn0"]
-[ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="5_lt5g4"]
-[ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://assets/themes/ui/InputsUserMenu.tres" id="6_3d47p"]
+[ext_resource type="Script" uid="uid://djt5ks2sqpqrb" path="res://scripts/ui/creacio_exercits.gd" id="1_8d45a"]
+[ext_resource type="PackedScene" uid="uid://did61qto33dha" path="res://scenes/card_ui.tscn" id="2_jn5g6"]
+[ext_resource type="Texture2D" uid="uid://cmwpg7ag1lk2x" path="res://assets/sprites/ui/fondos_de_pantalla/fondoExercit.png" id="3_iylt2"]
+[ext_resource type="StyleBox" uid="uid://k2idkull1v2y" path="res://assets/themes/ui/estilo_menu_panel_desplegable.tres" id="4_htsch"]
+[ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="5_h0cem"]
+[ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://assets/themes/ui/InputsUserMenu.tres" id="6_qyvee"]
+[ext_resource type="Theme" uid="uid://bxefl0wcs215u" path="res://assets/themes/ui/estilo_botones_circulares_carrusel.tres" id="7_u02qa"]
+[ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="8_0vh1m"]
 
 [node name="Control" type="Control" unique_id=456382028]
 layout_mode = 3
@@ -14,14 +16,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_iwjn0")
-carta_ui = ExtResource("2_23tcq")
+script = ExtResource("1_8d45a")
+carta_ui = ExtResource("2_jn5g6")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=537773588]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
-texture = ExtResource("1_n8s6x")
+texture = ExtResource("3_iylt2")
 expand_mode = 1
 stretch_mode = 6
 
@@ -66,7 +68,7 @@ text = "Añadir ejercitó +"
 [node name="PanelEjercito" type="Panel" parent="VBoxContainer" unique_id=725706832]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = ExtResource("2_iwjn0")
+theme_override_styles/panel = ExtResource("4_htsch")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/PanelEjercito" unique_id=941286745]
 layout_mode = 1
@@ -93,7 +95,7 @@ columns = 5
 [node name="Panel" type="Panel" parent="VBoxContainer" unique_id=1081368879]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-theme_override_styles/panel = ExtResource("5_lt5g4")
+theme_override_styles/panel = ExtResource("5_h0cem")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Panel" unique_id=1214911362]
 layout_mode = 1
@@ -120,7 +122,7 @@ custom_minimum_size = Vector2(580, 10)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
-theme = ExtResource("6_3d47p")
+theme = ExtResource("6_qyvee")
 theme_override_font_sizes/font_size = 16
 
 [node name="BotonGuardarEjercito" type="Button" parent="VBoxContainer" unique_id=2083470715]
@@ -136,14 +138,14 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -850.0
+offset_left = -900.0
 offset_top = -349.0
-offset_right = -100.0
+offset_right = -150.0
 offset_bottom = 42.0
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_vertical = 3
-theme_override_styles/panel = ExtResource("2_iwjn0")
+theme_override_styles/panel = ExtResource("4_htsch")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelCartasJugador" unique_id=815149764]
 layout_mode = 1
@@ -175,3 +177,23 @@ offset_top = 187.0
 offset_right = 926.0
 offset_bottom = 210.0
 text = "0/20"
+
+[node name="CanviarMenuEjercito" type="Button" parent="." unique_id=1724400063]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -49.0
+offset_right = -22.0
+offset_bottom = 49.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("7_u02qa")
+theme_override_font_sizes/font_size = 60
+text = ">"
+script = ExtResource("8_0vh1m")
+id_escena = "inicio"
+metadata/_custom_type_script = "uid://ct2doijn7j323"
