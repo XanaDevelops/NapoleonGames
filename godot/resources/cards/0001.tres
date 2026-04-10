@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="CardRes" format=3]
+[gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://cpgarlt4l63hy"]
 
-[ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="1_blkms"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="1_blkms"]
 [ext_resource type="Resource" path="res://resources/habilities/0001.tres" id="2_tm67s"]
-[ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="3_pas1u"]
+[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="3_pas1u"]
+[ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="3_tm67s"]
 [ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="4_rfijq"]
 [ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="5_ns7o7"]
-[ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="6_rb4sv"]
-[ext_resource type="Script" path="res://scripts/resources/card_type_res.gd" id="7_g3uba"]
+[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="6_rb4sv"]
+[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="7_g3uba"]
 [ext_resource type="Resource" path="res://resources/card_types/0001.tres" id="8_68h6i"]
 
 [resource]
@@ -20,7 +21,7 @@ resistances = Dictionary[ExtResource("3_pas1u"), int]({
 ExtResource("4_rfijq"): 15,
 ExtResource("5_ns7o7"): 5
 })
-habilities = Array[ExtResource("1_blkms")]([ExtResource("2_tm67s")])
+habilities = Array[ExtResource("1_blkms")]([ExtResource("2_tm67s"), ExtResource("3_tm67s")])
 types = Array[ExtResource("7_g3uba")]([ExtResource("8_68h6i")])
 uid = 1
 metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

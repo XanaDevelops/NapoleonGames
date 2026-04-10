@@ -3,6 +3,14 @@ extends Node
 
 @export var _gameMap: MapGame
 
+@export var _gameRes: GameResources
+
+func _ready() -> void:
+	_gameRes = GameResources.load_from()
+	
+	
+
+
 enum APP_STATE {
 	MENU_HUB,
 	IN_GAME,
@@ -23,3 +31,6 @@ func _get_mapRes() -> MapRes:
 	
 func get_map() -> MapGame:
 	return self._gameMap
+	
+func get_game_resources() -> GameResources:
+	return self._gameRes
