@@ -18,6 +18,9 @@ func _ready() -> void:
 	
 	usuario_actual = jugador_1
 
+func establecer_usuario_actual(us_actual: UserRes)->void:
+	usuario_actual=us_actual
+
 func set_jugador_activo(es_jugador_uno: bool) -> void:
 	if es_jugador_uno:
 		usuario_actual = jugador_1

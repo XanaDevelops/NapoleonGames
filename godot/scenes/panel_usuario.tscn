@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://c385migrg8vjo"]
+
+[ext_resource type="PackedScene" uid="uid://c6dc3tohy2alq" path="res://scenes/fila_usuario_menu.tscn" id="1_tkbbd"]
+
+[node name="PanelUsuario" type="Panel" unique_id=1116297954]
+custom_minimum_size = Vector2(250, 200)
+
+[node name="Panel" type="Panel" parent="." unique_id=926328050]
+custom_minimum_size = Vector2(230, 100)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -115.0
+offset_top = 10.0
+offset_right = 115.0
+offset_bottom = 110.0
+grow_horizontal = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=291689554]
+custom_minimum_size = Vector2(210, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=351266171]
+layout_mode = 2
+
+[node name="Button" parent="Panel/ScrollContainer/VBoxContainer" unique_id=552312672 instance=ExtResource("1_tkbbd")]
+custom_minimum_size = Vector2(210, 50)
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=1388523622]
+custom_minimum_size = Vector2(225, 50)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -112.5
+offset_top = -76.0
+offset_right = 112.5
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="AñadirCuenta" type="Button" parent="VBoxContainer2" unique_id=1977897488]
+layout_mode = 2
+text = "Añadir Cuenta"
+
+[node name="CrearCuenta" type="Button" parent="VBoxContainer2" unique_id=1069204961]
+layout_mode = 2
+text = "Crear Cuenta "
+
+[editable path="Panel/ScrollContainer/VBoxContainer/Button"]

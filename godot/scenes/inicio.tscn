@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="5_xg841"]
 [ext_resource type="Theme" uid="uid://bxefl0wcs215u" path="res://assets/themes/ui/estilo_botones_circulares_carrusel.tres" id="5_y25s7"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="6_ru1hr"]
+[ext_resource type="PackedScene" uid="uid://c385migrg8vjo" path="res://scenes/panel_usuario.tscn" id="8_bxgl6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0kd0"]
 bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
@@ -200,14 +201,16 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -120.0
+offset_left = -220.0
 offset_top = 20.0
-offset_right = -20.0
+offset_right = -120.0
 offset_bottom = 120.0
 grow_horizontal = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_v0kd0")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_3re45")
 theme_override_styles/hover = SubResource("StyleBoxFlat_l67cq")
+script = ExtResource("4_rfvtk")
+posicion_menu = 3
 
 [node name="IconoUsuario" type="TextureRect" parent="MenuUsuario" unique_id=1285921050]
 texture_filter = 1
@@ -227,3 +230,6 @@ grow_vertical = 2
 texture = ExtResource("6_ru1hr")
 expand_mode = 1
 stretch_mode = 6
+
+[node name="PanelUsuario" parent="MenuUsuario" unique_id=1116297954 instance=ExtResource("8_bxgl6")]
+layout_mode = 0
