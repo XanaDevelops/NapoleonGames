@@ -6,7 +6,7 @@ func generar_usuario_completo() -> UserRes:
 	user.name = "DevPlayer"
 	
 	
-	# 1. Mapas
+
 	user.availableMaps.append(_generar_mapa_prueba(
 		"Bosque de Pruebas", 
 		"Un frondoso bosque ideal para emboscadas. Los árboles bloquean la visión."

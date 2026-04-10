@@ -1,33 +1,39 @@
 extends Node
 
 @export var mapas_de_prueba: Array[MapRes] = []
-var jugador_1: UserRes
-var jugador_2: UserRes
 
-
+var usuarios: Dictionary = {}
 var usuario_actual: UserRes
 
-func _ready() -> void:
-	
-	jugador_1 = TestUserGenerator.new().generar_usuario_completo()
-	jugador_1.name = "Jugador 1" 
-	
-	jugador_2 = TestUserGenerator.new().generar_usuario_completo()
-	jugador_2.name = "Jugador 2"
-	
-	
-	usuario_actual = jugador_1
 
-func establecer_usuario_actual(us_actual: UserRes)->void:
-	usuario_actual=us_actual
 
-func set_jugador_activo(es_jugador_uno: bool) -> void:
-	if es_jugador_uno:
-		usuario_actual = jugador_1
+func meter_nuevo_usuario(nuevo_usuario: UserRes) -> bool:
+	if nuevo_usuario == null or nuevo_usuario.email == "":
+		push_error("Error: Intento de registro de usuario nulo o sin email válido.")
+		return false
+		
+	if usuarios.has(nuevo_usuario.email):
+		push_warning("Registro denegado: El email proporcionado ya está en uso.")
+		return false
+		
+	usuarios[nuevo_usuario.email] = nuevo_usuario
+	return true
+
+func establecer_usuario_actual(email_usuario: String) -> void:
+	if usuarios.has(email_usuario):
+		usuario_actual = usuarios[email_usuario]
+		print("Usuario activo cambiado a: " + usuario_actual.name)
 	else:
-		usuario_actual = jugador_2
-	print("El menú ahora está editando a: " + usuario_actual.name)
-	
+		push_error("Error: Usuario no encontrado en el registro.")
+
+
+func es_usuario_local(email_a_comprobar: String = "") -> bool:
+	var email = email_a_comprobar
+	if email == "" and usuario_actual != null:
+		email = usuario_actual.email
+		
+	return not "@" in email
+
 func obtener_mapas() -> Array[MapRes]:
 	if usuario_actual == null or usuario_actual.availableMaps.is_empty():
 		return mapas_de_prueba

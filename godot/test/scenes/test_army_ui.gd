@@ -1,9 +1,13 @@
 extends GutTest
 
-func test_cargar_datos_de_prueba() -> void:
+func before_each() -> void:
+	UserManager.usuarios.clear()
+	UserManager.usuario_actual = null
+
+func cargar_datos_de_prueba() -> void:
 	var usuario_prueba = UserRes.new()
 	usuario_prueba.name = "Jugador Local"
-	usuario_prueba.username = "test_user"
+	usuario_prueba.email = "test_user"
 	
 	var carta_esqueleto = CardRes.new()
 	carta_esqueleto.name = "Guerrero Esqueleto" 
@@ -15,13 +19,9 @@ func test_cargar_datos_de_prueba() -> void:
 	carta_elfo.weight = 1
 	carta_elfo.img = preload("res://assets/sprites/imagenes_de_cartas/elfo.jpg")
 	
-
 	var cartas_temporales: Dictionary[CardRes, int] = {}
-	
-	
 	cartas_temporales[carta_esqueleto] = 10
 	cartas_temporales[carta_elfo] = 10
-	
 	
 	usuario_prueba.availableCards = cartas_temporales
 	
@@ -35,18 +35,22 @@ func test_cargar_datos_de_prueba() -> void:
 	ejercito_final.isActive = true
 	usuario_prueba.userArmys.append(ejercito_final)
 	
-	UserManager.establecer_usuario_actual(usuario_prueba)
+	UserManager.meter_nuevo_usuario(usuario_prueba)
+	UserManager.establecer_usuario_actual(usuario_prueba.email)
 	
 	var usuario_guardado = UserManager.usuario_actual
+	
 	assert_eq(usuario_guardado.availableCards[carta_esqueleto], 10, "Debería haber guardado 10 Guerreros Esqueleto")
-	assert_eq(usuario_guardado.availableCards[carta_elfo], 10, "Debería haber guardado 5 Arqueros Elfo")
+	assert_eq(usuario_guardado.availableCards[carta_elfo], 10, "Debería haber guardado 10 Arqueros Elfo")
 	assert_not_null(usuario_guardado)
 	assert_eq(usuario_guardado.name, "Jugador Local")
 	assert_eq(usuario_guardado.userArmys.size(), 2)
-	
-	
+
+func test_cargar_datos() -> void:
+	cargar_datos_de_prueba()
+
 func test_armi_ui() -> void:
-	test_cargar_datos_de_prueba()
+	cargar_datos_de_prueba()
 	
 	var scene := preload("res://scenes/creacio_de_exercits.tscn")
 	var instance := scene.instantiate()
@@ -54,4 +58,3 @@ func test_armi_ui() -> void:
 	add_child_autoqfree(instance)
 	
 	gut.pause_before_teardown()
-	

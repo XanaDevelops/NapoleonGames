@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c385migrg8vjo"]
 
 [ext_resource type="PackedScene" uid="uid://c6dc3tohy2alq" path="res://scenes/fila_usuario_menu.tscn" id="1_tkbbd"]
+[ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="2_c817i"]
 
 [node name="PanelUsuario" type="Panel" unique_id=1116297954]
 custom_minimum_size = Vector2(250, 200)
@@ -32,10 +33,10 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=351266171]
+[node name="ContenedorUsuarios" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=351266171]
 layout_mode = 2
 
-[node name="Button" parent="Panel/ScrollContainer/VBoxContainer" unique_id=552312672 instance=ExtResource("1_tkbbd")]
+[node name="Button" parent="Panel/ScrollContainer/ContenedorUsuarios" unique_id=552312672 instance=ExtResource("1_tkbbd")]
 custom_minimum_size = Vector2(210, 50)
 layout_mode = 2
 size_flags_vertical = 6
@@ -55,12 +56,18 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="AñadirCuenta" type="Button" parent="VBoxContainer2" unique_id=1977897488]
+[node name="AñadirCuenta" type="Button" parent="VBoxContainer2" unique_id=133366195]
 layout_mode = 2
 text = "Añadir Cuenta"
+script = ExtResource("2_c817i")
+id_escena = "login"
+metadata/_custom_type_script = "uid://ct2doijn7j323"
 
-[node name="CrearCuenta" type="Button" parent="VBoxContainer2" unique_id=1069204961]
+[node name="CrearCuenta" type="Button" parent="VBoxContainer2" unique_id=669846678]
 layout_mode = 2
 text = "Crear Cuenta "
+script = ExtResource("2_c817i")
+id_escena = "registro"
+metadata/_custom_type_script = "uid://ct2doijn7j323"
 
-[editable path="Panel/ScrollContainer/VBoxContainer/Button"]
+[editable path="Panel/ScrollContainer/ContenedorUsuarios/Button"]
