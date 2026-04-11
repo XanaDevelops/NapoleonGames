@@ -64,6 +64,20 @@ public class UserEntity {
         return user;
     }
 
+    public void updateProfile (String email, String displayName, String profileImg) {
+
+        if (email != null && !email.isBlank()) {
+            this.email = email;
+        }
+
+        if (displayName != null && !displayName.isBlank()) {
+            this.displayName = displayName;
+        }
+
+        this.profileImg = profileImg;
+        this.updatedAt = LocalDateTime.now();
+    }
+
     public Long getId() {
         return id;
     }

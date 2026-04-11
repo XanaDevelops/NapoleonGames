@@ -1,5 +1,6 @@
 package com.napoleon.user.service.impl;
 
+import com.napoleon.common.exception.DuplicateResourceException;
 import com.napoleon.common.exception.ResourceNotFoundException;
 import com.napoleon.user.dto.*;
 import com.napoleon.user.entity.ArmyEntity;
@@ -12,6 +13,7 @@ import com.napoleon.user.repository.UserMapRepository;
 import com.napoleon.user.repository.UserRepository;
 import com.napoleon.user.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,7 +44,42 @@ public class UserServiceImpl implements UserService {
         }
 
         UserEntity user = resolveUser(id, username);
+        return buildUserResponse(user);
+    }
 
+    @Override
+    @Transactional
+    public UserResponse updateUser(UpdateUserRequest request) {
+        UserEntity user = userRepository.findById(request.id())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (request.email() != null
+                && !request.email().isBlank()
+                && userRepository.existsByEmailAndIdNot(request.email(), user.getId())) {
+            throw new DuplicateResourceException("Email already exists");
+        }
+
+        user.updateProfile(
+                request.email(),
+                request.displayName(),
+                request.profileImg()
+        );
+
+        UserEntity updatedUser = userRepository.save(user);
+        return buildUserResponse(updatedUser);
+    }
+
+    private UserEntity resolveUser(Long id, String username) {
+        if (id != null) {
+            return userRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        }
+
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
+
+    private UserResponse buildUserResponse(UserEntity user) {
         List<UserCardSummaryResponse> availableCards = userCardRepository.findByUser_Id(user.getId())
                 .stream()
                 .map(this::mapUserCard)
@@ -69,16 +106,6 @@ public class UserServiceImpl implements UserService {
                 userArmies,
                 List.of()
         );
-    }
-
-    private UserEntity resolveUser(Long id, String username) {
-        if (id != null) {
-            return userRepository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        }
-
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     private UserCardSummaryResponse mapUserCard(UserCardEntity entity) {
