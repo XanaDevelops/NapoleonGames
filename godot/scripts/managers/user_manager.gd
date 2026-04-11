@@ -1,11 +1,11 @@
 extends Node
 
+signal usuario_cambiado(email_activo)
+
 @export var mapas_de_prueba: Array[MapRes] = []
 
 var usuarios: Dictionary = {}
 var usuario_actual: UserRes
-
-
 
 func meter_nuevo_usuario(nuevo_usuario: UserRes) -> bool:
 	if nuevo_usuario == null or nuevo_usuario.email == "":
@@ -23,9 +23,9 @@ func establecer_usuario_actual(email_usuario: String) -> void:
 	if usuarios.has(email_usuario):
 		usuario_actual = usuarios[email_usuario]
 		print("Usuario activo cambiado a: " + usuario_actual.name)
+		usuario_cambiado.emit(usuario_actual.email)
 	else:
 		push_error("Error: Usuario no encontrado en el registro.")
-
 
 func es_usuario_local(email_a_comprobar: String = "") -> bool:
 	var email = email_a_comprobar
