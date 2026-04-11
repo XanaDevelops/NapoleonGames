@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameManagerNode="*uid://crfipueiwb0h0"
+GameManager="*uid://crfipueiwb0h0"
 UiManager="*uid://c7x52jkqmybks"
 UserManager="*uid://dugu0fxresru"
 ApiAdapter="*uid://dfb2v02pw1ss2"

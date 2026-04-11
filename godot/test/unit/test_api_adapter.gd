@@ -7,10 +7,10 @@ func test_get_res() -> void:
 	pass_test("ok?")
 
 func test_to_json_dict() -> void:
-	var res_test := GameManagerNode.get_game_resources().habilities[0]
-	var res_test2 := GameManagerNode.get_game_resources().cards[0]
-	var res_test3 := GameManagerNode.get_game_resources().maps[0]
-	var res_test4 := GameManagerNode.get_game_resources().users[0]
+	var res_test := GameManager.get_game_resources().habilities[0]
+	var res_test2 := GameManager.get_game_resources().cards[0]
+	var res_test3 := GameManager.get_game_resources().maps[0]
+	var res_test4 := GameManager.get_game_resources().users[0]
 	#ApiAdapter.send_game_resource(res_test)
 	
 	var scr : Script = HabilityRes

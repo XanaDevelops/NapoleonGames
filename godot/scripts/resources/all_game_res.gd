@@ -66,9 +66,7 @@ func _update_cache() -> void:
 					var elems : Array = get(prop.name)
 					var scr : Script = elems.get_typed_script()
 					for e: GameResource in elems:
-						if scr not in _cache:
-							_cache.set(scr, {})
-						_cache.get(scr).set(e.uid, e)
+						set_in_cache(e)
 				else:
 					# metadata
 					pass
@@ -201,3 +199,8 @@ func pack(folder := _folder) -> void:
 ## si no, devuelve null
 func get_res_from_uid(uid: int, gameRes : Script) -> GameResource:
 	return _cache.get(gameRes).get(uid)
+	
+func set_in_cache(gameRes : GameResource) -> void:
+	if gameRes.get_script() not in _cache:
+		_cache.set(gameRes.get_script(), {})
+	_cache.set(gameRes.get_script(), {gameRes.uid: gameRes})

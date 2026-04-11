@@ -46,7 +46,7 @@ func _al_seleccionar_tarjeta_mapa(datos_mapa: MapRes, nodo_tarjeta: MapCard) -> 
 func _al_presionar_boton_jugar() -> void:
 	if mapa_actual:
 		print("¡Iniciando partida en el mapa: " + mapa_actual.name + "!")
-		GameManagerNode.start_game(UserManager.jugador_1,
+		GameManager.start_game(UserManager.jugador_1,
 								   UserManager.jugador_2,
 								   mapa_actual,
 								   UserManager.jugador_1.obtener_ejercito_activo(), 
