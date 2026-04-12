@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://c385migrg8vjo"]
 
-[ext_resource type="PackedScene" uid="uid://c6dc3tohy2alq" path="res://scenes/fila_usuario_menu.tscn" id="1_tkbbd"]
+[ext_resource type="Script" uid="uid://cnl2ldkbkb056" path="res://scripts/ui/panel_usuario.gd" id="1_c817i"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="2_c817i"]
 
 [node name="PanelUsuario" type="Panel" unique_id=1116297954]
 custom_minimum_size = Vector2(250, 200)
+script = ExtResource("1_c817i")
 
 [node name="Panel" type="Panel" parent="." unique_id=926328050]
 custom_minimum_size = Vector2(230, 100)
@@ -35,11 +36,8 @@ grow_vertical = 2
 
 [node name="ContenedorUsuarios" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=351266171]
 layout_mode = 2
-
-[node name="Button" parent="Panel/ScrollContainer/ContenedorUsuarios" unique_id=552312672 instance=ExtResource("1_tkbbd")]
-custom_minimum_size = Vector2(210, 50)
-layout_mode = 2
-size_flags_vertical = 6
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=1388523622]
 custom_minimum_size = Vector2(225, 50)
@@ -69,5 +67,3 @@ text = "Crear Cuenta "
 script = ExtResource("2_c817i")
 id_escena = "registro"
 metadata/_custom_type_script = "uid://ct2doijn7j323"
-
-[editable path="Panel/ScrollContainer/ContenedorUsuarios/Button"]
