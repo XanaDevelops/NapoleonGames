@@ -56,7 +56,6 @@ enum CONDITION {
 @export var condition_stat : StatData = null
 ## valor a comparar
 @export var condition_value := 0.0
-
 ## true si la habilidad afecta a uno mismo
 static func inflicts_self(obj: HAB_DEST) -> bool:
 	return obj == HAB_DEST.SELF or obj == HAB_DEST.EVERYONE

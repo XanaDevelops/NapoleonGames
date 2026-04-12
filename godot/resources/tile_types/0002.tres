@@ -3,11 +3,13 @@
 [ext_resource type="Script" path="res://scripts/resources/tile_mod_res.gd" id="1_g6i62"]
 [ext_resource type="Resource" path="res://resources/tile_mods/0001.tres" id="2_3bhnw"]
 [ext_resource type="Script" path="res://scripts/resources/tile_type_res.gd" id="2_4up12"]
+[ext_resource type="Texture2D" path="res://assets/tiles/EverHex-Forest Lite/Sky/blue/1.png" id="4_3bhnw"]
 
 [resource]
 script = ExtResource("2_4up12")
 name = &"rocas"
 desc = "no tan facil"
 mods = Array[ExtResource("1_g6i62")]([ExtResource("2_3bhnw")])
+texture = ExtResource("4_3bhnw")
 uid = 2
 metadata/_custom_type_script = "uid://d4fyta6ugot35"

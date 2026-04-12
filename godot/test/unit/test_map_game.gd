@@ -17,13 +17,17 @@ func before_all():
 	map.name = &"test_map_01"
 	map.tamX = 5
 	map.tamY = 4
+	map.uid = 1
 	
+	var _uid := 1
 	for file in map_ids:
 		var aux : Array[TileRes]= []
 		for t in file:
 			var tile := TileRes.new()
 			tile.height = 1
 			tile.type = gr.tile_types[t]
+			tile.uid = _uid
+			_uid += 1 
 			aux.append(tile)
 		map.mapData.append(aux)
 		
