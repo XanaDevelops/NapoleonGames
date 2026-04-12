@@ -128,7 +128,10 @@ static func _parse_dictionary(dict: Dictionary) -> Variant:
 	var key0 : String = keys[0]
 	# Si tenemos la referencia a un GameResource
 	if keys.size() == 1 and get_script_from_json_text(key0) != null and dict[key0] is float:
-		return GameManagerNode.get_game_resources().get_res_from_uid(dict[key0], get_script_from_json_text(key0))
+		var gr := GameManager.get_game_resources()
+		var uid : int = dict[key0]
+		var script := get_script_from_json_text(key0)
+		return gr.get_res_from_uid(uid, script)
 	
 	var res : Dictionary = {}
 	for key in keys:
@@ -159,7 +162,14 @@ static func _parse_dictionary(dict: Dictionary) -> Variant:
 	
 ## Auxiliar de parse_json
 static func _parse_array(array: Array) -> Array:
-	var type = array.get_typed_builtin()
+	var type
+	# tener en cuenta arrays no tipados
+	if array.is_typed():
+		type = array.get_typed_builtin()
+	else:
+		if array.size() == 0:
+			return array
+		type = typeof(array[0])
 	if type >= TYPE_ARRAY:
 		return array.map(func (a:Array): return _parse_array(a))
 	if type == TYPE_DICTIONARY:

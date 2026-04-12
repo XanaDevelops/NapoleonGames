@@ -65,4 +65,4 @@ func iniciar_partida() -> void:
 	var ejercito_jugador_uno = jugador_uno.obtener_ejercito_activo()
 	var ejercito_jugador_dos = jugador_dos.obtener_ejercito_activo()
 	
-	GameManagerNode.start_game(jugador_uno, jugador_dos, mapa_seleccionado, ejercito_jugador_uno, ejercito_jugador_dos)
+	GameManager.start_game(jugador_uno, jugador_dos, mapa_seleccionado, ejercito_jugador_uno, ejercito_jugador_dos)

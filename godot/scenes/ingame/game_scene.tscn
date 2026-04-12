@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cbyjpsd5w2n8u"]
+
+[ext_resource type="Script" path="res://scenes/ingame/turn_manager.gd" id="1_4n5kr"]
+[ext_resource type="PackedScene" uid="uid://7np40cgmy80w" path="res://scenes/ingame/ingame_map.tscn" id="2_rqqua"]
+
+[node name="GameScene" type="Node" unique_id=1075307019]
+script = ExtResource("1_4n5kr")
+
+[node name="IngameMap" parent="." unique_id=594307947 instance=ExtResource("2_rqqua")]
