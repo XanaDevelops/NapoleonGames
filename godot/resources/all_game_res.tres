@@ -14,7 +14,7 @@
 [ext_resource type="Resource" uid="uid://cy3codwbk7in5" path="res://resources/habilities/0001.tres" id="12_e07fo"]
 [ext_resource type="Resource" uid="uid://cny6llqg71ojv" path="res://resources/habilities/0002.tres" id="13_8e42l"]
 [ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="14_wh2kh"]
-[ext_resource type="Resource" path="res://resources/maps/0001.tres" id="15_80616"]
+[ext_resource type="Resource" uid="uid://bok1j8n1qdj2b" path="res://resources/maps/0001.tres" id="15_80616"]
 [ext_resource type="Script" uid="uid://c1o5v8x6fs24v" path="res://scripts/resources/all_game_res.gd" id="15_y3xpg"]
 [ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="16_qmt1m"]
 [ext_resource type="Resource" uid="uid://bhu302qlgro8b" path="res://resources/stat_datas/0001.tres" id="17_ioe74"]
@@ -28,7 +28,7 @@
 [ext_resource type="Script" uid="uid://bmy17ix6av5bg" path="res://scripts/resources/tile_res.gd" id="25_c8v8g"]
 [ext_resource type="Script" uid="uid://ce5uvgu640fxr" path="res://scripts/resources/user_res.gd" id="26_k5wek"]
 [ext_resource type="Resource" uid="uid://dv2und8vcdag5" path="res://resources/users/0001.tres" id="27_mj3bk"]
-[ext_resource type="Resource" path="res://resources/users/0002.tres" id="29_y6jhn"]
+[ext_resource type="Resource" uid="uid://bysnf5j5fgx2p" path="res://resources/users/0002.tres" id="29_y6jhn"]
 
 [resource]
 script = ExtResource("15_y3xpg")
