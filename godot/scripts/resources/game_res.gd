@@ -128,7 +128,10 @@ static func _parse_dictionary(dict: Dictionary) -> Variant:
 	var key0 : String = keys[0]
 	# Si tenemos la referencia a un GameResource
 	if keys.size() == 1 and get_script_from_json_text(key0) != null and dict[key0] is float:
-		return GameManager.get_game_resources().get_res_from_uid(dict[key0], get_script_from_json_text(key0))
+		var gr := GameManager.get_game_resources()
+		var uid : int = dict[key0]
+		var script := get_script_from_json_text(key0)
+		return gr.get_res_from_uid(uid, script)
 	
 	var res : Dictionary = {}
 	for key in keys:

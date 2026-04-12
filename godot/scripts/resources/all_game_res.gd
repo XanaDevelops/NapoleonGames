@@ -198,9 +198,16 @@ func pack(folder := _folder) -> void:
 ## Devuelve el GameRes que coincida con el tipo y uid
 ## si no, devuelve null
 func get_res_from_uid(uid: int, gameRes : Script) -> GameResource:
+	if gameRes not in _cache:
+		push_warning("Se ha intentado obtener ", gameRes.get_global_name(), ":", uid, "\nPero no existe")
+		return null	
+		
 	return _cache.get(gameRes).get(uid)
 	
 func set_in_cache(gameRes : GameResource) -> void:
-	if gameRes.get_script() not in _cache:
-		_cache.set(gameRes.get_script(), {})
-	_cache.set(gameRes.get_script(), {gameRes.uid: gameRes})
+	var scr : Script = gameRes.get_script()
+	
+	if scr not in _cache:
+		_cache.set(scr, {})
+	var _dict = _cache.get(scr)
+	_dict.set(gameRes.uid, gameRes)
