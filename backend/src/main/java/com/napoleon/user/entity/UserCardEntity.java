@@ -3,6 +3,7 @@ package com.napoleon.user.entity;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user_cards")
@@ -59,6 +60,19 @@ public class UserCardEntity {
 
         public Long getCardId() {
             return cardId;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof UserCardId that)) return false;
+            return Objects.equals(userId, that.userId)
+                    && Objects.equals(cardId, that.cardId);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(userId, cardId);
         }
     }
 }
