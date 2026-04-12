@@ -43,11 +43,8 @@ func _al_seleccionar_tarjeta_mapa(datos_mapa: MapRes, nodo_tarjeta: MapCard) -> 
 	mapa_actual = datos_mapa
 	if boton_jugar: boton_jugar.disabled = false 
 
+
 func _al_presionar_boton_jugar() -> void:
 	if mapa_actual:
-		print("¡Iniciando partida en el mapa: " + mapa_actual.name + "!")
-		GameManager.start_game(UserManager.jugador_1,
-								   UserManager.jugador_2,
-								   mapa_actual,
-								   UserManager.jugador_1.obtener_ejercito_activo(), 
-								   UserManager.jugador_2.obtener_ejercito_activo())
+		print("Mapa confirmado. Pasando a selección de oponente...")
+		UiManager.cambiar_a_escena("oponente", {"mapa_seleccionado": mapa_actual})
