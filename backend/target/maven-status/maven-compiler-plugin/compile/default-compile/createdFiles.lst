@@ -24,10 +24,12 @@ com\napoleon\auth\dto\LoginRequest.class
 com\napoleon\user\repository\UserRepository.class
 com\napoleon\user\dto\UpdateUserRequest.class
 com\napoleon\card\repository\CardCardTypeRepository.class
+com\napoleon\auth\security\JwtAuthenticationFilter.class
 com\napoleon\card\entity\AttackTypeEntity.class
 com\napoleon\common\exception\InvalidCredentialsException.class
 com\napoleon\auth\dto\SignInRequest.class
 com\napoleon\card\service\CardService.class
+com\napoleon\config\SecurityConfig.class
 com\napoleon\user\entity\UserCardEntity.class
 com\napoleon\card\dto\CardResistanceResponse.class
 com\napoleon\config\SecurityBeansConfig.class
@@ -39,6 +41,8 @@ com\napoleon\user\dto\UserMapSummaryResponse.class
 com\napoleon\user\controller\UserController.class
 com\napoleon\user\dto\UserArmySummaryResponse.class
 com\napoleon\card\repository\AttackTypeRepository.class
+com\napoleon\config\ApplicationConfig.class
+com\napoleon\config\JwtProperties.class
 com\napoleon\auth\controller\AuthController.class
 com\napoleon\card\service\impl\CardServiceImpl.class
 com\napoleon\auth\service\impl\AuthServiceImpl.class
