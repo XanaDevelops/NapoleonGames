@@ -9,6 +9,8 @@ var map:MapGame
 @export var tile_map_layer_selection: TileMapLayer
 @export var tile_map_layer_highlight: TileMapLayer
 
+var selected_cell := Vector2i(-1, -1)
+var current_accesible_moves : Array[Vector2i] = []
 var tileset: TileSet
 var texture_to_source_id: Dictionary = {}
 enum HighlightType { MOVEMENT, ATTACK, SELECTED, SKILL }
@@ -29,10 +31,14 @@ func _setup_highlight_tiles() -> void:
 		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	map = MapGame.new(GameManager.get_map())
+	map=MapGame.new(GameManager.get_map())
+	
 	if map == null:
-		push_error("GameManager no tiene mapa, por ahora, usar el de test!!")
+		push_error("GameManager no tiene mapa en runtime, creando test!!")
 		map = TestMapGame.new().create_test_map()
+		
+
+
 		
 	tileset = _setup_tileset()
 	for tml in [tile_map_layer_texture, tile_map_layer_units,
@@ -93,7 +99,9 @@ func _scale_texture(texture: Texture2D) -> ImageTexture:
 	var img := texture.get_image()
 	img.resize(TILE_SIZE_HEIGHT, TILE_SIZE_HEIGHT, Image.INTERPOLATE_NEAREST)
 	return ImageTexture.create_from_image(img)
-	
+
+
+
 func plot_unit_moved(src: Vector2i, target:Vector2i) -> void:
 		var source_id = tile_map_layer_units.get_cell_source_id(src)
 		tile_map_layer_units.set_cell(target, source_id, Vector2i.ZERO)
@@ -116,5 +124,71 @@ func _process(delta: float) -> void:
 	#update stuff
 	pass
 
-				
+# Captura eventos de entrada (clics del ratón)
+func _unhandled_input(event: InputEvent) -> void:
+	# Comprobar si es un clic izquierdo del ratón y si acaba de ser presionado
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		
+		# 1. Obtener la posición del ratón relativa a este nodo
+		var mouse_pos = get_local_mouse_position()
+		
+		# 2. Convertir la posición en píxeles a coordenadas del mapa hexagonal
+		# Usamos tile_map_layer_texture ya que tiene configurado el tamaño y forma del hexágono
+		var map_coords = tile_map_layer_texture.local_to_map(mouse_pos)
+		
+		# 3. Procesar el clic en esa celda
+		_on_cell_clicked(map_coords)
+
+# Lógica a ejecutar cuando se hace clic en una celda
+signal movement_requested(start_pos: Vector2i, end_pos: Vector2i)
+
+func _on_cell_clicked(coords: Vector2i) -> void:
+	if coords.y < 0 or coords.y >= map._map.size() or coords.x < 0 or coords.x >= map._map[coords.y].size():
+		_clear_selection()
+		return
+		
+	# LÓGICA DE SOLICITUD DE MOVIMIENTO
+	if selected_cell != Vector2i(-1, -1) and coords in current_accesible_moves:
+		# Emitimos la señal en lugar de procesarlo aquí
+		movement_requested.emit(selected_cell, coords)
+		_clear_selection()
+		return
+
+	_process_selection(coords)
+
+## En godot/scenes/ingame/map_visualizer.gd
+func _process_selection(coords: Vector2i) -> void:
+	# 1. Actualizamos el estado interno del visualizador
+	selected_cell = coords
 	
+	# 2. Resaltamos visualmente la celda clicada (capa de selección)
+	highlight_selected_cell(coords)
+	
+	# 3. Obtenemos la información lógica de la casilla
+	var clicked_tile : TileGame = map.get_tile_at(coords)
+	
+	# 4. Si la casilla tiene una unidad...
+	if clicked_tile.has_unit():
+		var unit = clicked_tile.get_unit()
+		
+		# NUEVA COMPROBACIÓN: Solo mostramos el rango si NO se ha movido
+		if not unit.has_moved_this_turn:
+			# Calculamos los movimientos posibles
+			current_accesible_moves = map.get_accesible_moves(coords)
+			# Dibujamos los hexágonos de color verde para el rango
+			plot_mov_range(current_accesible_moves)
+		else:
+			# Si la unidad ya se movió, no mostramos rango verde
+			current_accesible_moves = []
+			tile_map_layer_highlight.clear()
+			
+	else:
+		# Si clicamos en una casilla vacía, limpiamos los rangos previos
+		current_accesible_moves = []
+		tile_map_layer_highlight.clear()
+# Función auxiliar para limpiar lo visual
+func _clear_selection() -> void:
+	selected_cell = Vector2i(-1, -1)
+	current_accesible_moves = []
+	tile_map_layer_selection.clear()
+	tile_map_layer_highlight.clear()

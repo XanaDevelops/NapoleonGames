@@ -53,7 +53,7 @@ func get_neightbours(pos: Vector2i) -> Array[Vector2i]:
 ## De eso TurnManager (TODO)
 func move_unit(start: Vector2i, end: Vector2i) -> void:
 	assert(self._map[start.y][start.x].has_unit(), "Casilla vacia")
-	assert(!self._map[end.y][end.y].has_unit(), "Casilla ocupada")
+	assert(!self._map[end.y][end.x].has_unit(), "Casilla ocupada")
 	
 	var unit := get_tile_at(start).get_unit()
 	get_tile_at(start).set_unit(null)
@@ -61,19 +61,24 @@ func move_unit(start: Vector2i, end: Vector2i) -> void:
 	
 ## Devuelve las posiciones de casillas accesibles para la unidad en 'pos'
 ## devuelve [] si no hay unidad
+## En godot/scripts/game/map_game.gd
+
 func get_accesible_moves(pos: Vector2i) -> Array[Vector2i]:
 	var ret_pos : Array[Vector2i] = []
 	var tile := get_tile_at(pos)
+	
 	if !tile.has_unit():
 		return ret_pos
 	
 	var unit := tile.get_unit()
-	
 	var distances := _calculate_distances(pos, unit)
 	
 	for key in distances:
+		# Comprobamos que esté en rango Y que no sea la casilla inicial
 		if distances[key] <= unit.get_speed() and key != pos:
-			ret_pos.append(key)
+			# NUEVA REGLA: Solo añadimos la casilla si NO tiene una unidad
+			if not get_tile_at(key).has_unit():
+				ret_pos.append(key)
 		
 	return ret_pos
 	

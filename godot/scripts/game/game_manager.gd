@@ -9,6 +9,7 @@ extends Node
 @export var _gameRes: GameResources
 
 
+
 enum APP_STATE {
 	MENU_HUB,
 	IN_GAME,
@@ -31,6 +32,7 @@ func start_game(playerA: UserRes, playerB:UserRes, map:MapRes, armyA: ArmyRes, a
 	self._army_a = armyA
 	self._army_b = armyB
 	
+
 	# considerar usar enums
 	UiManager.cambiar_a_escena("juego")
 	
@@ -51,3 +53,4 @@ func get_map() -> MapRes:
 	
 func get_game_resources() -> GameResources:
 	return self._gameRes
+	

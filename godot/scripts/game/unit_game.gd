@@ -16,6 +16,7 @@ extends RuntimeResource
 @export var _habilities: Dictionary[HabilityRes, int] = {}
 
 ## TODO estados alterados y toda la pesca
+var has_moved_this_turn : bool = false
 
 func _init(cardRes: CardRes) -> void:
 	self._cardRes = cardRes
@@ -107,7 +108,7 @@ func get_available_habilities() -> Array[HabilityRes]:
 
 	return ret
 func get_texture2D() -> Texture2D:
-	return self._cardRes.img
+	return self._cardRes.portrait
 	
 func get_speed() -> int:
 	return self._cardRes.speed
