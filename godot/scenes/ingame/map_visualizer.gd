@@ -124,22 +124,12 @@ func _process(delta: float) -> void:
 	#update stuff
 	pass
 
-# Captura eventos de entrada (clics del ratón)
 func _unhandled_input(event: InputEvent) -> void:
-	# Comprobar si es un clic izquierdo del ratón y si acaba de ser presionado
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		
-		# 1. Obtener la posición del ratón relativa a este nodo
 		var mouse_pos = get_local_mouse_position()
-		
-		# 2. Convertir la posición en píxeles a coordenadas del mapa hexagonal
-		# Usamos tile_map_layer_texture ya que tiene configurado el tamaño y forma del hexágono
 		var map_coords = tile_map_layer_texture.local_to_map(mouse_pos)
-		
-		# 3. Procesar el clic en esa celda
 		_on_cell_clicked(map_coords)
 
-# Lógica a ejecutar cuando se hace clic en una celda
 signal movement_requested(start_pos: Vector2i, end_pos: Vector2i)
 
 func _on_cell_clicked(coords: Vector2i) -> void:
@@ -147,46 +137,32 @@ func _on_cell_clicked(coords: Vector2i) -> void:
 		_clear_selection()
 		return
 		
-	# LÓGICA DE SOLICITUD DE MOVIMIENTO
 	if selected_cell != Vector2i(-1, -1) and coords in current_accesible_moves:
-		# Emitimos la señal en lugar de procesarlo aquí
 		movement_requested.emit(selected_cell, coords)
 		_clear_selection()
 		return
 
 	_process_selection(coords)
 
-## En godot/scenes/ingame/map_visualizer.gd
 func _process_selection(coords: Vector2i) -> void:
-	# 1. Actualizamos el estado interno del visualizador
 	selected_cell = coords
-	
-	# 2. Resaltamos visualmente la celda clicada (capa de selección)
 	highlight_selected_cell(coords)
 	
-	# 3. Obtenemos la información lógica de la casilla
 	var clicked_tile : TileGame = map.get_tile_at(coords)
 	
-	# 4. Si la casilla tiene una unidad...
 	if clicked_tile.has_unit():
 		var unit = clicked_tile.get_unit()
 		
-		# NUEVA COMPROBACIÓN: Solo mostramos el rango si NO se ha movido
 		if not unit.has_moved_this_turn:
-			# Calculamos los movimientos posibles
 			current_accesible_moves = map.get_accesible_moves(coords)
-			# Dibujamos los hexágonos de color verde para el rango
 			plot_mov_range(current_accesible_moves)
 		else:
-			# Si la unidad ya se movió, no mostramos rango verde
 			current_accesible_moves = []
 			tile_map_layer_highlight.clear()
-			
 	else:
-		# Si clicamos en una casilla vacía, limpiamos los rangos previos
 		current_accesible_moves = []
 		tile_map_layer_highlight.clear()
-# Función auxiliar para limpiar lo visual
+
 func _clear_selection() -> void:
 	selected_cell = Vector2i(-1, -1)
 	current_accesible_moves = []

@@ -74,9 +74,9 @@ func get_accesible_moves(pos: Vector2i) -> Array[Vector2i]:
 	var distances := _calculate_distances(pos, unit)
 	
 	for key in distances:
-		# Comprobamos que esté en rango Y que no sea la casilla inicial
+		
 		if distances[key] <= unit.get_speed() and key != pos:
-			# NUEVA REGLA: Solo añadimos la casilla si NO tiene una unidad
+			
 			if not get_tile_at(key).has_unit():
 				ret_pos.append(key)
 		
