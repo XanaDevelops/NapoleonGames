@@ -27,8 +27,8 @@ func create_test_map() -> MapGame:
 	var map_res = MapRes.new()
 	map_res.name = "Test Map"
 	map_res.desc = "Mapa de prueba"
-	map_res.tamX = 17
-	map_res.tamY = 10
+	map_res.tamX = 23
+	map_res.tamY = 11
 	
 	for y in range(map_res.tamY):
 		var row: Array = []
@@ -38,8 +38,9 @@ func create_test_map() -> MapGame:
 			
 			var tile_type = TileTypeRes.new()
 			tile_type.name = "GrassLand"
-			tile_type.desc = "Terrain de prueba"
+			tile_type.desc = "Terrain de prueba\n Campo bla bla hhhhhhhhhhhhhhhaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajkfksdlfhsdfhalfkfsufdjkdgsfdsldghsfkjghfdlghdfkghkfdh"
 			tile_type.texture = get_random_tile_texture("res://assets/tiles/EverHex-Forest Lite/Sky/blue")
+			#tile_type.mods= Array[TileTypeRes]
 			tile_res.type = tile_type
 			row.append(tile_res)
 		

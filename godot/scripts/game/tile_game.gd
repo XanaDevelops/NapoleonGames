@@ -30,3 +30,31 @@ func get_height_penalty(tile: TileGame) -> int:
 	
 func get_height() -> int:
 	return _tileRes.height
+
+func get_info() -> Dictionary:
+	return {
+		"tile_name": _tileRes.type.name,
+		"tile_desc": _tileRes.type.desc,
+		"height": _tileRes.height,
+		"mods": _tileRes.type.mods,
+		"move_cost": _tileRes.type.cost,
+		"texture": _tileRes.type.texture
+	}
+func get_unit_info() -> Dictionary:
+	return{
+		"card_name": _unit._cardRes.name,
+		"card_desc": _unit._cardRes.desc,
+		"card_currentHealth": _unit._currentHealth, 
+		"card_currentMana": _unit._currentMana,
+		"card_owner": _unit._owner,
+		"card_speed": _unit._cardRes.speed,
+		"card_dodge": _unit._cardRes.dodge,
+		"card_portrait": _unit._cardRes.portrait,
+		"card_resistances":_unit._cardRes.resistances,
+		"card_habilities": _unit._habilities,
+		"card_currentAlterStates": _unit._currentAlterStates,
+		"card_types": _unit._cardRes.types,
+		"card_weight": _unit._cardRes.weight
+		
+		
+	}

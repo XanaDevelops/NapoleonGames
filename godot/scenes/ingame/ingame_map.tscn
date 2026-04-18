@@ -1,10 +1,49 @@
 [gd_scene format=4 uid="uid://7np40cgmy80w"]
 
 [ext_resource type="Script" uid="uid://cpqdhsyw0vgg1" path="res://scenes/ingame/map_visualizer.gd" id="1_7udv5"]
+[ext_resource type="Script" uid="uid://dp3vm4x2rx3uf" path="res://scenes/ingame/ingame_map.gd" id="1_td6e5"]
+[ext_resource type="Script" uid="uid://dilrauf05i3je" path="res://scenes/ingame/players_panel.gd" id="2_s3xon"]
+[ext_resource type="Script" uid="uid://bm6sp4ow1l2qv" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
+[ext_resource type="Script" uid="uid://boaagd3hgel75" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
+[ext_resource type="Script" uid="uid://b8ttj2gcfkh47" path="res://scenes/ingame/unit_info.gd" id="6_smdvi"]
 
-[node name="IngameMap" type="Node2D" unique_id=594307947]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0htj4"]
+bg_color = Color(0.6148643, 0.6078581, 0.47734696, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
 
-[node name="mapVisualizer" type="Node2D" parent="." unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight")]
+[node name="IngameMap" type="Control" unique_id=1560040291]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_td6e5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1521827406]
+layout_mode = 1
+offset_right = 1919.0
+offset_bottom = 1073.0
+
+[node name="PlayersPanel" type="Control" parent="VBoxContainer" unique_id=69587996]
+layout_mode = 2
+script = ExtResource("2_s3xon")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer" unique_id=959567450]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/SubViewportContainer" unique_id=1514874787]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="mapVisualizer" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight")]
 script = ExtResource("1_7udv5")
 tile_map_layer_texture = NodePath("../TileMapLayer_texture")
 tile_map_layer_units = NodePath("../TileMapLayer_units")
@@ -12,12 +51,155 @@ tile_map_layer_selection = NodePath("../TileMapLayer_selection")
 tile_map_layer_highlight = NodePath("../TileMapLayer_highlights")
 metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
 
-[node name="TileMapLayer_texture" type="TileMapLayer" parent="." unique_id=479184065]
+[node name="TileMapLayer_texture" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=479184065]
 position = Vector2(0, -3)
 tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAUAAAAAAAIAAAAAAAUAAAAAAAAAAAABAAcAAAAAAP//AAAAAAcAAAABAP//AAABAAcAAAD/////AAAAAAcAAAD//wAAAAAAAAgAAAD+/wAAAAAGAAIAAAD9////AAAGAAIAAAD+////AAAGAAIAAAD8/wAAAAAAAAUAAAADAP//AAAAAAgAAAAEAP//AAAGAAIAAAA=")
 
-[node name="TileMapLayer_units" type="TileMapLayer" parent="." unique_id=1642646471]
+[node name="TileMapLayer_units" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=1642646471]
 
-[node name="TileMapLayer_selection" type="TileMapLayer" parent="." unique_id=1342848487]
+[node name="TileMapLayer_selection" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=1342848487]
 
-[node name="TileMapLayer_highlights" type="TileMapLayer" parent="." unique_id=739722248]
+[node name="TileMapLayer_highlights" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=739722248]
+
+[node name="CardsPanel" type="Control" parent="VBoxContainer" unique_id=1431020749]
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("4_0htj4")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/CardsPanel" unique_id=1572014560]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/ScrollContainer" unique_id=1670447488]
+layout_mode = 2
+
+[node name="TileInfo" type="Control" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer" unique_id=12227352]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("5_x30bk")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/TileInfo" unique_id=1104634476]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/TileInfo/HBoxContainer" unique_id=1608742071]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/TileInfo/HBoxContainer/VBoxContainer" unique_id=1804881697]
+layout_mode = 2
+size_flags_vertical = 1
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/TileInfo/HBoxContainer/VBoxContainer" unique_id=966611291]
+layout_mode = 2
+stretch_mode = 5
+
+[node name="DescriptionContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/TileInfo/HBoxContainer" unique_id=545130055]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_0htj4")
+
+[node name="DescriptionContainer" type="VBoxContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/TileInfo/HBoxContainer/DescriptionContainer" unique_id=1291994257]
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="DescriptionText" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/TileInfo/HBoxContainer/DescriptionContainer/DescriptionContainer" unique_id=1717102641]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.012377927, 0.002511518, 0.0011479177, 1)
+theme_override_font_sizes/font_size = 17
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/TileInfo/HBoxContainer/DescriptionContainer/DescriptionContainer" unique_id=817314821]
+layout_mode = 2
+theme_override_constants/paragraph_spacing = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/TileInfo/HBoxContainer" unique_id=312636863]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 60
+
+[node name="HeightLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/TileInfo/HBoxContainer/HBoxContainer" unique_id=1457569625]
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="CostLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/TileInfo/HBoxContainer/HBoxContainer" unique_id=2129641801]
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="UnitInfo" type="Control" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer" unique_id=551573519]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("6_smdvi")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo" unique_id=598713077]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer" unique_id=1368475035]
+layout_mode = 2
+
+[node name="UnitLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1696254877]
+layout_mode = 2
+
+[node name="UnitTextureRect" type="TextureRect" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1491441126]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer" unique_id=1419014336]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer/PanelContainer" unique_id=1269846927]
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer" unique_id=11764065]
+layout_mode = 2
+
+[node name="DescriptionText" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer" unique_id=822122252]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer" unique_id=413082808]
+layout_mode = 2
+
+[node name="OwnerLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1458816575]
+layout_mode = 2
+
+[node name="CurrentHealthLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=2048429449]
+layout_mode = 2
+
+[node name="CurrentManaLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=2115445963]
+layout_mode = 2
+
+[node name="SpeedLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1357048857]
+layout_mode = 2
+
+[node name="DodgeLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=504645439]
+layout_mode = 2
+
+[node name="WeightLabel" type="Label" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1058537696]
+layout_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer" unique_id=966613889]
+layout_mode = 2
+
+[node name="PanelContainer3" type="PanelContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer" unique_id=1173079697]
+layout_mode = 2
+
+[node name="PanelContainer4" type="PanelContainer" parent="VBoxContainer/CardsPanel/ScrollContainer/HBoxContainer/UnitInfo/VBoxContainer" unique_id=875609769]
+layout_mode = 2

@@ -4,10 +4,13 @@ extends Node2D
 #@export  var map:MapGame 
 var map:MapGame 
 
+
 @export var tile_map_layer_texture: TileMapLayer
 @export var tile_map_layer_units: TileMapLayer
 @export var tile_map_layer_selection: TileMapLayer
 @export var tile_map_layer_highlight: TileMapLayer
+
+signal tile_clicked(coords: Vector2i, tile: TileGame)
 
 var tileset: TileSet
 var texture_to_source_id: Dictionary = {}
@@ -20,8 +23,8 @@ const HIGHLIGHT_TEXTURES: Dictionary = {
 	HighlightType.ATTACK:   "res://assets/tiles/highlights/hl_attack.png",
 	HighlightType.SELECTED: "res://assets/tiles/highlights/hl_selected.png",
 }
-const TILE_SIZE_HEIGHT = 64*2
-const TILE_SIZE_WIDTH = 55*2 # TILE_SIZE_HEIGHT/2 * root(3)
+const TILE_SIZE_HEIGHT = 64*1.5
+const TILE_SIZE_WIDTH = 55*1.5 # TILE_SIZE_HEIGHT/2 * root(3)
 func _setup_highlight_tiles() -> void:
 	for type in HIGHLIGHT_TEXTURES.keys():
 		var tex := load(HIGHLIGHT_TEXTURES[type]) as Texture2D
@@ -29,17 +32,19 @@ func _setup_highlight_tiles() -> void:
 		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	map = MapGame.new(GameManager.get_map())
-	if map == null:
-		push_error("GameManager no tiene mapa, por ahora, usar el de test!!")
-		map = TestMapGame.new().create_test_map()
+	#map = MapGame.new(GameManager.get_map())
+	
+	#map = null
+	#if map == null:
+		#push_error("GameManager no tiene mapa, por ahora, usar el de test!!")
+		#map = TestMapGame.new().create_test_map()
 		
 	tileset = _setup_tileset()
 	for tml in [tile_map_layer_texture, tile_map_layer_units,
 				tile_map_layer_selection, tile_map_layer_highlight]:
 		tml.tile_set = tileset
 	_setup_highlight_tiles()
-	_setup_map()
+	#_setup_map()
 	
 	
   
@@ -52,7 +57,8 @@ func _setup_tileset() -> TileSet:
 	return tileset
 	
 
-func _setup_map():
+func _setup_map(map: MapGame):
+	self.map = map
 	for y in range(map._mapRes.tamY):
 		for x in range(map._mapRes.tamX):
 			draw_tile(x, y, map.get_tile_at(Vector2i(x, y)))
@@ -65,11 +71,13 @@ func draw_tile(i: int, y:int, tile:TileGame) -> void:
 				
 		tile_map_layer_texture.set_cell(coords, tile_source_id, Vector2i.ZERO)
 		
+		
 		if tile.has_unit():
 			var unit_source_id = add_texture_to_tileset(tile.get_unit().get_texture2D())
 			tile_map_layer_units.set_cell(coords, unit_source_id, Vector2i.ZERO)
 
-	
+func set_map(map: MapGame) -> void:
+	self.map= map    
 func add_texture_to_tileset(texture: Texture2D) -> int:
 		for tex_id in texture_to_source_id.keys():
 			if texture_to_source_id[tex_id]== texture:
@@ -110,6 +118,26 @@ func plot_mov_range(positions: Array[Vector2i]):
 	tile_map_layer_highlight.clear()
 	for pos in positions: 
 		tile_map_layer_highlight.set_cell(pos, highlight_source_ids[HighlightType.MOVEMENT], Vector2i.ZERO)
+		
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			_handle_click(event.global_position)
+
+func _handle_click(global_pos: Vector2) -> void:
+	# 1. Convertir posición global a local del TileMapLayer
+	var local_pos = tile_map_layer_texture.to_local(global_pos)
+	
+	# 2. Convertir posición local a coordenadas de celda
+	var coords = tile_map_layer_texture.local_to_map(local_pos)
+	
+	# 3. Verificar que la celda existe en el mapa
+	var tile = map.get_tile_at(coords)
+	if tile == null:
+		return
+	
+	emit_signal("tile_clicked", coords, tile)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#recibe señales
