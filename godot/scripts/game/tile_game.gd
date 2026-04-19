@@ -51,9 +51,9 @@ func get_unit_info() -> Dictionary:
 		"card_dodge": _unit._cardRes.dodge,
 		"card_portrait": _unit._cardRes.portrait,
 		"card_resistances":_unit._cardRes.resistances,
-		"card_habilities": _unit._habilities,
+		"card_available_habilities":_unit._habilities,
+		"card_habilities": _unit._cardRes.habilities,
 		"card_currentAlterStates": _unit._currentAlterStates,
-		"card_types": _unit._cardRes.types,
 		"card_weight": _unit._cardRes.weight
 		
 		
