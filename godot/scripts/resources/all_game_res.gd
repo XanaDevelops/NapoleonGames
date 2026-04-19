@@ -112,7 +112,7 @@ static func get_folder_name(scr: Script) -> StringName:
 	elif script_name.ends_with("Resource"):
 		script_name = script_name.substr(0, script_name.length() - 8)
 
-	var plural := _camel_to_snake(script_name) # + "s"
+	var plural := script_name.to_snake_case() # + "s"
 	if not plural.ends_with("s"):
 		if plural.ends_with("y"):
 			plural = plural.substr(0, plural.length() - 1) + "ies"
@@ -130,17 +130,6 @@ static func get_folder_name_for_resource(res: GameResource) -> StringName:
 		
 	return get_folder_name(res.get_script())
 	
-## FIXME, usa .to_snake_case()!
-static func _camel_to_snake(name: String) -> String:
-	var out := ""
-	var i := 0
-	for ch in name:
-		if i > 0 and ch == ch.to_upper() and ch != ch.to_lower():
-			out += "_"
-		out += ch.to_lower()
-		i += 1
-	return out
-
 static func _pad_left_zeros(val, width := 4) -> String:
 	var s := str(val)
 	while s.length() < width:
