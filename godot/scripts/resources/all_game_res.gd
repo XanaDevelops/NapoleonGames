@@ -4,7 +4,7 @@
 ##
 ## [br]
 ##
-## Atributos:[br]
+## Atributos (IMPORTANTE: no modificar directamente):[br]
 ## - metadata: Metadatos del proyecto ([MetadataRes]).[br]
 ## - users: Lista de usuarios ([UserRes]).[br]
 ## - card_types: Tipos de carta ([CardTypeRes]).[br]
@@ -25,6 +25,9 @@ extends GameResource
 # Path por defecto
 const _folder := "res://resources/"
 const _path := _folder + "all_game_res.tres"
+const _asset_folder := "res://assets/"
+
+const DELETE_AFTER_PACK := false
 
 var _cache : Dictionary[Script, Dictionary] = {}
 
@@ -120,7 +123,6 @@ static func get_folder_name(scr: Script) -> StringName:
 			plural = plural + "s"
 
 	return plural
-	
 
 ## A lo mejor mover esto a GameResource.gd?
 # Devuelve el nombre de la carpeta (snake_case plural) para un recurso `GameResource`
@@ -129,12 +131,6 @@ static func get_folder_name_for_resource(res: GameResource) -> StringName:
 		return &""
 		
 	return get_folder_name(res.get_script())
-	
-static func _pad_left_zeros(val, width := 4) -> String:
-	var s := str(val)
-	while s.length() < width:
-		s = "0" + s
-	return s
 	
 ## Extrae los recursos contenidos en la carpeta destino
 ## TODO: metadata
@@ -150,7 +146,7 @@ func unpack(folder := _folder) -> void:
 			for res in arr:
 				if res == null:
 					continue
-				var fname := _pad_left_zeros(res.uid, 4) + ".tres"
+				var fname := str(res.uid).lpad(4, "0") + ".tres"
 				var path := folder + folder_name + "/" + fname
 				var err := ResourceSaver.save(res, path)
 				if err != OK:
@@ -169,20 +165,24 @@ func pack(folder := _folder) -> void:
 			var path := folder+folder_name+"/"+file
 			print("Cargando: " + path)
 			var res := ResourceLoader.load(path, scr.get_global_name())
-			print(res.get_script())
+			#print(res.get_script())
 			if scr == MetadataRes:
 				pass
 			else:
-				var i : int = self.get(folder_name).find_custom(func (e: GameResource): return e.uid == res.uid)
-				print("i: " + str(i))
-				if i == -1: # no lo tenemos
-					print(folder_name)
-					print(self.get(folder_name))
-					self.get(folder_name).append(res)
-					#pass
-				else:
-					push_warning("Recurso duplicado??")
-	_update_cache()
+				set_in_cache(res)
+				
+	if DELETE_AFTER_PACK:
+		for scr : Script in self.game_resources:
+			var folder_name := get_folder_name(scr)
+			if scr == MetadataRes:
+				pass
+			else:
+				self.set(folder_name, [])
+			var dirFolder := DirAccess.open(folder+folder_name)
+			for file in ResourceLoader.list_directory(folder+folder_name):
+				var path := folder+folder_name+"/"+file
+				dirFolder.remove(path)
+
 
 ## Devuelve el GameRes que coincida con el tipo y uid
 ## si no, devuelve null
@@ -193,10 +193,33 @@ func get_res_from_uid(uid: int, gameRes : Script) -> GameResource:
 		
 	return _cache.get(gameRes).get(uid)
 	
+## Guarda un nuevo recurso en cache
 func set_in_cache(gameRes : GameResource) -> void:
 	var scr : Script = gameRes.get_script()
 	
+	# guardar en cache
 	if scr not in _cache:
 		_cache.set(scr, {})
-	var _dict = _cache.get(scr)
+	var _dict : Dictionary = _cache.get(scr)
+	
+	var has := _dict.has(gameRes.uid)
 	_dict.set(gameRes.uid, gameRes)
+	
+	# guardar en los arrays
+	var name := get_folder_name(scr)
+	
+	if has:
+		var arr : Array = self.get(name)
+		var i := arr.find_custom(func (x:GameResource): return x.uid == gameRes.uid)
+		arr[i] = gameRes
+		push_warning("Actualizando ", scr.get_global_name(), " ", gameRes.uid)
+	else:
+		self.get(name).append(gameRes)
+		
+	#TODO: pensar si mantener ordenado esos arrays o no...
+
+## Elimina un recurso de cache
+## no se puede deshacer
+func del_from_cache(gameRes: GameResource) -> void:
+	pass
+	

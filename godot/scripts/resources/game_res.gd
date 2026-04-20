@@ -12,6 +12,7 @@ extends Resource
 ## Marca en los JSON que indica que el nombre es de una clase de Godot
 ## no el nombre de un atributo
 const GR_MARK := &"@"
+const T2D_MARK := &"#Texture2D"
 
 func _process_array(array: Array) -> Array:
 	var typed : Script = array.get_typed_script()
@@ -116,8 +117,14 @@ func to_json_dict() -> Dictionary[String, Variant]:
 					var typed : Script = obj.get_script()
 					if typed != null and typed.get_base_script() == GameResource:
 						body.set(prop.name, {GR_MARK+typed.get_global_name(): (obj as GameResource).uid})
+					
+					elif prop.class_name == &"Texture2D":
+						obj = obj as Texture2D
+						var data : String = obj.resource_path.trim_prefix(GameResources._asset_folder)
+						body.set(prop.name, {T2D_MARK: data})
+					
 					else:
-						push_warning("No es un GameResource ", typed)
+						push_warning("No es un Objeto soportado ", typed)
 				_:
 					push_error("what? GameResource tiene: ", prop.type)
 	return {GR_MARK+(get_script() as Script).get_global_name(): body}
@@ -126,12 +133,19 @@ func to_json_dict() -> Dictionary[String, Variant]:
 static func _parse_dictionary(dict: Dictionary) -> Variant:
 	var keys : Array = dict.keys()
 	var key0 : String = keys[0]
+	
+	# si tenemos la referencia a un Texture2D
+	if keys.size() == 1 and key0 == T2D_MARK and dict[key0] is String:
+		return _resolve_T2D_MARK_data(dict[key0])
+	
 	# Si tenemos la referencia a un GameResource
 	if keys.size() == 1 and get_script_from_json_text(key0) != null and dict[key0] is float:
 		var gr := GameManager.get_game_resources()
 		var uid : int = dict[key0]
 		var script := get_script_from_json_text(key0)
 		return gr.get_res_from_uid(uid, script)
+		
+	
 	
 	var res : Dictionary = {}
 	for key in keys:
@@ -206,12 +220,27 @@ static func parse_json(json_text : String) -> GameResource:
 			game_res.get(param).assign(_parse_array(value))
 			
 		else:
-			game_res.set(param, value)
+			if key != T2D_MARK:
+				game_res.set(param, value)
+			else:
+				game_res.set(param, _resolve_T2D_MARK_data(value))
 	return game_res
+	
+## Calcula y devuelve la imagen asociada
+## TODO: pedir al server si no existe en local
+static func _resolve_T2D_MARK_data(path: String) -> Texture2D:
+	var file := GameResources._asset_folder + path
+	if !ResourceLoader.exists(file):
+		push_error("TODO: descargar del server ", path)
+		return null
+	var t2d : Texture2D = load(file)
+	
+	return t2d
+	
 	
 static func get_script_from_json_text(text: String) -> Script:
 	if !text.begins_with(GR_MARK):
-		push_error(text, " no tiene la marca de un GameResource")
+		push_warning(text, " no tiene la marca de un GameResource")
 		return null
 	var scr_name := text.trim_prefix(GR_MARK)
 	for res in GameResources.game_resources:
