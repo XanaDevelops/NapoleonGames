@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="UserRes" format=3 uid="uid://dv2und8vcdag5"]
+[gd_resource type="Resource" script_class="UserRes" format=3 uid="uid://cdkr6xdx4vfho"]
 
 [ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="1_1luw5"]
-[ext_resource type="Resource" uid="uid://7d851n11oc2a" path="res://resources/cards/0001.tres" id="2_5oa5q"]
-[ext_resource type="Resource" uid="uid://d5k80vu3hunu" path="res://resources/cards/0002.tres" id="3_aq2ka"]
+[ext_resource type="Resource" path="res://resources/cards/0001.tres" id="2_5oa5q"]
+[ext_resource type="Resource" path="res://resources/cards/0002.tres" id="3_aq2ka"]
 [ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="4_0url1"]
-[ext_resource type="Resource" uid="uid://bngnauf55ech" path="res://resources/maps/0001.tres" id="5_aq2ka"]
+[ext_resource type="Resource" uid="uid://b2lj7ueulj2qw" path="res://resources/maps/0001.tres" id="5_aq2ka"]
 [ext_resource type="Script" uid="uid://ce5uvgu640fxr" path="res://scripts/resources/user_res.gd" id="5_m3u0r"]
-[ext_resource type="Texture2D" uid="uid://cvc2838mfbk7r" path="res://icon.svg" id="6_i5a77"]
+[ext_resource type="Texture2D" uid="uid://57cwexqf6uhy" path="res://assets/sprites/ui/iconos_de_botones/editar.png" id="7_aq2ka"]
 [ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="7_w8ttf"]
 [ext_resource type="Script" uid="uid://chjdn7qg0thht" path="res://scripts/resources/card_army_group.gd" id="9_0url1"]
 
@@ -30,7 +30,7 @@ script = ExtResource("5_m3u0r")
 name = "Lord Xana"
 username = &"lordxana"
 email = "xana@lyoko.com"
-img = ExtResource("6_i5a77")
+img = ExtResource("7_aq2ka")
 token = "666"
 availableCards = Dictionary[ExtResource("1_1luw5"), int]({
 ExtResource("2_5oa5q"): 3,
