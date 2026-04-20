@@ -2,7 +2,9 @@ extends GutTest
 
 
 func test_test() -> void:
-	pass
+	
+	
+	pass_test("todo")
 
 
 func test_print_folder_names() -> void:
