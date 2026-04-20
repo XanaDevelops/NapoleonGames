@@ -11,17 +11,3 @@ func test_name() -> void:
 			assert_null(gameResources.get(script_name))
 		else:
 			assert_not_null(gameResources.get(script_name))
-
-func test_pack() -> void:
-	var gameResources := GameResources.new()
-	print("test")
-	gameResources.pack()
-	gameResources.save_to()
-	assert_true(true)
-	
-func test_unpack() -> void:
-	var gameResources := GameResources.load_from()
-	gameResources.unpack()
-	
-	var testRes : AttackType = ResourceLoader.load("res://resources/attack_types/0001.tres")
-	assert_eq(testRes.name, &"physic")

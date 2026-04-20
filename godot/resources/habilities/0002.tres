@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="HabilityRes" format=3]
+[gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://cny6llqg71ojv"]
 
-[ext_resource type="Script" path="res://scripts/resources/alter_state_res.gd" id="1_rep7s"]
-[ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="2_da0tt"]
-[ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="3_n06cp"]
-[ext_resource type="Resource" path="res://resources/stat_datas/0001.tres" id="4_8p03u"]
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_rep7s"]
+[ext_resource type="Resource" uid="uid://c6gllr8n2j6eu" path="res://resources/attack_types/0002.tres" id="2_da0tt"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="3_n06cp"]
+[ext_resource type="Resource" uid="uid://bhu302qlgro8b" path="res://resources/stat_datas/0001.tres" id="4_8p03u"]
 
 [resource]
 script = ExtResource("3_n06cp")

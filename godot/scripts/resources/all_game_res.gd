@@ -133,6 +133,7 @@ static func get_folder_name_for_resource(res: GameResource) -> StringName:
 	return get_folder_name(res.get_script())
 	
 ## Extrae los recursos contenidos en la carpeta destino
+## Además, deja GameResources con las referencias a los archivos
 ## TODO: metadata
 func unpack(folder := _folder) -> void:
 	for scr : Script in self.game_resources:
@@ -146,12 +147,19 @@ func unpack(folder := _folder) -> void:
 			for res in arr:
 				if res == null:
 					continue
-				var fname := str(res.uid).lpad(4, "0") + ".tres"
-				var path := folder + folder_name + "/" + fname
-				var err := ResourceSaver.save(res, path)
-				if err != OK:
-					push_warning("Failed saving resource: " + path + " err=" + str(err))
-	
+				_unpack(res, folder + folder_name + "/")
+				
+
+
+## Guarda en un archivo acorde en la carpeta root
+static func _unpack(res: GameResource, root: String) -> void:
+	var fname := str(res.uid).lpad(4, "0") + ".tres"
+	var path := root + fname
+	DirAccess.make_dir_recursive_absolute(root)
+	var err := ResourceSaver.save(res, path)
+	if err != OK:
+		push_warning("Failed saving resource: " + path + " err=" + str(err))
+
 ## Importar desde la carpeta folder
 ## TODO: metadata
 func pack(folder := _folder) -> void:
@@ -164,12 +172,15 @@ func pack(folder := _folder) -> void:
 		for file in ResourceLoader.list_directory(folder+folder_name):
 			var path := folder+folder_name+"/"+file
 			print("Cargando: " + path)
-			var res := ResourceLoader.load(path, scr.get_global_name())
+			var res : GameResource = ResourceLoader.load(path, scr.get_global_name())
+		
+			var new_res := GameResource.parse_json(JSON.stringify(res.to_json_dict()))
+
 			#print(res.get_script())
 			if scr == MetadataRes:
 				pass
 			else:
-				set_in_cache(res)
+				set_in_cache(new_res)
 				
 	if DELETE_AFTER_PACK:
 		for scr : Script in self.game_resources:
