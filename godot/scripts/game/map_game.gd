@@ -36,16 +36,16 @@ func get_neightbours(pos: Vector2i) -> Array[Vector2i]:
 	
 	# No existen arrays hexagonales, por lo que segun la paridad de la posicion
 	# se calculan unos vecinos u otros
-	if x%2 == 1:
-		y += 1
+	if y%2 == 1:
+		x += 1
 	else:
-		y -= 1
+		x -= 1
 		
-	if y >= 0 and y < _map.size():
-		if x-1 >= 0:
-			neight.append(Vector2i(x-1, y))
-		if x+1 < _map[y].size():
-			neight.append(Vector2i(x+1, y))
+	if x >= 0 and x < _map[0].size():
+		if y-1 >= 0:
+			neight.append(Vector2i(x, y-1))
+		if y+1 < _map.size():
+			neight.append(Vector2i(x, y+1))
 	
 	return neight
 ## Mueve una unidad de 'start' a 'end'

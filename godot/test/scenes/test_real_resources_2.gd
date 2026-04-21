@@ -41,6 +41,8 @@ func test_sandbox_interactivo_movimiento() -> void:
 
 
 	gut.pause_before_teardown()
+	
+	pass_test("mirar ui")
 
 func _find_visualizer_node(node: Node) -> mapVisualizer:
 	if node is mapVisualizer: 

@@ -61,7 +61,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
 	if unit._owner == get_current_user():
 	
 		map_logic.move_unit(start, end)
-		unit.has_moved_this_turn = true
+		#unit.has_moved_this_turn = true
 		visualizador.plot_unit_moved(start, end)
 		
 		var action = TurnAction.new()
