@@ -1,41 +1,10 @@
-[gd_resource type="Resource" script_class="TileRes" format=3 uid="uid://bdok273vqmxip"]
+[gd_resource type="Resource" script_class="TileRes" format=3]
 
-[ext_resource type="Script" uid="uid://bmy17ix6av5bg" path="res://scripts/resources/tile_res.gd" id="1_sl4fx"]
-[ext_resource type="Script" uid="uid://cnh4gjirdr73b" path="res://scripts/resources/tile_mod_res.gd" id="2_45ow8"]
-[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="3_ftdkq"]
-[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="4_myq3r"]
-[ext_resource type="Script" uid="uid://d4fyta6ugot35" path="res://scripts/resources/tile_type_res.gd" id="5_snhs7"]
-[ext_resource type="Texture2D" uid="uid://cdelg8nbko8kf" path="res://assets/tiles/EverHex-Forest Lite/Sky/blue/1.png" id="6_l5o2q"]
-
-[sub_resource type="Resource" id="Resource_hv8fm"]
-script = ExtResource("3_ftdkq")
-name = &"Unidad"
-desc = "Unidad básica, lol"
-uid = 1
-
-[sub_resource type="Resource" id="Resource_cdg0l"]
-script = ExtResource("4_myq3r")
-name = &"speed"
-desc = "Velocidad de la tropa"
-uid = 3
-
-[sub_resource type="Resource" id="Resource_isbv1"]
-script = ExtResource("2_45ow8")
-value = 999.0
-stat = SubResource("Resource_cdg0l")
-affectType = SubResource("Resource_hv8fm")
-uid = 1
-
-[sub_resource type="Resource" id="Resource_tg3fc"]
-script = ExtResource("5_snhs7")
-name = &"rocas"
-desc = "no tan facil"
-mods = Array[ExtResource("2_45ow8")]([SubResource("Resource_isbv1")])
-texture = ExtResource("6_l5o2q")
-uid = 2
+[ext_resource type="Script" path="res://scripts/resources/tile_res.gd" id="1_sl4fx"]
+[ext_resource type="Resource" path="res://resources/tile_types/0002.tres" id="2_sl4fx"]
 
 [resource]
 script = ExtResource("1_sl4fx")
 height = 1
-type = SubResource("Resource_tg3fc")
+type = ExtResource("2_sl4fx")
 uid = 9

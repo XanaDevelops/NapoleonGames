@@ -163,7 +163,7 @@ func _unpack(res: GameResource, root: String) -> void:
 		push_warning("Failed saving resource: " + path + " err=" + str(err))
 		return
 		
-	set_in_cache(new_res)
+	set_in_cache(load(path))
 
 ## Importar desde la carpeta folder
 ## TODO: metadata
@@ -229,7 +229,8 @@ func set_in_cache(gameRes : GameResource) -> void:
 	if has:
 		var arr : Array = self.get(name)
 		var i := arr.find_custom(func (x:GameResource): return x.uid == gameRes.uid)
-		(arr[i] as GameResource).update_vals(gameRes)
+		#(arr[i] as GameResource).update_vals(gameRes)
+		arr[i] = gameRes
 		push_warning("Actualizando ", scr.get_global_name(), " ", gameRes.uid)
 	else:
 		# comprobar que no sea un subrecurso que no interese tener en array

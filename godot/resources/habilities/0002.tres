@@ -1,27 +1,16 @@
-[gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://cxjgfw6ayksdj"]
+[gd_resource type="Resource" script_class="HabilityRes" format=3]
 
-[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_rep7s"]
-[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="2_rep7s"]
-[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="3_n06cp"]
-[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="4_da0tt"]
-
-[sub_resource type="Resource" id="Resource_rep7s"]
-script = ExtResource("2_rep7s")
-name = &"magic"
-uid = 2
-
-[sub_resource type="Resource" id="Resource_8ej3f"]
-script = ExtResource("4_da0tt")
-name = &"attack"
-desc = "daño de ataque"
-uid = 1
+[ext_resource type="Script" path="res://scripts/resources/alter_state_res.gd" id="1_rep7s"]
+[ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="2_rep7s"]
+[ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="3_n06cp"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0001.tres" id="4_da0tt"]
 
 [resource]
 script = ExtResource("3_n06cp")
 name = &"flechazo"
 desc = "Lanza una flecha magica"
 value = 10.0
-stat = SubResource("Resource_8ej3f")
-attackType = SubResource("Resource_rep7s")
+stat = ExtResource("4_da0tt")
+attackType = ExtResource("2_rep7s")
 radius = 3
 uid = 2

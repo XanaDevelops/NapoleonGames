@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="MapRes" format=3 uid="uid://gv6867bgsaa7"]
+[gd_resource type="Resource" script_class="MapRes" format=3]
 
 [ext_resource type="Resource" path="res://resources/tiles/0001.tres" id="1_2qxdn"]
 [ext_resource type="Resource" path="res://resources/tiles/0002.tres" id="2_5w1q5"]
 [ext_resource type="Resource" path="res://resources/tiles/0003.tres" id="3_u2rvt"]
 [ext_resource type="Resource" path="res://resources/tiles/0004.tres" id="4_ome67"]
-[ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="4_p6tef"]
+[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="4_p6tef"]
 [ext_resource type="Resource" path="res://resources/tiles/0005.tres" id="5_5rwvs"]
 [ext_resource type="Resource" path="res://resources/tiles/0006.tres" id="6_kmydw"]
 [ext_resource type="Resource" path="res://resources/tiles/0007.tres" id="7_p40sh"]

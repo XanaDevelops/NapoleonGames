@@ -5,8 +5,8 @@ func test_pack_unpack() -> void:
 	var gameress :=  GameManager.get_game_resources()
 	gameress.pack()
 	gameress.save_to()
-	##gameress.unpack()
-	##gameress.save_to()
+	gameress.unpack()
+	gameress.save_to()
 	
 	pass_test("check")
 	

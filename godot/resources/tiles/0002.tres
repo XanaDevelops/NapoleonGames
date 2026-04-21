@@ -1,19 +1,10 @@
-[gd_resource type="Resource" script_class="TileRes" format=3 uid="uid://dvirnvp31ybqq"]
+[gd_resource type="Resource" script_class="TileRes" format=3]
 
-[ext_resource type="Script" uid="uid://bmy17ix6av5bg" path="res://scripts/resources/tile_res.gd" id="1_ucxvr"]
-[ext_resource type="Script" uid="uid://cnh4gjirdr73b" path="res://scripts/resources/tile_mod_res.gd" id="2_xw682"]
-[ext_resource type="Script" uid="uid://d4fyta6ugot35" path="res://scripts/resources/tile_type_res.gd" id="3_w3h6t"]
-[ext_resource type="Texture2D" uid="uid://dh1y3p0beadlo" path="res://assets/tiles/EverHex-Forest Lite/Forest/1.png" id="4_u6gpf"]
-
-[sub_resource type="Resource" id="Resource_kag3p"]
-script = ExtResource("3_w3h6t")
-name = &"planicie"
-desc = "paso ez"
-texture = ExtResource("4_u6gpf")
-uid = 1
+[ext_resource type="Script" path="res://scripts/resources/tile_res.gd" id="1_ucxvr"]
+[ext_resource type="Resource" path="res://resources/tile_types/0001.tres" id="2_ucxvr"]
 
 [resource]
 script = ExtResource("1_ucxvr")
 height = 1
-type = SubResource("Resource_kag3p")
+type = ExtResource("2_ucxvr")
 uid = 2

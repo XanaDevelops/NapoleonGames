@@ -2,329 +2,67 @@
 
 [ext_resource type="Script" path="res://scripts/resources/alter_state_res.gd" id="1_7pwyr"]
 [ext_resource type="Script" path="res://scripts/resources/army_res.gd" id="2_quie6"]
-[ext_resource type="Script" path="res://scripts/resources/card_army_group.gd" id="3_5um8n"]
 [ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="3_80616"]
+[ext_resource type="Resource" path="res://resources/armies/0001.tres" id="3_c8v8g"]
+[ext_resource type="Resource" path="res://resources/armies/0002.tres" id="4_k5wek"]
+[ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="6_mj3bk"]
 [ext_resource type="Script" path="res://scripts/resources/card_type_res.gd" id="6_vwhd4"]
-[ext_resource type="Texture2D" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="7_10q82"]
-[ext_resource type="Texture2D" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="8_ej5gv"]
+[ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="7_vioyl"]
 [ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="8_q7fox"]
+[ext_resource type="Resource" path="res://resources/card_types/0001.tres" id="9_1jai1"]
+[ext_resource type="Resource" path="res://resources/cards/0001.tres" id="11_1nulq"]
 [ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="11_60c35"]
+[ext_resource type="Resource" path="res://resources/cards/0002.tres" id="12_t1ldd"]
+[ext_resource type="Resource" path="res://resources/habilities/0001.tres" id="14_5dmu5"]
 [ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="14_wh2kh"]
-[ext_resource type="Texture2D" path="res://assets/tiles/EverHex-Forest Lite/Forest/1.png" id="15_j1e8h"]
+[ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="15_fv4nc"]
 [ext_resource type="Script" path="res://scripts/resources/all_game_res.gd" id="15_y3xpg"]
 [ext_resource type="Script" path="res://scripts/resources/stat_res.gd" id="16_qmt1m"]
-[ext_resource type="Texture2D" path="res://assets/tiles/EverHex-Forest Lite/Sky/blue/1.png" id="16_yvi4t"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/iconos_de_botones/editar.png" id="19_y8dw2"]
+[ext_resource type="Resource" path="res://resources/maps/0001.tres" id="17_i6b4a"]
 [ext_resource type="Script" path="res://scripts/resources/tile_mod_res.gd" id="20_0eyc4"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/iconos_de_botones/cerrar.png" id="20_wp8t0"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0001.tres" id="20_35tx5"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0002.tres" id="21_5kkwk"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0003.tres" id="22_m0tnl"]
 [ext_resource type="Script" path="res://scripts/resources/tile_type_res.gd" id="22_p1cgm"]
+[ext_resource type="Resource" path="res://resources/tile_mods/0001.tres" id="24_neeky"]
 [ext_resource type="Script" path="res://scripts/resources/tile_res.gd" id="25_c8v8g"]
+[ext_resource type="Resource" path="res://resources/tile_types/0001.tres" id="26_aua58"]
 [ext_resource type="Script" path="res://scripts/resources/user_res.gd" id="26_k5wek"]
-
-[sub_resource type="Resource" id="Resource_7pwyr"]
-script = ExtResource("3_80616")
-name = &"physic"
-uid = 1
-
-[sub_resource type="Resource" id="Resource_quie6"]
-script = ExtResource("16_qmt1m")
-name = &"attack"
-desc = "daño de ataque"
-uid = 1
-
-[sub_resource type="Resource" id="Resource_80616"]
-script = ExtResource("11_60c35")
-name = &"espadazo"
-desc = "ataque corto de espada"
-value = 7.0
-stat = SubResource("Resource_quie6")
-attackType = SubResource("Resource_7pwyr")
-radius = 1
-uid = 1
-
-[sub_resource type="Resource" id="Resource_y6jhn"]
-script = ExtResource("3_80616")
-name = &"magic"
-uid = 2
-
-[sub_resource type="Resource" id="Resource_t0j3a"]
-script = ExtResource("11_60c35")
-name = &"flechazo"
-desc = "Lanza una flecha magica"
-value = 10.0
-stat = SubResource("Resource_quie6")
-attackType = SubResource("Resource_y6jhn")
-radius = 3
-uid = 2
-
-[sub_resource type="Resource" id="Resource_vwhd4"]
-script = ExtResource("6_vwhd4")
-name = &"Unidad"
-desc = "Unidad básica, lol"
-uid = 1
-
-[sub_resource type="Resource" id="Resource_df45x"]
-script = ExtResource("8_q7fox")
-name = &"Mele Unit"
-desc = "unidad a mele"
-hp = 20
-speed = 5
-dodge = 0.35
-portrait = ExtResource("8_ej5gv")
-img = ExtResource("7_10q82")
-resistances = Dictionary[ExtResource("3_80616"), int]({
-SubResource("Resource_7pwyr"): 15,
-SubResource("Resource_y6jhn"): 5
-})
-habilities = Array[ExtResource("11_60c35")]([SubResource("Resource_80616"), SubResource("Resource_t0j3a")])
-types = Array[ExtResource("6_vwhd4")]([SubResource("Resource_vwhd4")])
-uid = 1
-
-[sub_resource type="Resource" id="Resource_q7fox"]
-script = ExtResource("3_5um8n")
-cardType = SubResource("Resource_df45x")
-n = 3
-uid = 1
-
-[sub_resource type="Resource" id="Resource_lsxbk"]
-script = ExtResource("2_quie6")
-nom = &"superArmy1"
-isActive = true
-agrupations = Array[ExtResource("3_5um8n")]([SubResource("Resource_q7fox")])
-uid = 1
-
-[sub_resource type="Resource" id="Resource_r0ky1"]
-script = ExtResource("3_5um8n")
-cardType = SubResource("Resource_df45x")
-n = 3
-uid = 2
-
-[sub_resource type="Resource" id="Resource_60c35"]
-script = ExtResource("2_quie6")
-nom = &"superArmy2"
-isActive = true
-agrupations = Array[ExtResource("3_5um8n")]([SubResource("Resource_r0ky1")])
-uid = 2
-
-[sub_resource type="Resource" id="Resource_e07fo"]
-script = ExtResource("8_q7fox")
-name = &"Ranged Unit"
-desc = "Unidad a distancia"
-hp = 10
-mana = 10
-speed = 6
-dodge = 0.1
-resistances = Dictionary[ExtResource("3_80616"), int]({
-SubResource("Resource_7pwyr"): 5,
-SubResource("Resource_y6jhn"): 5
-})
-habilities = Array[ExtResource("11_60c35")]([SubResource("Resource_t0j3a")])
-types = Array[ExtResource("6_vwhd4")]([SubResource("Resource_vwhd4")])
-uid = 2
-
-[sub_resource type="Resource" id="Resource_8e42l"]
-script = ExtResource("22_p1cgm")
-name = &"planicie"
-desc = "paso ez"
-texture = ExtResource("15_j1e8h")
-uid = 1
-
-[sub_resource type="Resource" id="Resource_wh2kh"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 1
-
-[sub_resource type="Resource" id="Resource_y3xpg"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 2
-
-[sub_resource type="Resource" id="Resource_qmt1m"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 3
-
-[sub_resource type="Resource" id="Resource_ioe74"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 4
-
-[sub_resource type="Resource" id="Resource_nbaek"]
-script = ExtResource("25_c8v8g")
-height = 100
-type = SubResource("Resource_8e42l")
-uid = 5
-
-[sub_resource type="Resource" id="Resource_ub2ig"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 6
-
-[sub_resource type="Resource" id="Resource_0eyc4"]
-script = ExtResource("16_qmt1m")
-name = &"speed"
-desc = "Velocidad de la tropa"
-uid = 3
-
-[sub_resource type="Resource" id="Resource_ujolu"]
-script = ExtResource("20_0eyc4")
-value = 999.0
-stat = SubResource("Resource_0eyc4")
-affectType = SubResource("Resource_vwhd4")
-uid = 1
-
-[sub_resource type="Resource" id="Resource_p1cgm"]
-script = ExtResource("22_p1cgm")
-name = &"rocas"
-desc = "no tan facil"
-mods = Array[ExtResource("20_0eyc4")]([SubResource("Resource_ujolu")])
-texture = ExtResource("16_yvi4t")
-uid = 2
-
-[sub_resource type="Resource" id="Resource_ridsy"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_p1cgm")
-uid = 7
-
-[sub_resource type="Resource" id="Resource_iuvtm"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 8
-
-[sub_resource type="Resource" id="Resource_c8v8g"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_p1cgm")
-uid = 9
-
-[sub_resource type="Resource" id="Resource_k5wek"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 10
-
-[sub_resource type="Resource" id="Resource_mj3bk"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 11
-
-[sub_resource type="Resource" id="Resource_vioyl"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_p1cgm")
-uid = 12
-
-[sub_resource type="Resource" id="Resource_1jai1"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 13
-
-[sub_resource type="Resource" id="Resource_1nulq"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_p1cgm")
-uid = 14
-
-[sub_resource type="Resource" id="Resource_t1ldd"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 15
-
-[sub_resource type="Resource" id="Resource_5dmu5"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 16
-
-[sub_resource type="Resource" id="Resource_fv4nc"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 17
-
-[sub_resource type="Resource" id="Resource_i6b4a"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 18
-
-[sub_resource type="Resource" id="Resource_35tx5"]
-script = ExtResource("25_c8v8g")
-height = 1
-type = SubResource("Resource_8e42l")
-uid = 19
-
-[sub_resource type="Resource" id="Resource_5kkwk"]
-script = ExtResource("25_c8v8g")
-height = 100
-type = SubResource("Resource_8e42l")
-uid = 20
-
-[sub_resource type="Resource" id="Resource_m0tnl"]
-script = ExtResource("14_wh2kh")
-name = &"test_map_01"
-tamX = 5
-tamY = 4
-mapData = Array[Array]([[SubResource("Resource_wh2kh"), SubResource("Resource_y3xpg"), SubResource("Resource_qmt1m"), SubResource("Resource_ioe74"), SubResource("Resource_nbaek")], [SubResource("Resource_ub2ig"), SubResource("Resource_ridsy"), SubResource("Resource_iuvtm"), SubResource("Resource_c8v8g"), SubResource("Resource_k5wek")], [SubResource("Resource_mj3bk"), SubResource("Resource_vioyl"), SubResource("Resource_1jai1"), SubResource("Resource_1nulq"), SubResource("Resource_t1ldd")], [SubResource("Resource_5dmu5"), SubResource("Resource_fv4nc"), SubResource("Resource_i6b4a"), SubResource("Resource_35tx5"), SubResource("Resource_5kkwk")]])
-uid = 1
-
-[sub_resource type="Resource" id="Resource_neeky"]
-script = ExtResource("16_qmt1m")
-name = &"defense"
-desc = "La defensa"
-uid = 2
-
-[sub_resource type="Resource" id="Resource_aua58"]
-script = ExtResource("26_k5wek")
-name = "Lord Xana"
-username = &"lordxana"
-email = "xana@lyoko.com"
-img = ExtResource("19_y8dw2")
-token = "666"
-availableCards = Dictionary[ExtResource("8_q7fox"), int]({
-SubResource("Resource_df45x"): 3,
-SubResource("Resource_e07fo"): 2
-})
-availableMaps = Array[ExtResource("14_wh2kh")]([SubResource("Resource_m0tnl")])
-userArmys = Array[ExtResource("2_quie6")]([SubResource("Resource_lsxbk")])
-uid = 1
-
-[sub_resource type="Resource" id="Resource_pucry"]
-script = ExtResource("26_k5wek")
-name = "sussybaka"
-username = &"sussybaka"
-email = "amon@gus.lol"
-img = ExtResource("20_wp8t0")
-token = "777"
-availableCards = Dictionary[ExtResource("8_q7fox"), int]({
-SubResource("Resource_df45x"): 3,
-SubResource("Resource_e07fo"): 2
-})
-availableMaps = Array[ExtResource("14_wh2kh")]([SubResource("Resource_m0tnl")])
-userArmys = Array[ExtResource("2_quie6")]([SubResource("Resource_60c35")])
-uid = 2
+[ext_resource type="Resource" path="res://resources/tile_types/0002.tres" id="27_pucry"]
+[ext_resource type="Resource" path="res://resources/tiles/0001.tres" id="29_yp0rv"]
+[ext_resource type="Resource" path="res://resources/tiles/0002.tres" id="30_smaj7"]
+[ext_resource type="Resource" path="res://resources/tiles/0003.tres" id="31_7ic2b"]
+[ext_resource type="Resource" path="res://resources/tiles/0004.tres" id="32_alvlt"]
+[ext_resource type="Resource" path="res://resources/tiles/0005.tres" id="33_sk4sv"]
+[ext_resource type="Resource" path="res://resources/tiles/0006.tres" id="34_25exu"]
+[ext_resource type="Resource" path="res://resources/tiles/0007.tres" id="35_65kva"]
+[ext_resource type="Resource" path="res://resources/tiles/0008.tres" id="36_831jh"]
+[ext_resource type="Resource" path="res://resources/tiles/0009.tres" id="37_66w2b"]
+[ext_resource type="Resource" path="res://resources/tiles/0010.tres" id="38_l37vq"]
+[ext_resource type="Resource" path="res://resources/tiles/0011.tres" id="39_ye63u"]
+[ext_resource type="Resource" path="res://resources/tiles/0012.tres" id="40_vbio7"]
+[ext_resource type="Resource" path="res://resources/tiles/0013.tres" id="41_ect5a"]
+[ext_resource type="Resource" path="res://resources/tiles/0014.tres" id="42_lww5a"]
+[ext_resource type="Resource" path="res://resources/tiles/0015.tres" id="43_fm4bd"]
+[ext_resource type="Resource" path="res://resources/tiles/0016.tres" id="44_o8n0j"]
+[ext_resource type="Resource" path="res://resources/tiles/0017.tres" id="45_atj62"]
+[ext_resource type="Resource" path="res://resources/tiles/0018.tres" id="46_aahww"]
+[ext_resource type="Resource" path="res://resources/tiles/0019.tres" id="47_duqa4"]
+[ext_resource type="Resource" path="res://resources/tiles/0020.tres" id="48_vukjf"]
+[ext_resource type="Resource" path="res://resources/users/0001.tres" id="50_toexj"]
+[ext_resource type="Resource" path="res://resources/users/0002.tres" id="51_05j13"]
 
 [resource]
 script = ExtResource("15_y3xpg")
-users = Array[ExtResource("26_k5wek")]([SubResource("Resource_aua58"), SubResource("Resource_pucry")])
-card_types = Array[ExtResource("6_vwhd4")]([SubResource("Resource_vwhd4")])
-cards = Array[ExtResource("8_q7fox")]([SubResource("Resource_df45x"), SubResource("Resource_e07fo")])
-attack_types = Array[ExtResource("3_80616")]([SubResource("Resource_7pwyr"), SubResource("Resource_y6jhn")])
-habilities = Array[ExtResource("11_60c35")]([SubResource("Resource_80616"), SubResource("Resource_t0j3a")])
-tile_mods = Array[ExtResource("20_0eyc4")]([SubResource("Resource_ujolu")])
-tile_types = Array[ExtResource("22_p1cgm")]([SubResource("Resource_8e42l"), SubResource("Resource_p1cgm")])
-tiles = Array[ExtResource("25_c8v8g")]([SubResource("Resource_wh2kh"), SubResource("Resource_y3xpg"), SubResource("Resource_qmt1m"), SubResource("Resource_ioe74"), SubResource("Resource_nbaek"), SubResource("Resource_ub2ig"), SubResource("Resource_ridsy"), SubResource("Resource_iuvtm"), SubResource("Resource_c8v8g"), SubResource("Resource_k5wek"), SubResource("Resource_mj3bk"), SubResource("Resource_vioyl"), SubResource("Resource_1jai1"), SubResource("Resource_1nulq"), SubResource("Resource_t1ldd"), SubResource("Resource_5dmu5"), SubResource("Resource_fv4nc"), SubResource("Resource_i6b4a"), SubResource("Resource_35tx5"), SubResource("Resource_5kkwk")])
-maps = Array[ExtResource("14_wh2kh")]([SubResource("Resource_m0tnl")])
-armies = Array[ExtResource("2_quie6")]([SubResource("Resource_lsxbk"), SubResource("Resource_60c35")])
-stat_datas = Array[ExtResource("16_qmt1m")]([SubResource("Resource_quie6"), SubResource("Resource_neeky"), SubResource("Resource_0eyc4")])
+users = Array[ExtResource("26_k5wek")]([ExtResource("50_toexj"), ExtResource("51_05j13")])
+card_types = Array[ExtResource("6_vwhd4")]([ExtResource("9_1jai1")])
+cards = Array[ExtResource("8_q7fox")]([ExtResource("11_1nulq"), ExtResource("12_t1ldd")])
+attack_types = Array[ExtResource("3_80616")]([ExtResource("6_mj3bk"), ExtResource("7_vioyl")])
+habilities = Array[ExtResource("11_60c35")]([ExtResource("14_5dmu5"), ExtResource("15_fv4nc")])
+tile_mods = Array[ExtResource("20_0eyc4")]([ExtResource("24_neeky")])
+tile_types = Array[ExtResource("22_p1cgm")]([ExtResource("26_aua58"), ExtResource("27_pucry")])
+tiles = Array[ExtResource("25_c8v8g")]([ExtResource("29_yp0rv"), ExtResource("30_smaj7"), ExtResource("31_7ic2b"), ExtResource("32_alvlt"), ExtResource("33_sk4sv"), ExtResource("34_25exu"), ExtResource("35_65kva"), ExtResource("36_831jh"), ExtResource("37_66w2b"), ExtResource("38_l37vq"), ExtResource("39_ye63u"), ExtResource("40_vbio7"), ExtResource("41_ect5a"), ExtResource("42_lww5a"), ExtResource("43_fm4bd"), ExtResource("44_o8n0j"), ExtResource("45_atj62"), ExtResource("46_aahww"), ExtResource("47_duqa4"), ExtResource("48_vukjf")])
+maps = Array[ExtResource("14_wh2kh")]([ExtResource("17_i6b4a")])
+armies = Array[ExtResource("2_quie6")]([ExtResource("3_c8v8g"), ExtResource("4_k5wek")])
+stat_datas = Array[ExtResource("16_qmt1m")]([ExtResource("20_35tx5"), ExtResource("21_5kkwk"), ExtResource("22_m0tnl")])
 metadata/_custom_type_script = "uid://c1o5v8x6fs24v"
