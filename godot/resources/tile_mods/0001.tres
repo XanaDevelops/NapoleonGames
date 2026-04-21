@@ -1,13 +1,24 @@
-[gd_resource type="Resource" script_class="TileModRes" format=3 uid="uid://d2pw62bck6l0d"]
+[gd_resource type="Resource" script_class="TileModRes" format=3 uid="uid://dgn04w48f2l7u"]
 
-[ext_resource type="Resource" uid="uid://ci0rny5h6w2js" path="res://resources/card_types/0001.tres" id="1_hv8fm"]
+[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="1_hv8fm"]
 [ext_resource type="Script" uid="uid://cnh4gjirdr73b" path="res://scripts/resources/tile_mod_res.gd" id="1_sn381"]
-[ext_resource type="Resource" uid="uid://bp85ou6iqh8w4" path="res://resources/stat_datas/0003.tres" id="3_cdg0l"]
+[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="3_cdg0l"]
+
+[sub_resource type="Resource" id="Resource_hv8fm"]
+script = ExtResource("1_hv8fm")
+name = &"Unidad"
+desc = "Unidad básica, lol"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_cdg0l"]
+script = ExtResource("3_cdg0l")
+name = &"speed"
+desc = "Velocidad de la tropa"
+uid = 3
 
 [resource]
 script = ExtResource("1_sn381")
 value = 999.0
-stat = ExtResource("3_cdg0l")
-affectType = ExtResource("1_hv8fm")
+stat = SubResource("Resource_cdg0l")
+affectType = SubResource("Resource_hv8fm")
 uid = 1
-metadata/_custom_type_script = "uid://cnh4gjirdr73b"

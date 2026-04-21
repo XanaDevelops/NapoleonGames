@@ -15,30 +15,40 @@ const GR_MARK := &"@"
 const T2D_MARK := &"#Texture2D"
 
 func _process_array(array: Array) -> Array:
-	var typed : Script = array.get_typed_script()
-	if typed == null:
-		if array.get_typed_builtin() < TYPE_DICTIONARY:
-			return array
-		elif array.get_typed_builtin() == TYPE_DICTIONARY:
-			var _aux : Array = []
-			for a: Dictionary in array:
-				var type_key : Script = a.get_typed_key_script()
-				if type_key == null:
-					pass
-				elif type_key.get_base_script() == GameResource:
-					_aux.append({GR_MARK+type_key.get_global_name(): _process_dict_value(a)})
-			return _aux
-		else: # es array de array
-			var _aux : Array = []
-			for a in array:
-				_aux.append(_process_array(a))
-			return _aux
-	elif typed.get_base_script() == GameResource:
-		return array.map(func (x: GameResource): 
-						return {GR_MARK+typed.get_global_name(): x.uid})
-	else:
-		push_warning("TODO array: ", typed)
+	if array.size() == 0:
 		return array
+	var type : int
+	if array.is_typed():
+		type = array.get_typed_builtin()
+	else:
+		type = typeof(array[0])
+	
+	if type == TYPE_DICTIONARY:
+		var _aux : Array = []
+		for a: Dictionary in array:
+			var type_key : Script = a.get_typed_key_script()
+			if type_key == null:
+				pass
+			elif type_key.get_base_script() == GameResource:
+				_aux.append({GR_MARK+type_key.get_global_name(): _process_dict_value(a)})
+		return _aux
+	if type == TYPE_ARRAY:
+		var _aux : Array = []
+		for a in array:
+			_aux.append(_process_array(a))
+		return _aux
+	if type == TYPE_OBJECT:
+		var script : Script =  array[0].get_script() 
+		if script.get_base_script() == GameResource:
+			return array.map(func (x: GameResource): 
+				return {GR_MARK+script.get_global_name(): x.uid})
+		else:
+			push_warning("TODO array: ", array)
+			return array
+			
+	push_warning("TODO array: ", array)
+	return array
+		
 	
 func _get_key_repr(key: Variant) -> Variant:
 	if key is GameResource:
@@ -252,3 +262,13 @@ static func get_script_from_json_text(text: String) -> Script:
 	
 func compare(res: GameResource) -> bool:
 	return self.get_script() == res.get_script() and self.uid == res.uid
+
+# Copia los valores de res en self
+func update_vals(res: GameResource) -> void:
+	if res.get_script() != self.get_script():
+		push_warning("no son lo mismo!")
+		return
+	for prop in get_property_list():
+		if prop.usage & PropertyUsageFlags.PROPERTY_USAGE_DEFAULT and \
+			prop.usage & PropertyUsageFlags.PROPERTY_USAGE_SCRIPT_VARIABLE:
+				self.set(prop.name, res.get(prop.name))

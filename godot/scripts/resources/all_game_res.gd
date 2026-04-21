@@ -98,6 +98,7 @@ static var game_resources: Array[Script] = [
 	TileRes,
 	MapRes,
 	CardRes,
+	CardArmyGroup,
 	ArmyRes,
 	UserRes,
 	MetadataRes,
@@ -141,7 +142,7 @@ func unpack(folder := _folder) -> void:
 		if scr == MetadataRes:
 			pass
 		else:
-			var arr : Array = self.get(folder_name)
+			var arr = self.get(folder_name)
 			if arr == null:
 				continue
 			for res in arr:
@@ -152,23 +153,29 @@ func unpack(folder := _folder) -> void:
 
 
 ## Guarda en un archivo acorde en la carpeta root
-static func _unpack(res: GameResource, root: String) -> void:
+func _unpack(res: GameResource, root: String) -> void:
 	var fname := str(res.uid).lpad(4, "0") + ".tres"
 	var path := root + fname
 	DirAccess.make_dir_recursive_absolute(root)
-	var err := ResourceSaver.save(res, path)
+	var new_res := GameResource.parse_json(JSON.stringify(res.to_json_dict()))
+	var err := ResourceSaver.save(new_res, path)
 	if err != OK:
 		push_warning("Failed saving resource: " + path + " err=" + str(err))
+		return
+		
+	set_in_cache(new_res)
 
 ## Importar desde la carpeta folder
 ## TODO: metadata
 func pack(folder := _folder) -> void:
+	_cache.clear()
 	for scr : Script in self.game_resources:
 		var folder_name := get_folder_name(scr)
 		if scr == MetadataRes:
 			pass
 		else:
-			self.set(folder_name, [])
+			if self.get(folder_name) != null:
+				self.set(folder_name, [])
 		for file in ResourceLoader.list_directory(folder+folder_name):
 			var path := folder+folder_name+"/"+file
 			print("Cargando: " + path)
@@ -222,15 +229,32 @@ func set_in_cache(gameRes : GameResource) -> void:
 	if has:
 		var arr : Array = self.get(name)
 		var i := arr.find_custom(func (x:GameResource): return x.uid == gameRes.uid)
-		arr[i] = gameRes
+		(arr[i] as GameResource).update_vals(gameRes)
 		push_warning("Actualizando ", scr.get_global_name(), " ", gameRes.uid)
 	else:
-		self.get(name).append(gameRes)
+		# comprobar que no sea un subrecurso que no interese tener en array
+		# como CardArmyGroup
+		var arr = self.get(name)
+		if arr != null:
+			(arr as Array).append(gameRes)
 		
 	#TODO: pensar si mantener ordenado esos arrays o no...
 
 ## Elimina un recurso de cache
 ## no se puede deshacer
+## No trata las dependencias...
 func del_from_cache(gameRes: GameResource) -> void:
-	pass
+	var scr : Script = gameRes.get_script()
 	
+	# guardar en cache
+	if scr not in _cache:
+		_cache.set(scr, {})
+	var _dict : Dictionary = _cache.get(scr)
+	
+	var has := _dict.erase(gameRes.uid)
+		
+	# borrar en los arrays
+	var name := get_folder_name(scr)
+	if has:
+		var arr : Array = self.get(name)
+		arr.erase(gameRes)

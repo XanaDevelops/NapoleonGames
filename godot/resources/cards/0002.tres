@@ -1,13 +1,43 @@
-[gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://bepsr14lsasbs"]
+[gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://innxgep8vn6f"]
 
 [ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="1_csg87"]
-[ext_resource type="Resource" uid="uid://cny6llqg71ojv" path="res://resources/habilities/0002.tres" id="2_5u1va"]
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="2_46ni0"]
 [ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="3_5tldn"]
-[ext_resource type="Resource" uid="uid://jk0rcphxl8o7" path="res://resources/attack_types/0001.tres" id="4_xdvve"]
-[ext_resource type="Resource" uid="uid://c6gllr8n2j6eu" path="res://resources/attack_types/0002.tres" id="5_21faa"]
+[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="4_watfa"]
 [ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="6_s2s4f"]
 [ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="7_c5dnp"]
-[ext_resource type="Resource" uid="uid://ci0rny5h6w2js" path="res://resources/card_types/0001.tres" id="8_slsko"]
+
+[sub_resource type="Resource" id="Resource_rep7s"]
+script = ExtResource("3_5tldn")
+name = &"magic"
+uid = 2
+
+[sub_resource type="Resource" id="Resource_8ej3f"]
+script = ExtResource("4_watfa")
+name = &"attack"
+desc = "daño de ataque"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_tm67s"]
+script = ExtResource("1_csg87")
+name = &"flechazo"
+desc = "Lanza una flecha magica"
+value = 10.0
+stat = SubResource("Resource_8ej3f")
+attackType = SubResource("Resource_rep7s")
+radius = 3
+uid = 2
+
+[sub_resource type="Resource" id="Resource_1gsoq"]
+script = ExtResource("3_5tldn")
+name = &"physic"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_hv8fm"]
+script = ExtResource("7_c5dnp")
+name = &"Unidad"
+desc = "Unidad básica, lol"
+uid = 1
 
 [resource]
 script = ExtResource("6_s2s4f")
@@ -18,10 +48,9 @@ mana = 10
 speed = 6
 dodge = 0.1
 resistances = Dictionary[ExtResource("3_5tldn"), int]({
-ExtResource("4_xdvve"): 5,
-ExtResource("5_21faa"): 5
+SubResource("Resource_1gsoq"): 5,
+SubResource("Resource_rep7s"): 5
 })
-habilities = Array[ExtResource("1_csg87")]([ExtResource("2_5u1va")])
-types = Array[ExtResource("7_c5dnp")]([ExtResource("8_slsko")])
+habilities = Array[ExtResource("1_csg87")]([SubResource("Resource_tm67s")])
+types = Array[ExtResource("7_c5dnp")]([SubResource("Resource_hv8fm")])
 uid = 2
-metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

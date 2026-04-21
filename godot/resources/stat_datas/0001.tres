@@ -1,10 +1,9 @@
-[gd_resource type="Resource" script_class="StatData" format=3 uid="uid://bhu302qlgro8b"]
+[gd_resource type="Resource" script_class="StatData" format=3]
 
-[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="1_pphjk"]
+[ext_resource type="Script" path="res://scripts/resources/stat_res.gd" id="1_pphjk"]
 
 [resource]
 script = ExtResource("1_pphjk")
 name = &"attack"
 desc = "daño de ataque"
 uid = 1
-metadata/_custom_type_script = "uid://bcsdfa1f5drbr"

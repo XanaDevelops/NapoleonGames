@@ -1,29 +1,131 @@
-[gd_resource type="Resource" script_class="UserRes" format=3 uid="uid://c0lf2fgpitdlm"]
+[gd_resource type="Resource" script_class="UserRes" format=3 uid="uid://2d5yjbkan8ft"]
 
 [ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="1_lf4v0"]
-[ext_resource type="Resource" uid="uid://w1bmujuubth2" path="res://resources/cards/0001.tres" id="2_2nrnv"]
-[ext_resource type="Resource" uid="uid://bepsr14lsasbs" path="res://resources/cards/0002.tres" id="3_8dbxi"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="2_65nb2"]
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="3_tjrxg"]
+[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="4_bp2cv"]
 [ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="4_x851j"]
-[ext_resource type="Resource" uid="uid://bngnauf55ech" path="res://resources/maps/0001.tres" id="5_8dbxi"]
 [ext_resource type="Script" uid="uid://ce5uvgu640fxr" path="res://scripts/resources/user_res.gd" id="5_aidkp"]
+[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="5_gej1n"]
+[ext_resource type="Texture2D" uid="uid://b0yy2cwl13n5o" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="6_cwwtm"]
 [ext_resource type="Texture2D" uid="uid://de87s578gbsn2" path="res://assets/sprites/ui/iconos_de_botones/cerrar.png" id="7_8dbxi"]
 [ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="7_65nb2"]
+[ext_resource type="Texture2D" uid="uid://cfhl3bp06jbqv" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="7_y4qi1"]
+[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="8_cqwl8"]
 [ext_resource type="Script" uid="uid://chjdn7qg0thht" path="res://scripts/resources/card_army_group.gd" id="9_x851j"]
 
-[sub_resource type="Resource" id="Resource_m3u0r"]
+[sub_resource type="Resource" id="Resource_1gsoq"]
+script = ExtResource("4_bp2cv")
+name = &"physic"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_8ej3f"]
+script = ExtResource("5_gej1n")
+name = &"attack"
+desc = "daño de ataque"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_blkms"]
+script = ExtResource("2_65nb2")
+name = &"espadazo"
+desc = "ataque corto de espada"
+value = 7.0
+stat = SubResource("Resource_8ej3f")
+attackType = SubResource("Resource_1gsoq")
+radius = 1
+uid = 1
+
+[sub_resource type="Resource" id="Resource_rep7s"]
+script = ExtResource("4_bp2cv")
+name = &"magic"
+uid = 2
+
+[sub_resource type="Resource" id="Resource_tm67s"]
+script = ExtResource("2_65nb2")
+name = &"flechazo"
+desc = "Lanza una flecha magica"
+value = 10.0
+stat = SubResource("Resource_8ej3f")
+attackType = SubResource("Resource_rep7s")
+radius = 3
+uid = 2
+
+[sub_resource type="Resource" id="Resource_hv8fm"]
+script = ExtResource("8_cqwl8")
+name = &"Unidad"
+desc = "Unidad básica, lol"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_w8ttf"]
+script = ExtResource("1_lf4v0")
+name = &"Mele Unit"
+desc = "unidad a mele"
+hp = 20
+speed = 5
+dodge = 0.35
+portrait = ExtResource("7_y4qi1")
+img = ExtResource("6_cwwtm")
+resistances = Dictionary[ExtResource("4_bp2cv"), int]({
+SubResource("Resource_1gsoq"): 15,
+SubResource("Resource_rep7s"): 5
+})
+habilities = Array[ExtResource("2_65nb2")]([SubResource("Resource_blkms"), SubResource("Resource_tm67s")])
+types = Array[ExtResource("8_cqwl8")]([SubResource("Resource_hv8fm")])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_c1g2p"]
+script = ExtResource("1_lf4v0")
+name = &"Ranged Unit"
+desc = "Unidad a distancia"
+hp = 10
+mana = 10
+speed = 6
+dodge = 0.1
+resistances = Dictionary[ExtResource("4_bp2cv"), int]({
+SubResource("Resource_1gsoq"): 5,
+SubResource("Resource_rep7s"): 5
+})
+habilities = Array[ExtResource("2_65nb2")]([SubResource("Resource_tm67s")])
+types = Array[ExtResource("8_cqwl8")]([SubResource("Resource_hv8fm")])
+uid = 2
+
+[sub_resource type="Resource" id="Resource_ynih6"]
+script = ExtResource("4_x851j")
+name = &"test_map_01"
+tamX = 5
+tamY = 4
+mapData = Array[Array]([["():<Resource#-9223371950686992489>", "():<Resource#-9223371950502443109>", "():<Resource#-9223371950317893731>", "():<Resource#-9223371950133344354>", "():<Resource#-9223371949948794977>"], ["():<Resource#-9223371949764245600>", "():<Resource#-9223371949579696223>", "():<Resource#-9223371949395146846>", "():<Resource#-9223371949210597469>", "():<Resource#-9223371949026048092>"], ["():<Resource#-9223371948841498715>", "():<Resource#-9223371948656949338>", "():<Resource#-9223371948472399961>", "():<Resource#-9223371948287850584>", "():<Resource#-9223371948103301207>"], ["():<Resource#-9223371947918751830>", "():<Resource#-9223371947734202453>", "():<Resource#-9223371947549653076>", "():<Resource#-9223371947365103699>", "():<Resource#-9223371947180554322>"]])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_oplk3"]
+script = ExtResource("1_lf4v0")
+name = &"Mele Unit"
+desc = "unidad a mele"
+hp = 20
+speed = 5
+dodge = 0.35
+portrait = ExtResource("7_y4qi1")
+img = ExtResource("6_cwwtm")
+resistances = Dictionary[ExtResource("4_bp2cv"), int]({
+SubResource("Resource_1gsoq"): 15,
+SubResource("Resource_rep7s"): 5
+})
+habilities = Array[ExtResource("2_65nb2")]([SubResource("Resource_blkms"), SubResource("Resource_tm67s")])
+types = Array[ExtResource("8_cqwl8")]([SubResource("Resource_hv8fm")])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_1lhdc"]
 script = ExtResource("9_x851j")
-cardType = ExtResource("2_2nrnv")
+cardType = SubResource("Resource_oplk3")
 n = 3
 uid = 2
-metadata/_custom_type_script = "uid://chjdn7qg0thht"
 
-[sub_resource type="Resource" id="Resource_i5a77"]
+[sub_resource type="Resource" id="Resource_65nb2"]
 script = ExtResource("7_65nb2")
 nom = &"superArmy2"
 isActive = true
-agrupations = Array[ExtResource("9_x851j")]([SubResource("Resource_m3u0r")])
+agrupations = Array[ExtResource("9_x851j")]([SubResource("Resource_1lhdc")])
 uid = 2
-metadata/_custom_type_script = "uid://q3mvbqxdhool"
 
 [resource]
 script = ExtResource("5_aidkp")
@@ -33,10 +135,9 @@ email = "amon@gus.lol"
 img = ExtResource("7_8dbxi")
 token = "777"
 availableCards = Dictionary[ExtResource("1_lf4v0"), int]({
-ExtResource("2_2nrnv"): 3,
-ExtResource("3_8dbxi"): 2
+SubResource("Resource_w8ttf"): 3,
+SubResource("Resource_c1g2p"): 2
 })
-availableMaps = Array[ExtResource("4_x851j")]([ExtResource("5_8dbxi")])
-userArmys = Array[ExtResource("7_65nb2")]([SubResource("Resource_i5a77")])
+availableMaps = Array[ExtResource("4_x851j")]([SubResource("Resource_ynih6")])
+userArmys = Array[ExtResource("7_65nb2")]([SubResource("Resource_65nb2")])
 uid = 2
-metadata/_custom_type_script = "uid://ce5uvgu640fxr"
