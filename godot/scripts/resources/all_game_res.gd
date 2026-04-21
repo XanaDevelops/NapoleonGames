@@ -59,7 +59,7 @@ var _cache : Dictionary[Script, Dictionary] = {}
 @export var alter_states: Array[AlterStateRes] = []
 
 # Actualiza la cache desde las variables
-func _update_cache() -> void:
+func _update_cache(called_from_load_from:= false) -> void:
 	# TODO: Placeholder de cache
 	for prop in get_property_list():
 		# filtrar
@@ -69,7 +69,7 @@ func _update_cache() -> void:
 					var elems : Array = get(prop.name)
 					var scr : Script = elems.get_typed_script()
 					for e: GameResource in elems:
-						set_in_cache(e)
+						set_in_cache(e, called_from_load_from)
 				else:
 					# metadata
 					pass
@@ -82,7 +82,7 @@ func save_to(path:= _path) -> int:
 static func load_from(path: = _path) -> GameResources:
 	var res := ResourceLoader.load(path)
 	if res is GameResources:
-		res._update_cache()
+		res._update_cache(true)
 		return res
 	return null
 	
@@ -212,7 +212,7 @@ func get_res_from_uid(uid: int, gameRes : Script) -> GameResource:
 	return _cache.get(gameRes).get(uid)
 	
 ## Guarda un nuevo recurso en cache
-func set_in_cache(gameRes : GameResource) -> void:
+func set_in_cache(gameRes : GameResource, called_from_load_from:=false) -> void:
 	var scr : Script = gameRes.get_script()
 	
 	# guardar en cache
@@ -223,6 +223,10 @@ func set_in_cache(gameRes : GameResource) -> void:
 	var has := _dict.has(gameRes.uid)
 	_dict.set(gameRes.uid, gameRes)
 	
+	if called_from_load_from:
+		# evitar duplicidades en como esta creado esto
+		return
+	
 	# guardar en los arrays
 	var name := get_folder_name(scr)
 	
@@ -231,7 +235,7 @@ func set_in_cache(gameRes : GameResource) -> void:
 		var i := arr.find_custom(func (x:GameResource): return x.uid == gameRes.uid)
 		#(arr[i] as GameResource).update_vals(gameRes)
 		arr[i] = gameRes
-		push_warning("Actualizando ", scr.get_global_name(), " ", gameRes.uid)
+		print("Actualizando ", scr.get_global_name(), " ", gameRes.uid)
 	else:
 		# comprobar que no sea un subrecurso que no interese tener en array
 		# como CardArmyGroup

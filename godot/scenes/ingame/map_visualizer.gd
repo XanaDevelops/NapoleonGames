@@ -9,6 +9,8 @@ var map:MapGame
 @export var tile_map_layer_selection: TileMapLayer
 @export var tile_map_layer_highlight: TileMapLayer
 
+var selected_cell := Vector2i(-1, -1)
+var current_accesible_moves : Array[Vector2i] = []
 var tileset: TileSet
 var texture_to_source_id: Dictionary = {}
 enum HighlightType { MOVEMENT, ATTACK, SELECTED, SKILL }
@@ -29,10 +31,14 @@ func _setup_highlight_tiles() -> void:
 		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	map = MapGame.new(GameManager.get_map())
+	map=MapGame.new(GameManager.get_map())
+	
 	if map == null:
-		push_error("GameManager no tiene mapa, por ahora, usar el de test!!")
+		push_error("GameManager no tiene mapa en runtime, creando test!!")
 		map = TestMapGame.new().create_test_map()
+		
+
+
 		
 	tileset = _setup_tileset()
 	for tml in [tile_map_layer_texture, tile_map_layer_units,
@@ -93,7 +99,9 @@ func _scale_texture(texture: Texture2D) -> ImageTexture:
 	var img := texture.get_image()
 	img.resize(TILE_SIZE_HEIGHT, TILE_SIZE_HEIGHT, Image.INTERPOLATE_NEAREST)
 	return ImageTexture.create_from_image(img)
-	
+
+
+
 func plot_unit_moved(src: Vector2i, target:Vector2i) -> void:
 		var source_id = tile_map_layer_units.get_cell_source_id(src)
 		tile_map_layer_units.set_cell(target, source_id, Vector2i.ZERO)
@@ -116,5 +124,47 @@ func _process(delta: float) -> void:
 	#update stuff
 	pass
 
-				
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		var mouse_pos = get_local_mouse_position()
+		var map_coords = tile_map_layer_texture.local_to_map(mouse_pos)
+		_on_cell_clicked(map_coords)
+
+signal movement_requested(start_pos: Vector2i, end_pos: Vector2i)
+
+func _on_cell_clicked(coords: Vector2i) -> void:
+	if coords.y < 0 or coords.y >= map._map.size() or coords.x < 0 or coords.x >= map._map[coords.y].size():
+		_clear_selection()
+		return
+		
+	if selected_cell != Vector2i(-1, -1) and coords in current_accesible_moves:
+		movement_requested.emit(selected_cell, coords)
+		_clear_selection()
+		return
+
+	_process_selection(coords)
+
+func _process_selection(coords: Vector2i) -> void:
+	selected_cell = coords
+	highlight_selected_cell(coords)
 	
+	var clicked_tile : TileGame = map.get_tile_at(coords)
+	
+	if clicked_tile.has_unit():
+		var unit = clicked_tile.get_unit()
+		
+		if not unit.has_moved_this_turn:
+			current_accesible_moves = map.get_accesible_moves(coords)
+			plot_mov_range(current_accesible_moves)
+		else:
+			current_accesible_moves = []
+			tile_map_layer_highlight.clear()
+	else:
+		current_accesible_moves = []
+		tile_map_layer_highlight.clear()
+
+func _clear_selection() -> void:
+	selected_cell = Vector2i(-1, -1)
+	current_accesible_moves = []
+	tile_map_layer_selection.clear()
+	tile_map_layer_highlight.clear()
