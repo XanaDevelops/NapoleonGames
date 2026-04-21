@@ -7,7 +7,7 @@ func test_name() -> void:
 	for script in gameResources.game_resources:
 		var script_name := gameResources.get_folder_name(script)
 		gut.logger.log(script_name)
-		if script == MetadataRes:
+		if script == MetadataRes or script == CardArmyGroup:
 			assert_null(gameResources.get(script_name))
 		else:
 			assert_not_null(gameResources.get(script_name))
