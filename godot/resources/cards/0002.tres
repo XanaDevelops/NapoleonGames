@@ -17,7 +17,6 @@ hp = 10
 mana = 10
 speed = 6
 dodge = 0.1
-portrait = ExtResource("3_5u1va")
 resistances = Dictionary[ExtResource("3_5tldn"), int]({
 ExtResource("4_5u1va"): 5,
 ExtResource("5_5tldn"): 5
