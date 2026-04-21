@@ -1,0 +1,84 @@
+[gd_resource type="Resource" script_class="ArmyRes" format=3 uid="uid://dwtcj07issh1j"]
+
+[ext_resource type="Script" uid="uid://chjdn7qg0thht" path="res://scripts/resources/card_army_group.gd" id="1_1lhdc"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="2_t2bkl"]
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="3_1lhdc"]
+[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="4_anv67"]
+[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="5_t2bkl"]
+[ext_resource type="Texture2D" uid="uid://b0yy2cwl13n5o" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="6_ddwam"]
+[ext_resource type="Texture2D" uid="uid://cfhl3bp06jbqv" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="7_gn1ni"]
+[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="8_qcr77"]
+[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="9_p38i4"]
+[ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="10_a3ulr"]
+
+[sub_resource type="Resource" id="Resource_7pwyr"]
+script = ExtResource("4_anv67")
+name = &"physic"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_quie6"]
+script = ExtResource("5_t2bkl")
+name = &"attack"
+desc = "daño de ataque"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_80616"]
+script = ExtResource("2_t2bkl")
+name = &"espadazo"
+desc = "ataque corto de espada"
+value = 7.0
+stat = SubResource("Resource_quie6")
+attackType = SubResource("Resource_7pwyr")
+radius = 1
+uid = 1
+
+[sub_resource type="Resource" id="Resource_y6jhn"]
+script = ExtResource("4_anv67")
+name = &"magic"
+uid = 2
+
+[sub_resource type="Resource" id="Resource_t0j3a"]
+script = ExtResource("2_t2bkl")
+name = &"flechazo"
+desc = "Lanza una flecha magica"
+value = 10.0
+stat = SubResource("Resource_quie6")
+attackType = SubResource("Resource_y6jhn")
+radius = 3
+uid = 2
+
+[sub_resource type="Resource" id="Resource_vwhd4"]
+script = ExtResource("9_p38i4")
+name = &"Unidad"
+desc = "Unidad básica, lol"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_df45x"]
+script = ExtResource("8_qcr77")
+name = &"Mele Unit"
+desc = "unidad a mele"
+hp = 20
+speed = 5
+dodge = 0.35
+portrait = ExtResource("7_gn1ni")
+img = ExtResource("6_ddwam")
+resistances = Dictionary[ExtResource("4_anv67"), int]({
+SubResource("Resource_7pwyr"): 15,
+SubResource("Resource_y6jhn"): 5
+})
+habilities = Array[ExtResource("2_t2bkl")]([SubResource("Resource_80616"), SubResource("Resource_t0j3a")])
+types = Array[ExtResource("9_p38i4")]([SubResource("Resource_vwhd4")])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_r0ky1"]
+script = ExtResource("1_1lhdc")
+cardType = SubResource("Resource_df45x")
+n = 3
+uid = 2
+
+[resource]
+script = ExtResource("10_a3ulr")
+nom = &"superArmy2"
+isActive = true
+agrupations = Array[ExtResource("1_1lhdc")]([SubResource("Resource_r0ky1")])
+uid = 2
