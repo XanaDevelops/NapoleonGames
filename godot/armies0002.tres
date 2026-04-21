@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ArmyRes" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/card_army_group.gd" id="1_u840q"]
+[ext_resource type="Script" path="res://scripts/resources/army_res.gd" id="2_smatu"]
+
+[resource]
+script = ExtResource("2_smatu")
+nom = &"superArmy2"
+isActive = true
+uid = 2
