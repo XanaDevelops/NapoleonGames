@@ -36,16 +36,16 @@ func get_neightbours(pos: Vector2i) -> Array[Vector2i]:
 	
 	# No existen arrays hexagonales, por lo que segun la paridad de la posicion
 	# se calculan unos vecinos u otros
-	if x%2 == 1:
-		y += 1
+	if y%2 == 1:
+		x += 1
 	else:
-		y -= 1
+		x -= 1
 		
-	if y >= 0 and y < _map.size():
-		if x-1 >= 0:
-			neight.append(Vector2i(x-1, y))
-		if x+1 < _map[y].size():
-			neight.append(Vector2i(x+1, y))
+	if x >= 0 and x < _map[0].size():
+		if y-1 >= 0:
+			neight.append(Vector2i(x, y-1))
+		if y+1 < _map.size():
+			neight.append(Vector2i(x, y+1))
 	
 	return neight
 ## Mueve una unidad de 'start' a 'end'
@@ -53,7 +53,7 @@ func get_neightbours(pos: Vector2i) -> Array[Vector2i]:
 ## De eso TurnManager (TODO)
 func move_unit(start: Vector2i, end: Vector2i) -> void:
 	assert(self._map[start.y][start.x].has_unit(), "Casilla vacia")
-	assert(!self._map[end.y][end.y].has_unit(), "Casilla ocupada")
+	assert(!self._map[end.y][end.x].has_unit(), "Casilla ocupada")
 	
 	var unit := get_tile_at(start).get_unit()
 	get_tile_at(start).set_unit(null)
@@ -61,19 +61,24 @@ func move_unit(start: Vector2i, end: Vector2i) -> void:
 	
 ## Devuelve las posiciones de casillas accesibles para la unidad en 'pos'
 ## devuelve [] si no hay unidad
+## En godot/scripts/game/map_game.gd
+
 func get_accesible_moves(pos: Vector2i) -> Array[Vector2i]:
 	var ret_pos : Array[Vector2i] = []
 	var tile := get_tile_at(pos)
+	
 	if !tile.has_unit():
 		return ret_pos
 	
 	var unit := tile.get_unit()
-	
 	var distances := _calculate_distances(pos, unit)
 	
 	for key in distances:
+		
 		if distances[key] <= unit.get_speed() and key != pos:
-			ret_pos.append(key)
+			
+			if not get_tile_at(key).has_unit():
+				ret_pos.append(key)
 		
 	return ret_pos
 	

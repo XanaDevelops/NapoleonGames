@@ -7,4 +7,3 @@ script = ExtResource("1_pphci")
 name = &"Unidad"
 desc = "Unidad básica, lol"
 uid = 1
-metadata/_custom_type_script = "uid://1txoxg5iohxc"
