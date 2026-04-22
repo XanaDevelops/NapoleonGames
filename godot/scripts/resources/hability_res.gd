@@ -76,4 +76,4 @@ func applies(value_check: float) -> bool:
 		CONDITION.NE:
 			return value_check != self.condition_value
 		_: # NA
-			return false
+			return true

@@ -6,9 +6,22 @@ extends RuntimeResource
 @export var _owner: UserRes
 @export var _tile: TileGame
 ## Vida actual, si <=0 estas muerto
-@export var _currentHealth: int
+@export var hp: int
+
+var max_hp : int :
+	get : return _cardRes.hp
+	set(x) : pass
+	
+var speed : int :
+	get : return get_speed()
+	set(x) : pass
+	
+var height : int :
+	get : return _tile.get_height()
+	set(x) : pass
+
 ## Manà actual
-@export var _currentMana: int
+@export var mana: int
 
 ## estados alterados en activo con su duración restante
 @export var _currentAlterStates: Dictionary[AlterStateRes, int] = {}
@@ -17,12 +30,13 @@ extends RuntimeResource
 
 ## TODO estados alterados y toda la pesca
 var has_moved_this_turn : bool = false
+var has_hability_this_turn := false
 
 func _init(cardRes: CardRes) -> void:
 	self._cardRes = cardRes
 	
-	self._currentHealth = cardRes.hp
-	self._currentMana = cardRes.mana
+	self.hp = cardRes.hp
+	self.mana = cardRes.mana
 	
 	for h in self._cardRes.habilities:
 		self._habilities.set(h, 0)
@@ -43,12 +57,38 @@ func _tick() -> void:
 		var cd: int = self._habilities.get(key)
 		cd -= 1
 		self._habilities.set(key, maxi(0, cd))
-
-## se debe llamar cada turno
-## TODO preguntar si cooldowns bajan por turno (global) o turno (jugador)
+		
+## Lanzar pasivas
+func _proc_passives() -> void:
+	pass
+## se debe llamar cada turno del jugador
 func advance_turn() -> void:
 	_tick()
+	_proc_passives()
 	
+	has_moved_this_turn = false
+	has_hability_this_turn = false	
+	
+## Usa una habilidad
+## Devuelve si se ha usado correctamente
+func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
+	if has_hability_this_turn:
+		return false
+		
+	if hab not in get_available_habilities():
+		printerr("Habilidad no disponible")
+		return false
+		
+	if hab.condition != HabilityRes.CONDITION.NA:
+		pass
+		
+		
+	
+	
+	
+	has_hability_this_turn = true
+	return true	
+
 	
 ## funcion que calcula el daño recibido
 ## true si la mata
@@ -84,12 +124,16 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	## PLACEHOLDER!
 	var inflict_damage := maxi(0, damage-defense)
 	print("inflicted_damage: " + str(inflict_damage))
-	self._currentHealth -= inflict_damage
-	return self._currentHealth <= 0
+	self.hp -= inflict_damage
+	return self.hp <= 0
 	
 ## mata a la unidad
 func kill() -> void:
 	pass
+
+func heal(value: int, type: StatData) -> void:
+	pass
+
 ## devuelve la casilla donde se encuentra
 func _get_height() -> int:
 	return _tile.get_height()
@@ -111,4 +155,5 @@ func get_texture2D() -> Texture2D:
 	return self._cardRes.portrait
 	
 func get_speed() -> int:
+	## TODO modificadores de velocidad!
 	return self._cardRes.speed
