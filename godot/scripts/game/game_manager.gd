@@ -8,7 +8,7 @@ extends Node
 
 @export var _gameRes: GameResources
 
-
+var _turn_manager : TurnManager
 
 enum APP_STATE {
 	MENU_HUB,
@@ -54,3 +54,9 @@ func get_map() -> MapRes:
 func get_game_resources() -> GameResources:
 	return self._gameRes
 	
+func get_turn_manager() -> TurnManager:
+	return self._turn_manager
+## Registra un TurnManager como el actual
+## si hay que configurar signals y cosas de esas aquí
+func register_turn_manager(tm: TurnManager) -> void:
+	self._turn_manager = tm

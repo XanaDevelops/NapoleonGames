@@ -60,13 +60,21 @@ func move_unit(start: Vector2i, end: Vector2i) -> void:
 	get_tile_at(end).set_unit(unit)
 	
 ## Devuelve las posiciones con tropas dentro del rango
-func get_units_range(pos: Vector2i, range: int) -> Array[Vector2i]:
+func get_units_range(pos: Vector2i, range: int, filter:= HabilityRes.HAB_DEST.EVERYONE) -> Array[Vector2i]:
 	var ret_pos : Array[Vector2i] = []
 	var tile := get_tile_at(pos)
-	
 	if !tile.has_unit():
 		return ret_pos
-		
+	
+	var unit := tile.get_unit()
+	var distances := _calculate_distances(pos, null)
+	
+	for key in distances:
+		if distances[key] <= range and get_tile_at(key).has_unit():
+			var same_own := get_tile_at(key).get_unit()._owner == unit._owner
+			if same_own and HabilityRes.inflicts_ally(filter) or \
+				not same_own and HabilityRes.inflics_enemy(filter):
+				ret_pos.append(key)
 	
 	return ret_pos
 	

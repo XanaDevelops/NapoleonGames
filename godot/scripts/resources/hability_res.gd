@@ -60,6 +60,26 @@ enum CONDITION {
 static func inflicts_self(obj: HAB_DEST) -> bool:
 	return obj == HAB_DEST.SELF or obj == HAB_DEST.EVERYONE
 	
+## true si la habilidad afecta a los aliados (te incluye!)
+static func inflicts_ally(obj: HAB_DEST) -> bool:
+	return inflicts_self(obj) or obj == HAB_DEST.SINGLE_ALLY \
+		or obj == HAB_DEST.MULTIPLE_ALLY or obj == HAB_DEST.MULTIPLE_ANY \
+		or obj == HAB_DEST.SINGLE_ANY 
+
+## true si la habilidad afecta a los enemigos
+static func inflicts_enemy(obj: HAB_DEST) -> bool:
+	return obj == HAB_DEST.SINGLE_ENEMY or obj == HAB_DEST.MULTI_ENEMY \
+		or obj == HAB_DEST.MULTIPLE_ANY or obj == HAB_DEST.SINGLE_ANY \
+		or obj == HAB_DEST.EVERYONE
+	
+static func inflicts_single(obj: HAB_DEST) -> bool:
+	return obj == HAB_DEST.SINGLE_ANY or obj == HAB_DEST.SELF \
+		or obj == HAB_DEST.SINGLE_ALLY or obj == HAB_DEST.SINGLE_ENEMY
+		
+static func inflicts_multiple(obj: HAB_DEST) -> bool:
+	return obj == HAB_DEST.EVERYONE or obj == HAB_DEST.MULTIPLE_ALLY \
+		or obj == HAB_DEST.MULTI_ENEMY or obj == HAB_DEST.MULTIPLE_ANY
+			
 ## Comprueba si se cumple la condición dado el valor de entrada
 func applies(value_check: float) -> bool:
 	match self.condition:

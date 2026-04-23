@@ -60,21 +60,23 @@ func _tick() -> void:
 		
 ## Lanzar pasivas
 func _proc_passives() -> void:
-	pass
+	for hab in get_available_habilities():
+		if not hab.isPassive:
+			continue
+		# LLamar a turn manager
+		GameManager.get_turn_manager()._on_unit_hability_use(null, null, hab)
 ## se debe llamar cada turno del jugador
 func advance_turn() -> void:
 	_tick()
-	_proc_passives()
 	
 	has_moved_this_turn = false
 	has_hability_this_turn = false	
 	
+	_proc_passives()
+	
 ## Usa una habilidad
 ## Devuelve si se ha usado correctamente
 func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
-	if has_hability_this_turn:
-		return false
-		
 	if hab not in get_available_habilities():
 		printerr("Habilidad no disponible")
 		return false
@@ -82,11 +84,20 @@ func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
 	if hab.condition != HabilityRes.CONDITION.NA:
 		pass
 		
+	# calcular valor final
+	
+	# por cada objetivo
+	# aplicar el valor final
+	#  si ataque recieve_attack
+	#  si cura se puede hacer directo
+	#  lanzar estados alterados
 		
 	
-	
-	
-	has_hability_this_turn = true
+	# Las pasivas no gastan una habilidad
+	if not hab.isPassive:
+		has_hability_this_turn = true
+		
+	_habilities[hab] = hab.cooldown
 	return true	
 
 	
