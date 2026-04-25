@@ -1,6 +1,7 @@
 class_name TurnManager
 extends Node
 
+@onready var visualizador = $IngameMap/mapVisualizer
 ## Clase placeholder que representa una acion de un turno
 class TurnAction extends GameResource:
 	enum ACTION {
@@ -43,9 +44,31 @@ func register_turn(turn: TurnAction) -> bool:
 signal tick_turn
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	visualizador.movement_requested.connect(_on_unit_movement_requested)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
+	var map_logic = visualizador.map 
+	var unit = map_logic.get_tile_at(start).get_unit()
+	if unit.has_moved_this_turn:
+		print("La unidad ya se ha movido")
+		return
+		
+	if unit._owner == get_current_user():
+	
+		map_logic.move_unit(start, end)
+		#unit.has_moved_this_turn = true
+		visualizador.plot_unit_moved(start, end)
+		
+		var action = TurnAction.new()
+		action.player = unit._owner
+		action.action = TurnAction.ACTION.MOVEMENT
+		action.start = start
+		action.end = end
+		register_turn(action)
+	else:
+		print("Acción denegada: No es el turno del dueño de esta unidad")
