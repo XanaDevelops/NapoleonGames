@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b0yy2cwl13n5o"
-path="res://.godot/imported/esqueleto.jpg-84e52154c619e0370e0b9e215adae6fd.ctex"
+path="res://.godot/imported/esqueleto.jpg-55c305d157d4dca1b54b7fc20b6245e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/imagenes_de_cartas/img/esqueleto.jpg"
-dest_files=["res://.godot/imported/esqueleto.jpg-84e52154c619e0370e0b9e215adae6fd.ctex"]
+source_file="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg"
+dest_files=["res://.godot/imported/esqueleto.jpg-55c305d157d4dca1b54b7fc20b6245e8.ctex"]
 
 [params]
 

@@ -48,7 +48,7 @@ func test_dijkstra() -> void:
 	print(neight)
 	
 	var test_neight := [Vector2i(1,2), Vector2i(3,2), Vector2i(2,1), Vector2i(2,3),
-						Vector2i(1,1), Vector2i(1,3)]
+						Vector2i(1,1), Vector2i(3,1)]
 	for test in test_neight:
 		assert_true(test in neight)
 		

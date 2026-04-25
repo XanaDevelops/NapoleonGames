@@ -7,5 +7,3 @@
 script = ExtResource("1_4n5kr")
 
 [node name="IngameMap" parent="." unique_id=594307947 instance=ExtResource("2_rqqua")]
-
-[editable path="IngameMap"]

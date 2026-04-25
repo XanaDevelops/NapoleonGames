@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="5_xg841"]
 [ext_resource type="Theme" uid="uid://bxefl0wcs215u" path="res://assets/themes/ui/estilo_botones_circulares_carrusel.tres" id="5_y25s7"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="6_ru1hr"]
-[ext_resource type="PackedScene" path="res://scenes/panel_usuario.tscn" id="8_bxgl6"]
+[ext_resource type="PackedScene" uid="uid://c385migrg8vjo" path="res://scenes/panel_usuario.tscn" id="8_bxgl6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0kd0"]
 bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)

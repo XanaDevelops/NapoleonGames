@@ -12,3 +12,4 @@ desc = "no tan facil"
 mods = Array[ExtResource("1_g6i62")]([ExtResource("2_3bhnw")])
 texture = ExtResource("4_3bhnw")
 uid = 2
+metadata/_custom_type_script = "uid://d4fyta6ugot35"
