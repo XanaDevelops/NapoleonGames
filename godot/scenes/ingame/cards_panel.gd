@@ -25,9 +25,9 @@ func paint_tile_info(dict: Dictionary) -> void:
 	tabs.set_tab_hidden(1, true)
 	tabs.current_tab = 0
 	
-func paint_unit_info(dict: Dictionary) -> void:
+func paint_unit_info(dict: Dictionary, _unit: UnitGame) -> void:
 	tabs.visible = true
-	unit_info.paint(dict)
+	unit_info.paint(dict, _unit)
 	tabs.set_tab_hidden(1, false)
 	tabs.current_tab = 0
 

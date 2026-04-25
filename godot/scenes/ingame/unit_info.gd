@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 
 	
 
-func paint(dict: Dictionary) -> void:
+func paint(dict: Dictionary, _unit:UnitGame) -> void:
 	self.unit_label.text = dict["card_name"]
 	self.description_text.text= dict["card_desc"]
 	self.owner_label.text = "Owner: %s" %dict["card_owner"]
@@ -50,17 +50,24 @@ func paint(dict: Dictionary) -> void:
 	if dict["card_resistances"]!=null:
 		paint_resistances(dict["card_resistances"])
 	if dict["card_habilities"]!=null:
-		paint_habilities(dict["card_habilities"], dict["card_available_habilities"])
+		paint_habilities(dict["card_habilities"], dict["card_available_habilities"], _unit)
 	if dict["card_currentAlterStates"] !=null:
 		paint_AlterStates(dict["card_currentAlterStates"])
 
-func paint_habilities(habilities: Array[HabilityRes], available_habilities: Dictionary[HabilityRes, int]) -> void:
+func paint_habilities(habilities: Array[HabilityRes], available_habilities: Dictionary[HabilityRes, int], unit:UnitGame) -> void:
 	
 	for child in habilities_grid.get_children():
 		child.queue_free()
 
 	for hab in habilities:
-		var is_available = available_habilities.get(hab, 0) == 0
+		#check is hability can be used
+		var condition_ok = true
+		if hab.condition != HabilityRes.CONDITION.NA and hab.condition_stat != null:
+		# obtener el valor actual de la stat a comparar
+			var current_value = hab._get_stat_value(unit, hab.condition_stat)
+			condition_ok = hab.applies(current_value)
+		var is_available = available_habilities.get(hab, 0) == 0 or hab.isPassive or hab.manaCost>unit._currentMana or not condition_ok
+		
 		_add_row(hab, is_available)
 
 func _on_hability_info_requested(hab: HabilityRes) -> void:
@@ -86,11 +93,7 @@ func _on_hability_info_requested(hab: HabilityRes) -> void:
 	dialog.confirmed.connect(func(): dialog.queue_free())
 	dialog.canceled.connect(func(): dialog.queue_free())
 
-func _on_hability_use_requested(hab: HabilityRes) -> void:
-	#cell, and objective(s) selected
-	#plot range
-	
-	pass
+
 func _objective_text(obj: HabilityRes.HAB_DEST) -> String:
 	match obj:
 		HabilityRes.HAB_DEST.SINGLE_ENEMY:  return "Enemigo"

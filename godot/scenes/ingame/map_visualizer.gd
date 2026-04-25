@@ -32,13 +32,7 @@ func _setup_highlight_tiles() -> void:
 		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#map = MapGame.new(GameManager.get_map())
-	
-	#map = null
-	#if map == null:
-		#push_error("GameManager no tiene mapa, por ahora, usar el de test!!")
-		#map = TestMapGame.new().create_test_map()
-		
+
 	tileset = _setup_tileset()
 	for tml in [tile_map_layer_texture, tile_map_layer_units,
 				tile_map_layer_selection, tile_map_layer_highlight]:
@@ -126,13 +120,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			_handle_click(event.global_position)
 
 func _handle_click(global_pos: Vector2) -> void:
-	# 1. Convertir posición global a local del TileMapLayer
 	var local_pos = tile_map_layer_texture.to_local(global_pos)
 	
-	# 2. Convertir posición local a coordenadas de celda
 	var coords = tile_map_layer_texture.local_to_map(local_pos)
 	
-	# 3. Verificar que la celda existe en el mapa
 	var tile = map.get_tile_at(coords)
 	if tile == null:
 		return
