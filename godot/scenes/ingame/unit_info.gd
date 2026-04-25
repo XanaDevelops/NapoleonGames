@@ -18,13 +18,14 @@ extends Control
 @onready var alter_states_grid: GridContainer = $VBoxContainer/CurrenAlterStatesContainer/VBoxContainer/ScrollContainer/AlterStatesGridContainer
 @onready var current_health: ProgressBar = $VBoxContainer/Bars/HealthBar
 @onready var current_mana: ProgressBar = $VBoxContainer/Bars/ManaBar
-
-const HEADERS_HABILITIES = ["Nombre", "Objetivo", "Maná", "Rango", "CD", "Pasiva"]
+@onready var unit_info: Control = $VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo
 const HEADERS_RESISTANCES= ["Tipo de ataque", "Resistencia"]
 const ALTER_HEADERS = ["Estado", "Turnos Faltantes", "Efecto"]
+signal hability_use_requested(hab: HabilityRes)
 
 func _ready() -> void:
 	await get_tree().process_frame
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,9 +34,6 @@ func _process(delta: float) -> void:
 
 	
 
-func update_unit_info(coords: Vector2i) -> void:
-	
-	pass
 func paint(dict: Dictionary) -> void:
 	self.unit_label.text = dict["card_name"]
 	self.description_text.text= dict["card_desc"]
@@ -57,20 +55,42 @@ func paint(dict: Dictionary) -> void:
 		paint_AlterStates(dict["card_currentAlterStates"])
 
 func paint_habilities(habilities: Array[HabilityRes], available_habilities: Dictionary[HabilityRes, int]) -> void:
-
+	
 	for child in habilities_grid.get_children():
 		child.queue_free()
-	
-	habilities_grid.columns = HEADERS_HABILITIES.size()
-	
-	for header in HEADERS_HABILITIES:
-		habilities_grid.add_child(_create_cell(header, Color.YELLOW, true))
-	
+
 	for hab in habilities:
 		var is_available = available_habilities.get(hab, 0) == 0
 		_add_row(hab, is_available)
 
+func _on_hability_info_requested(hab: HabilityRes) -> void:
+	var dialog = AcceptDialog.new()
+	dialog.title = str(hab.name)
+	dialog.dialog_text = """
+		Descripción: %s
+		Objetivo: %s
+		Maná: %d
+		Rango: %d
+		Cooldown: %dt
+		Pasiva: %s
+	""" % [
+		hab.desc,
+		_objective_text(hab.objective),
+		hab.manaCost,
+		hab.radius,
+		hab.cooldown,
+		"Sí" if hab.isPassive else "No"
+	]
+	add_child(dialog)
+	dialog.popup_centered()
+	dialog.confirmed.connect(func(): dialog.queue_free())
+	dialog.canceled.connect(func(): dialog.queue_free())
 
+func _on_hability_use_requested(hab: HabilityRes) -> void:
+	#cell, and objective(s) selected
+	#plot range
+	
+	pass
 func _objective_text(obj: HabilityRes.HAB_DEST) -> String:
 	match obj:
 		HabilityRes.HAB_DEST.SINGLE_ENEMY:  return "Enemigo"
@@ -105,22 +125,49 @@ func _create_cell(text: String, color: Color, is_header: bool = false) -> PanelC
 	panel.add_child(margin)
 	return panel
 
-func _setup_headers() -> void:
-	for header in HEADERS_HABILITIES:
-		habilities_grid.add_child(_create_cell(header, Color.YELLOW, true))
+
 
 func _add_row(hab: HabilityRes, available: bool) -> void:
-	var color = Color.WHITE if available else Color.GRAY
-	var values = [
-		str(hab.name),
+	var row = HBoxContainer.new()
+	
+	var name_label = Label.new()
+	name_label.text = str(hab.name)
+	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_label.add_theme_color_override("font_color", Color.WHITE if available else Color.GRAY)
+	row.add_child(name_label)
+	
+	var btn_info = Button.new()
+	btn_info.text = "i"
+
+	btn_info.pressed.connect(func(): _show_hability_info(hab))
+	row.add_child(btn_info)
+	
+	var btn_use = Button.new()
+	btn_use.text = "Usar"
+	btn_use.disabled = not available
+	btn_use.pressed.connect(func(): emit_signal("hability_use_requested", hab, ))
+	row.add_child(btn_use)
+	
+	habilities_grid.columns = 1
+	habilities_grid.add_child(row)
+
+func _show_hability_info(hab: HabilityRes) -> void:
+	var dialog = AcceptDialog.new()
+	dialog.title = str(hab.name)
+	dialog.dialog_text = "Descripción: %s\nObjetivo: %s\nManá: %d\nRango: %d\nCD: %dt\nPasiva: %s" % [
+		hab.desc,
 		_objective_text(hab.objective),
-		str(hab.manaCost),
-		str(hab.radius),
-		str(hab.cooldown) + "t",
+		hab.manaCost,
+		hab.radius,
+		hab.cooldown,
 		"Sí" if hab.isPassive else "No"
 	]
-	for val in values:
-		habilities_grid.add_child(_create_cell(val, color))   
+	add_child(dialog)
+	dialog.popup_centered()
+	dialog.confirmed.connect(func(): dialog.queue_free())
+	dialog.canceled.connect(func(): dialog.queue_free())
+
+  
 
 func _add_row_resistance(attack: AttackType, resistance: int) -> void:
 	var values = [

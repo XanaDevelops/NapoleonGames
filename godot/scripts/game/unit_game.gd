@@ -21,104 +21,104 @@ signal mana_changed(current: int, max: int)
 ## TODO estados alterados y toda la pesca
 
 func _init(cardRes: CardRes) -> void:
-    self._cardRes = cardRes
-    
-    self._currentHealth = cardRes.hp
-    self._currentMana = cardRes.mana
-    
-    for h in self._cardRes.habilities:
-        self._habilities.set(h, 0)
-        
-    
+	self._cardRes = cardRes
+	
+	self._currentHealth = cardRes.hp
+	self._currentMana = cardRes.mana
+	
+	for h in self._cardRes.habilities:
+		self._habilities.set(h, 0)
+		
+	
 
 ## Avanza los contadores de habilidades y estados alterados
 func _tick() -> void:
-    for key in self._currentAlterStates.keys():
-        var cd : int = self._currentAlterStates.get(key)
-        cd-=1
-        if cd <= 0:
-            self._currentAlterStates.erase(key)
-        else:
-            self._currentAlterStates.set(key, cd)
-            
-    for key in self._habilities.keys():
-        var cd: int = self._habilities.get(key)
-        cd -= 1
-        self._habilities.set(key, maxi(0, cd))
+	for key in self._currentAlterStates.keys():
+		var cd : int = self._currentAlterStates.get(key)
+		cd-=1
+		if cd <= 0:
+			self._currentAlterStates.erase(key)
+		else:
+			self._currentAlterStates.set(key, cd)
+			
+	for key in self._habilities.keys():
+		var cd: int = self._habilities.get(key)
+		cd -= 1
+		self._habilities.set(key, maxi(0, cd))
 
 ## se debe llamar cada turno
 ## TODO preguntar si cooldowns bajan por turno (global) o turno (jugador)
 func advance_turn() -> void:
-    _tick()
-    
-    
+	_tick()
+	
+	
 ## funcion que calcula el daño recibido
 ## true si la mata
 func recieve_attack(damage: int, type: AttackType) -> bool:
-    push_warning("HOLA")
-    # Calcular defensa base a ese tipo
-    var defense: int
-    if self._cardRes.resistances.has(type):
-        defense = self._cardRes.resistances.get(type)
-    else:
-        push_warning("No se ha configurado valor de defensa para " + type.name + ", se asume 0")
-        defense = 0
-    
-    # Comprobar si algun estado alterado altera ese valor
-    for state in self._currentAlterStates:
-        if !HabilityRes.inflicts_self(state.objectiu):
-            continue
-            
-        # ojo que randf() es [0,1] no [0,1)
-        if randf() > state.hitP:
-            continue
-        
-        ## FIXME no me acaba de gustar esto
-        if state.stat.name != StatData.DEFENSE:
-            continue
-        if state.type != type:
-            continue
-        if state.stat.isPercent:
-            defense *= state.value
-        else:
-            defense += state.value
-            
-    ## PLACEHOLDER!
-    var inflict_damage := maxi(0, damage-defense)
-    print("inflicted_damage: " + str(inflict_damage))
-    self._currentHealth -= inflict_damage
-    return self._currentHealth <= 0
-    
+	push_warning("HOLA")
+	# Calcular defensa base a ese tipo
+	var defense: int
+	if self._cardRes.resistances.has(type):
+		defense = self._cardRes.resistances.get(type)
+	else:
+		push_warning("No se ha configurado valor de defensa para " + type.name + ", se asume 0")
+		defense = 0
+	
+	# Comprobar si algun estado alterado altera ese valor
+	for state in self._currentAlterStates:
+		if !HabilityRes.inflicts_self(state.objectiu):
+			continue
+			
+		# ojo que randf() es [0,1] no [0,1)
+		if randf() > state.hitP:
+			continue
+		
+		## FIXME no me acaba de gustar esto
+		if state.stat.name != StatData.DEFENSE:
+			continue
+		if state.type != type:
+			continue
+		if state.stat.isPercent:
+			defense *= state.value
+		else:
+			defense += state.value
+			
+	## PLACEHOLDER!
+	var inflict_damage := maxi(0, damage-defense)
+	print("inflicted_damage: " + str(inflict_damage))
+	self._currentHealth -= inflict_damage
+	return self._currentHealth <= 0
+	
 ## mata a la unidad
 func kill() -> void:
-    pass
+	pass
 ## devuelve la casilla donde se encuentra
 func _get_height() -> int:
-    return _tile.get_height()
-    
+	return _tile.get_height()
+	
 ## Devuelve las habilidades que se pueden usar
 func get_available_habilities() -> Array[HabilityRes]:
-    var ret : Array[HabilityRes] = []
-    for key in self._habilities:
-        var cd := _habilities[key]
-        if cd > 0:
-            continue
-            
-        ## TODO comprobar si aplica
-        
-        ret.append(key)
+	var ret : Array[HabilityRes] = []
+	for key in self._habilities:
+		var cd := _habilities[key]
+		if cd > 0:
+			continue
+			
+		## TODO comprobar si aplica
+		
+		ret.append(key)
 
-    return ret
+	return ret
 func get_texture2D() -> Texture2D:
-    return self._cardRes.img
-    
+	return self._cardRes.img
+	
 func get_speed() -> int:
-    return self._cardRes.speed
+	return self._cardRes.speed
 func _set_health(value: int) -> void:
-    _currentHealth = maxi(0, value)
-    emit_signal("health_changed", _currentHealth, _cardRes.hp)
+	_currentHealth = maxi(0, value)
+	emit_signal("health_changed", _currentHealth, _cardRes.hp)
 
 func _set_mana(value: int) -> void:
-    _currentMana = maxi(0, value)
-    emit_signal("mana_changed", _currentMana, _cardRes.mana)
-    
+	_currentMana = maxi(0, value)
+	emit_signal("mana_changed", _currentMana, _cardRes.mana)
+	

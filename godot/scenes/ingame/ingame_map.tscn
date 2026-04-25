@@ -66,12 +66,10 @@ theme_override_constants/margin_bottom = 5
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer/CardsPanel/MarginContainer" unique_id=1102639422]
 layout_mode = 2
-current_tab = 1
+current_tab = 0
 tab_0/title = "Información del terreno"
-tab_1/title = "Información de la carta"
 
 [node name="TileInfo" type="Control" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer" unique_id=12227352]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -157,12 +155,12 @@ layout_mode = 2
 size_flags_vertical = 1
 
 [node name="UnitInfo" type="Control" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer" unique_id=551573519]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("6_smdvi")
 metadata/_tab_index = 1
-metadata/_tab_name = "Información de la carta"
 
 [node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo" unique_id=598713077]
 layout_mode = 0
@@ -189,7 +187,7 @@ size_flags_stretch_ratio = 3.0
 
 [node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer" unique_id=1919011323]
 layout_mode = 2
-theme_override_constants/separation = 1
+theme_override_constants/separation = 0
 
 [node name="DescriptionLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer" unique_id=11764065]
 layout_mode = 2
@@ -203,6 +201,7 @@ size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
 [node name="DescriptionText" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer/ScrollContainer" unique_id=822122252]
+clip_contents = true
 custom_minimum_size = Vector2(200, 300)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -265,6 +264,7 @@ theme_override_colors/font_color = Color(0.08235294, 1, 1, 1)
 text = "Habilidades"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer" unique_id=1387866945]
+clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
@@ -274,6 +274,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="ResistancesContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1173079697]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -296,6 +297,7 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 
 [node name="CurrenAlterStatesContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=875609769]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
