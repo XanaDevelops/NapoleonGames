@@ -73,7 +73,7 @@ func get_units_range(pos: Vector2i, range: int, filter:= HabilityRes.HAB_DEST.EV
 		if distances[key] <= range and get_tile_at(key).has_unit():
 			var same_own := get_tile_at(key).get_unit()._owner == unit._owner
 			if same_own and HabilityRes.inflicts_ally(filter) or \
-				not same_own and HabilityRes.inflics_enemy(filter):
+				not same_own and HabilityRes.inflicts_enemy(filter):
 				ret_pos.append(key)
 	
 	return ret_pos

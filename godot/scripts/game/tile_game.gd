@@ -5,8 +5,11 @@ extends RuntimeResource
 
 @export var _unit: UnitGame 
 
-func _init(tileRes: TileRes) -> void:
+var _position: Vector2i
+
+func _init(tileRes: TileRes, pos: Vector2i) -> void:
 	self._tileRes = tileRes
+	self._position = pos
 	
 ## Devuelve la textura del tile, o de la tropa que contenga
 func get_texture2D() -> Texture2D:
@@ -35,3 +38,6 @@ func get_height_penalty(tile: TileGame) -> int:
 	
 func get_height() -> int:
 	return _tileRes.height
+	
+func get_position() -> Vector2i:
+	return _position

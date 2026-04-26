@@ -64,7 +64,7 @@ func _proc_passives() -> void:
 		if not hab.isPassive:
 			continue
 		# LLamar a turn manager
-		GameManager.get_turn_manager()._on_unit_hability_use(null, null, hab)
+		GameManager.get_turn_manager()._on_unit_hability_use(_tile.get_position(), [], hab)
 ## se debe llamar cada turno del jugador
 func advance_turn() -> void:
 	_tick()
@@ -81,17 +81,45 @@ func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
 		printerr("Habilidad no disponible")
 		return false
 		
+	## TODO: acabar condiciones
 	if hab.condition != HabilityRes.CONDITION.NA:
 		pass
 		
-	# calcular valor final
-	
-	# por cada objetivo
-	# aplicar el valor final
-	#  si ataque recieve_attack
-	#  si cura se puede hacer directo
-	#  lanzar estados alterados
+	if self.mana < hab.manaCost:
+		return false
 		
+	# calcular valor final
+	var valor_final := hab.value
+	# Por cada estado alterado que pueda afectar a la habilidad
+	for alter : AlterStateRes in self._currentAlterStates:
+		# Si afecta a la misma estadistica
+		if alter.stat.name == hab.stat.name:
+			# Si es ataque asegurarse que afecta al mismo tipo de ataque
+			if alter.stat.name == StatData.ATTACK and (alter.type != hab.attackType):
+				continue
+			if alter.stat.isPercent:
+				valor_final *= alter.value
+			else:
+				valor_final += alter.value
+	# por cada objetivo
+	for obj: UnitGame in dest:
+		# aplicar el valor final
+		match hab.stat.name:
+			StatData.ATTACK:
+				print("atacando por ", valor_final)
+				obj.recieve_attack(valor_final, hab.attackType)
+			StatData.HEALTH:
+				obj.heal(valor_final, hab.stat)
+			# Estadisticas que no se pueden modificar con una habilidad
+			StatData.HEIGHT, StatData.MAX_HEALTH, StatData.MAX_MANA:
+				push_error("Esto no se puede modificar con una habilidad!!")
+			_:
+				print("afectando por defecto ", hab.stat.name, " por valor de ", valor_final)
+				obj.set(hab.stat.name, obj.get(hab.stat.name) + valor_final)
+		
+		#  lanzar estados alterados
+		for alter in hab.alter_states:
+			obj.add_alter_state(alter)
 	
 	# Las pasivas no gastan una habilidad
 	if not hab.isPassive:
@@ -143,7 +171,17 @@ func kill() -> void:
 	pass
 
 func heal(value: int, type: StatData) -> void:
-	pass
+	if value < 0:
+		print("Curando por un valor negativo?? ", value)
+	if type.isPercent:
+		self.hp += self.max_hp * value
+	else:
+		self.hp += value
+		
+	self.hp = mini(self.hp, self.max_hp)
+
+func add_alter_state(alter: AlterStateRes) -> void:
+	self._currentAlterStates.set(alter, alter.duration)
 
 ## devuelve la casilla donde se encuentra
 func _get_height() -> int:

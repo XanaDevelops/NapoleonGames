@@ -75,7 +75,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
 		print("Acción denegada: No es el turno del dueño de esta unidad")
 
 
-func _on_unit_hability_use(tile: Vector2i, objective: Vector2i, hability: HabilityRes) -> void:
+func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability: HabilityRes) -> void:
 	var map : MapGame = visualizador.map
 	var unit_source := map.get_tile_at(tile).get_unit()
 	if unit_source.has_hability_this_turn:
@@ -86,20 +86,19 @@ func _on_unit_hability_use(tile: Vector2i, objective: Vector2i, hability: Habili
 		print("Acción denegada: No es el turno del dueño de esta unidad")
 		return
 		
-	var _dests : Array[UnitGame] = []
-	var dest_pos : Array[Vector2i]
-	# Si la habilidad es de objetivo unico, este se ha seleccionado
-	# con anterioridad
-	if HabilityRes.inflicts_single(hability.objective):
-		_dests.append(map.get_tile_at(objective).get_unit())
-		dest_pos.append(objective)
-	else:
-		# Si no obtiene las unidades a rango
-		dest_pos = map.get_units_range(tile, hability.radius, hability.objective)
-		dest_pos.map(
-			func (x: Vector2i): _dests.append(map.get_tile_at(x).get_unit())
+	var _dest : Array[UnitGame] = []
+	
+	# Si no se especifica objetivos, por ejemplo desde una llamada interna de pasiva
+	# o por lo que sea, se obtiene todas las unidades a rango
+	if not objectives or objectives.size() == 0:
+		# Si no se especifica obtiene las unidades a rango
+		objectives = map.get_units_range(tile, hability.radius, hability.objective)
+		objectives.map(
+			func (x: Vector2i): _dest.append(map.get_tile_at(x).get_unit())
 		)
-	var res := unit_source.use_hability(hability, _dests)
+	
+	
+	var res := unit_source.use_hability(hability, _dest)
 	if not res:
 		print("No se cumple las condiciones para usar esta habilidad!")
 		return
@@ -114,7 +113,7 @@ func _on_unit_hability_use(tile: Vector2i, objective: Vector2i, hability: Habili
 	action.unit = unit_source
 	action.start = tile
 	action.end = tile
-	action.dest = dest_pos
+	action.dest = objectives
 	
 	register_turn(action)
 		
