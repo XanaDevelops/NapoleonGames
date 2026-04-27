@@ -12,5 +12,5 @@ name = "Tenma"
 username = &"tenmak"
 email = "tenmakenzo@yahoo.jp"
 token = "123abc"
-friends = Array[ExtResource("3_n16je")]([ExtResource("4_tyjqp")])
+friends = Array[ExtResource("3_n16je")]([])
 metadata/_custom_type_script = "uid://ce5uvgu640fxr"

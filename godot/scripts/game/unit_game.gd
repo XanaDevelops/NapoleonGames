@@ -41,6 +41,7 @@ func _init(cardRes: CardRes, owner: UserRes) -> void:
 	for h in self._cardRes.habilities:
 		self._habilities.set(h, 0)
 		
+	self._owner = owner
 	
 
 ## Avanza los contadores de habilidades y estados alterados
@@ -200,9 +201,19 @@ func get_available_habilities() -> Array[HabilityRes]:
 		ret.append(key)
 
 	return ret
+
+## Devuelve todas las habilidades de la carta referencia
+func get_all_habilities() -> Array[HabilityRes]:
+	return _cardRes.habilities
+	
 func get_texture2D() -> Texture2D:
 	return self._cardRes.portrait
 	
 func get_speed() -> int:
 	## TODO modificadores de velocidad!
 	return self._cardRes.speed
+	
+## Obtiene de la referencia al _tile la posicion de este
+## Util para llamar pasivas
+func get_current_position() -> Vector2i:
+	return _tile.get_position()

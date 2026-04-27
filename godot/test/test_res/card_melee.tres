@@ -1,8 +1,10 @@
 [gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://cibw4lqsdw3ln"]
 
 [ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="1_ct0dh"]
+[ext_resource type="Resource" uid="uid://d263gp7720fyk" path="res://test/test_res/hab_espada.tres" id="2_5je53"]
 [ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="2_f8d8w"]
 [ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="3_5je53"]
+[ext_resource type="Resource" uid="uid://cbs40flw0dc1c" path="res://test/test_res/hab_pasiva_cura.tres" id="3_ll81n"]
 [ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="4_ll81n"]
 
 [resource]
@@ -13,4 +15,5 @@ hp = 20
 mana = 5
 speed = 4
 dodge = 0.25
+habilities = Array[ExtResource("1_ct0dh")]([ExtResource("2_5je53"), ExtResource("3_ll81n")])
 metadata/_custom_type_script = "uid://bf6xxxd2rqod0"
