@@ -55,7 +55,7 @@ func create_test_map() -> MapGame:
 				card_res.hp = 10
 				card_res.img = get_unit_texture("res://assets/tiles/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png")
 				
-				var unit = UnitGame.new(card_res)
+				var unit = UnitGame.new(card_res, null)
 				map.get_tile_at(Vector2i(x, y)).set_unit(unit)
 	
 	return map

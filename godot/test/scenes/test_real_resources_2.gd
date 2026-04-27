@@ -23,14 +23,14 @@ func test_sandbox_interactivo_movimiento() -> void:
 	turn_manager.turn_order.append(user_b)
 	turn_manager.turn_number = 0 
 	
-	var ally_unit = UnitGame.new(gr.cards[0])
+	var ally_unit = UnitGame.new(gr.cards[0], user_a)
 	ally_unit._owner = user_a
 	var ally_pos = Vector2i(0, 0) 
 	var tile_ally = visualizer.map.get_tile_at(ally_pos)
 	tile_ally.set_unit(ally_unit)
 	ally_unit._tile = tile_ally
 	
-	var enemy_unit = UnitGame.new(gr.cards[1])
+	var enemy_unit = UnitGame.new(gr.cards[1], user_b)
 	enemy_unit._owner = user_b
 	var enemy_pos = Vector2i(0, 1) 
 	var tile_enemy = visualizer.map.get_tile_at(enemy_pos)
