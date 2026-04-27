@@ -32,7 +32,7 @@ var height : int :
 var has_moved_this_turn : bool = false
 var has_hability_this_turn := false
 
-func _init(cardRes: CardRes) -> void:
+func _init(cardRes: CardRes, owner: UserRes) -> void:
 	self._cardRes = cardRes
 	
 	self.hp = cardRes.hp

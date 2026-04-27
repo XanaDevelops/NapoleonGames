@@ -13,7 +13,7 @@ func _init(mapRes: MapRes) -> void:
 			var temp: Array = []
 			for j in range(row.size()):
 				var t = row[j]
-				temp.append(TileGame.new(t))
+				temp.append(TileGame.new(t, Vector2i(j,i)))
 			_map.append(temp)
 
 func get_tile_at(pos : Vector2i) -> TileGame:

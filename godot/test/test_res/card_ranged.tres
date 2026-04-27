@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://cigwkiloi24pq"]
+
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="1_pv25n"]
+[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="2_qxgp1"]
+[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="3_gtena"]
+[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="4_b26a2"]
+
+[resource]
+script = ExtResource("3_gtena")
+name = &"ranged"
+desc = "test ranged"
+hp = 10
+mana = 15
+speed = 7
+dodge = 0.35
+metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

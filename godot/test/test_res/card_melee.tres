@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://cibw4lqsdw3ln"]
+
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="1_ct0dh"]
+[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="2_f8d8w"]
+[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="3_5je53"]
+[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="4_ll81n"]
+
+[resource]
+script = ExtResource("3_5je53")
+name = &"melee"
+desc = "test melee"
+hp = 20
+mana = 5
+speed = 4
+dodge = 0.25
+metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

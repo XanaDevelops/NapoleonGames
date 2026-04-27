@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://2y4nmb1ysq2b"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_ldcaq"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="2_0cl3u"]
+
+[resource]
+script = ExtResource("2_0cl3u")
+name = &"arco"
+objective = 2
+value = 5.0
+metadata/_custom_type_script = "uid://eihee83yhkpg"
