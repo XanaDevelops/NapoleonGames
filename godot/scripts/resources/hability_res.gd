@@ -46,6 +46,8 @@ enum CONDITION {
 @export var duration := 0  # (0 solo actua ese turno)
 ## Cooldown en turnos
 @export var cooldown := 1 # (1, en el siguiente está disponible
+## Probabilidad de acierto
+@export var hitP := 1.0
 ## Indica si es pasiva
 @export var isPassive := false
 ## Estados alterados aplicados (Array[[AlterStateRes]])
