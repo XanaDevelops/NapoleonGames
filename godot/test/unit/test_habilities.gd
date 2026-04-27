@@ -75,6 +75,9 @@ func before_each():
 	unit = UnitGame.new(card_melee, user_ally)
 	map_game.get_tile_at(Vector2i(0,0)).set_unit(unit)
 	ally_units.append(unit)
+	
+	
+	
 	unit = UnitGame.new(card_melee, user_enemy)
 	map_game.get_tile_at(Vector2i(1,0)).set_unit(unit)
 	enemy_units.append(unit)
