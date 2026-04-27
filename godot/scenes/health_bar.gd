@@ -1,32 +1,25 @@
+
 extends ProgressBar
 
 @onready var timer = $Timer
-@onready var damage_bar =$DamageBar
+@onready var damage_bar = $DamageBar
 
-var bar_value= 0: set = _set_value
+var bar_value: int = 0
+func init(max_val: int) -> void:
+    max_value = max_val
+    value = max_val
+    damage_bar.max_value = max_val
+    damage_bar.value = max_val
 
-
-func _set_value(new_value):
-	var prev_value = bar_value
-	bar_value = min(max_value, new_value)
-	value = bar_value
-	
-	if bar_value <=0:
-		queue_free()
-	if bar_value < prev_value: 
-		timer.start()
-	
-	else:
-		damage_bar.value = bar_value
-		
-func init(_value):
-	max_value = _value
-	bar_value= _value
-	value = bar_value
-	damage_bar.max_value = bar_value
-	damage_bar.value = bar_value
+func update(new_value: int) -> void:
+    var prev = bar_value
+    bar_value = new_value
+    value = bar_value
+    if bar_value < prev:
+        timer.start()
+    else:
+        damage_bar.value = bar_value
 
 
 func _on_timer_timeout() -> void:
-	damage_bar.value = bar_value
-	
+    damage_bar.value = bar_value

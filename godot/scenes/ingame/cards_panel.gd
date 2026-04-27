@@ -1,56 +1,84 @@
-extends Control 
+extends Control
 
-@onready var tile_info: Control = $MarginContainer/TabContainer/TileInfo
-@onready var unit_info: Control = $MarginContainer/TabContainer/UnitInfo
-@onready var tabs: TabContainer =$MarginContainer/TabContainer
+@onready var tile_info: Control  = $MarginContainer/TabContainer/TileInfo
+@onready var unit_info: Control  = $MarginContainer/TabContainer/UnitInfo
+@onready var tabs: TabContainer  = $MarginContainer/TabContainer
 
-var _unit: UnitGame = null : set = _set_unit
+var _confirm_dialog: AcceptDialog = null
+
+signal confirmed
+signal cancelled
 
 func _ready() -> void:
 	await get_tree().process_frame
-
 	_setup_pages()
 
+
 func _setup_pages() -> void:
-	var page_width = size.x
-	var page_height = size.y
-	
-	tile_info.custom_minimum_size = Vector2(page_width, page_height)
-	unit_info.custom_minimum_size = Vector2(page_width, page_height)
+	tile_info.custom_minimum_size = Vector2(size.x, size.y)
+	unit_info.custom_minimum_size = Vector2(size.x, size.y)
 
-
-func paint_tile_info(dict: Dictionary) -> void:
+func paint_tile_info(tile: TileGame) -> void:
 	tabs.visible = true
-	tile_info.paint(dict)
+	tile_info.paint(tile)
 	tabs.set_tab_hidden(1, true)
 	tabs.current_tab = 0
-	
-func paint_unit_info(dict: Dictionary, _unit: UnitGame) -> void:
+
+func paint_unit_info(tile: TileGame) -> void:
 	tabs.visible = true
-	unit_info.paint(dict, _unit)
+	unit_info.paint(tile)
 	tabs.set_tab_hidden(1, false)
 	tabs.current_tab = 0
 
+func clear_unit_info() -> void:
+	tabs.set_tab_hidden(1, true)
 
-	
 func clear() -> void:
 	tabs.visible = false
-	
-func _set_unit(unit: UnitGame) -> void:
-	if _unit != null:
-		_unit.health_changed.disconnect(update_health)
-		_unit.mana_changed.disconnect(update_mana)
-	
-	_unit = unit
-	
-	# Connect new unit
-	if _unit != null:
-		_unit.health_changed.connect(update_health)
-		_unit.mana_changed.connect(update_mana)
 
-func update_health(current: int, max_val: int) -> void:
-	unit_info.update_health(current, max_val)
 
-func update_mana(current: int, max_val: int) -> void:
-	unit_info.update_mana(current, max_val)
+func show_confirm_dialog(hab: HabilityRes, targets: Array[Vector2i], _unit: UnitGame) -> void:
+
+	_confirm_dialog = AcceptDialog.new()
+	_confirm_dialog.title       = hab.name
+	_confirm_dialog.dialog_text = "Descripción: %s\nObjetivo: %s\nManá: %d\nRango: %d\nCD: %dt\nPasiva: %s" % [
+		hab.desc,
+		_objective_text(hab.objective),
+		hab.manaCost,
+		hab.radius,
+		hab.cooldown,
+		"Sí" if hab.isPassive else "No",
+	]
+	_confirm_dialog.add_cancel_button("Cancelar")
+
+	add_child(_confirm_dialog)
+	_confirm_dialog.popup_centered()
+
+	_confirm_dialog.confirmed.connect(_on_dialog_confirmed)
+	_confirm_dialog.canceled.connect(_on_dialog_cancelled)
+
+
+func hide_confirm_dialog() -> void:
+	if _confirm_dialog == null:
+		return
+	_confirm_dialog.queue_free()
+	_confirm_dialog = null
+
+func _on_dialog_confirmed() -> void:
+	hide_confirm_dialog()
+	emit_signal("confirmed")
 	
+
+func _on_dialog_cancelled() -> void:
+	hide_confirm_dialog()
+	emit_signal("cancelled")
+
+
+func _objective_text(objective: HabilityRes.HAB_DEST) -> String:
+	match objective:
+		HabilityRes.HAB_DEST.SELF:         return "Uno mismo"
+		HabilityRes.HAB_DEST.SINGLE_ENEMY: return "Enemigo único"
+		HabilityRes.HAB_DEST.SINGLE_ALLY:  return "Aliado único"
+		HabilityRes.HAB_DEST.SINGLE_ANY:   return "Cualquier único"
+		HabilityRes.HAB_DEST.EVERYONE:     return "Todos en rango"
+		_:                                 return "Desconocido"

@@ -31,30 +31,46 @@ func get_height_penalty(tile: TileGame) -> int:
 func get_height() -> int:
 	return _tileRes.height
 
-func get_info() -> Dictionary:
-	return {
-		"tile_name": _tileRes.type.name,
-		"tile_desc": _tileRes.type.desc,
-		"height": _tileRes.height,
-		"mods": _tileRes.type.mods,
-		"move_cost": _tileRes.type.cost,
-		"texture": _tileRes.type.texture
-	}
-func get_unit_info() -> Dictionary:
-	return{
-		"card_name": _unit._cardRes.name,
-		"card_desc": _unit._cardRes.desc,
-		"card_currentHealth": _unit._currentHealth, 
-		"card_currentMana": _unit._currentMana,
-		"card_owner": _unit._owner,
-		"card_speed": _unit._cardRes.speed,
-		"card_dodge": _unit._cardRes.dodge,
-		"card_portrait": _unit._cardRes.portrait,
-		"card_resistances":_unit._cardRes.resistances,
-		"card_available_habilities":_unit._habilities,
-		"card_habilities": _unit._cardRes.habilities,
-		"card_currentAlterStates": _unit._currentAlterStates,
-		"card_weight": _unit._cardRes.weight
-		
-		
-	}
+func get_tile_name() -> String:
+	return self._tileRes.type.name
+
+func get_tile_desc() -> String:
+	return self._tileRes.type.desc
+
+func get_mods() -> Array[TileModRes]:
+	return self._tileRes.type.mods
+func get_tile_cost() -> int:
+	return self._tileRes.type.cost
+
+func get_owner_name() -> String:
+	if self._unit._owner!=null:
+		return self._unit._owner.name
+	return " "
+func get_unit_weight() -> int:
+	return self._unit._cardRes.weight
+
+func get_unit_portrait() -> Texture2D:
+	return self._unit._cardRes.portrait
+
+func get_speed() -> int:
+	return self._unit._cardRes.speed
+func get_dodge() -> int:
+	return self._unit._cardRes.dodge
+
+func get_currentHealth() -> int:
+	return self._unit._currentHealth
+
+func get_currentMana() -> int:
+	return self._unit._currentMana
+	
+func get_availableHabilities() -> Dictionary[HabilityRes, int] :
+	return self._unit._habilities
+
+func get_habilities() -> Array[HabilityRes]:
+	return self._unit._cardRes.habilities
+
+func get_resistances() -> Dictionary[AttackType, int]:
+	return self._unit._cardRes.resistances
+
+func get_AlterStates()-> Dictionary[AlterStateRes, int]:
+	return self._unit._currentAlterStates

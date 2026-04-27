@@ -106,10 +106,14 @@ func refresh_unit_died(coords: Vector2i):
 
 func highlight_selected_cell(pos: Vector2i) -> void:
 	tile_map_layer_selection.clear()
+	clear_highlights()
 	tile_map_layer_selection.set_cell(pos, highlight_source_ids[HighlightType.SELECTED], Vector2i.ZERO)
-
-func plot_mov_range(positions: Array[Vector2i]):
+	
+func clear_highlights()-> void:
 	tile_map_layer_highlight.clear()
+	
+func highlight_cells(positions: Array[Vector2i]):
+	clear_highlights()
 	for pos in positions: 
 		tile_map_layer_highlight.set_cell(pos, highlight_source_ids[HighlightType.MOVEMENT], Vector2i.ZERO)
 		

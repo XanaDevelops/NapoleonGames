@@ -125,12 +125,9 @@ func get_cells_in_range(pos: Vector2i, radius: int) -> Array[Vector2i]:
 			result.append(cell)
 	
 	return result
-func get_valid_targets(hab: HabilityRes, pos: Vector2i, user: UnitGame) -> Array[Vector2i]:
-	# Passives has no objectives?
-	if hab.isPassive:
-		return []
-	
-	
+
+func get_valid_targets(hab: HabilityRes, pos: Vector2i, unit: UnitGame) -> Array[Vector2i]:
+
 	if hab.objective == HabilityRes.HAB_DEST.SELF:
 		return [pos]
 	
@@ -139,14 +136,14 @@ func get_valid_targets(hab: HabilityRes, pos: Vector2i, user: UnitGame) -> Array
 		HabilityRes.HAB_DEST.SINGLE_ENEMY, HabilityRes.HAB_DEST.MULTI_ENEMY:
 			return in_range.filter(func(c):
 				var tile = get_tile_at(c)
-				return tile.has_unit() and tile.get_unit()._owner != user._owner
+				return tile.has_unit() and tile.get_unit()._owner != unit._owner
 			)
 			
 		HabilityRes.HAB_DEST.SINGLE_ALLY, HabilityRes.HAB_DEST.MULTIPLE_ALLY:
 			return in_range.filter(func(c):
 				var tile = get_tile_at(c)
 				
-				return tile.has_unit() and tile.get_unit()._owner == user._owner
+				return tile.has_unit() and tile.get_unit()._owner == unit._owner
 			)
 			
 		HabilityRes.HAB_DEST.SINGLE_ANY, HabilityRes.HAB_DEST.MULTIPLE_ANY:
@@ -155,10 +152,45 @@ func get_valid_targets(hab: HabilityRes, pos: Vector2i, user: UnitGame) -> Array
 			)
 			
 		HabilityRes.HAB_DEST.EVERYONE:
-		   
-			return in_range
+			in_range.append(pos)
+			return in_range.filter(func(c):
+				var tile = get_tile_at(c)
+				return tile.has_unit() 
+			)
 	
 	return []
 
-func apply_hab(hab:HabilityRes, pos:Vector2i, target:Vector2i):
-	pass
+func apply_hability(hab:HabilityRes, pos:Vector2i, targets:Array[Vector2i]) -> void:
+	var user_tile = get_tile_at(pos)
+	var unit = user_tile.get_unit()
+	unit._currentMana-=hab.manaCost
+	
+	unit._habilities[hab]= hab.cooldown
+	for target_pos in targets:
+		var target_tile = get_tile_at(target_pos)
+		if not target_tile.has_unit():
+			continue
+		var target_unit= target_tile.get_unit()
+		if hab.stat!=null:
+			_apply_stat_effect(hab, unit, target_unit, target_pos)
+		
+		for alter_state in hab.alter_states:
+			target_unit._currentAlterStates[alter_state]= alter_state.duration
+	
+
+func _apply_stat_effect(hab: HabilityRes, src_unit:UnitGame, target_unit:UnitGame, target_pos: Vector2i):
+	if hab.stat==null:
+		return 
+	var value: float= hab.value
+		
+	match hab.stat.name:
+			StatData.DEFENSE:
+				var id_dead= target_unit.recieve_attack(int(value), hab.attackType)
+				if id_dead:
+					target_unit.kill()
+					get_tile_at(target_pos).set_unit(null)
+			StatData.SPEED:
+				push_warning("_apply_stat_effect: speed debe modificarse via alter_states")
+
+				
+				

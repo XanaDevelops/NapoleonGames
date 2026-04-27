@@ -11,23 +11,18 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	await get_tree().process_frame
-	#description_label.custom_minimum_size = $MarginContainer/HBoxContainer/DescriptionContainer.size
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-func paint(dict: Dictionary) -> void:
-	self.name_label.text = dict["tile_name"]
-	self.description_text.text= dict["tile_desc"]
-	self.height_label.text=  "Altura: %d" % dict["height"]
-	self.cost_label.text= "Coste: %d" % dict["move_cost"]
-	self.texture_rect.texture= dict["texture"]
-	_paint_mods(dict["mods"])
-	
-	
-
+func paint(selected_tile:TileGame) -> void:
+	self.name_label.text = selected_tile.get_tile_name()
+	self.description_text.text= selected_tile.get_tile_desc()
+	self.height_label.text=  "Altura: %d" % selected_tile.get_height()
+	self.cost_label.text= "Coste: %d" % selected_tile.get_tile_cost()
+	self.texture_rect.texture= selected_tile.get_texture2D()
 
 func _paint_mods(mods: Array[TileModRes]) -> void:
 	pass

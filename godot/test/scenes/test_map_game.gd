@@ -5,7 +5,7 @@ const map_scene: String = "res://scenes/ingame/ingame_map.tscn"
 
 func test_visualizer() -> void:
 	var map := create_test_map()
-	GameManager._gameMap = map._mapRes
+	GameManager._gameMap = map
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
 	var scene := preload(map_scene)

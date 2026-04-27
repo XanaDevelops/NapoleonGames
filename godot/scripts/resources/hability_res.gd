@@ -77,3 +77,10 @@ func applies(value_check: float) -> bool:
 			return value_check != self.condition_value
 		_: # NA
 			return false
+
+func _is_single_target() -> bool:
+	return self.objective in [
+		self.HAB_DEST.SINGLE_ENEMY,
+		self.HAB_DEST.SINGLE_ALLY,
+		self.HAB_DEST.SINGLE_ANY,
+	]

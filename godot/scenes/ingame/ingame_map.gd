@@ -1,105 +1,115 @@
 class_name GameScene
 extends Control
 
-@onready var vbox: VBoxContainer = $VBoxContainer
-@onready var players_panel: Control = $VBoxContainer/PlayersPanel
+@onready var vbox:          VBoxContainer        = $VBoxContainer
+@onready var players_panel: Control              = $VBoxContainer/PlayersPanel
 @onready var map_container: SubViewportContainer = $VBoxContainer/SubViewportContainer
-@onready var cards_panel: Control = $VBoxContainer/CardsPanel
-@onready var sub_viewport: SubViewport = $VBoxContainer/SubViewportContainer/SubViewport
-@onready var map_visualizer: mapVisualizer= $VBoxContainer/SubViewportContainer/SubViewport/mapVisualizer
-@onready var unit_info: Control = $VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo
-enum UnitState{
-	IDLE, UNIT_SELECTED, SELECTING_TARGET
+@onready var cards_panel:   Control              = $VBoxContainer/CardsPanel
+@onready var sub_viewport:  SubViewport          = $VBoxContainer/SubViewportContainer/SubViewport
+@onready var map_visualizer: mapVisualizer       = $VBoxContainer/SubViewportContainer/SubViewport/mapVisualizer
+@onready var unit_info:     Control              = $VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo
+
+enum UnitState {
+	IDLE,
+	UNIT_SELECTED,
+	HABILITY_ACTIVE, 
 }
-var map:MapGame 
-var _state: UnitState = UnitState.IDLE
-var _selected_tile: TileGame = null
-var _selected_coords: Vector2i = Vector2i(-1, -1)
-var _pending_hab: HabilityRes = null
+
+var map:              MapGame       = null
+var _hab_manager:     HabilityManager
+var _state:           UnitState    = UnitState.IDLE
+var _selected_tile:   TileGame     = null
+var _selected_coords: Vector2i     = Vector2i(-1, -1)
+
 
 func _ready() -> void:
-	if self.map == null:
-		push_error("GameManager no tiene mapa, por ahora, usar el de test!!")
-		self.map = TestMapGame.new().create_test_map()
-		map_visualizer._setup_map(self.map)
+	if map == null:
+		push_error("GameScene: no tiene mapa — usando mapa de test")
+		map = TestMapGame.new().create_test_map()
+		GameManager.set_map(map)
+		map_visualizer._setup_map(map)
 
-	_setup_proportions()
-	
+	_hab_manager = HabilityManager.new()
+	_connect_hab_manager()
+
 	await get_tree().process_frame
 	_setup_viewport()
 	clear()
+
 	map_visualizer.tile_clicked.connect(_on_tile_clicked)
 	unit_info.hability_use_requested.connect(_on_hability_use_requested)
+	cards_panel.confirmed.connect(_hab_manager.confirm)
+	cards_panel.cancelled.connect(_hab_manager.cancel)
 
 
 func clear() -> void:
 	cards_panel.clear()
-func _setup_proportions() -> void:
-	for panel in [players_panel, map_container, cards_panel]:
-		panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	
-	players_panel.size_flags_stretch_ratio = 0.5
-	map_container.size_flags_stretch_ratio = 7.5
-	cards_panel.size_flags_stretch_ratio   = 2.0
 
 func _setup_viewport() -> void:
-	var size = Vector2i(map_container.size)
-	sub_viewport.size = size
+	sub_viewport.size = Vector2i(map_container.size)
+
+
+func _connect_hab_manager() -> void:
+	_hab_manager.targets_highlighted.connect(_on_hab_targets_highlighted)
+	_hab_manager.confirm_requested.connect(_on_hab_confirm_requested)
+	_hab_manager.hability_applied.connect(_on_hab_applied)
+	_hab_manager.cancelled.connect(_on_hab_cancelled)
+
+
+func _on_hab_targets_highlighted(targets: Array[Vector2i]) -> void:
+	map_visualizer.highlight_cells(targets)
+
+
+func _on_hab_confirm_requested(hab: HabilityRes, targets: Array[Vector2i], unit: UnitGame) -> void:
+	_state = UnitState.HABILITY_ACTIVE
+	map_visualizer.highlight_cells(targets)
+	cards_panel.show_confirm_dialog(hab, targets, unit)
+
+
+func _on_hab_applied(_hab: HabilityRes, _targets: Array[Vector2i]) -> void:
+	print("applying hability")
+	_state = UnitState.UNIT_SELECTED
+	map_visualizer.clear_highlights()
+	cards_panel.hide_confirm_dialog()
+	#esto cambiaría si por ej tuvieramos habilidades de teletransportase?
+	if _selected_tile != null and _selected_tile.has_unit():
+		cards_panel.paint_unit_info(_selected_tile)
+
+
+func _on_hab_cancelled() -> void:
+	_state = UnitState.UNIT_SELECTED
+	map_visualizer.clear_highlights()
+	cards_panel.hide_confirm_dialog()
+
 
 func _on_tile_clicked(coords: Vector2i, tile: TileGame) -> void:
 	match _state:
-		UnitState.IDLE, UnitState.UNIT_SELECTED:
-			_select_tile(coords)
-			
-		UnitState.SELECTING_TARGET:
-			_apply_hability_on_target(coords)
 
-func _select_tile(coords: Vector2i) -> void:
+		UnitState.IDLE, UnitState.UNIT_SELECTED:
+			_select_tile(coords, tile)
+
+		UnitState.HABILITY_ACTIVE:
+			if not _hab_manager.try_select_target(coords):
+				_select_tile(coords, tile)
+
+
+func _select_tile(coords: Vector2i, tile: TileGame) -> void:
 	_selected_coords = coords
-	_selected_tile = map.get_tile_at(coords)
+	_selected_tile   = tile
 	map_visualizer.highlight_selected_cell(coords)
-	cards_panel.paint_tile_info(_selected_tile.get_info())
-	
-	if _selected_tile.has_unit():
+	cards_panel.paint_tile_info(tile)
+
+	if tile.has_unit():
 		_state = UnitState.UNIT_SELECTED
-		cards_panel._unit = _selected_tile.get_unit()
-		cards_panel.paint_unit_info(_selected_tile.get_unit_info(),  _selected_tile.get_unit())
+		cards_panel.paint_unit_info(tile)
+		unit_info.observe(tile.get_unit())
 	else:
 		_state = UnitState.IDLE
-		cards_panel._unit = null
+		cards_panel.clear_unit_info()
+
 
 func _on_hability_use_requested(hab: HabilityRes) -> void:
 	if _selected_tile == null or not _selected_tile.has_unit():
 		return
-	
-	#if hab.objective == HabilityRes.HAB_DEST.SELF:
-		#map.apply_hab(hab, _selected_coords, _selected_coords)
-		#return
 
-	_pending_hab = hab
-	_state = UnitState.SELECTING_TARGET
-	
-	var targets = map.get_valid_targets(hab, _selected_coords, _selected_tile.get_unit())
-	map_visualizer.plot_mov_range(targets)
-
-func _apply_hability_on_target(target_coords: Vector2i) -> void:
-	if _pending_hab == null:
-		return
-	
-	var valid_targets = map.get_valid_targets(_pending_hab, _selected_coords, _selected_tile.get_unit())
-	if target_coords not in valid_targets:
-		
-		_cancel_hability()
-		return
-	
-	map.apply_hab(_pending_hab, _selected_coords, target_coords)
-	
-	_pending_hab = null
-	_state = UnitState.UNIT_SELECTED
-	map_visualizer.plot_mov_range([]) 
-
-func _cancel_hability() -> void:
-	_pending_hab = null
-	_state = UnitState.UNIT_SELECTED
-	map_visualizer.plot_mov_range([])
+	_hab_manager.request(hab, _selected_coords, _selected_tile)
