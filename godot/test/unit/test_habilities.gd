@@ -23,13 +23,33 @@ func test_ranges() -> void:
 	
 	var hab_esp := ally.get_all_habilities()[0]
 	
+	# esperamos tener a la unidad a rango
 	var pos := map_game.get_units_range(ally.get_current_position(), hab_esp.radius, hab_esp.objective)
-
 	assert_eq(pos[0], enemy.get_current_position())
 	
-func test_attack_1() -> void:
-	pass
+	# miramos que no esté a rango
+	map_game.move_unit(Vector2i(1,0), Vector2i(4,0))
+	assert_eq(map_game.get_units_range(ally.get_current_position(), hab_esp.radius, hab_esp.objective).size(), 0)
+	map_game.move_unit(Vector2i(4,0), Vector2i(1,0))
 
+	
+
+func test_attack_1() -> void:
+	var ally := ally_units[0]
+	var enemy := enemy_units[0]
+	
+	var hab_esp := ally.get_all_habilities()[0]
+	
+	var ene_hp := enemy.hp
+	assert_true(ally.use_hability(hab_esp, [enemy]))
+	assert_lt(enemy.hp, ene_hp)
+	
+func test_passive() -> void:
+	test_attack_1()
+	var ally := ally_units[0]
+	var enemy := enemy_units[0]
+	
+	
 
 func _before_all():
 	# Crea y guarda el mapa de prueba

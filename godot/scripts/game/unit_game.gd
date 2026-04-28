@@ -133,7 +133,6 @@ func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
 ## funcion que calcula el daño recibido
 ## true si la mata
 func recieve_attack(damage: int, type: AttackType) -> bool:
-	push_warning("HOLA")
 	# Calcular defensa base a ese tipo
 	var defense: int
 	if self._cardRes.resistances.has(type):

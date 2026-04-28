@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="2_tyjqp"]
 [ext_resource type="Script" uid="uid://ce5uvgu640fxr" path="res://scripts/resources/user_res.gd" id="3_n16je"]
 [ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="4_tscw1"]
-[ext_resource type="Resource" uid="uid://kw5it22dhrkk" path="res://test/test_res/user_enemy.tres" id="4_tyjqp"]
 
 [resource]
 script = ExtResource("3_n16je")
@@ -12,5 +11,4 @@ name = "Tenma"
 username = &"tenmak"
 email = "tenmakenzo@yahoo.jp"
 token = "123abc"
-friends = Array[ExtResource("3_n16je")]([])
 metadata/_custom_type_script = "uid://ce5uvgu640fxr"
