@@ -28,6 +28,19 @@ var height : int :
 ## habilidades disponibles con su tiempo de espera (0 se puede usar)
 @export var _habilities: Dictionary[HabilityRes, int] = {}
 
+signal health_changed(current: int)
+signal mana_changed(current: int)
+
+var _currentHealth: int:
+    set(val):
+        _currentHealth = val
+        health_changed.emit(_currentHealth)
+
+var _currentMana: int:
+    set(val):
+        _currentMana = val
+        mana_changed.emit(_currentMana)
+
 ## TODO estados alterados y toda la pesca
 var has_moved_this_turn : bool = false
 var has_hability_this_turn := false
@@ -185,19 +198,26 @@ func add_alter_state(alter: AlterStateRes) -> void:
 
 ## devuelve la casilla donde se encuentra
 func _get_height() -> int:
-	return _tile.get_height()
-	
+    return _tile.get_height()
+    
 ## Devuelve las habilidades que se pueden usar
 func get_available_habilities() -> Array[HabilityRes]:
-	var ret : Array[HabilityRes] = []
-	for key in self._habilities:
-		var cd := _habilities[key]
-		if cd > 0:
-			continue
-			
-		## TODO comprobar si aplica
-		
-		ret.append(key)
+    var ret : Array[HabilityRes] = []
+    for key in self._habilities:
+        var cd := _habilities[key]
+        if cd > 0:
+            continue
+        var condition_ok = true
+        if key.condition != HabilityRes.CONDITION.NA and key.condition_stat != null:
+            var unit= _tile.get_unit()
+            var current_value = key._get_stat_value(unit, key.condition_stat)
+            condition_ok = key.applies(current_value)
+            var is_available = key.isPassive or key.manaCost>unit._currentMana or not condition_ok
+            if is_available:
+                ret.append(key)
+                
+        ## TODO comprobar si aplica
+        
 
 	return ret
 
@@ -206,8 +226,8 @@ func get_all_habilities() -> Array[HabilityRes]:
 	return _cardRes.habilities
 	
 func get_texture2D() -> Texture2D:
-	return self._cardRes.portrait
-	
+    return self._cardRes.img
+    
 func get_speed() -> int:
 	## TODO modificadores de velocidad!
 	return self._cardRes.speed

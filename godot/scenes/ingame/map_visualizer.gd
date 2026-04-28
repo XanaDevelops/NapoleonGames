@@ -4,13 +4,14 @@ extends Node2D
 #@export  var map:MapGame 
 var map:MapGame 
 
+
 @export var tile_map_layer_texture: TileMapLayer
 @export var tile_map_layer_units: TileMapLayer
 @export var tile_map_layer_selection: TileMapLayer
 @export var tile_map_layer_highlight: TileMapLayer
 
-var selected_cell := Vector2i(-1, -1)
-var current_accesible_moves : Array[Vector2i] = []
+signal tile_clicked(coords: Vector2i, tile: TileGame)
+
 var tileset: TileSet
 var texture_to_source_id: Dictionary = {}
 enum HighlightType { MOVEMENT, ATTACK, SELECTED, SKILL }
@@ -22,8 +23,8 @@ const HIGHLIGHT_TEXTURES: Dictionary = {
 	HighlightType.ATTACK:   "res://assets/tiles/highlights/hl_attack.png",
 	HighlightType.SELECTED: "res://assets/tiles/highlights/hl_selected.png",
 }
-const TILE_SIZE_HEIGHT = 64*2
-const TILE_SIZE_WIDTH = 55*2 # TILE_SIZE_HEIGHT/2 * root(3)
+const TILE_SIZE_HEIGHT = 64*1.5
+const TILE_SIZE_WIDTH = 55*1.5 # TILE_SIZE_HEIGHT/2 * root(3)
 func _setup_highlight_tiles() -> void:
 	for type in HIGHLIGHT_TEXTURES.keys():
 		var tex := load(HIGHLIGHT_TEXTURES[type]) as Texture2D
@@ -31,21 +32,13 @@ func _setup_highlight_tiles() -> void:
 		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	map=MapGame.new(GameManager.get_map())
-	
-	if map == null:
-		push_error("GameManager no tiene mapa en runtime, creando test!!")
-		map = TestMapGame.new().create_test_map()
-		
 
-
-		
 	tileset = _setup_tileset()
 	for tml in [tile_map_layer_texture, tile_map_layer_units,
 				tile_map_layer_selection, tile_map_layer_highlight]:
 		tml.tile_set = tileset
 	_setup_highlight_tiles()
-	_setup_map()
+	#_setup_map()
 	
 	
   
@@ -58,7 +51,8 @@ func _setup_tileset() -> TileSet:
 	return tileset
 	
 
-func _setup_map():
+func _setup_map(map: MapGame):
+	self.map = map
 	for y in range(map._mapRes.tamY):
 		for x in range(map._mapRes.tamX):
 			draw_tile(x, y, map.get_tile_at(Vector2i(x, y)))
@@ -71,11 +65,13 @@ func draw_tile(i: int, y:int, tile:TileGame) -> void:
 				
 		tile_map_layer_texture.set_cell(coords, tile_source_id, Vector2i.ZERO)
 		
+		
 		if tile.has_unit():
 			var unit_source_id = add_texture_to_tileset(tile.get_unit().get_texture2D())
 			tile_map_layer_units.set_cell(coords, unit_source_id, Vector2i.ZERO)
 
-	
+func set_map(map: MapGame) -> void:
+	self.map= map    
 func add_texture_to_tileset(texture: Texture2D) -> int:
 		for tex_id in texture_to_source_id.keys():
 			if texture_to_source_id[tex_id]== texture:
@@ -99,9 +95,7 @@ func _scale_texture(texture: Texture2D) -> ImageTexture:
 	var img := texture.get_image()
 	img.resize(TILE_SIZE_HEIGHT, TILE_SIZE_HEIGHT, Image.INTERPOLATE_NEAREST)
 	return ImageTexture.create_from_image(img)
-
-
-
+	
 func plot_unit_moved(src: Vector2i, target:Vector2i) -> void:
 		var source_id = tile_map_layer_units.get_cell_source_id(src)
 		tile_map_layer_units.set_cell(target, source_id, Vector2i.ZERO)
@@ -112,59 +106,38 @@ func refresh_unit_died(coords: Vector2i):
 
 func highlight_selected_cell(pos: Vector2i) -> void:
 	tile_map_layer_selection.clear()
+	clear_highlights()
 	tile_map_layer_selection.set_cell(pos, highlight_source_ids[HighlightType.SELECTED], Vector2i.ZERO)
-
-func plot_mov_range(positions: Array[Vector2i]):
+	
+func clear_highlights()-> void:
 	tile_map_layer_highlight.clear()
+	
+func highlight_cells(positions: Array[Vector2i]):
+	clear_highlights()
 	for pos in positions: 
 		tile_map_layer_highlight.set_cell(pos, highlight_source_ids[HighlightType.MOVEMENT], Vector2i.ZERO)
+		
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			_handle_click(event.global_position)
+
+func _handle_click(global_pos: Vector2) -> void:
+	var local_pos = tile_map_layer_texture.to_local(global_pos)
+	
+	var coords = tile_map_layer_texture.local_to_map(local_pos)
+	
+	var tile = map.get_tile_at(coords)
+	if tile == null:
+		return
+	
+	emit_signal("tile_clicked", coords, tile)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#recibe señales
 	#update stuff
 	pass
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		var mouse_pos = get_local_mouse_position()
-		var map_coords = tile_map_layer_texture.local_to_map(mouse_pos)
-		_on_cell_clicked(map_coords)
-
-signal movement_requested(start_pos: Vector2i, end_pos: Vector2i)
-
-func _on_cell_clicked(coords: Vector2i) -> void:
-	if coords.y < 0 or coords.y >= map._map.size() or coords.x < 0 or coords.x >= map._map[coords.y].size():
-		_clear_selection()
-		return
-		
-	if selected_cell != Vector2i(-1, -1) and coords in current_accesible_moves:
-		movement_requested.emit(selected_cell, coords)
-		_clear_selection()
-		return
-
-	_process_selection(coords)
-
-func _process_selection(coords: Vector2i) -> void:
-	selected_cell = coords
-	highlight_selected_cell(coords)
+				
 	
-	var clicked_tile : TileGame = map.get_tile_at(coords)
-	
-	if clicked_tile.has_unit():
-		var unit = clicked_tile.get_unit()
-		
-		if not unit.has_moved_this_turn:
-			current_accesible_moves = map.get_accesible_moves(coords)
-			plot_mov_range(current_accesible_moves)
-		else:
-			current_accesible_moves = []
-			tile_map_layer_highlight.clear()
-	else:
-		current_accesible_moves = []
-		tile_map_layer_highlight.clear()
-
-func _clear_selection() -> void:
-	selected_cell = Vector2i(-1, -1)
-	current_accesible_moves = []
-	tile_map_layer_selection.clear()
-	tile_map_layer_highlight.clear()

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cfhl3bp06jbqv"
-path="res://.godot/imported/elfo.jpg-b94ace4ff4b9d11d58c9f38c9de6f31b.ctex"
+path="res://.godot/imported/elfo.jpg-827c1dec7e6ab23fd13ea2648766d927.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/imagenes_de_cartas/img/elfo.jpg"
-dest_files=["res://.godot/imported/elfo.jpg-b94ace4ff4b9d11d58c9f38c9de6f31b.ctex"]
+source_file="res://assets/sprites/imagenes_de_cartas/elfo.jpg"
+dest_files=["res://.godot/imported/elfo.jpg-827c1dec7e6ab23fd13ea2648766d927.ctex"]
 
 [params]
 

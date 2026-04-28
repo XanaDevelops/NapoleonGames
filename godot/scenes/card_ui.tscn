@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://did61qto33dha"]
 
 [ext_resource type="Script" uid="uid://e1mxjdbcalhf" path="res://scripts/ui/button_card.gd" id="1_e1hm3"]
-[ext_resource type="Texture2D" uid="uid://b0yy2cwl13n5o" path="res://assets/sprites/imagenes_de_cartas/img/esqueleto.jpg" id="2_birkm"]
+[ext_resource type="Texture2D" uid="uid://b0yy2cwl13n5o" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="2_birkm"]
 
 [node name="ButtonCard" type="Button" unique_id=2067365788]
 custom_minimum_size = Vector2(137, 177)

@@ -16,14 +16,9 @@ func get_texture2D() -> Texture2D:
 	return self._tileRes.type.texture
 	
 func set_unit(unit: UnitGame) -> void:
-	if unit == null:
-		# Si le pasamos 'null', significa que estamos vaciando la casilla
-		self._unit = null
-	else:
-		# Si le pasamos una unidad, comprobamos que esté vacía y la asignamos
-		assert(!self._unit, "[TileGame] se ha intentado asignar una unidad a una casilla ocupada")
-		self._unit = unit
-		self._unit._tile = self
+	assert(!self._unit, "[TileGame] se ha intentado asignar una unidad a una casilla ocupada")
+	self._unit = unit
+	self._unit._tile = self
 	
 func get_unit() -> UnitGame:
 	return self._unit
@@ -41,3 +36,47 @@ func get_height() -> int:
 	
 func get_position() -> Vector2i:
 	return _position
+
+func get_tile_name() -> String:
+	return self._tileRes.type.name
+
+func get_tile_desc() -> String:
+	return self._tileRes.type.desc
+
+func get_mods() -> Array[TileModRes]:
+	return self._tileRes.type.mods
+func get_tile_cost() -> int:
+	return self._tileRes.type.cost
+
+func get_owner_name() -> String:
+	if self._unit._owner!=null:
+		return self._unit._owner.name
+	return " "
+func get_unit_weight() -> int:
+	return self._unit._cardRes.weight
+
+func get_unit_portrait() -> Texture2D:
+	return self._unit._cardRes.portrait
+
+func get_speed() -> int:
+	return self._unit._cardRes.speed
+func get_dodge() -> int:
+	return self._unit._cardRes.dodge
+
+func get_currentHealth() -> int:
+	return self._unit._currentHealth
+
+func get_currentMana() -> int:
+	return self._unit._currentMana
+	
+func get_availableHabilities() -> Dictionary[HabilityRes, int] :
+	return self._unit._habilities
+
+func get_habilities() -> Array[HabilityRes]:
+	return self._unit._cardRes.habilities
+
+func get_resistances() -> Dictionary[AttackType, int]:
+	return self._unit._cardRes.resistances
+
+func get_AlterStates()-> Dictionary[AlterStateRes, int]:
+	return self._unit._currentAlterStates
