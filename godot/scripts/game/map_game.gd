@@ -53,7 +53,7 @@ func get_neightbours(pos: Vector2i) -> Array[Vector2i]:
 ## De eso TurnManager (TODO)
 func move_unit(start: Vector2i, end: Vector2i) -> void:
 	assert(self._map[start.y][start.x].has_unit(), "Casilla vacia")
-	assert(!self._map[end.y][end.y].has_unit(), "Casilla ocupada")
+	assert(!self._map[end.y][end.x].has_unit(), "Casilla ocupada")
 	
 	var unit := get_tile_at(start).get_unit()
 	get_tile_at(start).set_unit(null)

@@ -16,9 +16,10 @@ func get_texture2D() -> Texture2D:
 	return self._tileRes.type.texture
 	
 func set_unit(unit: UnitGame) -> void:
-	assert(!self._unit, "[TileGame] se ha intentado asignar una unidad a una casilla ocupada")
+	assert(not (self._unit and unit), "[TileGame] se ha intentado asignar una unidad a una casilla ocupada")
 	self._unit = unit
-	self._unit._tile = self
+	if unit:
+		self._unit._tile = self
 	
 func get_unit() -> UnitGame:
 	return self._unit
