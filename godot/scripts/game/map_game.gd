@@ -192,5 +192,33 @@ func _apply_stat_effect(hab: HabilityRes, src_unit:UnitGame, target_unit:UnitGam
 			StatData.SPEED:
 				push_warning("_apply_stat_effect: speed debe modificarse via alter_states")
 
-				
+
+func is_pos_in_deployment_zone(pos: Vector2i, is_player_a: bool) -> bool:
+	var height = _map.size()
+	if is_player_a:
+	
+		return pos.y >= 0 and pos.y < 3
+	else:
+	
+		return pos.y >= _mapRes.tamY - 3 and pos.y < _mapRes.tamY
+
+
+func get_deployment_group_tiles(center_pos: Vector2i, n_units: int, is_player_a: bool) -> Array[Vector2i]:
+	var result: Array[Vector2i] = []
+	var queue = [center_pos]
+	var visited = [center_pos]
+	
+	while queue.size() > 0 and result.size() < n_units:
+		var curr = queue.pop_front()
+		
+		
+		if is_pos_in_deployment_zone(curr, is_player_a) and !get_tile_at(curr).has_unit():
+			result.append(curr)
+			
+			
+			for neighbor in get_neightbours(curr):
+				if neighbor not in visited:
+					visited.append(neighbor)
+					queue.append(neighbor)
+	return result			
 				
