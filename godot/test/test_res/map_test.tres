@@ -1,135 +1,164 @@
-[gd_resource type="Resource" script_class="MapRes" format=3 uid="uid://bdhosujus7axb"]
+[gd_resource type="Resource" script_class="MapRes" format=3]
 
-[ext_resource type="Script" uid="uid://bmy17ix6av5bg" path="res://scripts/resources/tile_res.gd" id="1_co4aq"]
-[ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="1_jtlvq"]
-[ext_resource type="Resource" uid="uid://brnuhhyh64c38" path="res://test/test_res/tile_type_pasto.tres" id="2_f3wvc"]
-[ext_resource type="Resource" uid="uid://c4j28ib0pqjwd" path="res://test/test_res/tile_type_montaña.tres" id="3_iielr"]
+[ext_resource type="Script" path="res://scripts/resources/tile_res.gd" id="1_co4aq"]
+[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="1_jtlvq"]
+[ext_resource type="Resource" path="res://test/test_res/tile_type_pasto.tres" id="2_f3wvc"]
+[ext_resource type="Resource" path="res://test/test_res/tile_type_montaña.tres" id="3_iielr"]
 
-[sub_resource type="Resource" id="Resource_mxtu4"]
+[sub_resource type="Resource" id="Resource_co4aq"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 1
 
-[sub_resource type="Resource" id="Resource_1r6eb"]
+[sub_resource type="Resource" id="Resource_f3wvc"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 2
 
-[sub_resource type="Resource" id="Resource_n5865"]
+[sub_resource type="Resource" id="Resource_iielr"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 3
 
-[sub_resource type="Resource" id="Resource_um82x"]
+[sub_resource type="Resource" id="Resource_mxtu4"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 4
 
-[sub_resource type="Resource" id="Resource_crawo"]
+[sub_resource type="Resource" id="Resource_1r6eb"]
 script = ExtResource("1_co4aq")
 height = 100000
 type = ExtResource("2_f3wvc")
 uid = 5
 
-[sub_resource type="Resource" id="Resource_kbwgl"]
+[sub_resource type="Resource" id="Resource_n5865"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 6
 
-[sub_resource type="Resource" id="Resource_1bw0x"]
+[sub_resource type="Resource" id="Resource_um82x"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("3_iielr")
 uid = 7
 
-[sub_resource type="Resource" id="Resource_6bt66"]
+[sub_resource type="Resource" id="Resource_crawo"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 8
 
-[sub_resource type="Resource" id="Resource_7s2k3"]
+[sub_resource type="Resource" id="Resource_kbwgl"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("3_iielr")
 uid = 9
 
-[sub_resource type="Resource" id="Resource_viouc"]
+[sub_resource type="Resource" id="Resource_1bw0x"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 10
 
-[sub_resource type="Resource" id="Resource_sdwoi"]
+[sub_resource type="Resource" id="Resource_6bt66"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 11
 
-[sub_resource type="Resource" id="Resource_v4o6f"]
+[sub_resource type="Resource" id="Resource_7s2k3"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("3_iielr")
 uid = 12
 
-[sub_resource type="Resource" id="Resource_i3pt8"]
+[sub_resource type="Resource" id="Resource_viouc"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 13
 
-[sub_resource type="Resource" id="Resource_i8br6"]
+[sub_resource type="Resource" id="Resource_sdwoi"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("3_iielr")
 uid = 14
 
-[sub_resource type="Resource" id="Resource_cktlg"]
+[sub_resource type="Resource" id="Resource_v4o6f"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 15
 
-[sub_resource type="Resource" id="Resource_hajbc"]
+[sub_resource type="Resource" id="Resource_i3pt8"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 16
 
-[sub_resource type="Resource" id="Resource_7dj4a"]
+[sub_resource type="Resource" id="Resource_i8br6"]
 script = ExtResource("1_co4aq")
 height = 1
-type = ExtResource("2_f3wvc")
+type = ExtResource("3_iielr")
 uid = 17
 
-[sub_resource type="Resource" id="Resource_2oh0t"]
+[sub_resource type="Resource" id="Resource_cktlg"]
 script = ExtResource("1_co4aq")
 height = 1
 type = ExtResource("2_f3wvc")
 uid = 18
 
-[sub_resource type="Resource" id="Resource_0jvyy"]
+[sub_resource type="Resource" id="Resource_hajbc"]
 script = ExtResource("1_co4aq")
 height = 1
-type = ExtResource("2_f3wvc")
+type = ExtResource("3_iielr")
 uid = 19
 
-[sub_resource type="Resource" id="Resource_prdp6"]
+[sub_resource type="Resource" id="Resource_7dj4a"]
 script = ExtResource("1_co4aq")
 height = 100000
 type = ExtResource("2_f3wvc")
 uid = 20
 
+[sub_resource type="Resource" id="Resource_2oh0t"]
+script = ExtResource("1_co4aq")
+height = 1
+type = ExtResource("2_f3wvc")
+uid = 21
+
+[sub_resource type="Resource" id="Resource_0jvyy"]
+script = ExtResource("1_co4aq")
+height = 1
+type = ExtResource("2_f3wvc")
+uid = 22
+
+[sub_resource type="Resource" id="Resource_prdp6"]
+script = ExtResource("1_co4aq")
+height = 1
+type = ExtResource("2_f3wvc")
+uid = 23
+
+[sub_resource type="Resource" id="Resource_e8bpg"]
+script = ExtResource("1_co4aq")
+height = 1
+type = ExtResource("2_f3wvc")
+uid = 24
+
+[sub_resource type="Resource" id="Resource_ei504"]
+script = ExtResource("1_co4aq")
+height = 1
+type = ExtResource("2_f3wvc")
+uid = 25
+
 [resource]
 script = ExtResource("1_jtlvq")
 name = &"test_map_01"
 tamX = 5
-tamY = 4
-mapData = Array[Array]([Array[ExtResource("1_co4aq")]([SubResource("Resource_mxtu4"), SubResource("Resource_1r6eb"), SubResource("Resource_n5865"), SubResource("Resource_um82x"), SubResource("Resource_crawo")]), Array[ExtResource("1_co4aq")]([SubResource("Resource_kbwgl"), SubResource("Resource_1bw0x"), SubResource("Resource_6bt66"), SubResource("Resource_7s2k3"), SubResource("Resource_viouc")]), Array[ExtResource("1_co4aq")]([SubResource("Resource_sdwoi"), SubResource("Resource_v4o6f"), SubResource("Resource_i3pt8"), SubResource("Resource_i8br6"), SubResource("Resource_cktlg")]), Array[ExtResource("1_co4aq")]([SubResource("Resource_hajbc"), SubResource("Resource_7dj4a"), SubResource("Resource_2oh0t"), SubResource("Resource_0jvyy"), SubResource("Resource_prdp6")])])
+tamY = 5
+mapData = Array[Array]([Array[ExtResource("1_co4aq")]([SubResource("Resource_co4aq"), SubResource("Resource_f3wvc"), SubResource("Resource_iielr"), SubResource("Resource_mxtu4"), SubResource("Resource_1r6eb")]), Array[ExtResource("1_co4aq")]([SubResource("Resource_n5865"), SubResource("Resource_um82x"), SubResource("Resource_crawo"), SubResource("Resource_kbwgl"), SubResource("Resource_1bw0x")]), Array[ExtResource("1_co4aq")]([SubResource("Resource_6bt66"), SubResource("Resource_7s2k3"), SubResource("Resource_viouc"), SubResource("Resource_sdwoi"), SubResource("Resource_v4o6f")]), Array[ExtResource("1_co4aq")]([SubResource("Resource_i3pt8"), SubResource("Resource_i8br6"), SubResource("Resource_cktlg"), SubResource("Resource_hajbc"), SubResource("Resource_7dj4a")]), Array[ExtResource("1_co4aq")]([SubResource("Resource_2oh0t"), SubResource("Resource_0jvyy"), SubResource("Resource_prdp6"), SubResource("Resource_e8bpg"), SubResource("Resource_ei504")])])
 uid = 1
-metadata/_custom_type_script = "uid://808yjkcnb362"

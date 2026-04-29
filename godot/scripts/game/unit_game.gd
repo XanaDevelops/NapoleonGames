@@ -6,7 +6,10 @@ extends RuntimeResource
 @export var _owner: UserRes
 @export var _tile: TileGame
 ## Vida actual, si <=0 estas muerto
-@export var hp: int
+@export var hp: int:
+	set(val):
+		hp = val
+		health_changed.emit(hp)
 
 var max_hp : int :
 	get : return _cardRes.hp
@@ -21,7 +24,10 @@ var height : int :
 	set(x) : pass
 
 ## Manà actual
-@export var mana: int
+@export var mana: int:
+	set(val):
+		mana = val
+		mana_changed.emit(mana)
 
 ## estados alterados en activo con su duración restante
 @export var _currentAlterStates: Dictionary[AlterStateRes, int] = {}
@@ -31,15 +37,6 @@ var height : int :
 signal health_changed(current: int)
 signal mana_changed(current: int)
 
-var _currentHealth: int:
-	set(val):
-		_currentHealth = val
-		health_changed.emit(_currentHealth)
-
-var _currentMana: int:
-	set(val):
-		_currentMana = val
-		mana_changed.emit(_currentMana)
 
 ## TODO estados alterados y toda la pesca
 var has_moved_this_turn : bool = false
@@ -79,8 +76,12 @@ func _proc_passives() -> void:
 			continue
 		# LLamar a turn manager
 		GameManager.get_turn_manager()._on_unit_hability_use(_tile.get_position(), [], hab)
+
 ## se debe llamar cada turno del jugador
+## Se debe vincular con TurnManager
 func advance_turn() -> void:
+	if GameManager.get_turn_manager().get_current_user() != _owner:
+		return
 	_tick()
 	
 	has_moved_this_turn = false
@@ -217,7 +218,8 @@ func get_available_habilities() -> Array[HabilityRes]:
 				ret.append(key)
 				
 		## TODO comprobar si aplica
-		
+		if condition_ok:
+			ret.append(key)
 
 	return ret
 

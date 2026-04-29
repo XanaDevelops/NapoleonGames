@@ -44,17 +44,49 @@ func test_attack_1() -> void:
 	assert_true(ally.use_hability(hab_esp, [enemy]))
 	assert_lt(enemy.hp, ene_hp)
 	
+func test_attack_2() -> void:
+	var ally := ally_units[1]
+	
+	#arco
+	var hab_arc := ally.get_all_habilities()[1]
+	
+	var old_hps := enemy_units.map(func (x: UnitGame) -> int: return x.hp)
+	
+	# de paso comprobamos rangos
+	var ranges := GameManager.get_map().get_units_range(ally.get_current_position(), hab_arc.radius, hab_arc.objective)
+	assert_eq(ranges.size(), 3)
+	
+	# usar TurnManager para variar
+	GameManager.get_turn_manager()._on_unit_hability_use(ally.get_current_position(), ranges, hab_arc)
+	
+	for i in range(3):
+		assert_lt(enemy_units[i].hp, old_hps[i])
+		
+	assert_eq(enemy_units[3].hp, old_hps[3])
+	
 func test_passive() -> void:
 	test_attack_1()
 	var ally := ally_units[0]
 	var enemy := enemy_units[0]
 	
+	var old_hp := enemy.hp
+	# manualmente avanzar turno del enemigo
+	GameManager.get_turn_manager().advance_turn()
+	enemy.advance_turn()
+	assert_gt(enemy.hp, old_hp)
 	
+func test_alter_state() -> void:
+	
+	var ally := ally_units[0]
+	var enemy := enemy_units[0]
+	
+	var hab_esp := ally.get_all_habilities()[0]
 
-func _before_all():
+func before_all():
 	# Crea y guarda el mapa de prueba
 	
 	var map_ids := [[0,0,0,0,0],
+					[0,1,0,1,0],
 					[0,1,0,1,0],
 					[0,1,0,1,0],
 					[0,0,0,0,0]]
@@ -63,7 +95,7 @@ func _before_all():
 	
 	map_test.name = &"test_map_01"
 	map_test.tamX = 5
-	map_test.tamY = 4
+	map_test.tamY = 5
 	map_test.uid = 1
 	
 	var _uid := 1
@@ -81,7 +113,9 @@ func _before_all():
 	map_test.mapData[0][4].height = 100000
 	map_test.mapData[3][4].height = 100000
 	
-	ResourceSaver.save(map_test, "res://test/test_res/map_test.tres")
+	if ResourceSaver.save(map_test, "res://test/test_res/map_test.tres") != OK:
+		fail_test("error al guardar!")
+	
 
 func before_each():
 	map_game = MapGame.new(map_test)
@@ -96,12 +130,30 @@ func before_each():
 	map_game.get_tile_at(Vector2i(0,0)).set_unit(unit)
 	ally_units.append(unit)
 	
-	
+	unit = UnitGame.new(card_ranged, user_ally)
+	map_game.get_tile_at(Vector2i(0,1)).set_unit(unit)
+	ally_units.append(unit)
 	
 	unit = UnitGame.new(card_melee, user_enemy)
 	map_game.get_tile_at(Vector2i(1,0)).set_unit(unit)
 	enemy_units.append(unit)
+	unit = UnitGame.new(card_melee, user_enemy)
+	map_game.get_tile_at(Vector2i(2,0)).set_unit(unit)
+	enemy_units.append(unit)
+	unit = UnitGame.new(card_melee, user_enemy)
+	map_game.get_tile_at(Vector2i(3,0)).set_unit(unit)
+	enemy_units.append(unit)
+	unit = UnitGame.new(card_melee, user_enemy)
+	map_game.get_tile_at(Vector2i(4,4)).set_unit(unit)
+	enemy_units.append(unit)
+	
+	
 	seed(666)
+	
+	var tm : TurnManager = autofree(TurnManager.new())
+	tm.turn_order = [user_ally, user_enemy]
+	GameManager.register_turn_manager(tm)
+	GameManager.set_map(map_game)
 	
 	
 	

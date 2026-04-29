@@ -8,7 +8,6 @@
 [resource]
 script = ExtResource("2_0cl3u")
 name = &"arco"
-objective = 2
 value = 5.0
 stat = ExtResource("4_jqweu")
 attackType = ExtResource("2_rfqbo")
