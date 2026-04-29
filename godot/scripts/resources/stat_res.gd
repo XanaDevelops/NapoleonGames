@@ -33,7 +33,7 @@ static var ATTACK := &"attack"
 static var SPEED := &"speed"
 
 ## Vida actual (para curar) atacar -> ATTACK
-static var HEALTH := &"health"
+static var HEALTH := &"hp"
 
 ## Vida maxima
 static var MAX_HEALTH := &"max_health"

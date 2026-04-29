@@ -77,6 +77,23 @@ func _proc_passives() -> void:
 		# LLamar a turn manager
 		GameManager.get_turn_manager()._on_unit_hability_use(_tile.get_position(), [], hab)
 
+## Activa los estados alterados como los de daño o cura
+func _proc_alter_states() -> void:
+	for alter in self._currentAlterStates:
+		if randf() > alter.hitP:
+			continue
+			
+		# Reutilizar esta funcion, un AlterState no deja de ser una minihabilidad
+		var dest : Array[UnitGame] = []
+		if alter.objectiu == HabilityRes.HAB_DEST.SELF:
+			dest.append(self)
+		else:
+			push_error("NOT IMPLEMENTED!")
+			continue
+		for obj in dest:
+			_apply_hab(alter.stat, alter.type, alter.value, obj)
+		
+
 ## se debe llamar cada turno del jugador
 ## Se debe vincular con TurnManager
 func advance_turn() -> void:
@@ -118,19 +135,7 @@ func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
 				valor_final += alter.value
 	# por cada objetivo
 	for obj: UnitGame in dest:
-		# aplicar el valor final
-		match hab.stat.name:
-			StatData.ATTACK:
-				print("atacando por ", valor_final)
-				obj.recieve_attack(valor_final, hab.attackType)
-			StatData.HEALTH:
-				obj.heal(valor_final, hab.stat)
-			# Estadisticas que no se pueden modificar con una habilidad
-			StatData.HEIGHT, StatData.MAX_HEALTH, StatData.MAX_MANA:
-				push_error("Esto no se puede modificar con una habilidad!!")
-			_:
-				print("afectando por defecto ", hab.stat.name, " por valor de ", valor_final)
-				obj.set(hab.stat.name, obj.get(hab.stat.name) + valor_final)
+		_apply_hab(hab.stat, hab.attackType, valor_final, obj)
 		
 		#  lanzar estados alterados
 		for alter in hab.alter_states:
@@ -143,6 +148,21 @@ func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
 	_habilities[hab] = hab.cooldown
 	return true	
 
+## Aplica el valor a una estadistica a un objetivo
+func _apply_hab(stat: StatData, atkType:AttackType, val:float, obj: UnitGame):
+	# aplicar el valor final
+	match stat.name:
+		StatData.ATTACK:
+			print("atacando por ", val)
+			obj.recieve_attack(val, atkType)
+		StatData.HEALTH:
+			obj.heal(val, stat)
+		# Estadisticas que no se pueden modificar con una habilidad
+		StatData.HEIGHT, StatData.MAX_HEALTH, StatData.MAX_MANA:
+			push_error("Esto no se puede modificar con una habilidad!!")
+		_:
+			print("afectando por defecto ", stat.name, " por valor de ", val)
+			obj.set(stat.name, obj.get(stat.name) + val)
 	
 ## funcion que calcula el daño recibido
 ## true si la mata
