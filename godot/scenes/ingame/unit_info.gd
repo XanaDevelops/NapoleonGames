@@ -18,7 +18,7 @@ extends Control
 @onready var alter_states_grid: GridContainer = $VBoxContainer/CurrenAlterStatesContainer/VBoxContainer/ScrollContainer/AlterStatesGridContainer
 @onready var current_health: ProgressBar = $VBoxContainer/Bars/HealthBar
 @onready var current_mana: ProgressBar = $VBoxContainer/Bars/ManaBar
-@onready  var unit_info: Control = $VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo
+
 const HEADERS_RESISTANCES= ["Tipo de ataque", "Resistencia"]
 const ALTER_HEADERS = ["Estado", "Turnos Faltantes", "Efecto"]
 signal hability_use_requested(hab: HabilityRes)
