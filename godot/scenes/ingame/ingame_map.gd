@@ -23,11 +23,12 @@ var _selected_coords: Vector2i     = Vector2i(-1, -1)
 
 
 func _ready() -> void:
+	map = GameManager.get_map()
 	if map == null:
 		push_error("GameScene: no tiene mapa — usando mapa de test")
 		map = TestMapGame.new().create_test_map()
 		GameManager.set_map(map)
-		map_visualizer._setup_map(map)
+	map_visualizer._setup_map(map)
 
 	_hab_manager = HabilityManager.new()
 	_connect_hab_manager()

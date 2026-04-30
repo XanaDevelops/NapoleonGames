@@ -65,16 +65,16 @@ func get_dodge() -> int:
 	return self._unit._cardRes.dodge
 
 func get_currentHealth() -> int:
-	return self._unit._currentHealth
+	return self._unit.hp
 
 func get_currentMana() -> int:
-	return self._unit._currentMana
+	return self._unit.mana
 	
 func get_availableHabilities() -> Dictionary[HabilityRes, int] :
 	return self._unit._habilities
 
 func get_habilities() -> Array[HabilityRes]:
-	return self._unit._cardRes.habilities
+	return self._unit.get_all_habilities()
 
 func get_resistances() -> Dictionary[AttackType, int]:
 	return self._unit._cardRes.resistances

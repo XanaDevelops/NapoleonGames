@@ -48,7 +48,7 @@ func test_attack_2() -> void:
 	var ally := ally_units[1]
 	
 	#arco
-	var hab_arc := ally.get_all_habilities()[1]
+	var hab_arc := ally.get_all_habilities()[0]
 	
 	var old_hps := enemy_units.map(func (x: UnitGame) -> int: return x.hp)
 	
@@ -72,16 +72,43 @@ func test_passive() -> void:
 	var old_hp := enemy.hp
 	# manualmente avanzar turno del enemigo
 	GameManager.get_turn_manager().advance_turn()
-	enemy.advance_turn()
+	#enemy.advance_turn()
 	assert_gt(enemy.hp, old_hp)
 	
 func test_alter_state() -> void:
+	var ally := ally_units[1]
 	
-	var ally := ally_units[0]
-	var enemy := enemy_units[0]
+	#arco
+	var hab_fire := ally.get_all_habilities()[1]
 	
-	var hab_esp := ally.get_all_habilities()[0]
-
+	var old_hps := enemy_units.map(func (x: UnitGame) -> int: return x.hp)
+	
+	# de paso comprobamos rangos
+	var ranges := GameManager.get_map().get_units_range(ally.get_current_position(), hab_fire.radius, hab_fire.objective)
+	assert_eq(ranges.size(), 3)
+	
+	# usar TurnManager para variar
+	GameManager.get_turn_manager()._on_unit_hability_use(ally.get_current_position(), ranges, hab_fire)
+	
+	# Comprobar vida y que se haya aplicado la quemadura
+	for i in range(3):
+		assert_lt(enemy_units[i].hp, old_hps[i])
+		assert_eq(enemy_units[i]._currentAlterStates.size(),1)
+		
+	assert_eq(enemy_units[3].hp, old_hps[3])
+	
+	# avanzar turno
+	old_hps = enemy_units.map(func (x: UnitGame) -> int: return x.hp)
+	
+	GameManager.get_turn_manager().advance_turn()
+	# Recuerda que tambien aplica la cura, la diferencia deberia ser de 1!
+	for i in range(3):
+		assert_lt(enemy_units[i].hp, old_hps[i])
+		assert_eq(enemy_units[i]._currentAlterStates.size(),1)
+		
+	assert_eq(enemy_units[3].hp, old_hps[3])
+	
+	
 func before_all():
 	# Crea y guarda el mapa de prueba
 	
@@ -125,35 +152,43 @@ func before_each():
 	
 	# Crear unidades
 	var unit: UnitGame
+	var tm : TurnManager = autofree(TurnManager.new())
+	tm.turn_order = [user_ally, user_enemy]
+	GameManager.register_turn_manager(tm)
+	GameManager.set_map(map_game)
 	
 	unit = UnitGame.new(card_melee, user_ally)
 	map_game.get_tile_at(Vector2i(0,0)).set_unit(unit)
+	tm.tick_turn.connect(unit.advance_turn)
 	ally_units.append(unit)
 	
 	unit = UnitGame.new(card_ranged, user_ally)
 	map_game.get_tile_at(Vector2i(0,1)).set_unit(unit)
+	tm.tick_turn.connect(unit.advance_turn)
+
 	ally_units.append(unit)
 	
 	unit = UnitGame.new(card_melee, user_enemy)
 	map_game.get_tile_at(Vector2i(1,0)).set_unit(unit)
+	tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
 	unit = UnitGame.new(card_melee, user_enemy)
 	map_game.get_tile_at(Vector2i(2,0)).set_unit(unit)
+	tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
 	unit = UnitGame.new(card_melee, user_enemy)
 	map_game.get_tile_at(Vector2i(3,0)).set_unit(unit)
+	tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
 	unit = UnitGame.new(card_melee, user_enemy)
 	map_game.get_tile_at(Vector2i(4,4)).set_unit(unit)
+	tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
 	
 	
 	seed(666)
 	
-	var tm : TurnManager = autofree(TurnManager.new())
-	tm.turn_order = [user_ally, user_enemy]
-	GameManager.register_turn_manager(tm)
-	GameManager.set_map(map_game)
+	
 	
 	
 	

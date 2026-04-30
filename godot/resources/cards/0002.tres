@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="1_csg87"]
 [ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="2_5u1va"]
 [ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="3_5tldn"]
+[ext_resource type="Texture2D" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="3_5u1va"]
 [ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="4_xdvve"]
 [ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="5_21faa"]
 [ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="6_s2s4f"]
@@ -17,6 +18,8 @@ hp = 10
 mana = 10
 speed = 6
 dodge = 0.1
+portrait = ExtResource("3_5u1va")
+img = ExtResource("3_5u1va")
 resistances = Dictionary[ExtResource("3_5tldn"), int]({
 ExtResource("4_xdvve"): 5,
 ExtResource("5_21faa"): 5

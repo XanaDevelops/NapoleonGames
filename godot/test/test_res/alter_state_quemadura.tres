@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_16pnx")
-value = 2.0
+value = 3.0
 stat = ExtResource("2_eyxbh")
 type = ExtResource("3_arctm")
 duration = 3

@@ -105,6 +105,7 @@ func advance_turn() -> void:
 	has_hability_this_turn = false	
 	
 	_proc_passives()
+	_proc_alter_states()
 	
 ## Usa una habilidad
 ## Devuelve si se ha usado correctamente

@@ -8,7 +8,7 @@ func test_sandbox_interactivo_movimiento() -> void:
 	var user_a = gr.users[0]
 	var user_b = gr.users[1]
 	
-	GameManager._gameMap = gr.maps[0]
+	GameManager._gameMap = MapGame.new(gr.maps[0])
 	
 	var map_instance = load(MAP_SCENE_PATH).instantiate()
 	add_child_autoqfree(map_instance)
@@ -37,7 +37,7 @@ func test_sandbox_interactivo_movimiento() -> void:
 	tile_enemy.set_unit(enemy_unit)
 	enemy_unit._tile = tile_enemy
 	
-	visualizer._setup_map()
+	#visualizer._setup_map(GameManager.get_map())
 
 
 	gut.pause_before_teardown()

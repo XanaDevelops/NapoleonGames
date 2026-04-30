@@ -1,125 +1,125 @@
-[gd_resource type="Resource" script_class="MapRes" format=3 uid="uid://c7umu4kdabuub"]
+[gd_resource type="Resource" script_class="MapRes" format=3]
 
-[ext_resource type="Script" uid="uid://bmy17ix6av5bg" path="res://scripts/resources/tile_res.gd" id="1_ow2gf"]
+[ext_resource type="Script" path="res://scripts/resources/tile_res.gd" id="1_ow2gf"]
 [ext_resource type="Resource" path="res://resources/tile_types/0001.tres" id="2_qx23g"]
 [ext_resource type="Resource" path="res://resources/tile_types/0002.tres" id="3_1iye1"]
-[ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="4_p6tef"]
-
-[sub_resource type="Resource" id="Resource_80616"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 1
-
-[sub_resource type="Resource" id="Resource_y6jhn"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 2
+[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="4_p6tef"]
 
 [sub_resource type="Resource" id="Resource_t0j3a"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("2_qx23g")
-uid = 3
+uid = 1
 
 [sub_resource type="Resource" id="Resource_vwhd4"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("2_qx23g")
-uid = 4
+uid = 2
 
 [sub_resource type="Resource" id="Resource_df45x"]
 script = ExtResource("1_ow2gf")
-height = 100
+height = 1
 type = ExtResource("2_qx23g")
-uid = 5
+uid = 3
 
 [sub_resource type="Resource" id="Resource_q7fox"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("2_qx23g")
-uid = 6
+uid = 4
 
 [sub_resource type="Resource" id="Resource_lsxbk"]
 script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("3_1iye1")
-uid = 7
+height = 100
+type = ExtResource("2_qx23g")
+uid = 5
 
 [sub_resource type="Resource" id="Resource_r0ky1"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("2_qx23g")
-uid = 8
+uid = 6
 
 [sub_resource type="Resource" id="Resource_60c35"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("3_1iye1")
-uid = 9
+uid = 7
 
 [sub_resource type="Resource" id="Resource_e07fo"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("2_qx23g")
-uid = 10
+uid = 8
 
 [sub_resource type="Resource" id="Resource_8e42l"]
 script = ExtResource("1_ow2gf")
 height = 1
-type = ExtResource("2_qx23g")
-uid = 11
+type = ExtResource("3_1iye1")
+uid = 9
 
 [sub_resource type="Resource" id="Resource_wh2kh"]
 script = ExtResource("1_ow2gf")
 height = 1
-type = ExtResource("3_1iye1")
-uid = 12
+type = ExtResource("2_qx23g")
+uid = 10
 
 [sub_resource type="Resource" id="Resource_y3xpg"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("2_qx23g")
-uid = 13
+uid = 11
 
 [sub_resource type="Resource" id="Resource_qmt1m"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("3_1iye1")
-uid = 14
+uid = 12
 
 [sub_resource type="Resource" id="Resource_ioe74"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("2_qx23g")
-uid = 15
+uid = 13
 
 [sub_resource type="Resource" id="Resource_nbaek"]
 script = ExtResource("1_ow2gf")
 height = 1
-type = ExtResource("2_qx23g")
-uid = 16
+type = ExtResource("3_1iye1")
+uid = 14
 
 [sub_resource type="Resource" id="Resource_ub2ig"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("2_qx23g")
-uid = 17
+uid = 15
 
 [sub_resource type="Resource" id="Resource_0eyc4"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("2_qx23g")
-uid = 18
+uid = 16
 
 [sub_resource type="Resource" id="Resource_ujolu"]
 script = ExtResource("1_ow2gf")
 height = 1
 type = ExtResource("2_qx23g")
-uid = 19
+uid = 17
 
 [sub_resource type="Resource" id="Resource_p1cgm"]
+script = ExtResource("1_ow2gf")
+height = 1
+type = ExtResource("2_qx23g")
+uid = 18
+
+[sub_resource type="Resource" id="Resource_ridsy"]
+script = ExtResource("1_ow2gf")
+height = 1
+type = ExtResource("2_qx23g")
+uid = 19
+
+[sub_resource type="Resource" id="Resource_iuvtm"]
 script = ExtResource("1_ow2gf")
 height = 100
 type = ExtResource("2_qx23g")
@@ -130,5 +130,5 @@ script = ExtResource("4_p6tef")
 name = &"test_map_01"
 tamX = 5
 tamY = 4
-mapData = Array[Array]([Array[ExtResource("1_ow2gf")]([SubResource("Resource_80616"), SubResource("Resource_y6jhn"), SubResource("Resource_t0j3a"), SubResource("Resource_vwhd4"), SubResource("Resource_df45x")]), Array[ExtResource("1_ow2gf")]([SubResource("Resource_q7fox"), SubResource("Resource_lsxbk"), SubResource("Resource_r0ky1"), SubResource("Resource_60c35"), SubResource("Resource_e07fo")]), Array[ExtResource("1_ow2gf")]([SubResource("Resource_8e42l"), SubResource("Resource_wh2kh"), SubResource("Resource_y3xpg"), SubResource("Resource_qmt1m"), SubResource("Resource_ioe74")]), Array[ExtResource("1_ow2gf")]([SubResource("Resource_nbaek"), SubResource("Resource_ub2ig"), SubResource("Resource_0eyc4"), SubResource("Resource_ujolu"), SubResource("Resource_p1cgm")])])
+mapData = Array[Array]([Array[ExtResource("1_ow2gf")]([SubResource("Resource_t0j3a"), SubResource("Resource_vwhd4"), SubResource("Resource_df45x"), SubResource("Resource_q7fox"), SubResource("Resource_lsxbk")]), Array[ExtResource("1_ow2gf")]([SubResource("Resource_r0ky1"), SubResource("Resource_60c35"), SubResource("Resource_e07fo"), SubResource("Resource_8e42l"), SubResource("Resource_wh2kh")]), Array[ExtResource("1_ow2gf")]([SubResource("Resource_y3xpg"), SubResource("Resource_qmt1m"), SubResource("Resource_ioe74"), SubResource("Resource_nbaek"), SubResource("Resource_ub2ig")]), Array[ExtResource("1_ow2gf")]([SubResource("Resource_0eyc4"), SubResource("Resource_ujolu"), SubResource("Resource_p1cgm"), SubResource("Resource_ridsy"), SubResource("Resource_iuvtm")])])
 uid = 1

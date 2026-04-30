@@ -1,7 +1,7 @@
 class_name TurnManager
 extends Node
 
-@onready var visualizador : mapVisualizer = $IngameMap/mapVisualizer
+@onready var visualizador : mapVisualizer = $IngameMap/VBoxContainer/SubViewportContainer/SubViewport/mapVisualizer
 ## Clase placeholder que representa una acion de un turno
 class TurnAction extends GameResource:
 	enum ACTION {

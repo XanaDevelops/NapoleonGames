@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="GameResources" format=3 uid="uid://y5w3ijy85evr"]
+[gd_resource type="Resource" script_class="GameResources" format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/alter_state_res.gd" id="1_7pwyr"]
 [ext_resource type="Script" path="res://scripts/resources/army_res.gd" id="2_quie6"]
 [ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="3_80616"]
+[ext_resource type="Resource" path="res://resources/armies/0001.tres" id="3_t0j3a"]
+[ext_resource type="Resource" path="res://resources/armies/0002.tres" id="4_vwhd4"]
 [ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="4_y6jhn"]
 [ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="5_t0j3a"]
 [ext_resource type="Script" path="res://scripts/resources/card_type_res.gd" id="6_vwhd4"]
@@ -40,4 +42,5 @@ habilities = Array[ExtResource("11_60c35")]([ExtResource("12_e07fo"), ExtResourc
 tile_mods = Array[ExtResource("20_0eyc4")]([ExtResource("21_ujolu")])
 tile_types = Array[ExtResource("22_p1cgm")]([ExtResource("23_ridsy"), ExtResource("24_iuvtm")])
 maps = Array[ExtResource("14_wh2kh")]([ExtResource("15_80616")])
+armies = Array[ExtResource("2_quie6")]([ExtResource("3_t0j3a"), ExtResource("4_vwhd4")])
 stat_datas = Array[ExtResource("16_qmt1m")]([ExtResource("17_ioe74"), ExtResource("18_nbaek"), ExtResource("19_ub2ig")])
