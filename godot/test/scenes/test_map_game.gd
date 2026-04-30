@@ -29,6 +29,8 @@ func create_test_map() -> MapGame:
 	map_res.desc = "Mapa de prueba"
 	map_res.tamX = 23
 	map_res.tamY = 11
+	map_res.deployHeight=2
+	
 	
 	for y in range(map_res.tamY):
 		var row: Array = []
@@ -65,7 +67,7 @@ Vestibulum lacinia dapibus justo. Donec vitae mauris lacinia, porta orci nec, fa
 				card_res.resistances= generate_resistances()
 				var unit = UnitGame.new(card_res)
 				unit._currentAlterStates = generate_alter_states()
-				map.get_tile_at(Vector2i(x, y)).set_unit(unit)
+				#map.get_tile_at(Vector2i(x, y)).set_unit(unit)
 	
 	return map
 func generate_alter_states() -> Dictionary[AlterStateRes, int]:

@@ -191,34 +191,81 @@ func _apply_stat_effect(hab: HabilityRes, src_unit:UnitGame, target_unit:UnitGam
 					get_tile_at(target_pos).set_unit(null)
 			StatData.SPEED:
 				push_warning("_apply_stat_effect: speed debe modificarse via alter_states")
+func calculate_deployment(player_id: int, size: int, start_tile: Vector2i) -> Dictionary:
+	var result := {"tiles": [] as Array[Vector2i], "is_valid": true}
+	var ideal_shape: Array[Vector2i] = []
+	var queue: Array[Vector2i] = [start_tile]
+	var visited: Dictionary = {start_tile: true}
 
+	var deploy_height := _mapRes.deployHeight
+	var limit_up := (deploy_height - 1) / 2
+	var limit_down := deploy_height / 2
+	var min_allowed_y := start_tile.y - limit_up
+	var max_allowed_y := start_tile.y + limit_down
 
-func is_pos_in_deployment_zone(pos: Vector2i, is_player_a: bool) -> bool:
-	var height = _map.size()
-	if is_player_a:
-	
-		return pos.y >= 0 and pos.y < 3
-	else:
-	
-		return pos.y >= _mapRes.tamY - 3 and pos.y < _mapRes.tamY
-
-
-func get_deployment_group_tiles(center_pos: Vector2i, n_units: int, is_player_a: bool) -> Array[Vector2i]:
-	var result: Array[Vector2i] = []
-	var queue = [center_pos]
-	var visited = [center_pos]
-	
-	while queue.size() > 0 and result.size() < n_units:
-		var curr = queue.pop_front()
+	while ideal_shape.size() < size and not queue.is_empty():
+		var current: Vector2i = queue.pop_front()
+		ideal_shape.append(current)
 		
-		
-		if is_pos_in_deployment_zone(curr, is_player_a) and !get_tile_at(curr).has_unit():
-			result.append(curr)
-			
-			
-			for neighbor in get_neightbours(curr):
-				if neighbor not in visited:
-					visited.append(neighbor)
+		for neighbor in _get_clockwise_neighbors(current):
+			if not visited.has(neighbor):
+				visited[neighbor] = true
+				if neighbor.y >= min_allowed_y and neighbor.y <= max_allowed_y:
 					queue.append(neighbor)
-	return result			
-				
+
+	for pos in ideal_shape:
+		result["tiles"].append(pos)
+		
+		if not _is_in_map_bounds(pos) or not _is_in_deployment_zone(pos, player_id) or get_tile_at(pos).has_unit():
+			result["is_valid"] = false
+
+	if result["tiles"].size() < size:
+		result["is_valid"] = false
+		
+	return result
+
+func _get_clockwise_neighbors(pos: Vector2i) -> Array[Vector2i]:
+	var is_shifted_right: bool = (absi(pos.y) % 2 == 1)
+	var left_x := pos.x if is_shifted_right else pos.x - 1
+	var right_x := pos.x + 1 if is_shifted_right else pos.x
+	
+	return [
+		Vector2i(pos.x + 1, pos.y),
+		Vector2i(pos.x - 1, pos.y),
+		Vector2i(right_x, pos.y + 1),
+		Vector2i(left_x, pos.y + 1),
+		Vector2i(right_x, pos.y - 1),
+		Vector2i(left_x, pos.y - 1)
+	]
+
+func _is_in_map_bounds(pos: Vector2i) -> bool:
+	return pos.y >= 0 and pos.y < _map.size() and pos.x >= 0 and pos.x < _map[pos.y].size()
+
+func _is_in_deployment_zone(pos: Vector2i, player_id: int) -> bool:
+	var zone_thickness := _mapRes.deployHeight
+	return pos.y >= (_map.size() - zone_thickness) if player_id == 0 else pos.y < zone_thickness
+
+func get_deployment_zone_tiles(player_id: int) -> Array[Vector2i]:
+	var tiles: Array[Vector2i] = []
+	var zone_thickness := _mapRes.deployHeight
+	var start_y: int = maxi(0, _map.size() - zone_thickness) if player_id == 0 else 0
+	var end_y: int = _map.size() if player_id == 0 else mini(_map.size(), zone_thickness)
+
+	for y in range(start_y, end_y):
+		for x in range(_map[y].size()):
+			tiles.append(Vector2i(x, y))
+			
+	return tiles
+
+func place_unit(unit: UnitGame, pos: Vector2i) -> bool:
+	if not _is_in_map_bounds(pos):
+		return false
+		
+	var tile: TileGame = get_tile_at(pos)
+	if tile.has_unit():
+		return false
+		
+	tile.set_unit(unit)
+	unit._tile = tile 
+	
+	return true

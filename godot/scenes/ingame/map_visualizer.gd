@@ -3,14 +3,17 @@ extends Node2D
 
 #@export  var map:MapGame 
 var map:MapGame 
-
+var _last_hovered_tile: Vector2i = Vector2i(-999, -999)
 
 @export var tile_map_layer_texture: TileMapLayer
 @export var tile_map_layer_units: TileMapLayer
 @export var tile_map_layer_selection: TileMapLayer
 @export var tile_map_layer_highlight: TileMapLayer
+@export var tile_map_layer_deployment: TileMapLayer
+
 
 signal tile_clicked(coords: Vector2i, tile: TileGame)
+signal tile_hovered(coords: Vector2i)
 
 var tileset: TileSet
 var texture_to_source_id: Dictionary = {}
@@ -35,7 +38,7 @@ func _ready() -> void:
 
 	tileset = _setup_tileset()
 	for tml in [tile_map_layer_texture, tile_map_layer_units,
-				tile_map_layer_selection, tile_map_layer_highlight]:
+				tile_map_layer_selection, tile_map_layer_highlight,tile_map_layer_deployment]:
 		tml.tile_set = tileset
 	_setup_highlight_tiles()
 	#_setup_map()
@@ -118,10 +121,7 @@ func highlight_cells(positions: Array[Vector2i]):
 		tile_map_layer_highlight.set_cell(pos, highlight_source_ids[HighlightType.MOVEMENT], Vector2i.ZERO)
 		
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			_handle_click(event.global_position)
+
 
 func _handle_click(global_pos: Vector2) -> void:
 	var local_pos = tile_map_layer_texture.to_local(global_pos)
@@ -139,5 +139,39 @@ func _process(delta: float) -> void:
 	#update stuff
 	pass
 
-				
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		_handle_click(event.global_position)
+		
+	elif event is InputEventMouseMotion:
+		var local_pos := tile_map_layer_texture.to_local(event.global_position)
+		var coords := tile_map_layer_texture.local_to_map(local_pos)
+		
+		if coords != _last_hovered_tile:
+			_last_hovered_tile = coords
+			tile_hovered.emit(coords)
+
+func show_deployment_zone(positions: Array[Vector2i]) -> void:
+	tile_map_layer_deployment.clear()
+	var source_id := highlight_source_ids[HighlightType.SELECTED]
 	
+	for pos in positions:
+		tile_map_layer_deployment.set_cell(pos, source_id, Vector2i.ZERO)
+
+func clear_deployment_zone() -> void:
+	tile_map_layer_deployment.clear()
+
+func show_deployment_preview(positions: Array[Vector2i], is_valid: bool) -> void:
+	tile_map_layer_highlight.clear()
+	
+	var type := HighlightType.MOVEMENT if is_valid else HighlightType.ATTACK
+	var source_id := highlight_source_ids[type]
+	
+	for pos in positions:
+		tile_map_layer_highlight.set_cell(pos, source_id, Vector2i.ZERO)
+
+func clear_deployment_preview() -> void:
+	tile_map_layer_highlight.clear()
+	_last_hovered_tile = Vector2i(-999, -999)

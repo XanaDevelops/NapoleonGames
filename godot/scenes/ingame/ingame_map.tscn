@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://boaagd3hgel75" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
 [ext_resource type="Script" uid="uid://b8ttj2gcfkh47" path="res://scenes/ingame/unit_info.gd" id="6_smdvi"]
 [ext_resource type="PackedScene" uid="uid://ygwgcu7ruh4u" path="res://scenes/health_bar.tscn" id="7_6nuks"]
+[ext_resource type="Script" uid="uid://b220xr4adcigk" path="res://scenes/ingame/deployment_box.gd" id="8_rtl0i"]
 
 [node name="IngameMap" type="Control" unique_id=1560040291]
 layout_mode = 3
@@ -45,6 +46,8 @@ metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
 [node name="TileMapLayer_texture" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=479184065]
 position = Vector2(0, -3)
 tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAUAAAAAAAIAAAAAAAUAAAAAAAAAAAABAAcAAAAAAP//AAAAAAcAAAABAP//AAABAAcAAAD/////AAAAAAcAAAD//wAAAAAAAAgAAAD+/wAAAAAGAAIAAAD9////AAAGAAIAAAD+////AAAGAAIAAAD8/wAAAAAAAAUAAAADAP//AAAAAAgAAAAEAP//AAAGAAIAAAA=")
+
+[node name="TileMapLayer_deployment" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=1706908201]
 
 [node name="TileMapLayer_units" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=1642646471]
 
@@ -324,3 +327,7 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="DeploymentBox" type="HBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer" unique_id=484191042]
+layout_mode = 2
+script = ExtResource("8_rtl0i")
