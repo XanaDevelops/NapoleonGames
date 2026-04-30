@@ -17,8 +17,8 @@ func generar_usuario_completo() -> UserRes:
 	))
 	
 	# 2. Cartas
-	var carta_elfo = _generar_carta_prueba("Arquero Elfo", "Ataca a distancia.", 2, "res://assets/sprites/imagenes_de_cartas/img/elfo.jpg")
-	var carta_esqueleto = _generar_carta_prueba("Guerrero Esqueleto", "Resiste bien.", 1, "res://assets/sprites/imagenes_de_cartas/img/esqueleto.jpg")
+	var carta_elfo = _generar_carta_prueba("Arquero Elfo", "Ataca a distancia.", 2, "res://assets/sprites/imagenes_de_cartas/elfo.jpg")
+	var carta_esqueleto = _generar_carta_prueba("Guerrero Esqueleto", "Resiste bien.", 1, "res://assets/sprites/imagenes_de_cartas/esqueleto.jpg")
 	
 	user.availableCards[carta_elfo] = 3
 	user.availableCards[carta_esqueleto] = 3

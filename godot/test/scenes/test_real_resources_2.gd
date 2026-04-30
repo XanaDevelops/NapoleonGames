@@ -8,7 +8,7 @@ func test_sandbox_interactivo_movimiento() -> void:
 	var user_a = gr.users[0]
 	var user_b = gr.users[1]
 	
-	GameManager._gameMap = gr.maps[0]
+	GameManager._gameMap = MapGame.new(gr.maps[0])
 	
 	var map_instance = load(MAP_SCENE_PATH).instantiate()
 	add_child_autoqfree(map_instance)
@@ -23,21 +23,21 @@ func test_sandbox_interactivo_movimiento() -> void:
 	turn_manager.turn_order.append(user_b)
 	turn_manager.turn_number = 0 
 	
-	var ally_unit = UnitGame.new(gr.cards[0])
+	var ally_unit = UnitGame.new(gr.cards[0], user_a)
 	ally_unit._owner = user_a
 	var ally_pos = Vector2i(0, 0) 
 	var tile_ally = visualizer.map.get_tile_at(ally_pos)
 	tile_ally.set_unit(ally_unit)
 	ally_unit._tile = tile_ally
 	
-	var enemy_unit = UnitGame.new(gr.cards[1])
+	var enemy_unit = UnitGame.new(gr.cards[1], user_b)
 	enemy_unit._owner = user_b
 	var enemy_pos = Vector2i(0, 1) 
 	var tile_enemy = visualizer.map.get_tile_at(enemy_pos)
 	tile_enemy.set_unit(enemy_unit)
 	enemy_unit._tile = tile_enemy
 	
-	visualizer._setup_map()
+	#visualizer._setup_map(GameManager.get_map())
 
 
 	gut.pause_before_teardown()

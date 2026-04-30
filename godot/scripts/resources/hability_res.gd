@@ -46,6 +46,8 @@ enum CONDITION {
 @export var duration := 0  # (0 solo actua ese turno)
 ## Cooldown en turnos
 @export var cooldown := 1 # (1, en el siguiente está disponible
+## Probabilidad de acierto
+@export var hitP := 1.0
 ## Indica si es pasiva
 @export var isPassive := false
 ## Estados alterados aplicados (Array[[AlterStateRes]])
@@ -60,6 +62,26 @@ enum CONDITION {
 static func inflicts_self(obj: HAB_DEST) -> bool:
 	return obj == HAB_DEST.SELF or obj == HAB_DEST.EVERYONE
 	
+## true si la habilidad afecta a los aliados (te incluye!)
+static func inflicts_ally(obj: HAB_DEST) -> bool:
+	return inflicts_self(obj) or obj == HAB_DEST.SINGLE_ALLY \
+		or obj == HAB_DEST.MULTIPLE_ALLY or obj == HAB_DEST.MULTIPLE_ANY \
+		or obj == HAB_DEST.SINGLE_ANY 
+
+## true si la habilidad afecta a los enemigos
+static func inflicts_enemy(obj: HAB_DEST) -> bool:
+	return obj == HAB_DEST.SINGLE_ENEMY or obj == HAB_DEST.MULTI_ENEMY \
+		or obj == HAB_DEST.MULTIPLE_ANY or obj == HAB_DEST.SINGLE_ANY \
+		or obj == HAB_DEST.EVERYONE
+	
+static func inflicts_single(obj: HAB_DEST) -> bool:
+	return obj == HAB_DEST.SINGLE_ANY or obj == HAB_DEST.SELF \
+		or obj == HAB_DEST.SINGLE_ALLY or obj == HAB_DEST.SINGLE_ENEMY
+		
+static func inflicts_multiple(obj: HAB_DEST) -> bool:
+	return obj == HAB_DEST.EVERYONE or obj == HAB_DEST.MULTIPLE_ALLY \
+		or obj == HAB_DEST.MULTI_ENEMY or obj == HAB_DEST.MULTIPLE_ANY
+			
 ## Comprueba si se cumple la condición dado el valor de entrada
 func applies(value_check: float) -> bool:
 	match self.condition:
@@ -76,4 +98,11 @@ func applies(value_check: float) -> bool:
 		CONDITION.NE:
 			return value_check != self.condition_value
 		_: # NA
-			return false
+			return true
+
+func _is_single_target() -> bool:
+	return self.objective in [
+		self.HAB_DEST.SINGLE_ENEMY,
+		self.HAB_DEST.SINGLE_ALLY,
+		self.HAB_DEST.SINGLE_ANY,
+	]

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="GameResources" format=3 uid="uid://sj8d7s7mprk5"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_0ys6n"]
+[ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="2_ymw05"]
+[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="3_3r7n1"]
+[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="4_dlb7g"]
+[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="5_kdr8l"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="6_2ym1e"]
+[ext_resource type="Resource" uid="uid://cibw4lqsdw3ln" path="res://test/test_res/card_melee.tres" id="6_kdr8l"]
+[ext_resource type="Resource" uid="uid://cigwkiloi24pq" path="res://test/test_res/card_ranged.tres" id="7_2ym1e"]
+[ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="7_v3wyj"]
+[ext_resource type="Script" uid="uid://c1o5v8x6fs24v" path="res://scripts/resources/all_game_res.gd" id="8_2obhi"]
+[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="9_ohm1c"]
+[ext_resource type="Script" uid="uid://cnh4gjirdr73b" path="res://scripts/resources/tile_mod_res.gd" id="10_2u0fo"]
+[ext_resource type="Script" uid="uid://d4fyta6ugot35" path="res://scripts/resources/tile_type_res.gd" id="11_qx8eh"]
+[ext_resource type="Script" uid="uid://bmy17ix6av5bg" path="res://scripts/resources/tile_res.gd" id="12_17yll"]
+[ext_resource type="Script" uid="uid://ce5uvgu640fxr" path="res://scripts/resources/user_res.gd" id="13_b8vvb"]
+[ext_resource type="Resource" uid="uid://5bxdwaoej47m" path="res://test/test_res/user_ally.tres" id="16_v3wyj"]
+[ext_resource type="Resource" uid="uid://kw5it22dhrkk" path="res://test/test_res/user_enemy.tres" id="17_2obhi"]
+
+[resource]
+script = ExtResource("8_2obhi")
+users = Array[ExtResource("13_b8vvb")]([ExtResource("16_v3wyj"), ExtResource("17_2obhi")])
+cards = Array[ExtResource("5_kdr8l")]([ExtResource("6_kdr8l"), ExtResource("7_2ym1e")])
+metadata/_custom_type_script = "uid://c1o5v8x6fs24v"

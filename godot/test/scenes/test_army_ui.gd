@@ -12,12 +12,12 @@ func cargar_datos_de_prueba() -> void:
 	var carta_esqueleto = CardRes.new()
 	carta_esqueleto.name = "Guerrero Esqueleto" 
 	carta_esqueleto.weight = 2                  
-	carta_esqueleto.img = preload("res://assets/sprites/imagenes_de_cartas/img/esqueleto.jpg") 
+	carta_esqueleto.img = preload("res://assets/sprites/imagenes_de_cartas/esqueleto.jpg") 
 	
 	var carta_elfo = CardRes.new()
 	carta_elfo.name = "Arquero Elfo"
 	carta_elfo.weight = 1
-	carta_elfo.img = preload("res://assets/sprites/imagenes_de_cartas/img/elfo.jpg")
+	carta_elfo.img = preload("res://assets/sprites/imagenes_de_cartas/elfo.jpg")
 	
 	var cartas_temporales: Dictionary[CardRes, int] = {}
 	cartas_temporales[carta_esqueleto] = 10
