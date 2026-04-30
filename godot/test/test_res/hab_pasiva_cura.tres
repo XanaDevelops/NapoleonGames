@@ -8,7 +8,7 @@
 script = ExtResource("2_nthmj")
 name = &"curar"
 desc = "te cura"
-objective = 0
+objective = 1
 value = 2.0
 stat = ExtResource("3_nthmj")
 isPassive = true

@@ -15,11 +15,14 @@
 class_name HabilityRes
 extends GameResource
 
-enum HAB_DEST {SELF,
-	SINGLE_ENEMY, MULTI_ENEMY,
-	SINGLE_ALLY, MULTIPLE_ALLY,
-	SINGLE_ANY, MULTIPLE_ANY, 
-	EVERYONE}
+## Máscara que afecta a la misma unidad
+const SEL_SELF_FLAG := 0b0001
+## Máscara que afecta a los aliados
+const SEL_ALLY_FLAG := 0b0010
+## Máscara que afecta a los enemigos
+const SEL_ENEMY_FLAG := 0b0100
+## Máscara que indica multiplicidad
+const SEL_MULT_FLAG := 0b1000
 
 enum CONDITION {
 	LT, GT, EQ, LE, GE, NE,
@@ -31,7 +34,8 @@ enum CONDITION {
 ##Descripción de la habilidad
 @export var desc : String
 ## Objetivo de la habilidad (enum HAB_DEST)
-@export var objective := HAB_DEST.SINGLE_ENEMY
+@export_flags("self:1", "ally:2", "enemy:4", "multiple:8", "everyone:15")
+var objective := SEL_ENEMY_FLAG
 ## Valor de la habilidad
 @export var value: float ## FIXME: mirar despues con los int?!
 ## Estadística afectada ([StatData])
@@ -58,29 +62,30 @@ enum CONDITION {
 @export var condition_stat : StatData = null
 ## valor a comparar
 @export var condition_value := 0.0
+
+func _init() -> void:
+	if objective == 0:
+		objective = SEL_ENEMY_FLAG
+		push_error("Habilidad sin objetivo valido!\nValor por defecto ENEMY")
+		assert(false)
+
 ## true si la habilidad afecta a uno mismo
-static func inflicts_self(obj: HAB_DEST) -> bool:
-	return obj == HAB_DEST.SELF or obj == HAB_DEST.EVERYONE
+static func inflicts_self(obj: int) -> bool:
+	return obj & SEL_SELF_FLAG
 	
-## true si la habilidad afecta a los aliados (te incluye!)
-static func inflicts_ally(obj: HAB_DEST) -> bool:
-	return inflicts_self(obj) or obj == HAB_DEST.SINGLE_ALLY \
-		or obj == HAB_DEST.MULTIPLE_ALLY or obj == HAB_DEST.MULTIPLE_ANY \
-		or obj == HAB_DEST.SINGLE_ANY 
+## true si la habilidad afecta a los aliados (no te incluye!)
+static func inflicts_ally(obj: int) -> bool:
+	return obj & SEL_ALLY_FLAG
 
 ## true si la habilidad afecta a los enemigos
-static func inflicts_enemy(obj: HAB_DEST) -> bool:
-	return obj == HAB_DEST.SINGLE_ENEMY or obj == HAB_DEST.MULTI_ENEMY \
-		or obj == HAB_DEST.MULTIPLE_ANY or obj == HAB_DEST.SINGLE_ANY \
-		or obj == HAB_DEST.EVERYONE
+static func inflicts_enemy(obj: int) -> bool:
+	return obj & SEL_ENEMY_FLAG
 	
-static func inflicts_single(obj: HAB_DEST) -> bool:
-	return obj == HAB_DEST.SINGLE_ANY or obj == HAB_DEST.SELF \
-		or obj == HAB_DEST.SINGLE_ALLY or obj == HAB_DEST.SINGLE_ENEMY
+static func inflicts_single(obj: int) -> bool:
+	return not inflicts_multiple(obj)
 		
-static func inflicts_multiple(obj: HAB_DEST) -> bool:
-	return obj == HAB_DEST.EVERYONE or obj == HAB_DEST.MULTIPLE_ALLY \
-		or obj == HAB_DEST.MULTI_ENEMY or obj == HAB_DEST.MULTIPLE_ANY
+static func inflicts_multiple(obj: int) -> bool:
+	return obj & SEL_MULT_FLAG
 			
 ## Comprueba si se cumple la condición dado el valor de entrada
 func applies(value_check: float) -> bool:

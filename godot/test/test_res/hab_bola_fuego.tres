@@ -10,7 +10,7 @@
 script = ExtResource("2_ayh22")
 name = &"fireball"
 desc = "it's wizard time"
-objective = 2
+objective = 12
 value = 5.0
 stat = ExtResource("5_xnwaf")
 attackType = ExtResource("3_5hjd2")
