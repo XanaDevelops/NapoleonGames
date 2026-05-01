@@ -175,7 +175,7 @@ func pack(folder := _folder) -> void:
 			pass
 		else:
 			if self.get(folder_name) != null:
-				self.set(folder_name, [])
+				(self.get(folder_name) as Array).clear()
 		for file in ResourceLoader.list_directory(folder+folder_name):
 			var path := folder+folder_name+"/"+file
 			print("Cargando: " + path)
