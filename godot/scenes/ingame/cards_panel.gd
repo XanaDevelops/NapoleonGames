@@ -43,7 +43,7 @@ func show_confirm_dialog(hab: HabilityRes, targets: Array[Vector2i], _unit: Unit
 	_confirm_dialog.title       = hab.name
 	_confirm_dialog.dialog_text = "Descripción: %s\nObjetivo: %s\nManá: %d\nRango: %d\nCD: %dt\nPasiva: %s" % [
 		hab.desc,
-		_objective_text(hab.objective),
+		hab._objective_text(),
 		hab.manaCost,
 		hab.radius,
 		hab.cooldown,
@@ -72,13 +72,3 @@ func _on_dialog_confirmed() -> void:
 func _on_dialog_cancelled() -> void:
 	hide_confirm_dialog()
 	emit_signal("cancelled")
-
-
-func _objective_text(objective: HabilityRes.HAB_DEST) -> String:
-	match objective:
-		HabilityRes.HAB_DEST.SELF:         return "Uno mismo"
-		HabilityRes.HAB_DEST.SINGLE_ENEMY: return "Enemigo único"
-		HabilityRes.HAB_DEST.SINGLE_ALLY:  return "Aliado único"
-		HabilityRes.HAB_DEST.SINGLE_ANY:   return "Cualquier único"
-		HabilityRes.HAB_DEST.EVERYONE:     return "Todos en rango"
-		_:                                 return "Desconocido"

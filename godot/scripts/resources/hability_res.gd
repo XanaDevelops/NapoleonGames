@@ -118,6 +118,32 @@ static func is_valid_objective(obj: int) -> bool:
 ## true si el objetivo de la habilidad es valido
 func _is_valid_objective(obj: int) -> bool:
 	return is_valid_objective(obj)
+	
+static func objective_text(obj: int) -> String:
+	if HabilityRes.is_valid_objective(obj):
+		return "Inválido"
+	var is_self     := HabilityRes.inflicts_self(obj)
+	var is_enemy    := HabilityRes.inflicts_enemy(obj)
+	var is_ally     := HabilityRes.inflicts_ally(obj)
+	var is_multiple := HabilityRes.inflicts_multiple(obj)
+	
+	var parts: Array[String] = []
+	
+	if is_self:
+		parts.append("Uno mismo")
+
+	if is_enemy and is_ally:
+		# en playtest (si da tiempo) ver si es obvio la diferencia entre self i el resto de flags
+		parts.append("Todos" if is_multiple else "Cualquier único")
+	elif is_enemy:
+		parts.append("Enemigos" if is_multiple else "Enemigo único")
+	elif is_ally:
+		parts.append("Aliados" if is_multiple else "Aliado único")
+
+	return " + ".join(parts)
+	
+func _objective_text() -> String:
+	return objective_text(objective)
 			
 ## Comprueba si se cumple la condición dado el valor de entrada
 func applies(value_check: float) -> bool:
