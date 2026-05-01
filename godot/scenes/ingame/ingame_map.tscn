@@ -3,11 +3,17 @@
 [ext_resource type="Script" uid="uid://cpqdhsyw0vgg1" path="res://scenes/ingame/map_visualizer.gd" id="1_7udv5"]
 [ext_resource type="Script" uid="uid://dp3vm4x2rx3uf" path="res://scenes/ingame/ingame_map.gd" id="1_td6e5"]
 [ext_resource type="Script" uid="uid://dilrauf05i3je" path="res://scenes/ingame/players_panel.gd" id="2_s3xon"]
+[ext_resource type="Shader" uid="uid://cemlqbvowjq1m" path="res://scenes/ingame/ingame_map.gdshader" id="3_g5sqw"]
 [ext_resource type="Script" uid="uid://bm6sp4ow1l2qv" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
 [ext_resource type="Script" uid="uid://boaagd3hgel75" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
 [ext_resource type="Script" uid="uid://b8ttj2gcfkh47" path="res://scenes/ingame/unit_info.gd" id="6_smdvi"]
 [ext_resource type="PackedScene" uid="uid://ygwgcu7ruh4u" path="res://scenes/health_bar.tscn" id="7_6nuks"]
 [ext_resource type="Script" uid="uid://b220xr4adcigk" path="res://scenes/ingame/deployment_box.gd" id="8_rtl0i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3rx8c"]
+shader = ExtResource("3_g5sqw")
+shader_parameter/border_color = Color(1, 1, 1, 1)
+shader_parameter/border_width = 0.03
 
 [node name="IngameMap" type="Control" unique_id=1560040291]
 layout_mode = 3
@@ -23,8 +29,74 @@ offset_bottom = 1073.0
 [node name="PlayersPanel" type="Control" parent="VBoxContainer" unique_id=69587996]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
 script = ExtResource("2_s3xon")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PlayersPanel" unique_id=1918173195]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="PlayerCardP1" type="HBoxContainer" parent="VBoxContainer/PlayersPanel/HBoxContainer" unique_id=362556757]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/separation = 15
+
+[node name="AvatarP1" type="TextureRect" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP1" unique_id=1033620551]
+material = SubResource("ShaderMaterial_3rx8c")
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 6
+
+[node name="NameP1" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP1" unique_id=693470659]
+layout_mode = 2
+
+[node name="NumCardsP1" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP1" unique_id=517385690]
+layout_mode = 2
+
+[node name="CenterInfo" type="VBoxContainer" parent="VBoxContainer/PlayersPanel/HBoxContainer" unique_id=2036423434]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/separation = 6
+
+[node name="Phase" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/CenterInfo" unique_id=1628022305]
+layout_mode = 2
+uppercase = true
+
+[node name="EndTurn" type="Button" parent="VBoxContainer/PlayersPanel/HBoxContainer/CenterInfo" unique_id=126975506]
+layout_mode = 2
+text = "End Turn
+"
+
+[node name="PlayerCardP2" type="HBoxContainer" parent="VBoxContainer/PlayersPanel/HBoxContainer" unique_id=1103161440]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/separation = 15
+
+[node name="NumCardsP2" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP2" unique_id=1537170703]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="NameP2" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP2" unique_id=968602773]
+layout_mode = 2
+
+[node name="AvatarP2" type="TextureRect" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP2" unique_id=1482547048]
+material = SubResource("ShaderMaterial_3rx8c")
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 6
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer" unique_id=959567450]
 layout_mode = 2
@@ -35,12 +107,13 @@ size_flags_stretch_ratio = 7.5
 handle_input_locally = false
 render_target_update_mode = 4
 
-[node name="mapVisualizer" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight")]
+[node name="mapVisualizer" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment")]
 script = ExtResource("1_7udv5")
 tile_map_layer_texture = NodePath("../TileMapLayer_texture")
 tile_map_layer_units = NodePath("../TileMapLayer_units")
 tile_map_layer_selection = NodePath("../TileMapLayer_selection")
 tile_map_layer_highlight = NodePath("../TileMapLayer_highlights")
+tile_map_layer_deployment = NodePath("../TileMapLayer_deployment")
 metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
 
 [node name="TileMapLayer_texture" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=479184065]

@@ -191,6 +191,8 @@ func _apply_stat_effect(hab: HabilityRes, src_unit:UnitGame, target_unit:UnitGam
 					get_tile_at(target_pos).set_unit(null)
 			StatData.SPEED:
 				push_warning("_apply_stat_effect: speed debe modificarse via alter_states")
+				
+				
 func calculate_deployment(player_id: int, size: int, start_tile: Vector2i) -> Dictionary:
 	var result := {"tiles": [] as Array[Vector2i], "is_valid": true}
 	var ideal_shape: Array[Vector2i] = []

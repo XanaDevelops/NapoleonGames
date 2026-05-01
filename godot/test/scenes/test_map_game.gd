@@ -67,7 +67,7 @@ Vestibulum lacinia dapibus justo. Donec vitae mauris lacinia, porta orci nec, fa
 				card_res.resistances= generate_resistances()
 				var unit = UnitGame.new(card_res)
 				unit._currentAlterStates = generate_alter_states()
-				#map.get_tile_at(Vector2i(x, y)).set_unit(unit)
+				map.get_tile_at(Vector2i(x, y)).set_unit(unit)
 	
 	return map
 func generate_alter_states() -> Dictionary[AlterStateRes, int]:

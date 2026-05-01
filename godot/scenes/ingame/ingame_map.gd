@@ -8,7 +8,6 @@ extends Control
 @onready var sub_viewport:  SubViewport          = $VBoxContainer/SubViewportContainer/SubViewport
 @onready var map_visualizer: mapVisualizer       = $VBoxContainer/SubViewportContainer/SubViewport/mapVisualizer
 @onready var unit_info:     Control              = $VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo
-
 enum UnitState {
 	IDLE,
 	UNIT_SELECTED,
@@ -35,12 +34,12 @@ func _ready() -> void:
 	await get_tree().process_frame
 	_setup_viewport()
 	clear()
-
 	map_visualizer.tile_clicked.connect(_on_tile_clicked)
 	unit_info.hability_use_requested.connect(_on_hability_use_requested)
 	cards_panel.confirmed.connect(_hab_manager.confirm)
 	cards_panel.cancelled.connect(_hab_manager.cancel)
 
+	
 
 func clear() -> void:
 	cards_panel.clear()
