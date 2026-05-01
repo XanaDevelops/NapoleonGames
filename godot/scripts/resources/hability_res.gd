@@ -64,7 +64,7 @@ var objective := SEL_ENEMY_FLAG
 @export var condition_value := 0.0
 
 func _init() -> void:
-	if is_valid_objective(objective):
+	if not is_valid_objective(objective):
 		objective = SEL_ENEMY_FLAG
 		push_error("Habilidad sin objetivo valido!\nValor por defecto ENEMY")
 		assert(false)
@@ -110,7 +110,9 @@ func _inflicts_multiple(obj: int) -> bool:
 static func is_valid_objective(obj: int) -> bool:
 	if obj <= 0 or obj > 0b1111:
 		return false
-	if obj == SEL_SELF_FLAG | SEL_MULT_FLAG:
+	if obj == (SEL_SELF_FLAG | SEL_MULT_FLAG):
+		return false
+	if obj == SEL_MULT_FLAG:
 		return false
 		
 	return true
@@ -120,7 +122,7 @@ func _is_valid_objective(obj: int) -> bool:
 	return is_valid_objective(obj)
 	
 static func objective_text(obj: int) -> String:
-	if HabilityRes.is_valid_objective(obj):
+	if not HabilityRes.is_valid_objective(obj):
 		return "Inválido"
 	var is_self     := HabilityRes.inflicts_self(obj)
 	var is_enemy    := HabilityRes.inflicts_enemy(obj)

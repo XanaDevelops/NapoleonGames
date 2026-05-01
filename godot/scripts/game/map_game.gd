@@ -79,9 +79,6 @@ func get_units_range(pos: Vector2i, range: int, filter: int) -> Array[Vector2i]:
 				not same_own and HabilityRes.inflicts_enemy(filter):
 				ret_pos.append(key)
 				
-			# No se si tener esto aquí va bien o la comprobación debe de estar más arriba
-			if not HabilityRes.inflicts_multiple(filter):
-				break
 	
 	return ret_pos
 	
