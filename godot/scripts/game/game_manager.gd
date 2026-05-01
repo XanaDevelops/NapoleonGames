@@ -52,8 +52,7 @@ func start_game(playerA: UserRes, playerB:UserRes, map:MapRes, armyA: ArmyRes, a
 func get_game_config() -> void:
 	pass
 	
-func get_turn_manager() -> TurnManager:
-	return self.turn_manager
+
 ## Placeholder 
 func _get_mapRes() -> MapRes:
 	return self._gameMap._mapRes
@@ -68,11 +67,11 @@ func set_map(map_game:MapGame) -> void:
 	self._gameMap= map_game
 	
 func get_turn_manager() -> TurnManager:
-	return self._turn_manager
+	return self.turn_manager
 ## Registra un TurnManager como el actual
 ## si hay que configurar signals y cosas de esas aquí
 func register_turn_manager(tm: TurnManager) -> void:
-	self._turn_manager = tm
+	self.turn_manager = tm
 
 func get_current_phase() -> String:
 	match _app_state:

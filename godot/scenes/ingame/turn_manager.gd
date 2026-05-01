@@ -3,6 +3,7 @@ extends Node
 
 
 signal card_deployed(player: UserRes, remaining: int)
+## Los UnitGame deben subscribirse a esto para avanzar el turno
 signal tick_turn
 
 @onready var cards_panel = $IngameMap/VBoxContainer/CardsPanel
@@ -66,8 +67,6 @@ func register_turn(turn: TurnAction) -> bool:
 	return true
 
 
-## Los UnitGame deben subscribirse a esto para avanzar el turno
-signal tick_turn
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -92,7 +91,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
 	
 		map_logic.move_unit(start, end)
 		#unit.has_moved_this_turn = true
-		visualizador.plot_unit_moved(start, end)
+		map_visualizer.plot_unit_moved(start, end)
 		
 		var action = TurnAction.new()
 		action.player = unit._owner
@@ -173,13 +172,13 @@ func _on_hex_clicked(click_pos: Vector2i, _tile: TileGame = null) -> void:
 		return
 		
 	var current_user := get_current_user()
-	var result := GameManager._gameMap.calculate_deployment(get_current_user_number(), pending_deployment_group.n, click_pos)
+	var result:Dictionary = GameManager._gameMap.calculate_deployment(get_current_user_number(), pending_deployment_group.n, click_pos)
 	
 	if not result["is_valid"]:
 		return
 		
 	for pos in result["tiles"]:
-		var new_unit := UnitGame.new(pending_deployment_group.cardType)
+		var new_unit := UnitGame.new(pending_deployment_group.cardType, get_current_user())
 		new_unit._owner = current_user
 		
 		GameManager._gameMap.place_unit(new_unit, pos)
@@ -239,7 +238,7 @@ func _on_card_selected_in_ui(army_group: CardArmyGroup) -> void:
 	pending_deployment_group = army_group
 
 func _highlight_current_deployment_zone() -> void:
-	var zone_tiles := GameManager._gameMap.get_deployment_zone_tiles(get_current_user_number())
+	var zone_tiles:Array[Vector2i] = GameManager._gameMap.get_deployment_zone_tiles(get_current_user_number())
 	map_visualizer.show_deployment_zone(zone_tiles)
 
 func _on_map_tile_hovered(coords: Vector2i) -> void:
@@ -248,5 +247,5 @@ func _on_map_tile_hovered(coords: Vector2i) -> void:
 			map_visualizer.clear_deployment_preview()
 		return
 		
-	var result := GameManager._gameMap.calculate_deployment(get_current_user_number(), pending_deployment_group.n, coords)
+	var result:Dictionary= GameManager._gameMap.calculate_deployment(get_current_user_number(), pending_deployment_group.n, coords)
 	map_visualizer.show_deployment_preview(result["tiles"], result["is_valid"])
