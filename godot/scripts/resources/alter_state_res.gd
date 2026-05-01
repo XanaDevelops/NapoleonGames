@@ -17,7 +17,8 @@ class_name AlterStateRes
 extends GameResource
 
 ## Objetivo del estado alterado ([HabilityRes.HAB_DEST])
-@export var objectiu := HabilityRes.HAB_DEST.SELF #Si nos ponemos creativos puede ser diferente a self
+@export_flags("self:1", "ally:2", "enemy:4", "multiple:8", "everyone:15")
+var objectiu := HabilityRes.SEL_SELF_FLAG #Si nos ponemos creativos puede ser diferente a self
 ## Valor del estado alterado
 @export var value: float
 ## Estadistica a la que afecta
@@ -28,3 +29,9 @@ extends GameResource
 @export var hitP := 1.0
 ## Duración en turnos
 @export var duration: int
+
+func _init() -> void:
+	if objectiu == 0:
+		objectiu = HabilityRes.SEL_ALLY_FLAG
+		push_error("Estado alterado sin objetivo valido!\nValor por defecto SELF")
+		assert(false)

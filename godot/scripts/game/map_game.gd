@@ -60,7 +60,7 @@ func move_unit(start: Vector2i, end: Vector2i) -> void:
 	get_tile_at(end).set_unit(unit)
 	
 ## Devuelve las posiciones con tropas dentro del rango
-func get_units_range(pos: Vector2i, range: int, filter:= HabilityRes.HAB_DEST.EVERYONE) -> Array[Vector2i]:
+func get_units_range(pos: Vector2i, range: int, filter: int) -> Array[Vector2i]:
 	var ret_pos : Array[Vector2i] = []
 	var tile := get_tile_at(pos)
 	if !tile.has_unit():
@@ -71,10 +71,14 @@ func get_units_range(pos: Vector2i, range: int, filter:= HabilityRes.HAB_DEST.EV
 	
 	for key in distances:
 		if distances[key] <= range and get_tile_at(key).has_unit():
+			if key == pos and HabilityRes.inflicts_self(filter):
+				ret_pos.append(key)
+				
 			var same_own := get_tile_at(key).get_unit()._owner == unit._owner
-			if same_own and HabilityRes.inflicts_ally(filter) or \
+			if      same_own and HabilityRes.inflicts_ally(filter) or \
 				not same_own and HabilityRes.inflicts_enemy(filter):
 				ret_pos.append(key)
+				
 	
 	return ret_pos
 	
@@ -153,40 +157,6 @@ func get_cells_in_range(pos: Vector2i, radius: int) -> Array[Vector2i]:
 			result.append(cell)
 	
 	return result
-
-func get_valid_targets(hab: HabilityRes, pos: Vector2i, unit: UnitGame) -> Array[Vector2i]:
-
-	if hab.objective == HabilityRes.HAB_DEST.SELF:
-		return [pos]
-	
-	var in_range = get_cells_in_range(pos, hab.radius)
-	match hab.objective:
-		HabilityRes.HAB_DEST.SINGLE_ENEMY, HabilityRes.HAB_DEST.MULTI_ENEMY:
-			return in_range.filter(func(c):
-				var tile = get_tile_at(c)
-				return tile.has_unit() and tile.get_unit()._owner != unit._owner
-			)
-			
-		HabilityRes.HAB_DEST.SINGLE_ALLY, HabilityRes.HAB_DEST.MULTIPLE_ALLY:
-			return in_range.filter(func(c):
-				var tile = get_tile_at(c)
-				
-				return tile.has_unit() and tile.get_unit()._owner == unit._owner
-			)
-			
-		HabilityRes.HAB_DEST.SINGLE_ANY, HabilityRes.HAB_DEST.MULTIPLE_ANY:
-			return in_range.filter(func(c):
-				return get_tile_at(c).has_unit()
-			)
-			
-		HabilityRes.HAB_DEST.EVERYONE:
-			in_range.append(pos)
-			return in_range.filter(func(c):
-				var tile = get_tile_at(c)
-				return tile.has_unit() 
-			)
-	
-	return []
 
 func apply_hability(hab:HabilityRes, pos:Vector2i, targets:Array[Vector2i]) -> void:
 	var user_tile = get_tile_at(pos)

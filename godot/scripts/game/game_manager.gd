@@ -16,7 +16,7 @@ enum APP_STATE {
 }
 @export var _app_state := APP_STATE.MENU_HUB
 
-func _ready() -> void:
+func _init() -> void:
 	_gameRes = GameResources.load_from()
 	
 

@@ -71,7 +71,7 @@ func _on_hability_info_requested(hab: HabilityRes) -> void:
 		Pasiva: %s
 	""" % [
 		hab.desc,
-		_objective_text(hab.objective),
+		hab._objective_text(),
 		hab.manaCost,
 		hab.radius,
 		hab.cooldown,
@@ -82,16 +82,6 @@ func _on_hability_info_requested(hab: HabilityRes) -> void:
 	dialog.confirmed.connect(func(): dialog.queue_free())
 	dialog.canceled.connect(func(): dialog.queue_free())
 
-
-func _objective_text(obj: HabilityRes.HAB_DEST) -> String:
-	match obj:
-		HabilityRes.HAB_DEST.SINGLE_ENEMY:  return "Enemigo"
-		HabilityRes.HAB_DEST.MULTI_ENEMY:   return "Enemigos"
-		HabilityRes.HAB_DEST.SINGLE_ALLY:   return "Aliado"
-		HabilityRes.HAB_DEST.MULTIPLE_ALLY: return "Aliados"
-		HabilityRes.HAB_DEST.SELF:          return "Uno mismo"
-		HabilityRes.HAB_DEST.EVERYONE:      return "Todos"
-		_: return "-"
  
 func _create_cell(text: String, color: Color, is_header: bool = false) -> PanelContainer:
 	var panel = PanelContainer.new()
@@ -148,7 +138,7 @@ func _show_hability_info(hab: HabilityRes) -> void:
 	dialog.title = str(hab.name)
 	dialog.dialog_text = "Descripción: %s\nObjetivo: %s\nManá: %d\nRango: %d\nCD: %dt\nPasiva: %s" % [
 		hab.desc,
-		_objective_text(hab.objective),
+		hab._objective_text(),
 		hab.manaCost,
 		hab.radius,
 		hab.cooldown,

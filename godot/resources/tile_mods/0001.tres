@@ -1,13 +1,12 @@
 [gd_resource type="Resource" script_class="TileModRes" format=3]
 
 [ext_resource type="Resource" path="res://resources/card_types/0001.tres" id="1_hv8fm"]
-[ext_resource type="Script" path="res://scripts/resources/tile_mod_res.gd" id="1_sn381"]
-[ext_resource type="Resource" path="res://resources/stat_datas/0003.tres" id="3_cdg0l"]
+[ext_resource type="Script" path="res://scripts/resources/tile_mod_res.gd" id="2_cdg0l"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0003.tres" id="3_v40hh"]
 
 [resource]
-script = ExtResource("1_sn381")
+script = ExtResource("2_cdg0l")
 value = 999.0
-stat = ExtResource("3_cdg0l")
+stat = ExtResource("3_v40hh")
 affectType = ExtResource("1_hv8fm")
 uid = 1
-metadata/_custom_type_script = "uid://cnh4gjirdr73b"

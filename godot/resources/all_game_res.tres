@@ -3,44 +3,885 @@
 [ext_resource type="Script" path="res://scripts/resources/alter_state_res.gd" id="1_7pwyr"]
 [ext_resource type="Script" path="res://scripts/resources/army_res.gd" id="2_quie6"]
 [ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="3_80616"]
-[ext_resource type="Resource" path="res://resources/armies/0001.tres" id="3_t0j3a"]
-[ext_resource type="Resource" path="res://resources/armies/0002.tres" id="4_vwhd4"]
-[ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="4_y6jhn"]
-[ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="5_t0j3a"]
+[ext_resource type="Resource" path="res://resources/armies/0001.tres" id="3_c8v8g"]
+[ext_resource type="Resource" path="res://resources/armies/0002.tres" id="4_k5wek"]
+[ext_resource type="Script" path="res://scripts/resources/card_army_group.gd" id="5_1nulq"]
+[ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="6_mj3bk"]
 [ext_resource type="Script" path="res://scripts/resources/card_type_res.gd" id="6_vwhd4"]
-[ext_resource type="Resource" path="res://resources/card_types/0001.tres" id="7_df45x"]
+[ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="7_vioyl"]
 [ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="8_q7fox"]
-[ext_resource type="Resource" path="res://resources/cards/0001.tres" id="9_lsxbk"]
-[ext_resource type="Resource" path="res://resources/cards/0002.tres" id="10_r0ky1"]
+[ext_resource type="Resource" path="res://resources/card_types/0001.tres" id="9_1jai1"]
+[ext_resource type="Resource" path="res://resources/cards/0001.tres" id="11_1nulq"]
 [ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="11_60c35"]
-[ext_resource type="Resource" path="res://resources/habilities/0001.tres" id="12_e07fo"]
-[ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="13_8e42l"]
+[ext_resource type="Resource" path="res://resources/cards/0002.tres" id="12_t1ldd"]
+[ext_resource type="Resource" path="res://resources/habilities/0001.tres" id="14_5dmu5"]
 [ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="14_wh2kh"]
-[ext_resource type="Resource" path="res://resources/maps/0001.tres" id="15_80616"]
+[ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="15_fv4nc"]
 [ext_resource type="Script" path="res://scripts/resources/all_game_res.gd" id="15_y3xpg"]
 [ext_resource type="Script" path="res://scripts/resources/stat_res.gd" id="16_qmt1m"]
-[ext_resource type="Resource" path="res://resources/stat_datas/0001.tres" id="17_ioe74"]
-[ext_resource type="Resource" path="res://resources/stat_datas/0002.tres" id="18_nbaek"]
-[ext_resource type="Resource" path="res://resources/stat_datas/0003.tres" id="19_ub2ig"]
+[ext_resource type="Texture2D" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="16_t1ldd"]
+[ext_resource type="Texture2D" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="17_5dmu5"]
+[ext_resource type="Resource" path="res://resources/maps/0001.tres" id="17_i6b4a"]
 [ext_resource type="Script" path="res://scripts/resources/tile_mod_res.gd" id="20_0eyc4"]
-[ext_resource type="Resource" path="res://resources/tile_mods/0001.tres" id="21_ujolu"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0001.tres" id="20_35tx5"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0002.tres" id="21_5kkwk"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0003.tres" id="22_m0tnl"]
 [ext_resource type="Script" path="res://scripts/resources/tile_type_res.gd" id="22_p1cgm"]
-[ext_resource type="Resource" path="res://resources/tile_types/0001.tres" id="23_ridsy"]
-[ext_resource type="Resource" path="res://resources/tile_types/0002.tres" id="24_iuvtm"]
+[ext_resource type="Resource" path="res://resources/tile_mods/0001.tres" id="24_neeky"]
 [ext_resource type="Script" path="res://scripts/resources/tile_res.gd" id="25_c8v8g"]
+[ext_resource type="Resource" path="res://resources/tile_types/0001.tres" id="26_aua58"]
 [ext_resource type="Script" path="res://scripts/resources/user_res.gd" id="26_k5wek"]
-[ext_resource type="Resource" path="res://resources/users/0001.tres" id="27_mj3bk"]
-[ext_resource type="Resource" path="res://resources/users/0002.tres" id="29_y6jhn"]
+[ext_resource type="Texture2D" path="res://assets/tiles/EverHex-Forest Lite/Forest/1.png" id="27_fv4nc"]
+[ext_resource type="Resource" path="res://resources/tile_types/0002.tres" id="27_pucry"]
+[ext_resource type="Texture2D" path="res://assets/tiles/EverHex-Forest Lite/Sky/blue/1.png" id="28_i6b4a"]
+[ext_resource type="Resource" path="res://resources/tiles/0001.tres" id="29_yp0rv"]
+[ext_resource type="Resource" path="res://resources/tiles/0002.tres" id="30_smaj7"]
+[ext_resource type="Resource" path="res://resources/tiles/0003.tres" id="31_7ic2b"]
+[ext_resource type="Resource" path="res://resources/tiles/0004.tres" id="32_alvlt"]
+[ext_resource type="Resource" path="res://resources/tiles/0005.tres" id="33_sk4sv"]
+[ext_resource type="Resource" path="res://resources/tiles/0006.tres" id="34_25exu"]
+[ext_resource type="Resource" path="res://resources/tiles/0007.tres" id="35_65kva"]
+[ext_resource type="Resource" path="res://resources/tiles/0008.tres" id="36_831jh"]
+[ext_resource type="Resource" path="res://resources/tiles/0009.tres" id="37_66w2b"]
+[ext_resource type="Resource" path="res://resources/tiles/0010.tres" id="38_l37vq"]
+[ext_resource type="Resource" path="res://resources/tiles/0011.tres" id="39_ye63u"]
+[ext_resource type="Resource" path="res://resources/tiles/0012.tres" id="40_vbio7"]
+[ext_resource type="Resource" path="res://resources/tiles/0013.tres" id="41_ect5a"]
+[ext_resource type="Resource" path="res://resources/tiles/0014.tres" id="42_lww5a"]
+[ext_resource type="Resource" path="res://resources/tiles/0015.tres" id="43_fm4bd"]
+[ext_resource type="Resource" path="res://resources/tiles/0016.tres" id="44_o8n0j"]
+[ext_resource type="Resource" path="res://resources/tiles/0017.tres" id="45_atj62"]
+[ext_resource type="Resource" path="res://resources/tiles/0018.tres" id="46_aahww"]
+[ext_resource type="Resource" path="res://resources/tiles/0019.tres" id="47_duqa4"]
+[ext_resource type="Resource" path="res://resources/tiles/0020.tres" id="48_vukjf"]
+[ext_resource type="Resource" path="res://resources/users/0001.tres" id="50_toexj"]
+[ext_resource type="Resource" path="res://resources/users/0002.tres" id="51_05j13"]
+
+[sub_resource type="Resource" id="Resource_25exu"]
+script = ExtResource("2_quie6")
+nom = &"superArmy1"
+isActive = true
+uid = 1
+
+[sub_resource type="Resource" id="Resource_65kva"]
+script = ExtResource("2_quie6")
+nom = &"superArmy2"
+isActive = true
+uid = 2
+
+[sub_resource type="Resource" id="Resource_onrg7"]
+script = ExtResource("2_quie6")
+nom = &"superArmy1"
+isActive = true
+uid = 1
+
+[sub_resource type="Resource" id="Resource_ravwh"]
+script = ExtResource("2_quie6")
+nom = &"superArmy2"
+isActive = true
+uid = 2
+
+[sub_resource type="Resource" id="Resource_831jh"]
+script = ExtResource("3_80616")
+name = &"physic"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_66w2b"]
+script = ExtResource("3_80616")
+name = &"magic"
+uid = 2
+
+[sub_resource type="Resource" id="Resource_bahph"]
+script = ExtResource("3_80616")
+name = &"physic"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_4svu8"]
+script = ExtResource("3_80616")
+name = &"magic"
+uid = 2
+
+[sub_resource type="Resource" id="Resource_l37vq"]
+script = ExtResource("6_vwhd4")
+name = &"Unidad"
+desc = "Unidad básica, lol"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_kftuh"]
+script = ExtResource("6_vwhd4")
+name = &"Unidad"
+desc = "Unidad básica, lol"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_ye63u"]
+script = ExtResource("16_qmt1m")
+name = &"attack"
+desc = "daño de ataque"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_vbio7"]
+script = ExtResource("11_60c35")
+name = &"espadazo"
+desc = "ataque corto de espada"
+value = 7.0
+stat = SubResource("Resource_ye63u")
+attackType = SubResource("Resource_831jh")
+radius = 1
+uid = 1
+
+[sub_resource type="Resource" id="Resource_ect5a"]
+script = ExtResource("11_60c35")
+name = &"flechazo"
+desc = "Lanza una flecha magica"
+value = 10.0
+stat = SubResource("Resource_ye63u")
+attackType = SubResource("Resource_66w2b")
+radius = 3
+uid = 2
+
+[sub_resource type="Resource" id="Resource_lww5a"]
+script = ExtResource("8_q7fox")
+name = &"Mele Unit"
+desc = "unidad a mele"
+hp = 20
+speed = 5
+dodge = 0.35
+portrait = ExtResource("17_5dmu5")
+img = ExtResource("16_t1ldd")
+resistances = Dictionary[ExtResource("3_80616"), int]({
+SubResource("Resource_831jh"): 15,
+SubResource("Resource_66w2b"): 5
+})
+habilities = Array[ExtResource("11_60c35")]([SubResource("Resource_vbio7"), SubResource("Resource_ect5a")])
+types = Array[ExtResource("6_vwhd4")]([SubResource("Resource_l37vq")])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_fm4bd"]
+script = ExtResource("8_q7fox")
+name = &"Ranged Unit"
+desc = "Unidad a distancia"
+hp = 10
+mana = 10
+speed = 6
+dodge = 0.1
+portrait = ExtResource("16_t1ldd")
+img = ExtResource("17_5dmu5")
+resistances = Dictionary[ExtResource("3_80616"), int]({
+SubResource("Resource_831jh"): 5,
+SubResource("Resource_66w2b"): 5
+})
+habilities = Array[ExtResource("11_60c35")]([SubResource("Resource_ect5a")])
+types = Array[ExtResource("6_vwhd4")]([SubResource("Resource_l37vq")])
+uid = 2
+
+[sub_resource type="Resource" id="Resource_na0h5"]
+script = ExtResource("16_qmt1m")
+name = &"attack"
+desc = "daño de ataque"
+uid = 1
+
+[sub_resource type="Resource" id="Resource_w20mp"]
+script = ExtResource("11_60c35")
+name = &"espadazo"
+desc = "ataque corto de espada"
+value = 7.0
+stat = SubResource("Resource_na0h5")
+attackType = SubResource("Resource_bahph")
+radius = 1
+uid = 1
+
+[sub_resource type="Resource" id="Resource_wlopp"]
+script = ExtResource("11_60c35")
+name = &"flechazo"
+desc = "Lanza una flecha magica"
+value = 10.0
+stat = SubResource("Resource_na0h5")
+attackType = SubResource("Resource_4svu8")
+radius = 3
+uid = 2
+
+[sub_resource type="Resource" id="Resource_m0025"]
+script = ExtResource("8_q7fox")
+name = &"Mele Unit"
+desc = "unidad a mele"
+hp = 20
+speed = 5
+dodge = 0.35
+portrait = ExtResource("17_5dmu5")
+img = ExtResource("16_t1ldd")
+resistances = Dictionary[ExtResource("3_80616"), int]({
+SubResource("Resource_bahph"): 15,
+SubResource("Resource_4svu8"): 5
+})
+habilities = Array[ExtResource("11_60c35")]([SubResource("Resource_w20mp"), SubResource("Resource_wlopp")])
+types = Array[ExtResource("6_vwhd4")]([SubResource("Resource_kftuh")])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_nnagb"]
+script = ExtResource("8_q7fox")
+name = &"Ranged Unit"
+desc = "Unidad a distancia"
+hp = 10
+mana = 10
+speed = 6
+dodge = 0.1
+portrait = ExtResource("16_t1ldd")
+img = ExtResource("17_5dmu5")
+resistances = Dictionary[ExtResource("3_80616"), int]({
+SubResource("Resource_bahph"): 5,
+SubResource("Resource_4svu8"): 5
+})
+habilities = Array[ExtResource("11_60c35")]([SubResource("Resource_wlopp")])
+types = Array[ExtResource("6_vwhd4")]([SubResource("Resource_kftuh")])
+uid = 2
+
+[sub_resource type="Resource" id="Resource_c8v8g"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 1
+
+[sub_resource type="Resource" id="Resource_k5wek"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 2
+
+[sub_resource type="Resource" id="Resource_mj3bk"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 3
+
+[sub_resource type="Resource" id="Resource_vioyl"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 4
+
+[sub_resource type="Resource" id="Resource_1jai1"]
+script = ExtResource("25_c8v8g")
+height = 100
+type = ExtResource("26_aua58")
+uid = 5
+
+[sub_resource type="Resource" id="Resource_1nulq"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 6
+
+[sub_resource type="Resource" id="Resource_t1ldd"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("27_pucry")
+uid = 7
+
+[sub_resource type="Resource" id="Resource_5dmu5"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 8
+
+[sub_resource type="Resource" id="Resource_fv4nc"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("27_pucry")
+uid = 9
+
+[sub_resource type="Resource" id="Resource_i6b4a"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 10
+
+[sub_resource type="Resource" id="Resource_35tx5"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 11
+
+[sub_resource type="Resource" id="Resource_5kkwk"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("27_pucry")
+uid = 12
+
+[sub_resource type="Resource" id="Resource_m0tnl"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 13
+
+[sub_resource type="Resource" id="Resource_neeky"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("27_pucry")
+uid = 14
+
+[sub_resource type="Resource" id="Resource_aua58"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 15
+
+[sub_resource type="Resource" id="Resource_pucry"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 16
+
+[sub_resource type="Resource" id="Resource_yp0rv"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 17
+
+[sub_resource type="Resource" id="Resource_smaj7"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 18
+
+[sub_resource type="Resource" id="Resource_7ic2b"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 19
+
+[sub_resource type="Resource" id="Resource_alvlt"]
+script = ExtResource("25_c8v8g")
+height = 100
+type = ExtResource("26_aua58")
+uid = 20
+
+[sub_resource type="Resource" id="Resource_sk4sv"]
+script = ExtResource("14_wh2kh")
+name = &"test_map_01"
+tamX = 5
+tamY = 4
+mapData = Array[Array]([Array[ExtResource("25_c8v8g")]([SubResource("Resource_c8v8g"), SubResource("Resource_k5wek"), SubResource("Resource_mj3bk"), SubResource("Resource_vioyl"), SubResource("Resource_1jai1")]), Array[ExtResource("25_c8v8g")]([SubResource("Resource_1nulq"), SubResource("Resource_t1ldd"), SubResource("Resource_5dmu5"), SubResource("Resource_fv4nc"), SubResource("Resource_i6b4a")]), Array[ExtResource("25_c8v8g")]([SubResource("Resource_35tx5"), SubResource("Resource_5kkwk"), SubResource("Resource_m0tnl"), SubResource("Resource_neeky"), SubResource("Resource_aua58")]), Array[ExtResource("25_c8v8g")]([SubResource("Resource_pucry"), SubResource("Resource_yp0rv"), SubResource("Resource_smaj7"), SubResource("Resource_7ic2b"), SubResource("Resource_alvlt")])])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_o8n0j"]
+script = ExtResource("22_p1cgm")
+name = &"planicie"
+desc = "paso ez"
+texture = ExtResource("27_fv4nc")
+uid = 1
+
+[sub_resource type="Resource" id="Resource_atj62"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 1
+
+[sub_resource type="Resource" id="Resource_aahww"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 2
+
+[sub_resource type="Resource" id="Resource_duqa4"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 3
+
+[sub_resource type="Resource" id="Resource_vukjf"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 4
+
+[sub_resource type="Resource" id="Resource_toexj"]
+script = ExtResource("25_c8v8g")
+height = 100
+type = SubResource("Resource_o8n0j")
+uid = 5
+
+[sub_resource type="Resource" id="Resource_05j13"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 6
+
+[sub_resource type="Resource" id="Resource_cbqrm"]
+script = ExtResource("16_qmt1m")
+name = &"speed"
+desc = "Velocidad de la tropa"
+uid = 3
+
+[sub_resource type="Resource" id="Resource_trp6w"]
+script = ExtResource("20_0eyc4")
+value = 999.0
+stat = SubResource("Resource_cbqrm")
+affectType = SubResource("Resource_l37vq")
+uid = 1
+
+[sub_resource type="Resource" id="Resource_w4mwl"]
+script = ExtResource("22_p1cgm")
+name = &"rocas"
+desc = "no tan facil"
+mods = Array[ExtResource("20_0eyc4")]([SubResource("Resource_trp6w")])
+texture = ExtResource("28_i6b4a")
+uid = 2
+
+[sub_resource type="Resource" id="Resource_nu60g"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_w4mwl")
+uid = 7
+
+[sub_resource type="Resource" id="Resource_dntur"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 8
+
+[sub_resource type="Resource" id="Resource_xst8d"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_w4mwl")
+uid = 9
+
+[sub_resource type="Resource" id="Resource_rkwqq"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 10
+
+[sub_resource type="Resource" id="Resource_vud7a"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 11
+
+[sub_resource type="Resource" id="Resource_4olrs"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_w4mwl")
+uid = 12
+
+[sub_resource type="Resource" id="Resource_5p6yu"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 13
+
+[sub_resource type="Resource" id="Resource_3bfk6"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_w4mwl")
+uid = 14
+
+[sub_resource type="Resource" id="Resource_lrbe1"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 15
+
+[sub_resource type="Resource" id="Resource_8gwva"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 16
+
+[sub_resource type="Resource" id="Resource_2e11t"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 17
+
+[sub_resource type="Resource" id="Resource_xh8bc"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 18
+
+[sub_resource type="Resource" id="Resource_bvmup"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_o8n0j")
+uid = 19
+
+[sub_resource type="Resource" id="Resource_pfo5u"]
+script = ExtResource("25_c8v8g")
+height = 100
+type = SubResource("Resource_o8n0j")
+uid = 20
+
+[sub_resource type="Resource" id="Resource_26ghu"]
+script = ExtResource("14_wh2kh")
+name = &"test_map_01"
+tamX = 5
+tamY = 4
+mapData = Array[Array]([[SubResource("Resource_atj62"), SubResource("Resource_aahww"), SubResource("Resource_duqa4"), SubResource("Resource_vukjf"), SubResource("Resource_toexj")], [SubResource("Resource_05j13"), SubResource("Resource_nu60g"), SubResource("Resource_dntur"), SubResource("Resource_xst8d"), SubResource("Resource_rkwqq")], [SubResource("Resource_vud7a"), SubResource("Resource_4olrs"), SubResource("Resource_5p6yu"), SubResource("Resource_3bfk6"), SubResource("Resource_lrbe1")], [SubResource("Resource_8gwva"), SubResource("Resource_2e11t"), SubResource("Resource_xh8bc"), SubResource("Resource_bvmup"), SubResource("Resource_pfo5u")]])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_w81lf"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 1
+
+[sub_resource type="Resource" id="Resource_ilpb7"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 2
+
+[sub_resource type="Resource" id="Resource_0htiu"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 3
+
+[sub_resource type="Resource" id="Resource_8wipr"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 4
+
+[sub_resource type="Resource" id="Resource_d6ax8"]
+script = ExtResource("25_c8v8g")
+height = 100
+type = ExtResource("26_aua58")
+uid = 5
+
+[sub_resource type="Resource" id="Resource_qqs3f"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 6
+
+[sub_resource type="Resource" id="Resource_1tswl"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("27_pucry")
+uid = 7
+
+[sub_resource type="Resource" id="Resource_noaaj"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 8
+
+[sub_resource type="Resource" id="Resource_m5cls"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("27_pucry")
+uid = 9
+
+[sub_resource type="Resource" id="Resource_emy1y"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 10
+
+[sub_resource type="Resource" id="Resource_jguxf"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 11
+
+[sub_resource type="Resource" id="Resource_wkbwu"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("27_pucry")
+uid = 12
+
+[sub_resource type="Resource" id="Resource_wsndi"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 13
+
+[sub_resource type="Resource" id="Resource_ej488"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("27_pucry")
+uid = 14
+
+[sub_resource type="Resource" id="Resource_45ij5"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 15
+
+[sub_resource type="Resource" id="Resource_n373c"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 16
+
+[sub_resource type="Resource" id="Resource_1aog7"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 17
+
+[sub_resource type="Resource" id="Resource_pses1"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 18
+
+[sub_resource type="Resource" id="Resource_ph3ot"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = ExtResource("26_aua58")
+uid = 19
+
+[sub_resource type="Resource" id="Resource_hfb5y"]
+script = ExtResource("25_c8v8g")
+height = 100
+type = ExtResource("26_aua58")
+uid = 20
+
+[sub_resource type="Resource" id="Resource_fi3f5"]
+script = ExtResource("14_wh2kh")
+name = &"test_map_01"
+tamX = 5
+tamY = 4
+mapData = Array[Array]([Array[ExtResource("25_c8v8g")]([SubResource("Resource_w81lf"), SubResource("Resource_ilpb7"), SubResource("Resource_0htiu"), SubResource("Resource_8wipr"), SubResource("Resource_d6ax8")]), Array[ExtResource("25_c8v8g")]([SubResource("Resource_qqs3f"), SubResource("Resource_1tswl"), SubResource("Resource_noaaj"), SubResource("Resource_m5cls"), SubResource("Resource_emy1y")]), Array[ExtResource("25_c8v8g")]([SubResource("Resource_jguxf"), SubResource("Resource_wkbwu"), SubResource("Resource_wsndi"), SubResource("Resource_ej488"), SubResource("Resource_45ij5")]), Array[ExtResource("25_c8v8g")]([SubResource("Resource_n373c"), SubResource("Resource_1aog7"), SubResource("Resource_pses1"), SubResource("Resource_ph3ot"), SubResource("Resource_hfb5y")])])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_ourjb"]
+script = ExtResource("22_p1cgm")
+name = &"planicie"
+desc = "paso ez"
+texture = ExtResource("27_fv4nc")
+uid = 1
+
+[sub_resource type="Resource" id="Resource_1pm6t"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 1
+
+[sub_resource type="Resource" id="Resource_do51a"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 2
+
+[sub_resource type="Resource" id="Resource_v0efm"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 3
+
+[sub_resource type="Resource" id="Resource_8n0cj"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 4
+
+[sub_resource type="Resource" id="Resource_en3sh"]
+script = ExtResource("25_c8v8g")
+height = 100
+type = SubResource("Resource_ourjb")
+uid = 5
+
+[sub_resource type="Resource" id="Resource_th537"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 6
+
+[sub_resource type="Resource" id="Resource_8iovh"]
+script = ExtResource("16_qmt1m")
+name = &"speed"
+desc = "Velocidad de la tropa"
+uid = 3
+
+[sub_resource type="Resource" id="Resource_hvqpk"]
+script = ExtResource("20_0eyc4")
+value = 999.0
+stat = SubResource("Resource_8iovh")
+affectType = SubResource("Resource_kftuh")
+uid = 1
+
+[sub_resource type="Resource" id="Resource_17xy0"]
+script = ExtResource("22_p1cgm")
+name = &"rocas"
+desc = "no tan facil"
+mods = Array[ExtResource("20_0eyc4")]([SubResource("Resource_hvqpk")])
+texture = ExtResource("28_i6b4a")
+uid = 2
+
+[sub_resource type="Resource" id="Resource_qtj1c"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_17xy0")
+uid = 7
+
+[sub_resource type="Resource" id="Resource_fuj2f"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 8
+
+[sub_resource type="Resource" id="Resource_06m5b"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_17xy0")
+uid = 9
+
+[sub_resource type="Resource" id="Resource_pkgh1"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 10
+
+[sub_resource type="Resource" id="Resource_wbkuu"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 11
+
+[sub_resource type="Resource" id="Resource_tours"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_17xy0")
+uid = 12
+
+[sub_resource type="Resource" id="Resource_w8xhu"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 13
+
+[sub_resource type="Resource" id="Resource_rfan4"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_17xy0")
+uid = 14
+
+[sub_resource type="Resource" id="Resource_n7vn7"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 15
+
+[sub_resource type="Resource" id="Resource_a4bni"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 16
+
+[sub_resource type="Resource" id="Resource_msuic"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 17
+
+[sub_resource type="Resource" id="Resource_5ppqw"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 18
+
+[sub_resource type="Resource" id="Resource_4qhxd"]
+script = ExtResource("25_c8v8g")
+height = 1
+type = SubResource("Resource_ourjb")
+uid = 19
+
+[sub_resource type="Resource" id="Resource_7nx7x"]
+script = ExtResource("25_c8v8g")
+height = 100
+type = SubResource("Resource_ourjb")
+uid = 20
+
+[sub_resource type="Resource" id="Resource_2knvc"]
+script = ExtResource("14_wh2kh")
+name = &"test_map_01"
+tamX = 5
+tamY = 4
+mapData = Array[Array]([[SubResource("Resource_1pm6t"), SubResource("Resource_do51a"), SubResource("Resource_v0efm"), SubResource("Resource_8n0cj"), SubResource("Resource_en3sh")], [SubResource("Resource_th537"), SubResource("Resource_qtj1c"), SubResource("Resource_fuj2f"), SubResource("Resource_06m5b"), SubResource("Resource_pkgh1")], [SubResource("Resource_wbkuu"), SubResource("Resource_tours"), SubResource("Resource_w8xhu"), SubResource("Resource_rfan4"), SubResource("Resource_n7vn7")], [SubResource("Resource_a4bni"), SubResource("Resource_msuic"), SubResource("Resource_5ppqw"), SubResource("Resource_4qhxd"), SubResource("Resource_7nx7x")]])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_cn88i"]
+script = ExtResource("16_qmt1m")
+name = &"defense"
+desc = "La defensa"
+uid = 2
+
+[sub_resource type="Resource" id="Resource_t3w33"]
+script = ExtResource("16_qmt1m")
+name = &"defense"
+desc = "La defensa"
+uid = 2
+
+[sub_resource type="Resource" id="Resource_ebxin"]
+script = ExtResource("26_k5wek")
+name = "Lord Xana"
+username = &"lordxana"
+email = "xana@lyoko.com"
+token = "666"
+availableCards = Dictionary[ExtResource("8_q7fox"), int]({
+SubResource("Resource_lww5a"): 3,
+SubResource("Resource_fm4bd"): 2
+})
+availableMaps = Array[ExtResource("14_wh2kh")]([SubResource("Resource_26ghu")])
+userArmys = Array[ExtResource("2_quie6")]([SubResource("Resource_25exu")])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_y6sbp"]
+script = ExtResource("26_k5wek")
+name = "sussybaka"
+username = &"sussybaka"
+email = "amon@gus.lol"
+token = "777"
+availableCards = Dictionary[ExtResource("8_q7fox"), int]({
+SubResource("Resource_lww5a"): 3,
+SubResource("Resource_fm4bd"): 2
+})
+availableMaps = Array[ExtResource("14_wh2kh")]([SubResource("Resource_26ghu")])
+userArmys = Array[ExtResource("2_quie6")]([SubResource("Resource_65kva")])
+uid = 2
+
+[sub_resource type="Resource" id="Resource_l0uy1"]
+script = ExtResource("26_k5wek")
+name = "Lord Xana"
+username = &"lordxana"
+email = "xana@lyoko.com"
+token = "666"
+availableCards = Dictionary[ExtResource("8_q7fox"), int]({
+SubResource("Resource_m0025"): 3,
+SubResource("Resource_nnagb"): 2
+})
+availableMaps = Array[ExtResource("14_wh2kh")]([SubResource("Resource_2knvc")])
+userArmys = Array[ExtResource("2_quie6")]([SubResource("Resource_onrg7")])
+uid = 1
+
+[sub_resource type="Resource" id="Resource_al1s1"]
+script = ExtResource("26_k5wek")
+name = "sussybaka"
+username = &"sussybaka"
+email = "amon@gus.lol"
+token = "777"
+availableCards = Dictionary[ExtResource("8_q7fox"), int]({
+SubResource("Resource_m0025"): 3,
+SubResource("Resource_nnagb"): 2
+})
+availableMaps = Array[ExtResource("14_wh2kh")]([SubResource("Resource_2knvc")])
+userArmys = Array[ExtResource("2_quie6")]([SubResource("Resource_ravwh")])
+uid = 2
 
 [resource]
 script = ExtResource("15_y3xpg")
-users = Array[ExtResource("26_k5wek")]([ExtResource("27_mj3bk"), ExtResource("29_y6jhn")])
-card_types = Array[ExtResource("6_vwhd4")]([ExtResource("7_df45x")])
-cards = Array[ExtResource("8_q7fox")]([ExtResource("9_lsxbk"), ExtResource("10_r0ky1")])
-attack_types = Array[ExtResource("3_80616")]([ExtResource("4_y6jhn"), ExtResource("5_t0j3a")])
-habilities = Array[ExtResource("11_60c35")]([ExtResource("12_e07fo"), ExtResource("13_8e42l")])
-tile_mods = Array[ExtResource("20_0eyc4")]([ExtResource("21_ujolu")])
-tile_types = Array[ExtResource("22_p1cgm")]([ExtResource("23_ridsy"), ExtResource("24_iuvtm")])
-maps = Array[ExtResource("14_wh2kh")]([ExtResource("15_80616")])
-armies = Array[ExtResource("2_quie6")]([ExtResource("3_t0j3a"), ExtResource("4_vwhd4")])
-stat_datas = Array[ExtResource("16_qmt1m")]([ExtResource("17_ioe74"), ExtResource("18_nbaek"), ExtResource("19_ub2ig")])
+users = Array[ExtResource("26_k5wek")]([ExtResource("50_toexj"), ExtResource("51_05j13"), SubResource("Resource_ebxin"), SubResource("Resource_y6sbp"), SubResource("Resource_l0uy1"), SubResource("Resource_al1s1")])
+card_types = Array[ExtResource("6_vwhd4")]([ExtResource("9_1jai1"), SubResource("Resource_l37vq"), SubResource("Resource_kftuh")])
+cards = Array[ExtResource("8_q7fox")]([ExtResource("11_1nulq"), ExtResource("12_t1ldd"), SubResource("Resource_lww5a"), SubResource("Resource_fm4bd"), SubResource("Resource_m0025"), SubResource("Resource_nnagb")])
+attack_types = Array[ExtResource("3_80616")]([ExtResource("6_mj3bk"), ExtResource("7_vioyl"), SubResource("Resource_831jh"), SubResource("Resource_66w2b"), SubResource("Resource_bahph"), SubResource("Resource_4svu8")])
+habilities = Array[ExtResource("11_60c35")]([ExtResource("14_5dmu5"), ExtResource("15_fv4nc"), SubResource("Resource_vbio7"), SubResource("Resource_ect5a"), SubResource("Resource_w20mp"), SubResource("Resource_wlopp")])
+tile_mods = Array[ExtResource("20_0eyc4")]([ExtResource("24_neeky"), SubResource("Resource_trp6w"), SubResource("Resource_hvqpk")])
+tile_types = Array[ExtResource("22_p1cgm")]([ExtResource("26_aua58"), ExtResource("27_pucry"), SubResource("Resource_o8n0j"), SubResource("Resource_w4mwl"), SubResource("Resource_ourjb"), SubResource("Resource_17xy0")])
+tiles = Array[ExtResource("25_c8v8g")]([ExtResource("29_yp0rv"), ExtResource("30_smaj7"), ExtResource("31_7ic2b"), ExtResource("32_alvlt"), ExtResource("33_sk4sv"), ExtResource("34_25exu"), ExtResource("35_65kva"), ExtResource("36_831jh"), ExtResource("37_66w2b"), ExtResource("38_l37vq"), ExtResource("39_ye63u"), ExtResource("40_vbio7"), ExtResource("41_ect5a"), ExtResource("42_lww5a"), ExtResource("43_fm4bd"), ExtResource("44_o8n0j"), ExtResource("45_atj62"), ExtResource("46_aahww"), ExtResource("47_duqa4"), ExtResource("48_vukjf"), SubResource("Resource_atj62"), SubResource("Resource_aahww"), SubResource("Resource_duqa4"), SubResource("Resource_vukjf"), SubResource("Resource_toexj"), SubResource("Resource_05j13"), SubResource("Resource_nu60g"), SubResource("Resource_dntur"), SubResource("Resource_xst8d"), SubResource("Resource_rkwqq"), SubResource("Resource_vud7a"), SubResource("Resource_4olrs"), SubResource("Resource_5p6yu"), SubResource("Resource_3bfk6"), SubResource("Resource_lrbe1"), SubResource("Resource_8gwva"), SubResource("Resource_2e11t"), SubResource("Resource_xh8bc"), SubResource("Resource_bvmup"), SubResource("Resource_pfo5u"), SubResource("Resource_1pm6t"), SubResource("Resource_do51a"), SubResource("Resource_v0efm"), SubResource("Resource_8n0cj"), SubResource("Resource_en3sh"), SubResource("Resource_th537"), SubResource("Resource_qtj1c"), SubResource("Resource_fuj2f"), SubResource("Resource_06m5b"), SubResource("Resource_pkgh1"), SubResource("Resource_wbkuu"), SubResource("Resource_tours"), SubResource("Resource_w8xhu"), SubResource("Resource_rfan4"), SubResource("Resource_n7vn7"), SubResource("Resource_a4bni"), SubResource("Resource_msuic"), SubResource("Resource_5ppqw"), SubResource("Resource_4qhxd"), SubResource("Resource_7nx7x")])
+maps = Array[ExtResource("14_wh2kh")]([ExtResource("17_i6b4a"), SubResource("Resource_sk4sv"), SubResource("Resource_26ghu"), SubResource("Resource_fi3f5"), SubResource("Resource_2knvc")])
+armies = Array[ExtResource("2_quie6")]([ExtResource("3_c8v8g"), ExtResource("4_k5wek"), SubResource("Resource_25exu"), SubResource("Resource_65kva"), SubResource("Resource_onrg7"), SubResource("Resource_ravwh")])
+stat_datas = Array[ExtResource("16_qmt1m")]([ExtResource("20_35tx5"), ExtResource("21_5kkwk"), ExtResource("22_m0tnl"), SubResource("Resource_ye63u"), SubResource("Resource_cn88i"), SubResource("Resource_cbqrm"), SubResource("Resource_na0h5"), SubResource("Resource_t3w33"), SubResource("Resource_8iovh")])
+metadata/_custom_type_script = "uid://c1o5v8x6fs24v"

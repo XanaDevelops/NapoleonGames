@@ -25,7 +25,7 @@ func request(hab: HabilityRes, coords: Vector2i, tile: TileGame) -> bool:
 		cancel()
 
 	var unit    := tile.get_unit()
-	var targets := GameManager.get_map().get_valid_targets(hab, coords, unit)
+	var targets := GameManager.get_map().get_units_range(coords, hab.radius, hab.objective)
 
 	if targets.is_empty():
 		push_warning("No hay objetivos válidos para '%s'" % hab.name)
@@ -50,7 +50,7 @@ func try_select_target(coords: Vector2i) -> bool:
 	if _phase != Phase.SELECTING_TARGET:
 		return false
 
-	var valid := GameManager.get_map().get_valid_targets(_pending_hab, _caster_coords, _caster_tile.get_unit())
+	var valid := GameManager.get_map().get_units_range(_caster_coords, _pending_hab.radius, _pending_hab.objective)
 	if coords not in valid:
 		cancel()
 		return false

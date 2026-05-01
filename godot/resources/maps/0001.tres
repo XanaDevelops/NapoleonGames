@@ -1,134 +1,31 @@
 [gd_resource type="Resource" script_class="MapRes" format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/tile_res.gd" id="1_ow2gf"]
-[ext_resource type="Resource" path="res://resources/tile_types/0001.tres" id="2_qx23g"]
-[ext_resource type="Resource" path="res://resources/tile_types/0002.tres" id="3_1iye1"]
-[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="4_p6tef"]
-
-[sub_resource type="Resource" id="Resource_t0j3a"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 1
-
-[sub_resource type="Resource" id="Resource_vwhd4"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 2
-
-[sub_resource type="Resource" id="Resource_df45x"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 3
-
-[sub_resource type="Resource" id="Resource_q7fox"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 4
-
-[sub_resource type="Resource" id="Resource_lsxbk"]
-script = ExtResource("1_ow2gf")
-height = 100
-type = ExtResource("2_qx23g")
-uid = 5
-
-[sub_resource type="Resource" id="Resource_r0ky1"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 6
-
-[sub_resource type="Resource" id="Resource_60c35"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("3_1iye1")
-uid = 7
-
-[sub_resource type="Resource" id="Resource_e07fo"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 8
-
-[sub_resource type="Resource" id="Resource_8e42l"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("3_1iye1")
-uid = 9
-
-[sub_resource type="Resource" id="Resource_wh2kh"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 10
-
-[sub_resource type="Resource" id="Resource_y3xpg"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 11
-
-[sub_resource type="Resource" id="Resource_qmt1m"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("3_1iye1")
-uid = 12
-
-[sub_resource type="Resource" id="Resource_ioe74"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 13
-
-[sub_resource type="Resource" id="Resource_nbaek"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("3_1iye1")
-uid = 14
-
-[sub_resource type="Resource" id="Resource_ub2ig"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 15
-
-[sub_resource type="Resource" id="Resource_0eyc4"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 16
-
-[sub_resource type="Resource" id="Resource_ujolu"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 17
-
-[sub_resource type="Resource" id="Resource_p1cgm"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 18
-
-[sub_resource type="Resource" id="Resource_ridsy"]
-script = ExtResource("1_ow2gf")
-height = 1
-type = ExtResource("2_qx23g")
-uid = 19
-
-[sub_resource type="Resource" id="Resource_iuvtm"]
-script = ExtResource("1_ow2gf")
-height = 100
-type = ExtResource("2_qx23g")
-uid = 20
+[ext_resource type="Resource" path="res://resources/tiles/0001.tres" id="1_2qxdn"]
+[ext_resource type="Resource" path="res://resources/tiles/0002.tres" id="2_5w1q5"]
+[ext_resource type="Resource" path="res://resources/tiles/0003.tres" id="3_u2rvt"]
+[ext_resource type="Resource" path="res://resources/tiles/0004.tres" id="4_ome67"]
+[ext_resource type="Resource" path="res://resources/tiles/0005.tres" id="5_5rwvs"]
+[ext_resource type="Resource" path="res://resources/tiles/0006.tres" id="6_kmydw"]
+[ext_resource type="Resource" path="res://resources/tiles/0007.tres" id="7_p40sh"]
+[ext_resource type="Resource" path="res://resources/tiles/0008.tres" id="8_bivgk"]
+[ext_resource type="Resource" path="res://resources/tiles/0009.tres" id="9_mrt2k"]
+[ext_resource type="Resource" path="res://resources/tiles/0010.tres" id="10_ejbds"]
+[ext_resource type="Resource" path="res://resources/tiles/0011.tres" id="11_rxyqs"]
+[ext_resource type="Resource" path="res://resources/tiles/0012.tres" id="12_kx28j"]
+[ext_resource type="Resource" path="res://resources/tiles/0013.tres" id="13_mqfa3"]
+[ext_resource type="Resource" path="res://resources/tiles/0014.tres" id="14_620so"]
+[ext_resource type="Resource" path="res://resources/tiles/0015.tres" id="15_gdilq"]
+[ext_resource type="Resource" path="res://resources/tiles/0016.tres" id="16_24lg0"]
+[ext_resource type="Resource" path="res://resources/tiles/0017.tres" id="17_0fciy"]
+[ext_resource type="Resource" path="res://resources/tiles/0018.tres" id="18_3kqr7"]
+[ext_resource type="Resource" path="res://resources/tiles/0019.tres" id="19_k5c2t"]
+[ext_resource type="Resource" path="res://resources/tiles/0020.tres" id="20_lra2c"]
+[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="21_hoohb"]
 
 [resource]
-script = ExtResource("4_p6tef")
+script = ExtResource("21_hoohb")
 name = &"test_map_01"
 tamX = 5
 tamY = 4
-mapData = Array[Array]([Array[ExtResource("1_ow2gf")]([SubResource("Resource_t0j3a"), SubResource("Resource_vwhd4"), SubResource("Resource_df45x"), SubResource("Resource_q7fox"), SubResource("Resource_lsxbk")]), Array[ExtResource("1_ow2gf")]([SubResource("Resource_r0ky1"), SubResource("Resource_60c35"), SubResource("Resource_e07fo"), SubResource("Resource_8e42l"), SubResource("Resource_wh2kh")]), Array[ExtResource("1_ow2gf")]([SubResource("Resource_y3xpg"), SubResource("Resource_qmt1m"), SubResource("Resource_ioe74"), SubResource("Resource_nbaek"), SubResource("Resource_ub2ig")]), Array[ExtResource("1_ow2gf")]([SubResource("Resource_0eyc4"), SubResource("Resource_ujolu"), SubResource("Resource_p1cgm"), SubResource("Resource_ridsy"), SubResource("Resource_iuvtm")])])
+mapData = Array[Array]([[ExtResource("1_2qxdn"), ExtResource("2_5w1q5"), ExtResource("3_u2rvt"), ExtResource("4_ome67"), ExtResource("5_5rwvs")], [ExtResource("6_kmydw"), ExtResource("7_p40sh"), ExtResource("8_bivgk"), ExtResource("9_mrt2k"), ExtResource("10_ejbds")], [ExtResource("11_rxyqs"), ExtResource("12_kx28j"), ExtResource("13_mqfa3"), ExtResource("14_620so"), ExtResource("15_gdilq")], [ExtResource("16_24lg0"), ExtResource("17_0fciy"), ExtResource("18_3kqr7"), ExtResource("19_k5c2t"), ExtResource("20_lra2c")]])
 uid = 1

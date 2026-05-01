@@ -1,11 +1,11 @@
 [gd_scene format=4 uid="uid://7np40cgmy80w"]
 
 [ext_resource type="Script" uid="uid://cpqdhsyw0vgg1" path="res://scenes/ingame/map_visualizer.gd" id="1_7udv5"]
-[ext_resource type="Script" uid="uid://dp3vm4x2rx3uf" path="res://scenes/ingame/ingame_map.gd" id="1_td6e5"]
-[ext_resource type="Script" uid="uid://dilrauf05i3je" path="res://scenes/ingame/players_panel.gd" id="2_s3xon"]
-[ext_resource type="Script" uid="uid://bm6sp4ow1l2qv" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
-[ext_resource type="Script" uid="uid://boaagd3hgel75" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
-[ext_resource type="Script" uid="uid://b8ttj2gcfkh47" path="res://scenes/ingame/unit_info.gd" id="6_smdvi"]
+[ext_resource type="Script" path="res://scenes/ingame/ingame_map.gd" id="1_td6e5"]
+[ext_resource type="Script" path="res://scenes/ingame/players_panel.gd" id="2_s3xon"]
+[ext_resource type="Script" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
+[ext_resource type="Script" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
+[ext_resource type="Script" path="res://scenes/ingame/unit_info.gd" id="6_smdvi"]
 [ext_resource type="PackedScene" uid="uid://ygwgcu7ruh4u" path="res://scenes/health_bar.tscn" id="7_6nuks"]
 
 [node name="IngameMap" type="Control" unique_id=1560040291]

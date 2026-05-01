@@ -1,42 +1,24 @@
 [gd_resource type="Resource" script_class="UserRes" format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="1_1luw5"]
-[ext_resource type="Resource" path="res://resources/cards/0001.tres" id="2_5oa5q"]
-[ext_resource type="Resource" path="res://resources/cards/0002.tres" id="3_aq2ka"]
-[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="4_0url1"]
-[ext_resource type="Resource" path="res://resources/maps/0001.tres" id="5_aq2ka"]
-[ext_resource type="Script" path="res://scripts/resources/user_res.gd" id="5_m3u0r"]
-[ext_resource type="Texture2D" path="res://icon.svg" id="6_i5a77"]
-[ext_resource type="Script" path="res://scripts/resources/army_res.gd" id="7_w8ttf"]
-[ext_resource type="Script" path="res://scripts/resources/card_army_group.gd" id="9_0url1"]
-
-[sub_resource type="Resource" id="Resource_m3u0r"]
-script = ExtResource("9_0url1")
-cardType = ExtResource("2_5oa5q")
-n = 3
-uid = 1
-metadata/_custom_type_script = "uid://chjdn7qg0thht"
-
-[sub_resource type="Resource" id="Resource_i5a77"]
-script = ExtResource("7_w8ttf")
-nom = &"superArmy1"
-isActive = true
-agrupations = Array[ExtResource("9_0url1")]([SubResource("Resource_m3u0r")])
-uid = 1
-metadata/_custom_type_script = "uid://q3mvbqxdhool"
+[ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="1_5oa5q"]
+[ext_resource type="Resource" path="res://resources/cards/0001.tres" id="2_aq2ka"]
+[ext_resource type="Resource" path="res://resources/cards/0002.tres" id="3_0url1"]
+[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="4_m3u0r"]
+[ext_resource type="Resource" path="res://resources/maps/0001.tres" id="5_i5a77"]
+[ext_resource type="Script" path="res://scripts/resources/user_res.gd" id="6_w8ttf"]
+[ext_resource type="Script" path="res://scripts/resources/army_res.gd" id="7_c1g2p"]
+[ext_resource type="Resource" path="res://resources/armies/0001.tres" id="8_ynih6"]
 
 [resource]
-script = ExtResource("5_m3u0r")
+script = ExtResource("6_w8ttf")
 name = "Lord Xana"
 username = &"lordxana"
 email = "xana@lyoko.com"
-img = ExtResource("6_i5a77")
 token = "666"
-availableCards = Dictionary[ExtResource("1_1luw5"), int]({
-ExtResource("2_5oa5q"): 3,
-ExtResource("3_aq2ka"): 2
+availableCards = Dictionary[ExtResource("1_5oa5q"), int]({
+ExtResource("2_aq2ka"): 3,
+ExtResource("3_0url1"): 2
 })
-availableMaps = Array[ExtResource("4_0url1")]([ExtResource("5_aq2ka")])
-userArmys = Array[ExtResource("7_w8ttf")]([SubResource("Resource_i5a77")])
+availableMaps = Array[ExtResource("4_m3u0r")]([ExtResource("5_i5a77")])
+userArmys = Array[ExtResource("7_c1g2p")]([ExtResource("8_ynih6")])
 uid = 1
-metadata/_custom_type_script = "uid://ce5uvgu640fxr"
