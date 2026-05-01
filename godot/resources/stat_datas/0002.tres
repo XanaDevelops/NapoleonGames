@@ -7,4 +7,3 @@ script = ExtResource("1_1812q")
 name = &"defense"
 desc = "La defensa"
 uid = 2
-metadata/_custom_type_script = "uid://bcsdfa1f5drbr"

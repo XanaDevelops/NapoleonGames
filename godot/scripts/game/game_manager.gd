@@ -16,7 +16,7 @@ enum APP_STATE {
 }
 @export var _app_state := APP_STATE.MENU_HUB
 
-func _ready() -> void:
+func _init() -> void:
 	_gameRes = GameResources.load_from()
 	#temporal
 	self.turn_manager= TurnManager.new()
@@ -66,6 +66,13 @@ func get_game_resources() -> GameResources:
 
 func set_map(map_game:MapGame) -> void:
 	self._gameMap= map_game
+	
+func get_turn_manager() -> TurnManager:
+	return self._turn_manager
+## Registra un TurnManager como el actual
+## si hay que configurar signals y cosas de esas aquí
+func register_turn_manager(tm: TurnManager) -> void:
+	self._turn_manager = tm
 
 func get_current_phase() -> String:
 	match _app_state:

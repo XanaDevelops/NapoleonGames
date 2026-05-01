@@ -31,6 +31,7 @@ class TurnAction extends GameResource:
 	var start : Vector2i
 	var end : Vector2i
 	var hability : HabilityRes
+	var dest : Array[Vector2i]
 	var deploy_pos : Vector2i
 	
 	func _init() -> void:
@@ -64,6 +65,10 @@ func register_turn(turn: TurnAction) -> bool:
 	turns.append(turn)
 	return true
 
+
+## Los UnitGame deben subscribirse a esto para avanzar el turno
+signal tick_turn
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
@@ -75,6 +80,73 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
+	var map_logic = GameManager.get_map()
+	var unit = map_logic.get_tile_at(start).get_unit()
+	if unit.has_moved_this_turn:
+		print("La unidad ya se ha movido")
+		return
+		
+	if unit._owner == get_current_user():
+	
+		map_logic.move_unit(start, end)
+		#unit.has_moved_this_turn = true
+		visualizador.plot_unit_moved(start, end)
+		
+		var action = TurnAction.new()
+		action.player = unit._owner
+		action.action = TurnAction.ACTION.MOVEMENT
+		action.start = start
+		action.end = end
+		register_turn(action)
+	else:
+		print("Acción denegada: No es el turno del dueño de esta unidad")
+
+
+func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability: HabilityRes) -> void:
+	var map : MapGame = GameManager.get_map()
+	var unit_source := map.get_tile_at(tile).get_unit()
+	if unit_source.has_hability_this_turn:
+		print("La unidad ya ha usado una habilidad activa!")
+		return
+		
+	if unit_source._owner != get_current_user():
+		print("Acción denegada: No es el turno del dueño de esta unidad")
+		return
+		
+	var _dest : Array[UnitGame] = []
+	
+	# Si no se especifica objetivos, por ejemplo desde una llamada interna de pasiva
+	# o por lo que sea, se obtiene todas las unidades a rango
+	if not objectives or objectives.size() == 0:
+		# Si no se especifica obtiene las unidades a rango
+		objectives = map.get_units_range(tile, hability.radius, hability.objective)
+		
+	objectives.map(
+		func (x: Vector2i): _dest.append(map.get_tile_at(x).get_unit())
+	)
+
+	
+	var res := unit_source.use_hability(hability, _dest)
+	if not res:
+		print("No se cumple las condiciones para usar esta habilidad!")
+		return
+		
+	var action := TurnAction.new()
+	if hability.isPassive:
+		action.action = TurnAction.ACTION.PASSIVE
+	else:
+		action.action = TurnAction.ACTION.ACTIVE
+	action.action = TurnAction.ACTION.ACTIVE
+	action.player = unit_source._owner
+	action.unit = unit_source
+	action.start = tile
+	action.end = tile
+	action.dest = objectives
+	
+	register_turn(action)
+		
 
 func start_deployment_phase() -> void:
 	is_deployment_phase = true

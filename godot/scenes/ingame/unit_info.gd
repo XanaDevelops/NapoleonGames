@@ -18,13 +18,15 @@ extends Control
 @onready var alter_states_grid: GridContainer = $VBoxContainer/CurrenAlterStatesContainer/VBoxContainer/ScrollContainer/AlterStatesGridContainer
 @onready var current_health: ProgressBar = $VBoxContainer/Bars/HealthBar
 @onready var current_mana: ProgressBar = $VBoxContainer/Bars/ManaBar
-@onready var unit_info: Control = $VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo
+
 const HEADERS_RESISTANCES= ["Tipo de ataque", "Resistencia"]
 const ALTER_HEADERS = ["Estado", "Turnos Faltantes", "Efecto"]
 signal hability_use_requested(hab: HabilityRes)
 # UnitInfo
 var _observed_unit: UnitGame = null
 func _ready() -> void:
+	await get_tree().process_frame
+	
 	await get_tree().process_frame
 	
 
@@ -71,7 +73,7 @@ func _on_hability_info_requested(hab: HabilityRes) -> void:
 		Pasiva: %s
 	""" % [
 		hab.desc,
-		_objective_text(hab.objective),
+		hab._objective_text(),
 		hab.manaCost,
 		hab.radius,
 		hab.cooldown,
@@ -82,16 +84,6 @@ func _on_hability_info_requested(hab: HabilityRes) -> void:
 	dialog.confirmed.connect(func(): dialog.queue_free())
 	dialog.canceled.connect(func(): dialog.queue_free())
 
-
-func _objective_text(obj: HabilityRes.HAB_DEST) -> String:
-	match obj:
-		HabilityRes.HAB_DEST.SINGLE_ENEMY:  return "Enemigo"
-		HabilityRes.HAB_DEST.MULTI_ENEMY:   return "Enemigos"
-		HabilityRes.HAB_DEST.SINGLE_ALLY:   return "Aliado"
-		HabilityRes.HAB_DEST.MULTIPLE_ALLY: return "Aliados"
-		HabilityRes.HAB_DEST.SELF:          return "Uno mismo"
-		HabilityRes.HAB_DEST.EVERYONE:      return "Todos"
-		_: return "-"
  
 func _create_cell(text: String, color: Color, is_header: bool = false) -> PanelContainer:
 	var panel = PanelContainer.new()
@@ -148,7 +140,7 @@ func _show_hability_info(hab: HabilityRes) -> void:
 	dialog.title = str(hab.name)
 	dialog.dialog_text = "Descripción: %s\nObjetivo: %s\nManá: %d\nRango: %d\nCD: %dt\nPasiva: %s" % [
 		hab.desc,
-		_objective_text(hab.objective),
+		hab._objective_text(),
 		hab.manaCost,
 		hab.radius,
 		hab.cooldown,
@@ -182,6 +174,7 @@ func paint_resistances(resistances: Dictionary[AttackType, int]) -> void:
 	
 	for key in resistances.keys():
 		_add_row_resistance(key, resistances[key] )
+
 
 
 
@@ -230,13 +223,14 @@ func observe(unit: UnitGame) -> void:
 		_observed_unit.mana_changed.disconnect(_on_mana_changed)
 
 	_observed_unit = unit
-	current_health.init(unit._currentHealth)
-	current_mana.init(unit._currentMana)
-	current_health.update(unit._currentHealth)
-	current_mana.update(unit._currentMana)
+	current_health.init(unit.hp)
+	current_mana.init(unit.mana)
+	current_health.update(unit.hp)
+	current_mana.update(unit.mana)
 
 	unit.health_changed.connect(_on_health_changed)
 	unit.mana_changed.connect(_on_mana_changed)
+	
 
 func _on_health_changed(current: int) -> void:
 	current_health.update(current)

@@ -3,12 +3,14 @@ C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\auth\dto
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\common\exception\InvalidCredentialsException.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\user\entity\UserMapEntity.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\card\entity\CardCardTypeEntity.java
+C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\config\JwtProperties.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\card\repository\AttackTypeRepository.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\common\dto\ApiErrorResponse.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\card\entity\CardEntity.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\card\service\CardService.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\user\dto\UserFriendSummaryResponse.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\auth\service\AuthService.java
+C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\config\ApplicationConfig.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\common\exception\ResourceNotFoundException.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\auth\dto\LoginRequest.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\user\service\UserService.java
@@ -24,8 +26,10 @@ C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\config\S
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\card\dto\UpdateCardRequest.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\card\entity\AbilityEntity.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\user\service\impl\UserServiceImpl.java
+C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\config\SecurityConfig.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\user\dto\UserCardSummaryResponse.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\user\dto\UserResponse.java
+C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\auth\security\JwtAuthenticationFilter.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\user\repository\UserRepository.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\user\dto\UserArmySummaryResponse.java
 C:\Users\josel\Desktop\NapoleonGames\backend\src\main\java\com\napoleon\user\repository\ArmyRepository.java

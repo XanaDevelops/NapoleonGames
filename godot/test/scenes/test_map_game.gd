@@ -65,7 +65,7 @@ Vestibulum lacinia dapibus justo. Donec vitae mauris lacinia, porta orci nec, fa
 				card_res.speed= randi_range(10, 80)
 				card_res.habilities = generate_habilities()
 				card_res.resistances= generate_resistances()
-				var unit = UnitGame.new(card_res)
+				var unit = UnitGame.new(card_res, null)
 				unit._currentAlterStates = generate_alter_states()
 				map.get_tile_at(Vector2i(x, y)).set_unit(unit)
 	
@@ -88,7 +88,7 @@ func generate_alter_states() -> Dictionary[AlterStateRes, int]:
 		state.value = randf_range(-0.3, 0.5) if stat.isPercent else randf_range(-20.0, 30.0)
 		state.hitP = 1.0
 		state.duration = randi_range(1, 4)
-		state.objectiu = HabilityRes.HAB_DEST.SELF
+		state.objectiu = HabilityRes.SEL_SELF_FLAG
 		
 		# El int del diccionario son los turnos restantes (entre 1 y duration)
 		var turns_remaining = randi_range(1, state.duration)
@@ -118,12 +118,12 @@ func generate_habilities() -> Array[HabilityRes]:
 				 "Aumenta la defensa", "Dispara a distancia", 
 				 "Reduce las estadísticas del enemigo", "Se mueve a cualquier casilla"]
 	var objectives = [
-		HabilityRes.HAB_DEST.SINGLE_ENEMY,
-		HabilityRes.HAB_DEST.MULTI_ENEMY,
-		HabilityRes.HAB_DEST.SINGLE_ALLY,
-		HabilityRes.HAB_DEST.SELF,
-		HabilityRes.HAB_DEST.EVERYONE,
-		HabilityRes.HAB_DEST.SINGLE_ANY
+		HabilityRes.SEL_SELF_FLAG,
+		HabilityRes.SEL_ALLY_FLAG,
+		HabilityRes.SEL_ENEMY_FLAG,
+		HabilityRes.SEL_ALLY_FLAG | HabilityRes.SEL_MULT_FLAG,
+		HabilityRes.SEL_ENEMY_FLAG | HabilityRes.SEL_MULT_FLAG,
+		HabilityRes.SEL_ALLY_FLAG | HabilityRes.SEL_ENEMY_FLAG | HabilityRes.SEL_MULT_FLAG,
 	]
 	
 	for i in range(count):

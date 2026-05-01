@@ -5,17 +5,21 @@ extends RuntimeResource
 
 @export var _unit: UnitGame 
 
-func _init(tileRes: TileRes) -> void:
+var _position: Vector2i
+
+func _init(tileRes: TileRes, pos: Vector2i) -> void:
 	self._tileRes = tileRes
+	self._position = pos
 	
 ## Devuelve la textura del tile, o de la tropa que contenga
 func get_texture2D() -> Texture2D:
 	return self._tileRes.type.texture
 	
 func set_unit(unit: UnitGame) -> void:
-	assert(!self._unit, "[TileGame] se ha intentado asignar una unidad a una casilla ocupada")
+	assert(not (self._unit and unit), "[TileGame] se ha intentado asignar una unidad a una casilla ocupada")
 	self._unit = unit
-	self._unit._tile = self
+	if unit:
+		self._unit._tile = self
 	
 func get_unit() -> UnitGame:
 	return self._unit
@@ -30,6 +34,9 @@ func get_height_penalty(tile: TileGame) -> int:
 	
 func get_height() -> int:
 	return _tileRes.height
+	
+func get_position() -> Vector2i:
+	return _position
 
 func get_tile_name() -> String:
 	return self._tileRes.type.name
@@ -58,16 +65,16 @@ func get_dodge() -> int:
 	return self._unit._cardRes.dodge
 
 func get_currentHealth() -> int:
-	return self._unit._currentHealth
+	return self._unit.hp
 
 func get_currentMana() -> int:
-	return self._unit._currentMana
+	return self._unit.mana
 	
 func get_availableHabilities() -> Dictionary[HabilityRes, int] :
 	return self._unit._habilities
 
 func get_habilities() -> Array[HabilityRes]:
-	return self._unit._cardRes.habilities
+	return self._unit.get_all_habilities()
 
 func get_resistances() -> Dictionary[AttackType, int]:
 	return self._unit._cardRes.resistances
