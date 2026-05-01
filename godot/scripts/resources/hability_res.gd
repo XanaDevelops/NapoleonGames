@@ -64,7 +64,7 @@ var objective := SEL_ENEMY_FLAG
 @export var condition_value := 0.0
 
 func _init() -> void:
-	if objective == 0:
+	if is_valid_objective(objective):
 		objective = SEL_ENEMY_FLAG
 		push_error("Habilidad sin objetivo valido!\nValor por defecto ENEMY")
 		assert(false)
@@ -73,19 +73,51 @@ func _init() -> void:
 static func inflicts_self(obj: int) -> bool:
 	return obj & SEL_SELF_FLAG
 	
+## true si la habilidad afecta a uno mismo
+func _inflicts_self(obj: int) -> bool:
+	return inflicts_self(obj)
+	
 ## true si la habilidad afecta a los aliados (no te incluye!)
 static func inflicts_ally(obj: int) -> bool:
 	return obj & SEL_ALLY_FLAG
 
+## true si la habilidad afecta a los aliados (no te incluye!)
+func _inflicts_ally(obj: int) -> bool:
+	return inflicts_ally(obj)
+
 ## true si la habilidad afecta a los enemigos
 static func inflicts_enemy(obj: int) -> bool:
 	return obj & SEL_ENEMY_FLAG
+
+## true si la habilidad afecta a los enemigos
+func _inflicts_enemy(obj: int) -> bool:
+	return inflicts_enemy(obj)
 	
 static func inflicts_single(obj: int) -> bool:
 	return not inflicts_multiple(obj)
+
+## true si la habilidad afecta a un solo objetivo
+func _inflicts_single(obj: int) -> bool:
+	return inflicts_single(obj)
 		
 static func inflicts_multiple(obj: int) -> bool:
 	return obj & SEL_MULT_FLAG
+
+## true si la habilidad afecta a multiples objetivos
+func _inflicts_multiple(obj: int) -> bool:
+	return inflicts_multiple(obj)
+	
+static func is_valid_objective(obj: int) -> bool:
+	if obj <= 0 or obj > 0b1111:
+		return false
+	if obj == SEL_SELF_FLAG | SEL_MULT_FLAG:
+		return false
+		
+	return true
+
+## true si el objetivo de la habilidad es valido
+func _is_valid_objective(obj: int) -> bool:
+	return is_valid_objective(obj)
 			
 ## Comprueba si se cumple la condición dado el valor de entrada
 func applies(value_check: float) -> bool:

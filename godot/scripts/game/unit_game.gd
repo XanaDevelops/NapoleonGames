@@ -85,7 +85,7 @@ func _proc_alter_states() -> void:
 			
 		# Reutilizar esta funcion, un AlterState no deja de ser una minihabilidad
 		var dest : Array[UnitGame] = []
-		if alter.objectiu == HabilityRes.HAB_DEST.SELF:
+		if HabilityRes.inflicts_self(alter.objectiu):
 			dest.append(self)
 		else:
 			push_error("NOT IMPLEMENTED!")
