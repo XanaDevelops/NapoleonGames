@@ -2,12 +2,13 @@ extends Node
 
 @export var _user_a: UserRes
 @export var _user_b: UserRes
-@export var _gameMap: MapRes
+#@export var _gameMap: MapRes
 @export var _army_a : ArmyRes
 @export var _army_b : ArmyRes
-
+@export var _gameMap: MapGame
 @export var _gameRes: GameResources
 
+var _turn_manager : TurnManager
 
 enum APP_STATE {
 	MENU_HUB,
@@ -15,7 +16,7 @@ enum APP_STATE {
 }
 @export var _app_state := APP_STATE.MENU_HUB
 
-func _ready() -> void:
+func _init() -> void:
 	_gameRes = GameResources.load_from()
 	
 
@@ -27,7 +28,7 @@ func start_game(playerA: UserRes, playerB:UserRes, map:MapRes, armyA: ArmyRes, a
 	print("playerB: ", playerB.username)
 	self._user_a = playerA
 	self._user_b = playerB
-	self._gameMap = map
+	self._gameMap = MapGame.new(map)
 	self._army_a = armyA
 	self._army_b = armyB
 	
@@ -46,8 +47,19 @@ func get_game_config() -> void:
 func _get_mapRes() -> MapRes:
 	return self._gameMap._mapRes
 	
-func get_map() -> MapRes:
+func get_map() -> MapGame:
+	#return self._gameMap
 	return self._gameMap
 	
 func get_game_resources() -> GameResources:
 	return self._gameRes
+
+func set_map(map_game:MapGame) -> void:
+	self._gameMap= map_game
+	
+func get_turn_manager() -> TurnManager:
+	return self._turn_manager
+## Registra un TurnManager como el actual
+## si hay que configurar signals y cosas de esas aquí
+func register_turn_manager(tm: TurnManager) -> void:
+	self._turn_manager = tm

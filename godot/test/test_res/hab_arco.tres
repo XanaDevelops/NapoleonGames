@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://2y4nmb1ysq2b"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_ldcaq"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="2_0cl3u"]
+[ext_resource type="Resource" uid="uid://2u4830mftyn8" path="res://test/test_res/attack_type_physic.tres" id="2_rfqbo"]
+[ext_resource type="Resource" uid="uid://dmc4jstoyeoun" path="res://test/test_res/stat_attack_linear.tres" id="4_jqweu"]
+
+[resource]
+script = ExtResource("2_0cl3u")
+name = &"arco"
+value = 5.0
+stat = ExtResource("4_jqweu")
+attackType = ExtResource("2_rfqbo")
+radius = 3
+metadata/_custom_type_script = "uid://eihee83yhkpg"

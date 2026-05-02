@@ -41,7 +41,7 @@ func before_all():
 
 func test_dijkstra() -> void:
 	var mapGame := MapGame.new(map)
-	var unit := UnitGame.new(gr.cards[0])
+	var unit := UnitGame.new(gr.cards[0], null)
 	mapGame.get_tile_at(Vector2i(2,2)).set_unit(unit)
 	
 	var neight := mapGame.get_neightbours(Vector2i(2,2))
