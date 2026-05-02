@@ -8,18 +8,21 @@ extends Node
 @export var _gameRes: GameResources
 
 var turn_manager: TurnManager
-
+signal phase_changed(phase: APP_STATE)
 enum APP_STATE {
 	MENU_HUB,
 	DEPLOYMENT,
 	IN_GAME,
 }
-@export var _app_state := APP_STATE.MENU_HUB
+@export var _app_state := APP_STATE.IN_GAME
+
 
 func _init() -> void:
 	_gameRes = GameResources.load_from()
 	#temporal
 	self.turn_manager= TurnManager.new()
+	_app_state = APP_STATE.DEPLOYMENT
+	#phase_changed.emit(_app_state)
 	set_users()
 
 
@@ -42,7 +45,8 @@ func start_game(playerA: UserRes, playerB:UserRes, map:MapRes, armyA: ArmyRes, a
 	
 	self.turn_manager= TurnManager.new()
 	#_app_state = APP_STATE.IN_GAME
-	_app_state = APP_STATE.DEPLOYMENT
+	#_app_state = APP_STATE.DEPLOYMENT
+	#phase_changed.emit(_app_state)
 	# considerar usar enums
 	UiManager.cambiar_a_escena("juego")
 	

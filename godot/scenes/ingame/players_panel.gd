@@ -24,12 +24,23 @@ var _p2: UserRes
 
 func _ready() -> void:
 	self.turnManager= GameManager.get_turn_manager()
-	self.btn_end_turn.pressed.connect(pass_turn)
+	#setup()
+
+func set_phase_deployment() -> void:
+	self.btn_end_turn.visible= false
 	self.turnManager.card_deployed.connect(update_cards_number)
+	p1_num_cards.text = "Cards %d/%d" % [total_cards_p1, total_cards_p1]
+	p2_num_cards.text = "Cards %d/%d" % [total_cards_p2, total_cards_p2]
+	p1_num_cards.visible= true
+	p2_num_cards.visible= true
+
+func set_phase_battle() -> void:
+	self.btn_end_turn.pressed.connect(pass_turn)
 	self.turnManager.tick_turn.connect(update_turn_info)
-	setup()
-
-
+	p1_num_cards.visible= false
+	p2_num_cards.visible= false
+	
+	#añadir más info..
 func setup() -> void:
 	phase_label.text= "Fase de %s"%GameManager.get_current_phase()
 	var p1:UserRes= GameManager._user_a
@@ -43,8 +54,7 @@ func setup() -> void:
 	p1_avatar.texture = p1.img
 	p2_name.text = p2.username
 	p2_avatar.texture = p2.img
-	p1_num_cards.text = "Cards %d/%d" % [total_cards_p1, total_cards_p1]
-	p2_num_cards.text = "Cards %d/%d" % [total_cards_p2, total_cards_p2]
+
 
 func update_cards_number(player: UserRes, remaining_cards: int) -> void:
 	if player == _p1:

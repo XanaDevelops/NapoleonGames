@@ -159,6 +159,7 @@ func start_deployment_phase() -> void:
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
 	cards_panel.set_deployment_phase(false)
+	#GameManager._app_state= GameManager.APP_STATE.IN_GAME
 	
 	if map_visualizer:
 		map_visualizer.clear_deployment_zone()
@@ -201,6 +202,7 @@ func _consume_current_card() -> void:
 	if player_deployment_data.has(current_user):
 		player_deployment_data[current_user].erase(pending_deployment_group)
 		deployment_box.remove_card_visual(pending_deployment_group)
+
 	
 	pending_deployment_group = null
 	card_deployed.emit(current_user, player_deployment_data[current_user].size())

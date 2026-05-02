@@ -152,11 +152,10 @@ theme_override_constants/margin_bottom = 5
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer/CardsPanel/MarginContainer" unique_id=1102639422]
 layout_mode = 2
-current_tab = 1
+current_tab = 0
 tab_0/title = "Información del terreno"
 
 [node name="TileInfo" type="Control" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer" unique_id=12227352]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -242,6 +241,7 @@ layout_mode = 2
 size_flags_vertical = 1
 
 [node name="UnitInfo" type="Control" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer" unique_id=551573519]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -249,7 +249,7 @@ script = ExtResource("6_smdvi")
 metadata/_tab_index = 1
 
 [node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo" unique_id=598713077]
-layout_mode = 0
+layout_mode = 1
 offset_right = 1920.0
 offset_bottom = 520.0
 theme_override_constants/separation = 15

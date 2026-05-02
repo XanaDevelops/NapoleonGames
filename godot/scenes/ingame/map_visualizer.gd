@@ -152,7 +152,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		if coords != _last_hovered_tile:
 			_last_hovered_tile = coords
 			tile_hovered.emit(coords)
-
 func show_deployment_zone(positions: Array[Vector2i]) -> void:
 	tile_map_layer_deployment.clear()
 	var source_id := highlight_source_ids[HighlightType.SELECTED]

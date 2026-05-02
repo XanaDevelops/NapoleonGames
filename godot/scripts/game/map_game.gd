@@ -158,39 +158,39 @@ func get_cells_in_range(pos: Vector2i, radius: int) -> Array[Vector2i]:
 	
 	return result
 
-func apply_hability(hab:HabilityRes, pos:Vector2i, targets:Array[Vector2i]) -> void:
-	var user_tile = get_tile_at(pos)
-	var unit = user_tile.get_unit()
-	unit._currentMana-=hab.manaCost
-	
-	unit._habilities[hab]= hab.cooldown
-	for target_pos in targets:
-		var target_tile = get_tile_at(target_pos)
-		if not target_tile.has_unit():
-			continue
-		var target_unit= target_tile.get_unit()
-		if hab.stat!=null:
-			_apply_stat_effect(hab, unit, target_unit, target_pos)
-		
-		for alter_state in hab.alter_states:
-			target_unit._currentAlterStates[alter_state]= alter_state.duration
-	
-
-func _apply_stat_effect(hab: HabilityRes, src_unit:UnitGame, target_unit:UnitGame, target_pos: Vector2i):
-	if hab.stat==null:
-		return 
-	var value: float= hab.value
-		
-	match hab.stat.name:
-			StatData.DEFENSE:
-				var id_dead= target_unit.recieve_attack(int(value), hab.attackType)
-				if id_dead:
-					target_unit.kill()
-					get_tile_at(target_pos).set_unit(null)
-			StatData.SPEED:
-				push_warning("_apply_stat_effect: speed debe modificarse via alter_states")
-				
-				
+#func apply_hability(hab:HabilityRes, pos:Vector2i, targets:Array[Vector2i]) -> void:
+	#var user_tile = get_tile_at(pos)
+	#var unit = user_tile.get_unit()
+	#unit._currentMana-=hab.manaCost
+	#
+	#unit._habilities[hab]= hab.cooldown
+	#for target_pos in targets:
+		#var target_tile = get_tile_at(target_pos)
+		#if not target_tile.has_unit():
+			#continue
+		#var target_unit= target_tile.get_unit()
+		#if hab.stat!=null:
+			#_apply_stat_effect(hab, unit, target_unit, target_pos)
+		#
+		#for alter_state in hab.alter_states:
+			#target_unit._currentAlterStates[alter_state]= alter_state.duration
+	#
+#
+#func _apply_stat_effect(hab: HabilityRes, src_unit:UnitGame, target_unit:UnitGame, target_pos: Vector2i):
+	#if hab.stat==null:
+		#return 
+	#var value: float= hab.value
+		#
+	#match hab.stat.name:
+			#StatData.DEFENSE:
+				#var id_dead= target_unit.recieve_attack(int(value), hab.attackType)
+				#if id_dead:
+					#target_unit.kill()
+					#get_tile_at(target_pos).set_unit(null)
+			#StatData.SPEED:
+				#push_warning("_apply_stat_effect: speed debe modificarse via alter_states")
+				#
+				#
 func calculate_deployment(player_id: int, size: int, start_tile: Vector2i) -> Dictionary:
 	var result := {"tiles": [] as Array[Vector2i], "is_valid": true}
 	var ideal_shape: Array[Vector2i] = []

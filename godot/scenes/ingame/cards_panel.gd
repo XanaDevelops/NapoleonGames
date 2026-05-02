@@ -17,12 +17,21 @@ signal cancelled
 func _ready() -> void:
 	await get_tree().process_frame
 	_setup_pages()
-	
+	set_phase_battle()
 
 func _setup_pages() -> void:
+	
 	tile_info.custom_minimum_size = Vector2(size.x, size.y)
 	unit_info.custom_minimum_size = Vector2(size.x, size.y)
 
+func set_phase_battle() -> void:
+	clear()
+	deployment_box.visible= false
+	
+#func set_phase_deployment() -> void:
+	#tabs.visible= false
+	#deployment_box.visible= true
+	#
 func paint_tile_info(tile: TileGame) -> void:
 	
 	if is_deployment_active: 
@@ -83,3 +92,16 @@ func _on_dialog_confirmed() -> void:
 func _on_dialog_cancelled() -> void:
 	hide_confirm_dialog()
 	emit_signal("cancelled")
+	
+func set_deployment_phase(is_active: bool) -> void:
+	is_deployment_active = is_active
+	tabs.visible = not is_active
+	if deployment_box:
+		deployment_box.visible = is_active
+
+
+#func populate_deployment(army_groups: Array) -> void:
+	#deployment_box.populate(army_groups)
+#
+#func remove_deployment_card(group: CardArmyGroup) -> void:
+	#deployment_box.remove_card_visual(group)

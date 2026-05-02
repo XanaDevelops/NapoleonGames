@@ -8,7 +8,7 @@ extends RuntimeResource
 ## Vida actual, si <=0 estas muerto
 @export var hp: int:
 	set(val):
-		hp = val
+		hp = maxi(0, val)
 		health_changed.emit(hp)
 
 var max_hp : int :
@@ -26,7 +26,7 @@ var height : int :
 ## Manà actual
 @export var mana: int:
 	set(val):
-		mana = val
+		mana = maxi(0, val)
 		mana_changed.emit(mana)
 
 ## estados alterados en activo con su duración restante
@@ -268,11 +268,3 @@ func get_speed() -> int:
 ## Util para llamar pasivas
 func get_current_position() -> Vector2i:
 	return _tile.get_position()
-
-func _set_health(value: int) -> void:
-	_currentHealth = maxi(0, value)
-	emit_signal("health_changed", _currentHealth, _cardRes.hp)
-
-func _set_mana(value: int) -> void:
-	_currentMana = maxi(0, value)
-	emit_signal("mana_changed", _currentMana, _cardRes.mana)
