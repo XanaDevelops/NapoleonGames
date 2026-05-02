@@ -230,7 +230,9 @@ func _handle_next_deployment_step() -> void:
 
 func _refresh_ui_for_current_player() -> void:
 	var user := get_current_user()
+	
 	if player_deployment_data.has(user):
+		
 		deployment_box.populate(player_deployment_data[user])
 
 func _has_cards_to_deploy(user: UserRes) -> bool:

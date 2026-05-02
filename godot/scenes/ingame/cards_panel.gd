@@ -8,7 +8,8 @@ extends Control
 var _confirm_dialog: AcceptDialog = null
 
 
-var is_deployment_active: bool = false
+var is_deployment_active: bool =false
+
 
 
 signal confirmed
@@ -17,7 +18,7 @@ signal cancelled
 func _ready() -> void:
 	await get_tree().process_frame
 	_setup_pages()
-	set_phase_battle()
+	
 
 func _setup_pages() -> void:
 	
@@ -95,7 +96,7 @@ func _on_dialog_cancelled() -> void:
 	
 func set_deployment_phase(is_active: bool) -> void:
 	is_deployment_active = is_active
-	tabs.visible = not is_active
+	tabs.visible = !is_active
 	if deployment_box:
 		deployment_box.visible = is_active
 
