@@ -15,7 +15,7 @@ INSERT INTO users (
     1,
     'jose',
     'jose@test.com',
-    '$2y$10$OVXlmX8V.Z/nOeidnZr5MezIBxBkwSzUWMMH0Ps.gZn8oGQ3fXI.a',
+    '$2a$10$HfZkm9tB5QrQjWYg9kZ6Ne9lZV/fF5n.cNKN4GDBD4DovF0h.EfbW',
     'José',
     '/profiles/jose.png',
     'PLAYER',
@@ -26,7 +26,7 @@ INSERT INTO users (
     2,
     'pere',
     'pere@test.com',
-    '$2y$10$OVXlmX8V.Z/nOeidnZr5MezIBxBkwSzUWMMH0Ps.gZn8oGQ3fXI.a',
+    '$2a$10$HfZkm9tB5QrQjWYg9kZ6Ne9lZV/fF5n.cNKN4GDBD4DovF0h.EfbW',
     'Pere',
     '/profiles/pere.png',
     'PLAYER',
@@ -165,7 +165,7 @@ INSERT INTO user_cards (user_id, card_id, quantity, unlocked_at) VALUES
 (2, 1, 2, NOW()),
 (2, 2, 4, NOW());
 
--- Ejércitos
+-- Ejércitos<
 INSERT INTO armies (
     id, user_id, slot_number, name,
     is_active, created_at, updated_at
