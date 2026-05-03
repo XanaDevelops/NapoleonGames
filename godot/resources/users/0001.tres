@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://dyrplorxchews" path="res://resources/maps/0002.tres" id="6_aq2ka"]
 [ext_resource type="Script" uid="uid://ce5uvgu640fxr" path="res://scripts/resources/user_res.gd" id="6_w8ttf"]
 [ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="7_c1g2p"]
-[ext_resource type="Texture2D" uid="uid://cvc2838mfbk7r" path="res://icon.svg" id="8_0url1"]
+[ext_resource type="Texture2D" uid="uid://bukjdog11t1my" path="res://assets/icons/user1_profile.png" id="8_0url1"]
 [ext_resource type="Resource" uid="uid://ddhmivrgtrfmr" path="res://resources/armies/0001.tres" id="8_ynih6"]
 
 [resource]

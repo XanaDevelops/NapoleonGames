@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="4_aidkp"]
 [ext_resource type="Resource" uid="uid://c7umu4kdabuub" path="res://resources/maps/0001.tres" id="5_0dh4l"]
 [ext_resource type="Script" uid="uid://ce5uvgu640fxr" path="res://scripts/resources/user_res.gd" id="6_65nb2"]
-[ext_resource type="Texture2D" uid="uid://cvc2838mfbk7r" path="res://icon.svg" id="7_8dbxi"]
+[ext_resource type="Texture2D" uid="uid://ddyaj556iitvq" path="res://assets/icons/profile_user2.jpg" id="7_8dbxi"]
 [ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="7_tjrxg"]
 [ext_resource type="Resource" uid="uid://dflajs3np3r2d" path="res://resources/armies/0002.tres" id="8_bp2cv"]
 
