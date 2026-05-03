@@ -13,7 +13,7 @@
 [ext_resource type="Resource" uid="uid://dybb6cmqtgypn" path="res://resources/cards/0001.tres" id="11_1nulq"]
 [ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="11_60c35"]
 [ext_resource type="Resource" uid="uid://d5k80vu3hunu" path="res://resources/cards/0002.tres" id="12_t1ldd"]
-[ext_resource type="Resource" path="res://resources/habilities/0001.tres" id="14_5dmu5"]
+[ext_resource type="Resource" uid="uid://capf4v7rflxrh" path="res://resources/habilities/0001.tres" id="14_5dmu5"]
 [ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="14_wh2kh"]
 [ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="15_fv4nc"]
 [ext_resource type="Script" uid="uid://c1o5v8x6fs24v" path="res://scripts/resources/all_game_res.gd" id="15_y3xpg"]

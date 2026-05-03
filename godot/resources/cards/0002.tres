@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="1_5tldn"]
 [ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="2_xdvve"]
-[ext_resource type="Texture2D" uid="uid://cfhl3bp06jbqv" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="3_21faa"]
 [ext_resource type="Texture2D" uid="uid://b0yy2cwl13n5o" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="4_s2s4f"]
 [ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="5_c5dnp"]
 [ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="6_slsko"]
@@ -20,7 +19,7 @@ mana = 10
 speed = 6
 dodge = 0.1
 portrait = ExtResource("4_s2s4f")
-img = ExtResource("3_21faa")
+img = ExtResource("4_s2s4f")
 resistances = Dictionary[ExtResource("5_c5dnp"), int]({
 ExtResource("6_slsko"): 5,
 ExtResource("7_nakli"): 5

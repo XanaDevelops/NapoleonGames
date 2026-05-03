@@ -269,7 +269,11 @@ theme_override_constants/separation = 10
 layout_mode = 2
 
 [node name="UnitTextureRect" type="TextureRect" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1491441126]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand_mode = 3
 stretch_mode = 5
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1419014336]
@@ -389,6 +393,7 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 
 [node name="CurrenAlterStatesContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=875609769]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 

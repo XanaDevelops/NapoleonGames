@@ -1,15 +1,14 @@
 [gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://dybb6cmqtgypn"]
 
-[ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="1_rfijq"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="1_rfijq"]
 [ext_resource type="Resource" path="res://resources/habilities/0001.tres" id="2_ns7o7"]
 [ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="3_rb4sv"]
-[ext_resource type="Texture2D" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="4_g3uba"]
-[ext_resource type="Texture2D" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="5_68h6i"]
-[ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="6_s1tia"]
+[ext_resource type="Texture2D" uid="uid://cfhl3bp06jbqv" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="5_68h6i"]
+[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="6_s1tia"]
 [ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="7_64q8c"]
 [ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="8_ehnsg"]
-[ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="9_nvind"]
-[ext_resource type="Script" path="res://scripts/resources/card_type_res.gd" id="10_l06gy"]
+[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="9_nvind"]
+[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="10_l06gy"]
 [ext_resource type="Resource" path="res://resources/card_types/0001.tres" id="11_1vqic"]
 
 [resource]
@@ -20,7 +19,7 @@ hp = 20
 speed = 5
 dodge = 0.35
 portrait = ExtResource("5_68h6i")
-img = ExtResource("4_g3uba")
+img = ExtResource("5_68h6i")
 resistances = Dictionary[ExtResource("6_s1tia"), int]({
 ExtResource("7_64q8c"): 15,
 ExtResource("8_ehnsg"): 5
