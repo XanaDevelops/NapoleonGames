@@ -17,7 +17,8 @@ public class GlobalExceptionHandler {
         ApiErrorResponse response = new ApiErrorResponse(
                 "INVALID_CREDENTIALS",
                 ex.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                ex.getMessage()
         );
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
@@ -28,7 +29,8 @@ public class GlobalExceptionHandler {
         ApiErrorResponse response = new ApiErrorResponse(
                 "VALIDATION_ERROR",
                 "Request validation failed",
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                ex.getMessage()
         );
 
         return ResponseEntity.badRequest().body(response);
@@ -38,8 +40,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleGeneric(Exception ex) {
         ApiErrorResponse response = new ApiErrorResponse(
                 "INTERNAL_SERVER_ERROR",
-                "Unexpected server error",
-                LocalDateTime.now()
+                "Unexpected server error N__E__W",
+                LocalDateTime.now(),
+                ex.getClass().getName() + ": " + ex.getMessage()
         );
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
@@ -50,7 +53,8 @@ public class GlobalExceptionHandler {
         ApiErrorResponse response = new ApiErrorResponse(
                 "DUPLICATE_RESOURCE",
                 ex.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                ex.getMessage()
         );
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
@@ -61,7 +65,8 @@ public class GlobalExceptionHandler {
         ApiErrorResponse response = new ApiErrorResponse(
                 "RESOURCE_NOT_FOUND",
                 ex.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                ex.getMessage()
         );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -72,7 +77,8 @@ public class GlobalExceptionHandler {
         ApiErrorResponse response = new ApiErrorResponse(
                 "BAD_REQUEST",
                 ex.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                ex.getMessage()
         );
 
         return ResponseEntity.badRequest().body(response);
