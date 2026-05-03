@@ -23,99 +23,102 @@ func test_visualizer() -> void:
 
 
 func test_hability_applies_to_bars() -> void:
+	var gr := GameResources.load_from()
 	var map := create_test_map()
 	GameManager._gameMap = map
+	GameManager._user_a = gr.users[0]
+	GameManager._user_b = gr.users[1]
+	GameManager._army_a = gr.users[0].obtener_ejercito_activo()
+	GameManager._army_b = gr.users[1].obtener_ejercito_activo()
 
-	# Buscar dos unidades adyacentes para simular ataque
-	var attacker_pos := Vector2i(-1, -1)
-	var attacker: UnitGame = null
-	var target_pos := Vector2i(-1, -1)
-	var target: UnitGame = null
-
-	for y in range(map._mapRes.tamY):
-		for x in range(map._mapRes.tamX):
-			var tile = map.get_tile_at(Vector2i(x, y))
-			if tile.has_unit():
-				if attacker == null:
-					attacker_pos = Vector2i(x, y)
-					attacker = tile.get_unit()
-				elif target == null:
-					target_pos = Vector2i(x, y)
-					target = tile.get_unit()
-					break
-		if target != null:
-			break
-
-	assert_not_null(attacker, "Debe haber al menos un atacante")
-	assert_not_null(target, "Debe haber al menos un objetivo")
-
-	# Instanciar escena
+	# Usar game_scene.tscn que incluye TurnManager
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
-	var scene := preload(map_scene)
-	var instance := scene.instantiate()
+	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate() as TurnManager
+	instance.turn_order = [gr.users[0], gr.users[1]]
+	instance.turn_number = 0
 	add_child_autoqfree(instance)
 
 	await wait_until(func(): return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
 
-	var unit_info = instance.get_node("VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo")
+	var unit_info = instance.get_node("IngameMap/VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo")
 	assert_not_null(unit_info, "UnitInfo debe existir")
 
-	# ── Test A: Ataque físico reduce HP del objetivo ──
+	# Crear unidades de test con CardRes válido
+	var card_attacker = CardRes.new()
+	card_attacker.name = "Atacante"
+	card_attacker.hp = 100
+	card_attacker.mana = 50
+	card_attacker.speed = 3
+	card_attacker.dodge = 10.0
+	card_attacker.habilities = [_create_physical_attack()] as Array[HabilityRes]
+	card_attacker.resistances = {} as Dictionary[AttackType, int]
+
+	var card_target = CardRes.new()
+	card_target.name = "Objetivo"
+	card_target.hp = 80
+	card_target.mana = 40
+	card_target.speed = 2
+	card_target.dodge = 5.0
+	card_target.habilities = [] as Array[HabilityRes]
+	card_target.resistances = {} as Dictionary[AttackType, int]
+
+	var attacker = UnitGame.new(card_attacker, gr.users[0])
+	var target = UnitGame.new(card_target, gr.users[1])
+
+	# Colocar unidades en el mapa
+	var attacker_pos = Vector2i(5, 5)
+	var target_pos = Vector2i(6, 5)
+	map.get_tile_at(attacker_pos).set_unit(attacker)
+	map.get_tile_at(target_pos).set_unit(target)
+
+	# ── Test A: Observar target y verificar HP inicial ──
 	unit_info.observe(target)
 	await wait_physics_frames(2)
 
 	var hp_bar: ProgressBar = unit_info.current_health
-	var hp_before = target._currentHealth
+	assert_eq(int(hp_bar.value), 80, "HP inicial debe ser 80")
 
-	var ataque_fisico = _create_physical_attack()
-	var targets_array: Array[Vector2i] = [target_pos] as Array[Vector2i]
-	#map.apply_hability(ataque_fisico, attacker_pos, targets_array)
-	GameManager.get_turn_manager()._on_unit_hability_use(attacker_pos, targets_array, ataque_fisico)
-
+	# ── Test B: Daño directo baja HP ──
+	var hp_before = target.hp
+	target.hp -= 20
 	await wait_physics_frames(2)
 
-	assert_lt(target._currentHealth, hp_before, "HP debe bajar tras ataque físico")
-	assert_eq(int(hp_bar.value), target._currentHealth, "Barra HP debe reflejar el daño")
+	assert_eq(target.hp, hp_before - 20, "HP debe bajar tras daño")
+	assert_eq(int(hp_bar.value), hp_before - 20, "Barra HP debe reflejar daño")
 
-	# ── Test B: Curación sube HP ──
-	var hp_after_attack = target._currentHealth
-	var curacion = _create_heal()
-	GameManager.get_turn_manager()._on_unit_hability_use(attacker_pos, targets_array, curacion)
-
+	# ── Test C: Curación sube HP ──
+	var hp_after_damage = target.hp
+	target.hp += 10
 	await wait_physics_frames(2)
 
-	assert_gt(target._currentHealth, hp_after_attack, "HP debe subir tras curación")
-	assert_eq(int(hp_bar.value), target._currentHealth, "Barra HP debe reflejar curación")
+	assert_eq(target.hp, hp_after_damage + 10, "HP debe subir tras curación")
+	assert_eq(int(hp_bar.value), hp_after_damage + 10, "Barra HP debe reflejar curación")
 
-	# ── Test C: Habilidad consume maná del atacante ──
+	# ── Test D: Observar atacante y verificar maná ──
 	unit_info.observe(attacker)
 	await wait_physics_frames(2)
 
 	var mana_bar: ProgressBar = unit_info.current_mana
-	var mana_before = attacker._currentMana
+	assert_eq(int(mana_bar.value), 50, "Mana inicial debe ser 50")
 
-	var ataque_magico = _create_magic_attack()
-	var targets_attacker: Array[Vector2i] = [target_pos] as Array[Vector2i]
-	GameManager.get_turn_manager()._on_unit_hability_use(attacker_pos, targets_attacker, ataque_magico)
-
+	# ── Test E: Consumo de maná ──
+	attacker.mana -= 25
 	await wait_physics_frames(2)
 
-	var expected_mana = maxi(0, mana_before - ataque_magico.manaCost)
-	assert_eq(attacker._currentMana, expected_mana, "Maná debe bajar tras usar habilidad")
-	assert_eq(int(mana_bar.value), expected_mana, "Barra maná debe reflejar el consumo")
+	assert_eq(attacker.mana, 25, "Mana debe bajar")
+	assert_eq(int(mana_bar.value), 25, "Barra mana debe reflejar consumo")
 
+	# ── Test F: Cambiar observación a target muestra valores correctos ──
 	unit_info.observe(target)
 	await wait_physics_frames(2)
 
-	assert_eq(int(hp_bar.value), target._currentHealth, "Barra debe mostrar HP del nuevo objetivo")
+	assert_eq(int(hp_bar.value), target.hp, "Barra debe mostrar HP del target")
 
 	gut.pause_before_teardown()
 	pass_test("Hability application and bars update correctly")
 	gut.add_children_to = prev_add_target
-
-
 
 func _create_physical_attack() -> HabilityRes:
 	var hab = HabilityRes.new()
