@@ -177,7 +177,6 @@ func paint_resistances(resistances: Dictionary[AttackType, int]) -> void:
 
 
 
-
 func paint_AlterStates(states: Dictionary[AlterStateRes, int]) -> void:
 	if states==null:
 		return 
