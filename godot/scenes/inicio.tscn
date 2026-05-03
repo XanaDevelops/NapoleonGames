@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://ckdof4q0k3o7x"]
+[gd_scene format=3 uid="uid://cllpyrjg508jg"]
 
 [ext_resource type="Texture2D" uid="uid://cecnrsydavur1" path="res://assets/sprites/ui/fondos_de_pantalla/fondo inicial.jpeg" id="1_4xtsl"]
 [ext_resource type="StyleBox" uid="uid://k2idkull1v2y" path="res://assets/themes/ui/estilo_menu_panel_desplegable.tres" id="2_xg841"]
