@@ -8,7 +8,7 @@ extends RuntimeResource
 ## Vida actual, si <=0 estas muerto
 @export var hp: int:
 	set(val):
-		hp = val
+		hp = maxi(0, val)
 		health_changed.emit(hp)
 
 var max_hp : int :
@@ -26,7 +26,7 @@ var height : int :
 ## Manà actual
 @export var mana: int:
 	set(val):
-		mana = val
+		mana = maxi(0, val)
 		mana_changed.emit(mana)
 
 ## estados alterados en activo con su duración restante
@@ -37,6 +37,15 @@ var height : int :
 signal health_changed(current: int)
 signal mana_changed(current: int)
 
+var _currentHealth: int:
+	set(val):
+		_currentHealth = val
+		health_changed.emit(_currentHealth)
+
+var _currentMana: int:
+	set(val):
+		_currentMana = val
+		mana_changed.emit(_currentMana)
 
 ## TODO estados alterados y toda la pesca
 var has_moved_this_turn : bool = false

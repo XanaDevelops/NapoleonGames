@@ -1,30 +1,29 @@
-[gd_resource type="Resource" script_class="CardRes" format=3]
+[gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://ffh24jxa4bu8"]
 
-[ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="1_5tldn"]
-[ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="2_xdvve"]
-[ext_resource type="Texture2D" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="3_21faa"]
-[ext_resource type="Texture2D" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="4_s2s4f"]
-[ext_resource type="Script" path="res://scripts/resources/attack_type_res.gd" id="5_c5dnp"]
-[ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="6_slsko"]
-[ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="7_nakli"]
-[ext_resource type="Script" path="res://scripts/resources/card_res.gd" id="8_j8ct8"]
-[ext_resource type="Script" path="res://scripts/resources/card_type_res.gd" id="9_qv1p8"]
-[ext_resource type="Resource" path="res://resources/card_types/0001.tres" id="10_8f3x1"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="1_5u1va"]
+[ext_resource type="Resource" path="res://resources/habilities/0002.tres" id="2_5tldn"]
+[ext_resource type="Texture2D" uid="uid://b0yy2cwl13n5o" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="3_xdvve"]
+[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="4_21faa"]
+[ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="5_s2s4f"]
+[ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="6_c5dnp"]
+[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="7_slsko"]
+[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="8_nakli"]
+[ext_resource type="Resource" path="res://resources/card_types/0001.tres" id="9_j8ct8"]
 
 [resource]
-script = ExtResource("8_j8ct8")
+script = ExtResource("7_slsko")
 name = &"Ranged Unit"
 desc = "Unidad a distancia"
 hp = 10
 mana = 10
 speed = 6
 dodge = 0.1
-portrait = ExtResource("4_s2s4f")
-img = ExtResource("3_21faa")
-resistances = Dictionary[ExtResource("5_c5dnp"), int]({
-ExtResource("6_slsko"): 5,
-ExtResource("7_nakli"): 5
+portrait = ExtResource("3_xdvve")
+img = ExtResource("3_xdvve")
+resistances = Dictionary[ExtResource("4_21faa"), int]({
+ExtResource("5_s2s4f"): 5,
+ExtResource("6_c5dnp"): 5
 })
-habilities = Array[ExtResource("1_5tldn")]([ExtResource("2_xdvve")])
-types = Array[ExtResource("9_qv1p8")]([ExtResource("10_8f3x1")])
+habilities = Array[ExtResource("1_5u1va")]([ExtResource("2_5tldn")])
+types = Array[ExtResource("8_nakli")]([ExtResource("9_j8ct8")])
 uid = 2

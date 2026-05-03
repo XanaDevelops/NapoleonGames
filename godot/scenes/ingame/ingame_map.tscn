@@ -1,18 +1,32 @@
 [gd_scene format=4 uid="uid://7np40cgmy80w"]
 
 [ext_resource type="Script" uid="uid://cpqdhsyw0vgg1" path="res://scenes/ingame/map_visualizer.gd" id="1_7udv5"]
-[ext_resource type="Script" path="res://scenes/ingame/ingame_map.gd" id="1_td6e5"]
-[ext_resource type="Script" path="res://scenes/ingame/players_panel.gd" id="2_s3xon"]
-[ext_resource type="Script" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
-[ext_resource type="Script" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
-[ext_resource type="Script" path="res://scenes/ingame/unit_info.gd" id="6_smdvi"]
+[ext_resource type="Script" uid="uid://dp3vm4x2rx3uf" path="res://scenes/ingame/ingame_map.gd" id="1_td6e5"]
+[ext_resource type="Script" uid="uid://dilrauf05i3je" path="res://scenes/ingame/players_panel.gd" id="2_s3xon"]
+[ext_resource type="Shader" uid="uid://cemlqbvowjq1m" path="res://scenes/ingame/ingame_map.gdshader" id="3_g5sqw"]
+[ext_resource type="Script" uid="uid://bm6sp4ow1l2qv" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
+[ext_resource type="Script" uid="uid://boaagd3hgel75" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
+[ext_resource type="Script" uid="uid://b8ttj2gcfkh47" path="res://scenes/ingame/unit_info.gd" id="6_smdvi"]
 [ext_resource type="PackedScene" uid="uid://ygwgcu7ruh4u" path="res://scenes/health_bar.tscn" id="7_6nuks"]
+[ext_resource type="Script" uid="uid://b220xr4adcigk" path="res://scenes/ingame/deployment_box.gd" id="8_rtl0i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3rx8c"]
+shader = ExtResource("3_g5sqw")
+shader_parameter/border_color = Color(0, 0, 0, 1)
+shader_parameter/border_width = 0.03
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g5sqw"]
+shader = ExtResource("3_g5sqw")
+shader_parameter/border_color = Color(0, 0, 0, 1)
+shader_parameter/border_width = 0.03
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g5sqw"]
+bg_color = Color(0.0042888485, 0.012468488, 0.074443825, 1)
 
 [node name="IngameMap" type="Control" unique_id=1560040291]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_td6e5")
-metadata/_edit_lock_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1521827406]
 layout_mode = 1
@@ -22,35 +36,107 @@ offset_bottom = 1073.0
 [node name="PlayersPanel" type="Control" parent="VBoxContainer" unique_id=69587996]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
 script = ExtResource("2_s3xon")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer" unique_id=959567450]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PlayersPanel" unique_id=1918173195]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="PlayerCardP1" type="HBoxContainer" parent="VBoxContainer/PlayersPanel/HBoxContainer" unique_id=362556757]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/separation = 15
+
+[node name="AvatarP1" type="TextureRect" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP1" unique_id=1033620551]
+material = SubResource("ShaderMaterial_3rx8c")
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 6
+
+[node name="NameP1" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP1" unique_id=693470659]
+layout_mode = 2
+
+[node name="NumCardsP1" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP1" unique_id=517385690]
+layout_mode = 2
+
+[node name="CenterInfo" type="VBoxContainer" parent="VBoxContainer/PlayersPanel/HBoxContainer" unique_id=2036423434]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/separation = 6
+
+[node name="Phase" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/CenterInfo" unique_id=1628022305]
+layout_mode = 2
+uppercase = true
+
+[node name="EndTurn" type="Button" parent="VBoxContainer/PlayersPanel/HBoxContainer/CenterInfo" unique_id=126975506]
+layout_mode = 2
+text = "End Turn
+"
+
+[node name="PlayerCardP2" type="HBoxContainer" parent="VBoxContainer/PlayersPanel/HBoxContainer" unique_id=1103161440]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_constants/separation = 15
+
+[node name="NumCardsP2" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP2" unique_id=1537170703]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="NameP2" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP2" unique_id=968602773]
+layout_mode = 2
+
+[node name="AvatarP2" type="TextureRect" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP2" unique_id=1482547048]
+material = SubResource("ShaderMaterial_g5sqw")
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 6
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1473323759]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 7.5
+theme_override_styles/panel = SubResource("StyleBoxFlat_g5sqw")
 
-[node name="SubViewport" type="SubViewport" parent="VBoxContainer/SubViewportContainer" unique_id=1514874787]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/PanelContainer" unique_id=959567450]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/PanelContainer/SubViewportContainer" unique_id=1514874787]
 handle_input_locally = false
+size = Vector2i(1919, 747)
 render_target_update_mode = 4
 
-[node name="mapVisualizer" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight")]
+[node name="mapVisualizer" type="Node2D" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment")]
 script = ExtResource("1_7udv5")
-tile_map_layer_texture = NodePath("../TileMapLayer_texture")
-tile_map_layer_units = NodePath("../TileMapLayer_units")
-tile_map_layer_selection = NodePath("../TileMapLayer_selection")
-tile_map_layer_highlight = NodePath("../TileMapLayer_highlights")
+tile_map_layer_texture = NodePath("TileMapLayer_texture")
+tile_map_layer_units = NodePath("TileMapLayer_units")
+tile_map_layer_selection = NodePath("TileMapLayer_selection")
+tile_map_layer_highlight = NodePath("TileMapLayer_highlights")
+tile_map_layer_deployment = NodePath("TileMapLayer_deployment")
 metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
 
-[node name="TileMapLayer_texture" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=479184065]
-position = Vector2(0, -3)
+[node name="TileMapLayer_texture" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=479184065]
 tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAUAAAAAAAIAAAAAAAUAAAAAAAAAAAABAAcAAAAAAP//AAAAAAcAAAABAP//AAABAAcAAAD/////AAAAAAcAAAD//wAAAAAAAAgAAAD+/wAAAAAGAAIAAAD9////AAAGAAIAAAD+////AAAGAAIAAAD8/wAAAAAAAAUAAAADAP//AAAAAAgAAAAEAP//AAAGAAIAAAA=")
 
-[node name="TileMapLayer_units" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=1642646471]
+[node name="TileMapLayer_deployment" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1706908201]
 
-[node name="TileMapLayer_selection" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=1342848487]
+[node name="TileMapLayer_units" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1642646471]
 
-[node name="TileMapLayer_highlights" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=739722248]
+[node name="TileMapLayer_selection" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1342848487]
+
+[node name="TileMapLayer_highlights" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=739722248]
 
 [node name="CardsPanel" type="Control" parent="VBoxContainer" unique_id=1431020749]
 layout_mode = 2
@@ -72,11 +158,10 @@ theme_override_constants/margin_bottom = 5
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer/CardsPanel/MarginContainer" unique_id=1102639422]
 layout_mode = 2
-current_tab = 1
+current_tab = 0
 tab_0/title = "Información del terreno"
 
 [node name="TileInfo" type="Control" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer" unique_id=12227352]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -162,6 +247,7 @@ layout_mode = 2
 size_flags_vertical = 1
 
 [node name="UnitInfo" type="Control" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer" unique_id=551573519]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -169,7 +255,7 @@ script = ExtResource("6_smdvi")
 metadata/_tab_index = 1
 
 [node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo" unique_id=598713077]
-layout_mode = 0
+layout_mode = 1
 offset_right = 1920.0
 offset_bottom = 520.0
 theme_override_constants/separation = 15
@@ -183,7 +269,11 @@ theme_override_constants/separation = 10
 layout_mode = 2
 
 [node name="UnitTextureRect" type="TextureRect" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1491441126]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand_mode = 3
 stretch_mode = 5
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1419014336]
@@ -303,6 +393,7 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 
 [node name="CurrenAlterStatesContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=875609769]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -324,3 +415,7 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="DeploymentBox" type="HBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer" unique_id=484191042]
+layout_mode = 2
+script = ExtResource("8_rtl0i")

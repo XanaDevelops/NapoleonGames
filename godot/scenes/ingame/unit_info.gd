@@ -27,6 +27,8 @@ var _observed_unit: UnitGame = null
 func _ready() -> void:
 	await get_tree().process_frame
 	
+	await get_tree().process_frame
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -43,8 +45,7 @@ func paint(tile: TileGame) -> void:
 	self.unit_texture.texture= tile.get_unit_portrait()
 	self.speed_label.text = "Speed : %d" % tile.get_speed()
 	self.dodge_label.text = "Dodge : %d" % tile.get_dodge()
-	self.current_health.init(tile.get_currentHealth())
-	self.current_mana.init(tile.get_currentMana())
+
 
 	paint_resistances(tile.get_resistances())
 	paint_habilities(tile.get_habilities(),tile.get_availableHabilities())
@@ -127,7 +128,8 @@ func _add_row(hab: HabilityRes, available: bool) -> void:
 	var btn_use = Button.new()
 	btn_use.text = "Usar"
 	btn_use.disabled = not available
-	btn_use.pressed.connect(func(): emit_signal("hability_use_requested", hab, ))
+	btn_use.pressed.connect(func():
+		emit_signal("hability_use_requested", hab, ))
 	row.add_child(btn_use)
 	
 	habilities_grid.columns = 1
@@ -216,20 +218,24 @@ func _get_effect_text(state: AlterStateRes) -> String:
 
 func observe(unit: UnitGame) -> void:
 	if _observed_unit != null:
-		_observed_unit.health_changed.disconnect(_on_health_changed)
-		_observed_unit.mana_changed.disconnect(_on_mana_changed)
+		if _observed_unit.health_changed.is_connected(_on_health_changed):
+				_observed_unit.health_changed.disconnect(_on_health_changed)
+		if _observed_unit.mana_changed.is_connected(_on_mana_changed):
+			_observed_unit.mana_changed.disconnect(_on_mana_changed)
 
 	_observed_unit = unit
-	current_health.init(unit.hp)
-	current_mana.init(unit.mana)
+	current_health.init(unit.max_hp)
+	current_mana.init(unit._cardRes.mana)
 	current_health.update(unit.hp)
 	current_mana.update(unit.mana)
 
 	unit.health_changed.connect(_on_health_changed)
 	unit.mana_changed.connect(_on_mana_changed)
+	
 
 func _on_health_changed(current: int) -> void:
 	current_health.update(current)
 
 func _on_mana_changed(current: int) -> void:
+
 	current_mana.update(current)

@@ -26,3 +26,11 @@ func test_unpack() -> void:
 	
 	var testRes : AttackType = ResourceLoader.load("res://resources/attack_types/0001.tres")
 	assert_eq(testRes.name, &"physic")
+	
+func no_test_borrar() -> void:
+	var map : MapRes = load("res://resources/maps/0002.tres")
+	var gr := GameManager.get_game_resources()
+	for row in map.mapData:
+		for tile :TileRes in row:
+			gr._unpack(tile.type, "res://resources/tile_types/")
+			gr._unpack(tile, "res://resources/tiles/")

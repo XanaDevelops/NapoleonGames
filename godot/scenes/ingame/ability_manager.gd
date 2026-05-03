@@ -26,7 +26,6 @@ func request(hab: HabilityRes, coords: Vector2i, tile: TileGame) -> bool:
 
 	var unit    := tile.get_unit()
 	var targets := GameManager.get_map().get_units_range(coords, hab.radius, hab.objective)
-
 	if targets.is_empty():
 		push_warning("No hay objetivos válidos para '%s'" % hab.name)
 		return false
@@ -37,7 +36,7 @@ func request(hab: HabilityRes, coords: Vector2i, tile: TileGame) -> bool:
 
 	targets_highlighted.emit(targets)
 
-	if hab._is_single_target():
+	if hab._inflicts_single(hab.objective):
 		_phase = Phase.SELECTING_TARGET
 	else:
 		_pending_targets = targets
@@ -63,11 +62,8 @@ func try_select_target(coords: Vector2i) -> bool:
 func confirm() -> void:
 	if _phase != Phase.CONFIRM_DIALOG:
 		return
-
-	GameManager.get_map().apply_hability(_pending_hab, _caster_coords, _pending_targets)
-	if _pending_hab.objective== _pending_hab.HAB_DEST.SINGLE_ENEMY or _pending_hab.objective== _pending_hab.HAB_DEST.MULTI_ENEMY:
-		print("Los enemigos no se detectan ya que no están definidos los usuarios en esta prueba") 
-
+	GameManager.get_turn_manager()._on_unit_hability_use(_caster_coords, _pending_targets, _pending_hab)
+	
 	var hab     := _pending_hab
 	var targets := _pending_targets.duplicate()
 	_reset()
