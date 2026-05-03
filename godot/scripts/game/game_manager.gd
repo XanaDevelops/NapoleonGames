@@ -20,7 +20,7 @@ enum APP_STATE {
 func _init() -> void:
 	_gameRes = GameResources.load_from()
 	#temporal
-	self.turn_manager= TurnManager.new()
+	#self.turn_manager= TurnManager.new()
 	_app_state = APP_STATE.DEPLOYMENT
 	#phase_changed.emit(_app_state)
 	set_users()
@@ -34,20 +34,16 @@ func set_users() -> void:
 	
 ## Placeholder
 func start_game(playerA: UserRes, playerB:UserRes, map:MapRes, armyA: ArmyRes, armyB:ArmyRes) -> void:
-	print("iniciamos partida")
-	print("playerA: ", playerA.username)
-	print("playerB: ", playerB.username)
+
 	self._user_a = playerA
 	self._user_b = playerB
 	self._gameMap = MapGame.new(map)
 	self._army_a = armyA
 	self._army_b = armyB
-	
-	self.turn_manager= TurnManager.new()
+
 	#_app_state = APP_STATE.IN_GAME
-	#_app_state = APP_STATE.DEPLOYMENT
-	#phase_changed.emit(_app_state)
-	# considerar usar enums
+	_app_state = APP_STATE.DEPLOYMENT
+
 	UiManager.cambiar_a_escena("juego")
 	
 	

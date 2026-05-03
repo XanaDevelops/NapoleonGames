@@ -70,13 +70,27 @@ func register_turn(turn: TurnAction) -> bool:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	GameManager.turn_manager = self 
 	deployment_box.unit_selected_for_deployment.connect(_on_card_selected_in_ui)
 	map_visualizer.tile_clicked.connect(_on_hex_clicked)
+	if turn_order.is_empty() :
+		turn_order = [GameManager._user_a, GameManager._user_b]
+	
+	if player_deployment_data.is_empty():
+		player_deployment_data[turn_order[0]] = _clone_army(GameManager._army_a)
+		player_deployment_data[turn_order[1]] = _clone_army(GameManager._army_b)
 
+	players_panel.setup(self)
 	start_deployment_phase()
 	
 	#end_deployment_phase()
 
+func _clone_army(army: ArmyRes) -> Array[CardArmyGroup]:
+	var copy: Array[CardArmyGroup] = []
+	if army:
+		for group in army.agrupations:
+			copy.append(group.duplicate())
+	return copy
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
