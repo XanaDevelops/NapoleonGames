@@ -231,8 +231,12 @@ func set_in_cache(gameRes : GameResource, called_from_load_from:=false) -> void:
 	var name := get_folder_name(scr)
 	
 	if has:
-		var arr : Array = self.get(name)
-		var i := arr.find_custom(func (x:GameResource): return x.uid == gameRes.uid)
+		var arr = self.get(name)
+		if arr == null:
+			push_warning(name, "no existe en GameResources, puede ser intencional")
+			return
+		
+		var i := (arr as Array).find_custom(func (x:GameResource): return x.uid == gameRes.uid)
 		#(arr[i] as GameResource).update_vals(gameRes)
 		arr[i] = gameRes
 		print("Actualizando ", scr.get_global_name(), " ", gameRes.uid)

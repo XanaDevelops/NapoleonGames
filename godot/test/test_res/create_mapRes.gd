@@ -8,11 +8,12 @@ func _run() -> void:
 	map_res.tamX = 23
 	map_res.tamY = 10
 	map_res.deployHeight = 2
+	map_res.uid = 2
 	
-	var grass = _create_tile_type("Grass", "Pradera abierta", 1, "res://assets/tiles/EverHex-Forest Lite/Forest/1.png")
-	var forest = _create_tile_type("Tree", "Bosque ligero", 2, "res://assets/tiles/EverHex-Forest Lite/Forest/7.png")
-	var path = _create_tile_type("Path", "Camino de tierra", 1, "res://assets/tiles/EverHex-Forest Lite/Forest/168.png")
-	var forest2= _create_tile_type("Tree", "Bosque denso", 2, "res://assets/tiles/EverHex-Forest Lite/Forest/14.png")
+	var grass = _create_tile_type("Grass", "Pradera abierta", 1, "res://assets/tiles/EverHex-Forest Lite/Forest/1.png", 10)
+	var forest = _create_tile_type("Tree", "Bosque ligero", 2, "res://assets/tiles/EverHex-Forest Lite/Forest/7.png", 11)
+	var path = _create_tile_type("Path", "Camino de tierra", 1, "res://assets/tiles/EverHex-Forest Lite/Forest/168.png", 12)
+	var forest2= _create_tile_type("Tree", "Bosque denso", 2, "res://assets/tiles/EverHex-Forest Lite/Forest/14.png", 13)
 	# Layout 23x10
 	var layout = [
 		[0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,0],
@@ -28,13 +29,15 @@ func _run() -> void:
 	]
 	
 	var types = [grass, forest, path, forest2]
-	
+	var start_uid := 1000
 	for y in range(map_res.tamY):
 		var row: Array[TileRes] = []
 		for x in range(map_res.tamX):
-			var tile = TileRes.new()
+			var tile := TileRes.new()
 			tile.type = types[layout[y][x]]
 			tile.height = 2 if layout[y][x] == 2 else 0
+			tile.uid = start_uid
+			start_uid+=1
 			row.append(tile)
 		map_res.mapData.append(row)
 	
@@ -44,11 +47,12 @@ func _run() -> void:
 	else:
 		print("Error al guardar: ", err)
 
-func _create_tile_type(name: String, desc: String, cost: int, texture_path: String) -> TileTypeRes:
-	var tile_type = TileTypeRes.new()
+func _create_tile_type(name: String, desc: String, cost: int, texture_path: String, uid: int) -> TileTypeRes:
+	var tile_type := TileTypeRes.new()
 	tile_type.name = name
 	tile_type.desc = desc
 	tile_type.cost = cost
+	tile_type.uid = uid
 	if ResourceLoader.exists(texture_path):
 		tile_type.texture = load(texture_path)
 	return tile_type

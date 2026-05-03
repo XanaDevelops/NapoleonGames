@@ -206,7 +206,7 @@ static func parse_json(json_text : String) -> GameResource:
 	var json : Dictionary = JSON.parse_string(json_text)
 	var key : String = json.keys()[0]
 	var game_res_scr : Script = get_script_from_json_text(key)
-	print("parseando un ", game_res_scr)
+	#print("parseando un ", game_res_scr)
 	var game_res : GameResource = game_res_scr.new()
 
 	for param in json[key]:
