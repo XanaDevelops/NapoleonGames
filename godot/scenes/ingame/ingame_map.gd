@@ -41,6 +41,7 @@ func _ready() -> void:
 	#GameManager.phase_changed.connect(_on_phase_change)
 	#_on_phase_change(GameManager._app_state)
 	unit_info.hability_use_requested.connect(_on_hability_use_requested)
+
 	cards_panel.confirmed.connect(_hab_manager.confirm)
 	cards_panel.cancelled.connect(_hab_manager.cancel)
 
@@ -90,20 +91,21 @@ func _on_hab_confirm_requested(hab: HabilityRes, targets: Array[Vector2i], unit:
 	cards_panel.show_confirm_dialog(hab, targets, unit)
 
 func _on_hability_use_requested(hab: HabilityRes) -> void:
+
 	if _selected_tile == null or not _selected_tile.has_unit():
 		return
 
 	_hab_manager.request(hab, _selected_coords, _selected_tile)
+	_state = UnitState.HABILITY_ACTIVE 
 
 
 func _on_hab_applied(_hab: HabilityRes, _targets: Array[Vector2i]) -> void:
-	print("applying hability")
 	_state = UnitState.UNIT_SELECTED
 	map_visualizer.clear_highlights()
 	cards_panel.hide_confirm_dialog()
 	#esto cambiaría si por ej tuvieramos habilidades de teletransportase?
-	if _selected_tile != null and _selected_tile.has_unit():
-		cards_panel.paint_unit_info(_selected_tile)
+	#if _selected_tile != null and _selected_tile.has_unit():
+		#cards_panel.paint_unit_info(_selected_tile)
 
 
 func _on_hab_cancelled() -> void:
@@ -111,7 +113,6 @@ func _on_hab_cancelled() -> void:
 	map_visualizer.clear_highlights()
 	cards_panel.hide_confirm_dialog()
 
-#----------
 func _on_tile_clicked(coords: Vector2i, tile: TileGame) -> void:
 	match _state:
 		UnitState.IDLE, UnitState.UNIT_SELECTED:
