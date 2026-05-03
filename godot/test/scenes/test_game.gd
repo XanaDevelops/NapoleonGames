@@ -34,7 +34,7 @@ func test_full_game_session() -> void:
 	
 	GameManager.start_game(
 		user_a, user_b,
-		gr.maps[2],
+		gr.maps[1],
 		user_a.obtener_ejercito_activo(),
 		user_b.obtener_ejercito_activo()
 	)

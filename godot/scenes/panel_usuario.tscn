@@ -1,4 +1,4 @@
-[gd_scene format=3]
+[gd_scene format=3 ]
 
 [ext_resource type="Script" path="res://scripts/ui/panel_usuario.gd" id="1_c817i"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="2_c817i"]
