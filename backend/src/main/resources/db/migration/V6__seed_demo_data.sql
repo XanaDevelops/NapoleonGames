@@ -165,7 +165,7 @@ INSERT INTO user_cards (user_id, card_id, quantity, unlocked_at) VALUES
 (2, 1, 2, NOW()),
 (2, 2, 4, NOW());
 
--- Ejércitos<
+-- Ejércitos
 INSERT INTO armies (
     id, user_id, slot_number, name,
     is_active, created_at, updated_at
