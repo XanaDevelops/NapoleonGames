@@ -28,7 +28,6 @@ func test_sandbox_interactivo_fase_despliegue() -> void:
 func _get_cloned_army(user: UserRes) -> Array[CardArmyGroup]:
 	var army_copy: Array[CardArmyGroup] = []
 	var active_army := user.obtener_ejercito_activo()
-	print("activa_army", active_army)
 	if active_army:
 		for group in active_army.agrupations:
 			army_copy.append(group.duplicate())

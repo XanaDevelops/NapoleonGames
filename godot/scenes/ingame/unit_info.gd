@@ -45,8 +45,7 @@ func paint(tile: TileGame) -> void:
 	self.unit_texture.texture= tile.get_unit_portrait()
 	self.speed_label.text = "Speed : %d" % tile.get_speed()
 	self.dodge_label.text = "Dodge : %d" % tile.get_dodge()
-	#self.current_health.init(tile.get_currentHealth())
-	#self.current_mana.init(tile.get_currentMana())
+
 
 	paint_resistances(tile.get_resistances())
 	paint_habilities(tile.get_habilities(),tile.get_availableHabilities())
@@ -236,10 +235,8 @@ func observe(unit: UnitGame) -> void:
 	
 
 func _on_health_changed(current: int) -> void:
-	print(">>> health_changed received: ", current)
 	current_health.update(current)
 
 func _on_mana_changed(current: int) -> void:
-	print(">>> mana_changed received: ", current)
 
 	current_mana.update(current)
