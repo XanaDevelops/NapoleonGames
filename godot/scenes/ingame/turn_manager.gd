@@ -8,8 +8,8 @@ signal tick_turn
 
 @onready var cards_panel = $IngameMap/VBoxContainer/CardsPanel
 @onready var deployment_box = $IngameMap/VBoxContainer/CardsPanel/MarginContainer/DeploymentBox
-@onready var map_visualizer = $IngameMap/VBoxContainer/SubViewportContainer/SubViewport/mapVisualizer
-
+@onready var map_visualizer = $IngameMap/VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer
+@onready var players_panel= $IngameMap/VBoxContainer/PlayersPanel
 @export var turns: Array[TurnAction] = []
 var turn_order: Array[UserRes] = []
 var turn_number: int = 0
@@ -70,11 +70,12 @@ func register_turn(turn: TurnAction) -> bool:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
 	deployment_box.unit_selected_for_deployment.connect(_on_card_selected_in_ui)
 	map_visualizer.tile_clicked.connect(_on_hex_clicked)
 
 	start_deployment_phase()
+	
+	#end_deployment_phase()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -149,6 +150,7 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 
 func start_deployment_phase() -> void:
 	is_deployment_phase = true
+	players_panel.set_phase_deployment()
 	cards_panel.set_deployment_phase(true)
 	_refresh_ui_for_current_player()
 	_highlight_current_deployment_zone()
@@ -158,6 +160,8 @@ func start_deployment_phase() -> void:
 
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
+	players_panel.set_phase_battle()
+
 	cards_panel.set_deployment_phase(false)
 	map_visualizer.movement_requested.connect(_on_unit_movement_requested)
 	#GameManager._app_state= GameManager.APP_STATE.IN_GAME
@@ -203,10 +207,10 @@ func _consume_current_card() -> void:
 	if player_deployment_data.has(current_user):
 		player_deployment_data[current_user].erase(pending_deployment_group)
 		deployment_box.remove_card_visual(pending_deployment_group)
+		card_deployed.emit(current_user, player_deployment_data[current_user].size())
 
 	
 	pending_deployment_group = null
-	card_deployed.emit(current_user, player_deployment_data[current_user].size())
 
 	_handle_next_deployment_step()
 

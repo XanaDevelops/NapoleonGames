@@ -20,6 +20,9 @@ shader = ExtResource("3_g5sqw")
 shader_parameter/border_color = Color(0, 0, 0, 1)
 shader_parameter/border_width = 0.03
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g5sqw"]
+bg_color = Color(0.0042888485, 0.012468488, 0.074443825, 1)
+
 [node name="IngameMap" type="Control" unique_id=1560040291]
 layout_mode = 3
 anchors_preset = 0
@@ -102,35 +105,38 @@ size_flags_vertical = 4
 expand_mode = 1
 stretch_mode = 6
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer" unique_id=959567450]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1473323759]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 7.5
+theme_override_styles/panel = SubResource("StyleBoxFlat_g5sqw")
 
-[node name="SubViewport" type="SubViewport" parent="VBoxContainer/SubViewportContainer" unique_id=1514874787]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/PanelContainer" unique_id=959567450]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/PanelContainer/SubViewportContainer" unique_id=1514874787]
 handle_input_locally = false
+size = Vector2i(1919, 747)
 render_target_update_mode = 4
 
-[node name="mapVisualizer" type="Node2D" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment")]
+[node name="mapVisualizer" type="Node2D" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment")]
 script = ExtResource("1_7udv5")
-tile_map_layer_texture = NodePath("../TileMapLayer_texture")
-tile_map_layer_units = NodePath("../TileMapLayer_units")
-tile_map_layer_selection = NodePath("../TileMapLayer_selection")
-tile_map_layer_highlight = NodePath("../TileMapLayer_highlights")
-tile_map_layer_deployment = NodePath("../TileMapLayer_deployment")
+tile_map_layer_texture = NodePath("TileMapLayer_texture")
+tile_map_layer_units = NodePath("TileMapLayer_units")
+tile_map_layer_selection = NodePath("TileMapLayer_selection")
+tile_map_layer_highlight = NodePath("TileMapLayer_highlights")
+tile_map_layer_deployment = NodePath("TileMapLayer_deployment")
 metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
 
-[node name="TileMapLayer_texture" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=479184065]
-position = Vector2(0, -3)
+[node name="TileMapLayer_texture" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=479184065]
 tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAUAAAAAAAIAAAAAAAUAAAAAAAAAAAABAAcAAAAAAP//AAAAAAcAAAABAP//AAABAAcAAAD/////AAAAAAcAAAD//wAAAAAAAAgAAAD+/wAAAAAGAAIAAAD9////AAAGAAIAAAD+////AAAGAAIAAAD8/wAAAAAAAAUAAAADAP//AAAAAAgAAAAEAP//AAAGAAIAAAA=")
 
-[node name="TileMapLayer_deployment" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=1706908201]
+[node name="TileMapLayer_deployment" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1706908201]
 
-[node name="TileMapLayer_units" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=1642646471]
+[node name="TileMapLayer_units" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1642646471]
 
-[node name="TileMapLayer_selection" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=1342848487]
+[node name="TileMapLayer_selection" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1342848487]
 
-[node name="TileMapLayer_highlights" type="TileMapLayer" parent="VBoxContainer/SubViewportContainer/SubViewport" unique_id=739722248]
+[node name="TileMapLayer_highlights" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=739722248]
 
 [node name="CardsPanel" type="Control" parent="VBoxContainer" unique_id=1431020749]
 layout_mode = 2

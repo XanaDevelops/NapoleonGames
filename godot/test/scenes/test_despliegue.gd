@@ -12,13 +12,11 @@ func test_sandbox_interactivo_fase_despliegue() -> void:
 	
 	
 	game_scene.turn_order = [user_a, user_b]
-	print(game_scene.turn_order)
 	game_scene.turn_number = 0 
 	
 	
 	game_scene.player_deployment_data[user_a] = _get_cloned_army(user_a)
 	game_scene.player_deployment_data[user_b] = _get_cloned_army(user_b)
-	print(game_scene.player_deployment_data)
 	add_child_autoqfree(game_scene)
 	await wait_frames(2)
 	

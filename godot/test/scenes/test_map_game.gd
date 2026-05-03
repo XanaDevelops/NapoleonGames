@@ -340,7 +340,7 @@ func create_test_map() -> MapGame:
 	map_res.name = "Test Map"
 	map_res.desc = "Mapa de prueba"
 	map_res.tamX = 23
-	map_res.tamY = 11
+	map_res.tamY = 10
 	map_res.deployHeight = 2
 
 	for y in range(map_res.tamY):
@@ -387,7 +387,7 @@ func create_test_map() -> MapGame:
 				card_res.resistances = generate_resistances()
 				var unit = UnitGame.new(card_res, null)
 				unit._currentAlterStates = generate_alter_states()
-				map.get_tile_at(Vector2i(x, y)).set_unit(unit)
+				#map.get_tile_at(Vector2i(x, y)).set_unit(unit)
 
 	return map
 

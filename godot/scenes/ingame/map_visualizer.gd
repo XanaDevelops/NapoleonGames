@@ -60,7 +60,6 @@ func _setup_map(map: MapGame):
 	for y in range(map._mapRes.tamY):
 		for x in range(map._mapRes.tamX):
 			draw_tile(x, y, map.get_tile_at(Vector2i(x, y)))
-
 func set_map(map: MapGame) -> void:
 	self.map = map   
 
@@ -169,16 +168,13 @@ func _handle_click(coords: Vector2i) -> void:
 		_clear_selection()
 		return
 	
-	
+		
 	emit_signal("tile_clicked", coords, tile)
-	
 	
 	if selected_cell != Vector2i(-1, -1) and coords in current_accesible_moves:
 		movement_requested.emit(selected_cell, coords)
 		_clear_selection()
 		return
-
-	
 	_process_selection(coords, tile)
 
 func _process_selection(coords: Vector2i, clicked_tile: TileGame) -> void:

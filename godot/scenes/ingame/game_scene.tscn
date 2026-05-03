@@ -8,7 +8,7 @@ script = ExtResource("1_4n5kr")
 
 [node name="IngameMap" parent="." unique_id=594307947 instance=ExtResource("2_rqqua")]
 
-[node name="mapVisualizer" parent="IngameMap/VBoxContainer/SubViewportContainer/SubViewport" parent_id_path=PackedInt32Array(594307947, 1514874787) index="0" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_deployment")]
-tile_map_layer_deployment = NodePath("../TileMapLayer_deployment")
+[node name="SubViewportContainer" parent="IngameMap/VBoxContainer/PanelContainer" parent_id_path=PackedInt32Array(594307947, 1473323759) index="0" unique_id=959567450]
+size_flags_horizontal = 4
 
 [editable path="IngameMap"]

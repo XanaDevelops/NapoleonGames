@@ -3,11 +3,13 @@ extends Control
 
 @onready var vbox:          VBoxContainer        = $VBoxContainer
 @onready var players_panel: Control              = $VBoxContainer/PlayersPanel
-@onready var map_container: SubViewportContainer = $VBoxContainer/SubViewportContainer
+@onready var map_container: SubViewportContainer = $VBoxContainer/PanelContainer/SubViewportContainer
+
 @onready var cards_panel:   Control              = $VBoxContainer/CardsPanel
-@onready var sub_viewport:  SubViewport          = $VBoxContainer/SubViewportContainer/SubViewport
-@onready var map_visualizer: mapVisualizer       = $VBoxContainer/SubViewportContainer/SubViewport/mapVisualizer
+@onready var sub_viewport:  SubViewport          = $VBoxContainer/PanelContainer/SubViewportContainer/SubViewport
+@onready var map_visualizer: mapVisualizer       = $VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer
 @onready var unit_info:     Control              = $VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo
+
 enum UnitState {
 	IDLE,
 	UNIT_SELECTED,
@@ -31,6 +33,7 @@ func _ready() -> void:
 	_hab_manager = HabilityManager.new()
 	_connect_hab_manager()
 
+	await get_tree().process_frame
 	await get_tree().process_frame
 	_setup_viewport()
 	clear()
@@ -64,8 +67,11 @@ func clear() -> void:
 	cards_panel.clear()
 
 func _setup_viewport() -> void:
-	sub_viewport.size = Vector2i(map_container.size)
+	var container_size = map_container.size
+	sub_viewport.size = Vector2i(container_size)
 
+	sub_viewport.transparent_bg = true
+	
 #HABILITY RELATED FUNCTIONS----------------
 func _connect_hab_manager() -> void:
 	_hab_manager.targets_highlighted.connect(_on_hab_targets_highlighted)

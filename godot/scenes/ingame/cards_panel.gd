@@ -25,9 +25,9 @@ func _setup_pages() -> void:
 	tile_info.custom_minimum_size = Vector2(size.x, size.y)
 	unit_info.custom_minimum_size = Vector2(size.x, size.y)
 
-func set_phase_battle() -> void:
-	clear()
-	deployment_box.visible= false
+#func set_phase_battle() -> void:
+	#clear()
+	#deployment_box.visible= false
 	
 #func set_phase_deployment() -> void:
 	#tabs.visible= false
