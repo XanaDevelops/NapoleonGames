@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TileRes" format=3 uid="uid://c43hj2fqrqv6g"]
+
+[ext_resource type="Script" uid="uid://bmy17ix6av5bg" path="res://scripts/resources/tile_res.gd" id="1_oldxb"]
+[ext_resource type="Resource" path="res://resources/tile_types/0001.tres" id="2_e2u25"]
+
+[resource]
+script = ExtResource("1_oldxb")
+type = ExtResource("2_e2u25")
+uid = 2078
