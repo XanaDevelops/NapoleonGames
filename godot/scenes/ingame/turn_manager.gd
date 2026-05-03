@@ -43,8 +43,8 @@ class TurnAction extends GameResource:
 func advance_turn() -> void:
 	var user : UserRes = turn_order[turn_number % turn_order.size()]
 	print("Turno de ", user.username)
-	tick_turn.emit()
 	turn_number += 1
+	tick_turn.emit()
 	
 	
 func get_current_user() -> UserRes:
