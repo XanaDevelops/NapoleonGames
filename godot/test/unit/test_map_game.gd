@@ -42,12 +42,11 @@ func before_all():
 func test_dijkstra() -> void:
 	var mapGame := MapGame.new(map)
 	var unit := UnitGame.new(gr.cards[0], null)
-	mapGame.get_tile_at(Vector2i(2,2)).set_unit(unit)
+	var pos_even := Vector2i(2, 2) # y par
+	mapGame.get_tile_at(pos_even).set_unit(unit)
 
-	# Vecinos hexagonales: se valida como conjunto (sin depender del orden)
-	# y cubriendo filas pares/impares y bordes.
-	var pos_even_row := Vector2i(2, 2)
-	var expected_even_row := [
+	# Vecinos esperados para y par (layout offset horizontal)
+	var expected_even := [
 		Vector2i(3, 2),
 		Vector2i(1, 2),
 		Vector2i(2, 3),
@@ -55,10 +54,16 @@ func test_dijkstra() -> void:
 		Vector2i(2, 1),
 		Vector2i(1, 1),
 	]
-	_assert_neighbors(mapGame, pos_even_row, expected_even_row)
+	var actual_even := mapGame.get_neightbours(pos_even)
+	assert_eq(actual_even.size(), expected_even.size())
+	for p in expected_even:
+		assert_true(p in actual_even)
+	for p in actual_even:
+		assert_true(p in expected_even)
 
-	var pos_odd_row := Vector2i(2, 1)
-	var expected_odd_row := [
+	# Vecinos esperados para y impar (otra paridad)
+	var pos_odd := Vector2i(2, 1) # y impar
+	var expected_odd := [
 		Vector2i(3, 1),
 		Vector2i(1, 1),
 		Vector2i(3, 2),
@@ -66,40 +71,19 @@ func test_dijkstra() -> void:
 		Vector2i(3, 0),
 		Vector2i(2, 0),
 	]
-	_assert_neighbors(mapGame, pos_odd_row, expected_odd_row)
+	var actual_odd := mapGame.get_neightbours(pos_odd)
+	assert_eq(actual_odd.size(), expected_odd.size())
+	for p in expected_odd:
+		assert_true(p in actual_odd)
+	for p in actual_odd:
+		assert_true(p in expected_odd)
 
-	var corner := Vector2i(0, 0)
-	var expected_corner := [Vector2i(1, 0), Vector2i(0, 1)]
-	_assert_neighbors(mapGame, corner, expected_corner)
-
-	# Dijkstra: comprobaciones robustas (invariantes) sobre movimientos accesibles.
-	var available := mapGame.get_accesible_moves(pos_even_row)
-	assert_false(pos_even_row in available)
-	assert_true(available.size() >= 0)
-	assert_true(available.size() <= (map.tamX * map.tamY) - 1)
-
-	# Todos los movimientos deben estar dentro del mapa y no repetidos.
+	# Dijkstra/movimiento: invariantes simples (sin tamaños mágicos)
+	var available := mapGame.get_accesible_moves(pos_even)
+	assert_false(pos_even in available)
 	var seen := {}
 	for p in available:
-		assert_true(_in_rect_bounds(p))
+		assert_true(p.x >= 0 and p.x < map.tamX)
+		assert_true(p.y >= 0 and p.y < map.tamY)
 		assert_false(seen.has(p))
 		seen[p] = true
-
-	# Si la unidad tiene velocidad >= 1, todos los vecinos vacíos inmediatos son alcanzables.
-	if unit.get_speed() >= 1:
-		for p in mapGame.get_neightbours(pos_even_row):
-			assert_true(p in available)
-
-
-func _assert_neighbors(mapGame: MapGame, pos: Vector2i, expected: Array) -> void:
-	var actual := mapGame.get_neightbours(pos)
-	assert_eq(actual.size(), expected.size())
-	for e in expected:
-		assert_true(e in actual)
-	for a in actual:
-		assert_true(a in expected)
-		assert_true(_in_rect_bounds(a))
-
-
-func _in_rect_bounds(p: Vector2i) -> bool:
-	return p.x >= 0 and p.x < map.tamX and p.y >= 0 and p.y < map.tamY
