@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://dprnigfrin707"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_81n53"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="2_ayh22"]
+[ext_resource type="Resource" uid="uid://wej1g0fgvlo4" path="res://test/test_res/alter_state_quemadura.tres" id="2_x1l0j"]
+[ext_resource type="Resource" uid="uid://bw2xo1v1mpllw" path="res://test/test_res/attack_type_fire.tres" id="3_5hjd2"]
+[ext_resource type="Resource" uid="uid://dmc4jstoyeoun" path="res://test/test_res/stat_attack_linear.tres" id="5_xnwaf"]
+
+[resource]
+script = ExtResource("2_ayh22")
+name = &"fireball"
+desc = "it's wizard time"
+objective = 12
+value = 5.0
+stat = ExtResource("5_xnwaf")
+attackType = ExtResource("3_5hjd2")
+radius = 3
+manaCost = 5
+cooldown = 3
+alter_states = Array[ExtResource("1_81n53")]([ExtResource("2_x1l0j")])
+metadata/_custom_type_script = "uid://eihee83yhkpg"

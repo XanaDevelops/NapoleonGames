@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://d263gp7720fyk"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_rgbbo"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="2_am4g8"]
+[ext_resource type="Resource" uid="uid://2u4830mftyn8" path="res://test/test_res/attack_type_physic.tres" id="2_kpfri"]
+[ext_resource type="Resource" uid="uid://dmc4jstoyeoun" path="res://test/test_res/stat_attack_linear.tres" id="3_am4g8"]
+
+[resource]
+script = ExtResource("2_am4g8")
+name = &"espadazo"
+desc = "espada"
+value = 7.0
+stat = ExtResource("3_am4g8")
+attackType = ExtResource("2_kpfri")
+radius = 1
+metadata/_custom_type_script = "uid://eihee83yhkpg"

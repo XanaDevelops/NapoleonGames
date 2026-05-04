@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="StatData" format=3 uid="uid://dmc4jstoyeoun"]
+
+[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="1_oevja"]
+
+[resource]
+script = ExtResource("1_oevja")
+name = &"attack"
+metadata/_custom_type_script = "uid://bcsdfa1f5drbr"

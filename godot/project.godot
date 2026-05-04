@@ -17,7 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+GameManager="*uid://crfipueiwb0h0"
 UiManager="*uid://c7x52jkqmybks"
+UserManager="*uid://dugu0fxresru"
+ApiAdapter="*uid://dfb2v02pw1ss2"
 
 [display]
 
@@ -33,10 +36,6 @@ version_control/autoload_on_startup=true
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gut/plugin.cfg")
-
-[global_group]
-
-botones_navegacion=""
 
 [physics]
 

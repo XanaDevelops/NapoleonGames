@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://culfctgdahmki"]
+
+[ext_resource type="Script" uid="uid://dcrh166317lyc" path="res://scenes/deployment_card_ui.gd" id="1_r5g11"]
+[ext_resource type="Texture2D" uid="uid://b0yy2cwl13n5o" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="2_ngwk6"]
+
+[node name="ButtonCard" type="Button" unique_id=2067365788]
+custom_minimum_size = Vector2(137, 177)
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_r5g11")
+
+[node name="ImageCard" type="TextureRect" parent="." unique_id=1703592953]
+layout_mode = 0
+offset_right = 137.0
+offset_bottom = 177.0
+mouse_filter = 2
+texture = ExtResource("2_ngwk6")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=889953746]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -67.5
+offset_top = -50.0
+offset_right = 69.5
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Name" type="Label" parent="VBoxContainer" unique_id=1930371124]
+layout_mode = 2
+text = "Esqueleto"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Quantity" type="Label" parent="VBoxContainer" unique_id=1180935565]
+layout_mode = 2
+text = "x10"
+horizontal_alignment = 1
