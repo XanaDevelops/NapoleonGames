@@ -25,4 +25,4 @@ extends GameResource
 ## datos de las casillas
 @export var mapData: Array[Array] # Godot no permite tipar Array[Array[TileRes]]
 ## tamaño de las zonas de despliege
-@export var deployHeight: int
+@export var deployHeight: int = 1

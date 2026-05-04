@@ -24,9 +24,12 @@ extends GameResource
 func get_total_cost(card: CardRes) -> int:
 	var _cost = cost
 	for mod in mods:
-		if mod.stat.name == StatData.SPEED and mod.affectType in card.types:
+		if mod.stat.name == StatData.SPEED and _check_match(card.types, mod.affectType):
 			if mod.stat.isPercent:
 				_cost *= mod.value
 			else:
 				_cost += mod.value
 	return _cost
+	
+func _check_match(types: Array[CardTypeRes], mod: CardTypeRes) -> bool:
+	return types.any(func (x: CardTypeRes) : return x.uid == mod.uid)
