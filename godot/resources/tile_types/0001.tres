@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="TileTypeRes" format=3 uid="uid://bhctonp62262a"]
+[gd_resource type="Resource" script_class="TileTypeRes" format=3 uid="uid://ddoy4opru1lma"]
 
 [ext_resource type="Script" uid="uid://cnh4gjirdr73b" path="res://scripts/resources/tile_mod_res.gd" id="1_fct3x"]
 [ext_resource type="Script" uid="uid://d4fyta6ugot35" path="res://scripts/resources/tile_type_res.gd" id="2_8gcph"]

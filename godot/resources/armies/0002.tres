@@ -1,83 +1,12 @@
-[gd_resource type="Resource" script_class="ArmyRes" format=3 uid="uid://fx521kymrner"]
+[gd_resource type="Resource" script_class="ArmyRes" format=3 uid="uid://brrsgcfarj81v"]
 
 [ext_resource type="Script" uid="uid://chjdn7qg0thht" path="res://scripts/resources/card_army_group.gd" id="1_tp3i1"]
+[ext_resource type="Resource" uid="uid://c742admoyxfg1" path="res://resources/card_army_groups/0002.tres" id="2_dik0a"]
 [ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="2_ogtmr"]
-[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="2_oosgc"]
-[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="3_1lhdc"]
-[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="4_t2bkl"]
-[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="5_b2068"]
-[ext_resource type="Texture2D" uid="uid://cfhl3bp06jbqv" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="6_anv67"]
-[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="7_wd8fl"]
-[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="8_ddwam"]
-
-[sub_resource type="Resource" id="Resource_df45x"]
-script = ExtResource("4_t2bkl")
-name = &"physic"
-uid = 1
-
-[sub_resource type="Resource" id="Resource_q7fox"]
-script = ExtResource("5_b2068")
-name = &"attack"
-desc = "daño de ataque"
-uid = 1
-
-[sub_resource type="Resource" id="Resource_lsxbk"]
-script = ExtResource("2_oosgc")
-name = &"espadazo"
-desc = "ataque corto de espada"
-value = 7.0
-stat = SubResource("Resource_q7fox")
-attackType = SubResource("Resource_df45x")
-radius = 1
-uid = 1
-
-[sub_resource type="Resource" id="Resource_r0ky1"]
-script = ExtResource("4_t2bkl")
-name = &"magic"
-uid = 2
-
-[sub_resource type="Resource" id="Resource_60c35"]
-script = ExtResource("2_oosgc")
-name = &"flechazo"
-desc = "Lanza una flecha magica"
-value = 10.0
-stat = SubResource("Resource_q7fox")
-attackType = SubResource("Resource_r0ky1")
-radius = 3
-uid = 2
-
-[sub_resource type="Resource" id="Resource_e07fo"]
-script = ExtResource("8_ddwam")
-name = &"Unidad"
-desc = "Unidad básica, lol"
-uid = 1
-
-[sub_resource type="Resource" id="Resource_8e42l"]
-script = ExtResource("7_wd8fl")
-name = &"Mele Unit"
-desc = "unidad a mele"
-hp = 20
-speed = 5
-dodge = 0.35
-portrait = ExtResource("6_anv67")
-img = ExtResource("6_anv67")
-resistances = Dictionary[ExtResource("4_t2bkl"), int]({
-SubResource("Resource_df45x"): 15,
-SubResource("Resource_r0ky1"): 5
-})
-habilities = Array[ExtResource("2_oosgc")]([SubResource("Resource_lsxbk"), SubResource("Resource_60c35")])
-types = Array[ExtResource("8_ddwam")]([SubResource("Resource_e07fo")])
-uid = 1
-
-[sub_resource type="Resource" id="Resource_qmt1m"]
-script = ExtResource("1_tp3i1")
-cardType = SubResource("Resource_8e42l")
-n = 3
-uid = 2
 
 [resource]
 script = ExtResource("2_ogtmr")
 nom = &"superArmy2"
 isActive = true
-agrupations = Array[ExtResource("1_tp3i1")]([SubResource("Resource_qmt1m")])
+agrupations = Array[ExtResource("1_tp3i1")]([ExtResource("2_dik0a")])
 uid = 2

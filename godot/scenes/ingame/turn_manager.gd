@@ -77,6 +77,7 @@ func _ready() -> void:
 		turn_order = [GameManager._user_a, GameManager._user_b]
 	
 	if player_deployment_data.is_empty():
+		## FIXME: usar .deep_duplicate
 		player_deployment_data[turn_order[0]] = _clone_army(GameManager._army_a)
 		player_deployment_data[turn_order[1]] = _clone_army(GameManager._army_b)
 
