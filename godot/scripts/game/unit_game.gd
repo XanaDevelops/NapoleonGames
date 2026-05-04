@@ -218,12 +218,12 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	return self.hp <= 0
 ## mata a la unidad
 func kill() -> void:
-	var tm = GameManager.get_turn_manager()
+	var tm := GameManager.get_turn_manager()
 	if tm != null and tm.tick_turn.is_connected(self.advance_turn):
 			tm.tick_turn.disconnect(self.advance_turn)
 			#GameManager.get_map().get_tile_at(_tile._position).set_unit(null)
 			#notificar al turn_manager
-	_tile._position.set_unit(null)
+	_tile.set_unit(null)
 
 	died.emit(self, _tile._position)
 	_tile = null 

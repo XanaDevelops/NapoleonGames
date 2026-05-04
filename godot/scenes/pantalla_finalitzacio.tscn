@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dd7rkqmyelbi3"]
 
-[ext_resource type="Script" uid="uid://df0juty4godvj" path="res://scripts/ui/pantalla_finalizacion.gd" id="1_ko0ix"]
+[ext_resource type="Script" path="res://scripts/ui/pantalla_finalizacion.gd" id="1_ko0ix"]
 [ext_resource type="Texture2D" uid="uid://m71jo7exjp3w" path="res://assets/sprites/ui/fondos_de_pantalla/fondo de victoria.jpg" id="2_0xcpk"]
 [ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="3_gxiv4"]
 [ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://assets/themes/ui/estilo_botones.tres" id="4_31p13"]
-[ext_resource type="Script" uid="uid://bgcdmwi57at8w" path="res://scenes/boton_de_reinicio.gd" id="5_0xcpk"]
+[ext_resource type="Script" path="res://scenes/boton_de_reinicio.gd" id="5_0xcpk"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="5_5iba6"]
 [ext_resource type="FontFile" uid="uid://cmiuntu71oyl3" path="res://addons/gut/fonts/LobsterTwo-Bold.ttf" id="6_hs4sh"]
 
