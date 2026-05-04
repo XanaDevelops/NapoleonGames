@@ -44,8 +44,8 @@ func advance_turn() -> void:
 	var user : UserRes = turn_order[turn_number % turn_order.size()]
 	print("Turno de ", user.username)
 	turn_number += 1
-	
 	tick_turn.emit()
+	
 	
 func get_current_user() -> UserRes:
 	return turn_order[turn_number % turn_order.size()]
@@ -273,3 +273,7 @@ func _on_map_tile_hovered(coords: Vector2i) -> void:
 		
 	var result:Dictionary= GameManager._gameMap.calculate_deployment(get_current_user_number(), pending_deployment_group.n, coords)
 	map_visualizer.show_deployment_preview(result["tiles"], result["is_valid"])
+
+
+func on_unit_killed(pos: Vector2i) -> void:
+	map_visualizer.remove_unit(pos, GameManager._gameMap.get_tile_at(pos))
