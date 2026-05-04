@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MapRes" format=3 uid="uid://ca1rk56kr78ny"]
+[gd_resource type="Resource" script_class="MapRes" format=3]
 
 [ext_resource type="Resource" path="res://resources/tiles/1000.tres" id="1_78cjj"]
 [ext_resource type="Resource" path="res://resources/tiles/1001.tres" id="2_edpew"]
@@ -230,7 +230,7 @@
 [ext_resource type="Resource" path="res://resources/tiles/1227.tres" id="228_lt7rn"]
 [ext_resource type="Resource" path="res://resources/tiles/1228.tres" id="229_cajv3"]
 [ext_resource type="Resource" path="res://resources/tiles/1229.tres" id="230_07fn0"]
-[ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="231_2r177"]
+[ext_resource type="Script" path="res://scripts/resources/map_res.gd" id="231_2r177"]
 
 [resource]
 script = ExtResource("231_2r177")

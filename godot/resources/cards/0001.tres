@@ -1,15 +1,15 @@
-[gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://c0366qikod0ob"]
+[gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://deqcg42rbpe8l"]
 
 [ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="1_pas1u"]
-[ext_resource type="Resource" uid="uid://sm46hyuva36t" path="res://resources/habilities/0001.tres" id="2_rfijq"]
-[ext_resource type="Resource" uid="uid://b22l2wdt755c1" path="res://resources/habilities/0004.tres" id="3_pas1u"]
+[ext_resource type="Resource" uid="uid://bm6j3dr3iggpa" path="res://resources/habilities/0001.tres" id="2_rfijq"]
+[ext_resource type="Resource" path="res://resources/habilities/0004.tres" id="3_ns7o7"]
 [ext_resource type="Texture2D" uid="uid://cfhl3bp06jbqv" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="4_rb4sv"]
 [ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="5_g3uba"]
-[ext_resource type="Resource" path="res://resources/attack_types/0001.tres" id="6_68h6i"]
-[ext_resource type="Resource" path="res://resources/attack_types/0002.tres" id="7_s1tia"]
+[ext_resource type="Resource" uid="uid://dugp208jb6n0w" path="res://resources/attack_types/0001.tres" id="6_68h6i"]
+[ext_resource type="Resource" uid="uid://c8nqbfkp1bu52" path="res://resources/attack_types/0002.tres" id="7_s1tia"]
 [ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="8_64q8c"]
 [ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="9_ehnsg"]
-[ext_resource type="Resource" path="res://resources/card_types/0001.tres" id="10_nvind"]
+[ext_resource type="Resource" uid="uid://dv5hw58o12syf" path="res://resources/card_types/0001.tres" id="10_nvind"]
 
 [resource]
 script = ExtResource("8_64q8c")
@@ -24,6 +24,6 @@ resistances = Dictionary[ExtResource("5_g3uba"), int]({
 ExtResource("6_68h6i"): 15,
 ExtResource("7_s1tia"): 5
 })
-habilities = Array[ExtResource("1_pas1u")]([ExtResource("2_rfijq"), ExtResource("3_pas1u")])
+habilities = Array[ExtResource("1_pas1u")]([ExtResource("2_rfijq"), ExtResource("3_ns7o7")])
 types = Array[ExtResource("9_ehnsg")]([ExtResource("10_nvind")])
 uid = 1
