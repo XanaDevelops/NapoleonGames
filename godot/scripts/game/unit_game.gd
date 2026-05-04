@@ -36,6 +36,7 @@ var height : int :
 
 signal health_changed(current: int)
 signal mana_changed(current: int)
+signal died(unit: UnitGame, pos: Vector2i)
 
 var _currentHealth: int:
 	set(val):
@@ -210,18 +211,20 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	var inflict_damage := maxi(0, damage-defense)
 	print("inflicted_damage: " + str(inflict_damage))
 	self.hp -= inflict_damage
-	return self.hp <= 0
 	
+
+		
+	return self.hp <= 0
 ## mata a la unidad
 func kill() -> void:
-	var tm = GameManager.get_turn_manager()
+	var tm := GameManager.get_turn_manager()
 	if tm != null and tm.tick_turn.is_connected(self.advance_turn):
 			tm.tick_turn.disconnect(self.advance_turn)
 			#GameManager.get_map().get_tile_at(_tile._position).set_unit(null)
 			#notificar al turn_manager
-	GameManager.get_map().get_tile_at(_tile._position).set_unit(null)
+	_tile.set_unit(null)
 
-	tm.on_unit_killed( _tile._position)
+	died.emit(self, _tile._position)
 	_tile = null 
 
 

@@ -1,27 +1,25 @@
 class_name TestSandboxDespliegue
 extends GutTest
 
-const MAP_SCENE_PATH: String = "res://scenes/ingame/game_scene.tscn"
-
-func test_sandbox_interactivo_fase_despliegue() -> void:
+func test_sandbox_integracion_despliegue() -> void:
 	var gr := GameResources.load_from() 
-	var user_a: UserRes = gr.users[0]
-	var user_b: UserRes = gr.users[1]
+	var user_a = gr.users[0]
+	var user_b = gr.users[1]
 	
-	GameManager.start_game(user_a, user_b, gr.maps[2], user_a.userArmys[0], user_b.userArmys[0])
+	# Esto inicializa todo el sistema como lo haría el juego real
+	GameManager.start_game(
+		user_a, 
+		user_b, 
+		gr.maps[2], 
+		user_a.obtener_ejercito_activo(), 
+		user_b.obtener_ejercito_activo()
+	)
 	
-	#var game_scene := load(MAP_SCENE_PATH).instantiate() as TurnManager
+	# Esperamos a que la escena se instancie y el TurnManager se registre
+	await wait_until(func(): return GameManager.turn_manager != null, 5)
+	var game_scene = GameManager.turn_manager
 	
-	
-	#game_scene.turn_order = [user_a, user_b]
-	#game_scene.turn_number = 0 
-	
-	
-	#game_scene.player_deployment_data[user_a] = _get_cloned_army(user_a)
-	#game_scene.player_deployment_data[user_b] = _get_cloned_army(user_b)
-	#add_child_autoqfree(game_scene)
-	await wait_frames(2)
-	
+	assert_not_null(game_scene)
+	assert_true(game_scene.is_deployment_phase)
 	
 	gut.pause_before_teardown()
-	pass_test("Sandbox de despliegue finalizado.")
