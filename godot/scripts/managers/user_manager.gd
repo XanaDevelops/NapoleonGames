@@ -7,6 +7,27 @@ signal usuario_cambiado(email_activo)
 var usuarios: Dictionary = {}
 var usuario_actual: UserRes
 
+func _ready() -> void:
+	
+	cargar_usuarios_de_prueba()
+
+func cargar_usuarios_de_prueba() -> void:
+	var gr := GameResources.load_from() 
+	
+	
+	if gr != null and not gr.users.is_empty(): #
+		
+		for usuario in gr.users: #[cite: 1]
+			
+			if usuario != null:
+				meter_nuevo_usuario(usuario) 
+		
+		establecer_usuario_actual(gr.users[0].email)
+		print(str(gr.users.size()) + " usuarios de prueba cargados con éxito.") 
+	else:
+		push_warning("No se encontraron usuarios de prueba en GameResources.")
+
+
 func meter_nuevo_usuario(nuevo_usuario: UserRes) -> bool:
 	if nuevo_usuario == null or nuevo_usuario.email == "":
 		push_error("Error: Intento de registro de usuario nulo o sin email válido.")
