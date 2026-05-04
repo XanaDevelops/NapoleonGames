@@ -165,7 +165,9 @@ func _apply_hab(stat: StatData, atkType:AttackType, val:float, obj: UnitGame):
 	match stat.name:
 		StatData.ATTACK:
 			print("atacando por ", val)
-			obj.recieve_attack(val, atkType)
+			#Ha muerto la unidad
+			if obj.recieve_attack(val, atkType):
+				obj.kill()
 		StatData.HEALTH:
 			obj.heal(val, stat)
 		# Estadisticas que no se pueden modificar con una habilidad
@@ -216,14 +218,16 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	return self.hp <= 0
 ## mata a la unidad
 func kill() -> void:
-	
-	print(self._cardRes.name + " ha muerto!")
-	var pos = _tile.get_position()
-	
-	_tile.set_unit(null)
-	self._tile = null
-	
-	died.emit(self, pos)
+	var tm = GameManager.get_turn_manager()
+	if tm != null and tm.tick_turn.is_connected(self.advance_turn):
+			tm.tick_turn.disconnect(self.advance_turn)
+			#GameManager.get_map().get_tile_at(_tile._position).set_unit(null)
+			#notificar al turn_manager
+	_tile._position.set_unit(null)
+
+	died.emit(self, _tile._position)
+	_tile = null 
+
 
 func heal(value: int, type: StatData) -> void:
 	if value < 0:

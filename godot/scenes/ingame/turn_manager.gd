@@ -45,8 +45,8 @@ func advance_turn() -> void:
 	var user : UserRes = turn_order[turn_number % turn_order.size()]
 	print("Turno de ", user.username)
 	turn_number += 1
-	
 	tick_turn.emit()
+	
 	
 func get_current_user() -> UserRes:
 	return turn_order[turn_number % turn_order.size()]
@@ -78,6 +78,7 @@ func _ready() -> void:
 		turn_order = [GameManager._user_a, GameManager._user_b]
 	
 	if player_deployment_data.is_empty():
+		## FIXME: usar .deep_duplicate
 		player_deployment_data[turn_order[0]] = _clone_army(GameManager._army_a)
 		player_deployment_data[turn_order[1]] = _clone_army(GameManager._army_b)
 	
@@ -278,21 +279,14 @@ func _on_map_tile_hovered(coords: Vector2i) -> void:
 		
 	var result:Dictionary= GameManager._gameMap.calculate_deployment(get_current_user_number(), pending_deployment_group.n, coords)
 	map_visualizer.show_deployment_preview(result["tiles"], result["is_valid"])
-	
-func finalizar_partida(nombre_del_vencedor: String):
-	
-	var parametros_victoria = {
-		"nombre_ganador": nombre_del_vencedor
-	}
-	UiManager.cambiar_a_escena("finalizacion", parametros_victoria)
+
 
 #esta función se ejecuta caundo una unidad emite que ha muerto
 func _on_unit_died(unit: UnitGame, pos: Vector2i) -> void:
-		
-	map_visualizer.refresh_unit_died(pos)
-	
+	map_visualizer.remove_unit(pos, GameManager._gameMap.get_tile_at(pos))
+
 	if tick_turn.is_connected(unit.advance_turn):
-		tick_turn.disconnect(unit.advance_turn)
+			tick_turn.disconnect(unit.advance_turn)
 	
 	cards_panel.clear_unit_info()
 	
@@ -306,3 +300,10 @@ func _on_unit_died(unit: UnitGame, pos: Vector2i) -> void:
 			
 		print("¡Partida terminada! El ganador es: ", ganador.name)
 		finalizar_partida(ganador.name)
+
+func finalizar_partida(nombre_del_vencedor: String):
+	
+	var parametros_victoria = {
+		"nombre_ganador": nombre_del_vencedor
+	}
+	UiManager.cambiar_a_escena("finalizacion", parametros_victoria)

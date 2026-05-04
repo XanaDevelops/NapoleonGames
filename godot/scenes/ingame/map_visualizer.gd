@@ -63,7 +63,10 @@ func _setup_map(map: MapGame):
 func set_map(map: MapGame) -> void:
 	self.map = map   
 
-
+func remove_unit(pos:Vector2i, tile:TileGame)-> void:
+	var tile_source_id = add_texture_to_tileset(tile.get_texture2D())
+	tile_map_layer_units.set_cell(pos, tile_source_id, Vector2i.ZERO)
+	
 func draw_tile(i: int, y: int, tile: TileGame) -> void:
 	var coords = Vector2i(i, y)
 	var tile_source_id = add_texture_to_tileset(tile.get_texture2D())
@@ -161,8 +164,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			tile_hovered.emit(coords)
 
 func _handle_click(coords: Vector2i) -> void:
+	if not map._is_in_map_bounds(coords):
+		_clear_selection()
+		return
 	var tile = map.get_tile_at(coords)
-	
 	
 	if tile == null:
 		_clear_selection()

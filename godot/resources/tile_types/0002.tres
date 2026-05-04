@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("3_8h3q6")
 name = &"rocas"
-desc = "no tan facil"
+desc = "no tan facil, por mod"
 mods = Array[ExtResource("1_3bhnw")]([ExtResource("2_isbv1")])
 texture = ExtResource("4_71uw1")
 uid = 2

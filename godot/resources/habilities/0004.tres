@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="HabilityRes" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/alter_state_res.gd" id="1_jqa87"]
+[ext_resource type="Script" path="res://scripts/resources/hability_res.gd" id="2_3wdm1"]
+[ext_resource type="Resource" path="res://resources/stat_datas/0004.tres" id="3_g3ub6"]
+
+[resource]
+script = ExtResource("2_3wdm1")
+name = &"curar"
+desc = "te cura"
+objective = 1
+value = 2.0
+stat = ExtResource("3_g3ub6")
+isPassive = true
+uid = 4

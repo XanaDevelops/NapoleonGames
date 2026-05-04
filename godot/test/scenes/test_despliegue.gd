@@ -10,7 +10,7 @@ func test_sandbox_integracion_despliegue() -> void:
 	GameManager.start_game(
 		user_a, 
 		user_b, 
-		TestMapGame.new().create_test_map()._mapRes, 
+		gr.maps[2], 
 		user_a.obtener_ejercito_activo(), 
 		user_b.obtener_ejercito_activo()
 	)

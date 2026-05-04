@@ -235,5 +235,9 @@ func place_unit(unit: UnitGame, pos: Vector2i) -> bool:
 		
 	tile.set_unit(unit)
 	unit._tile = tile 
+	#conectar con el turn_manager
+	var tm = GameManager.get_turn_manager()
+	if tm != null and not tm.tick_turn.is_connected(unit.advance_turn):
+		tm.tick_turn.connect(unit.advance_turn)
 	
 	return true
