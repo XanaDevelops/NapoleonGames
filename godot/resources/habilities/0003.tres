@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://gqxm1qinl7gs"]
 
 [ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_6p710"]
-[ext_resource type="Resource" path="res://resources/alter_states/0001.tres" id="2_a81cp"]
+[ext_resource type="Resource" uid="uid://cdrkp17ceqw6r" path="res://resources/alter_states/0001.tres" id="2_a81cp"]
 [ext_resource type="Resource" uid="uid://c8nqbfkp1bu52" path="res://resources/attack_types/0002.tres" id="3_owtjg"]
 [ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="4_lq25q"]
 [ext_resource type="Resource" uid="uid://bn8ykcxfx62qc" path="res://resources/stat_datas/0001.tres" id="5_f7hpa"]
