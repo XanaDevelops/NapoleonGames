@@ -15,9 +15,9 @@ func cargar_usuarios_de_prueba() -> void:
 	var gr := GameResources.load_from() 
 	
 	
-	if gr != null and not gr.users.is_empty(): #
+	if gr != null and not gr.users.is_empty(): 
 		
-		for usuario in gr.users: #[cite: 1]
+		for usuario in gr.users: 
 			
 			if usuario != null:
 				meter_nuevo_usuario(usuario) 
