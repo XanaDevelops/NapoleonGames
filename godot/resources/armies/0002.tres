@@ -72,7 +72,7 @@ uid = 1
 [sub_resource type="Resource" id="Resource_e07fo"]
 script = ExtResource("1_tp3i1")
 cardType = SubResource("Resource_lsxbk")
-n = 3
+n = 1
 uid = 2
 
 [resource]

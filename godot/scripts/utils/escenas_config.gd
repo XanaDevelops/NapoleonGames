@@ -10,5 +10,6 @@ const MAPA_ESCENAS: Dictionary[String, String] = {
 	"mapas":"res://scenes/selector_de_mapas.tscn",
 	"ejercitos":"res://scenes/creacio_de_exercits.tscn",
 	"oponente":"res://scenes/selector_de_oponente.tscn",
-	"juego":"res://scenes/ingame/game_scene.tscn"
+	"juego":"res://scenes/ingame/game_scene.tscn",
+	"finalizacion":"res://scenes/pantalla_finalitzacio.tscn"
 }

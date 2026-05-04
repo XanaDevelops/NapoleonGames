@@ -15,6 +15,7 @@ var turn_order: Array[UserRes] = []
 var turn_number: int = 0
 
 var player_deployment_data: Dictionary[UserRes, Array] = {}
+var living_units: Dictionary[UserRes, int] = {}
 var pending_deployment_group: CardArmyGroup = null
 var is_deployment_phase: bool = false
 
@@ -79,7 +80,9 @@ func _ready() -> void:
 	if player_deployment_data.is_empty():
 		player_deployment_data[turn_order[0]] = _clone_army(GameManager._army_a)
 		player_deployment_data[turn_order[1]] = _clone_army(GameManager._army_b)
-
+	
+	for usuario in turn_order:
+		living_units[usuario] = 0
 	players_panel.setup(self)
 	start_deployment_phase()
 	
@@ -196,7 +199,9 @@ func _on_hex_clicked(click_pos: Vector2i, _tile: TileGame = null) -> void:
 	
 	if not result["is_valid"]:
 		return
-		
+	
+	living_units[current_user] +=pending_deployment_group.n 
+	
 	for pos in result["tiles"]:
 		var new_unit := UnitGame.new(pending_deployment_group.cardType, get_current_user())
 		new_unit._owner = current_user
@@ -204,6 +209,7 @@ func _on_hex_clicked(click_pos: Vector2i, _tile: TileGame = null) -> void:
 		GameManager._gameMap.place_unit(new_unit, pos)
 		map_visualizer.draw_tile(pos.x, pos.y, GameManager._gameMap.get_tile_at(pos))
 		
+		new_unit.died.connect(_on_unit_died)
 		var action := TurnAction.new()
 		action.player = current_user
 		action.action = TurnAction.ACTION.DEPLOYMENT
@@ -272,3 +278,31 @@ func _on_map_tile_hovered(coords: Vector2i) -> void:
 		
 	var result:Dictionary= GameManager._gameMap.calculate_deployment(get_current_user_number(), pending_deployment_group.n, coords)
 	map_visualizer.show_deployment_preview(result["tiles"], result["is_valid"])
+	
+func finalizar_partida(nombre_del_vencedor: String):
+	
+	var parametros_victoria = {
+		"nombre_ganador": nombre_del_vencedor
+	}
+	UiManager.cambiar_a_escena("finalizacion", parametros_victoria)
+
+#esta función se ejecuta caundo una unidad emite que ha muerto
+func _on_unit_died(unit: UnitGame, pos: Vector2i) -> void:
+		
+	map_visualizer.refresh_unit_died(pos)
+	
+	if tick_turn.is_connected(unit.advance_turn):
+		tick_turn.disconnect(unit.advance_turn)
+	
+	cards_panel.clear_unit_info()
+	
+	living_units[unit._owner] -= 1
+	print(unit._owner.name + " ha perdido una unidad. Le quedan: ", living_units[unit._owner])
+		
+		# Si llega a 0, la partida termina inmediatamente
+	if living_units[unit._owner] <= 0:
+			
+		var ganador = turn_order[0] if unit._owner == turn_order[1] else turn_order[1]
+			
+		print("¡Partida terminada! El ganador es: ", ganador.name)
+		finalizar_partida(ganador.name)

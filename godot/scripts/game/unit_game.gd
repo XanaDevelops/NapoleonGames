@@ -36,6 +36,7 @@ var height : int :
 
 signal health_changed(current: int)
 signal mana_changed(current: int)
+signal died(unit: UnitGame, pos: Vector2i)
 
 var _currentHealth: int:
 	set(val):
@@ -208,11 +209,21 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	var inflict_damage := maxi(0, damage-defense)
 	print("inflicted_damage: " + str(inflict_damage))
 	self.hp -= inflict_damage
-	return self.hp <= 0
 	
+	if self.hp <= 0:
+		kill()
+		
+	return self.hp <= 0
 ## mata a la unidad
 func kill() -> void:
-	pass
+	
+	print(self._cardRes.name + " ha muerto!")
+	var pos = _tile.get_position()
+	
+	_tile.set_unit(null)
+	self._tile = null
+	
+	died.emit(self, pos)
 
 func heal(value: int, type: StatData) -> void:
 	if value < 0:
