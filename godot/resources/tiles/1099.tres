@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="TileRes" format=3]
+[gd_resource type="Resource" script_class="TileRes" format=3 uid="uid://rmky0gtom0a8"]
 
-[ext_resource type="Script" path="res://scripts/resources/tile_res.gd" id="1_nerbn"]
-[ext_resource type="Resource" path="res://resources/tile_types/0013.tres" id="2_02wbl"]
+[ext_resource type="Script" uid="uid://bmy17ix6av5bg" path="res://scripts/resources/tile_res.gd" id="1_nerbn"]
+[ext_resource type="Resource" uid="uid://doy41a13ixy3h" path="res://resources/tile_types/0013.tres" id="2_02wbl"]
 
 [resource]
 script = ExtResource("1_nerbn")
