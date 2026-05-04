@@ -212,8 +212,7 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	print("inflicted_damage: " + str(inflict_damage))
 	self.hp -= inflict_damage
 	
-	if self.hp <= 0:
-		kill()
+
 		
 	return self.hp <= 0
 ## mata a la unidad
