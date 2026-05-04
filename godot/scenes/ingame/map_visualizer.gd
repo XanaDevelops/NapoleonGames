@@ -164,8 +164,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			tile_hovered.emit(coords)
 
 func _handle_click(coords: Vector2i) -> void:
+	if not map._is_in_map_bounds(coords):
+		_clear_selection()
+		return
 	var tile = map.get_tile_at(coords)
-	
 	
 	if tile == null:
 		_clear_selection()
