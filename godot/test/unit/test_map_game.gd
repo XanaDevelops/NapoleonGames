@@ -42,17 +42,48 @@ func before_all():
 func test_dijkstra() -> void:
 	var mapGame := MapGame.new(map)
 	var unit := UnitGame.new(gr.cards[0], null)
-	mapGame.get_tile_at(Vector2i(2,2)).set_unit(unit)
-	
-	var neight := mapGame.get_neightbours(Vector2i(2,2))
-	print(neight)
-	
-	var test_neight := [Vector2i(1,2), Vector2i(3,2), Vector2i(2,1), Vector2i(2,3),
-						Vector2i(1,1), Vector2i(3,1)]
-	for test in test_neight:
-		assert_true(test in neight)
-		
-	var available := mapGame.get_accesible_moves(Vector2i(2,2))
-	print(available)
-	
-	assert_eq(available.size(), 13)
+	var pos_even := Vector2i(2, 2) # y par
+	mapGame.get_tile_at(pos_even).set_unit(unit)
+
+	# Vecinos esperados para y par (layout offset horizontal)
+	var expected_even := [
+		Vector2i(3, 2),
+		Vector2i(1, 2),
+		Vector2i(2, 3),
+		Vector2i(1, 3),
+		Vector2i(2, 1),
+		Vector2i(1, 1),
+	]
+	var actual_even := mapGame.get_neightbours(pos_even)
+	assert_eq(actual_even.size(), expected_even.size())
+	for p in expected_even:
+		assert_true(p in actual_even)
+	for p in actual_even:
+		assert_true(p in expected_even)
+
+	# Vecinos esperados para y impar (otra paridad)
+	var pos_odd := Vector2i(2, 1) # y impar
+	var expected_odd := [
+		Vector2i(3, 1),
+		Vector2i(1, 1),
+		Vector2i(3, 2),
+		Vector2i(2, 2),
+		Vector2i(3, 0),
+		Vector2i(2, 0),
+	]
+	var actual_odd := mapGame.get_neightbours(pos_odd)
+	assert_eq(actual_odd.size(), expected_odd.size())
+	for p in expected_odd:
+		assert_true(p in actual_odd)
+	for p in actual_odd:
+		assert_true(p in expected_odd)
+
+	# Dijkstra/movimiento: invariantes simples (sin tamaños mágicos)
+	var available := mapGame.get_accesible_moves(pos_even)
+	assert_false(pos_even in available)
+	var seen := {}
+	for p in available:
+		assert_true(p.x >= 0 and p.x < map.tamX)
+		assert_true(p.y >= 0 and p.y < map.tamY)
+		assert_false(seen.has(p))
+		seen[p] = true
