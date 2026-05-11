@@ -38,15 +38,6 @@ signal health_changed(current: int)
 signal mana_changed(current: int)
 signal died(unit: UnitGame, pos: Vector2i)
 
-var _currentHealth: int:
-	set(val):
-		_currentHealth = val
-		health_changed.emit(_currentHealth)
-
-var _currentMana: int:
-	set(val):
-		_currentMana = val
-		mana_changed.emit(_currentMana)
 
 ## TODO estados alterados y toda la pesca
 var has_moved_this_turn : bool = false
