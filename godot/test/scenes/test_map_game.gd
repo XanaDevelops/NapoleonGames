@@ -16,6 +16,7 @@ func test_visualizer() -> void:
 	await wait_until(func():
 		return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
+	autoqfree(instance._hab_manager)
 
 	gut.pause_before_teardown()
 	pass_test("ok, check UI")
@@ -41,6 +42,8 @@ func test_hability_applies_to_bars() -> void:
 
 	await wait_until(func(): return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
+	var ingame_map = instance.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
 
 	var unit_info = instance.get_node("IngameMap/VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo")
 	assert_not_null(unit_info, "UnitInfo debe existir")
@@ -459,6 +462,8 @@ func test_bars_react_to_signals() -> void:
 	
 	await wait_until(func(): return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
+	var ingame_map = instance.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
 	
 	var unit_info = instance.get_node("IngameMap/VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo")
 	var hp_bar: ProgressBar = unit_info.current_health

@@ -34,7 +34,8 @@ func _advance_and_wait(tm: TurnManager) -> void:
 
 func _setup_game_environment() -> Dictionary:
 	var gr := GameResources.load_from("res://test/test_res/all_test_resources.tres")
-	var map := TestMapGame.new().create_test_map()
+	var test_map_game : TestMapGame = autofree(TestMapGame.new())
+	var map := test_map_game.create_test_map()
 	GameManager._gameMap = map
 	GameManager._user_a = gr.users[0]
 	GameManager._user_b = gr.users[1]
@@ -68,6 +69,8 @@ func test_advance_turn_updates_units() -> void:
 	
 	await wait_until(func(): return tm.is_inside_tree(), 5)
 	await wait_physics_frames(2)
+	var ingame_map = tm.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
 	
 
 	_assert_subscribed(tm, unit_a, true, "Unit A debe estar suscrita")

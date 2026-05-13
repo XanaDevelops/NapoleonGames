@@ -18,6 +18,9 @@ func test_sandbox_integracion_despliegue() -> void:
 	# Esperamos a que la escena se instancie y el TurnManager se registre
 	await wait_until(func(): return GameManager.turn_manager != null, 5)
 	var game_scene = GameManager.turn_manager
+	autoqfree(get_tree().current_scene)
+	var ingame_map = get_tree().current_scene.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
 	
 	assert_not_null(game_scene)
 	assert_true(game_scene.is_deployment_phase)
