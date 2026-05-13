@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AlterStateRes" format=3 uid="uid://l34xtkisb2pq"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_yb8b5"]
+[ext_resource type="Resource" uid="uid://dmc4jstoyeoun" path="res://test/test_res/stat_attack_linear.tres" id="2_pdx3k"]
+[ext_resource type="Resource" uid="uid://2u4830mftyn8" path="res://test/test_res/attack_type_physic.tres" id="3_4fr1i"]
+
+[resource]
+script = ExtResource("1_yb8b5")
+objectiu = 15
+value = 4.0
+stat = ExtResource("2_pdx3k")
+type = ExtResource("3_4fr1i")
+duration = 4
+radius = 999999999
+metadata/_custom_type_script = "uid://c6ylgfoqmjeis"

@@ -29,6 +29,8 @@ var objectiu := HabilityRes.SEL_SELF_FLAG #Si nos ponemos creativos puede ser di
 @export var hitP := 1.0
 ## Duración en turnos
 @export var duration: int
+## Rango
+@export var radius := 1 
 
 func _init() -> void:
 	if objectiu == 0:

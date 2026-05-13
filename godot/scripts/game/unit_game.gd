@@ -84,11 +84,11 @@ func _proc_alter_states() -> void:
 			
 		# Reutilizar esta funcion, un AlterState no deja de ser una minihabilidad
 		var dest : Array[UnitGame] = []
-		if HabilityRes.inflicts_self(alter.objectiu):
+		if HabilityRes.inflicts_strict_self(alter.objectiu):
 			dest.append(self)
 		else:
-			push_error("NOT IMPLEMENTED!")
-			continue
+			dest.append_array(GameManager.get_map().get_units_range(_tile.get_position(), alter.radius, alter.objectiu) \
+					.map(func (x: Vector2i): return GameManager.get_map().get_tile_at(x).get_unit()) as Array[UnitGame])
 		for obj in dest:
 			_apply_hab(alter.stat, alter.type, alter.value, obj)
 		
@@ -97,6 +97,9 @@ func _proc_alter_states() -> void:
 ## Se debe vincular con TurnManager
 func advance_turn() -> void:
 	if GameManager.get_turn_manager().get_current_user() != _owner:
+		return
+	# Si es despliegue ignoramos esta llamadas
+	if GameManager._app_state != GameManager.APP_STATE.IN_GAME:
 		return
 	_tick()
 	
@@ -211,6 +214,9 @@ func get_available_habilities() -> Array[HabilityRes]:
 		var cd := _habilities[key]
 		if cd > 0:
 			continue
+			
+		if GameManager.get_map().get_units_range(_tile.get_position(), key.radius, key.objective).size() == 0:
+			continue
 		
 		if key.manaCost > self.mana:
 			continue
@@ -267,3 +273,10 @@ func _update_val_alter_states(init_val : float, stat_name:StringName, type: Atta
 			final_val += alter.value
 	
 	return final_val * multipliers
+	
+## Devuelve si tiene acciones pendientes
+## Una habilidad debe de tener objetivos validos para tenerlo en cuenta
+## Mirar de comprobar si tiene movimientos disponibles
+func has_pending_actions() -> bool:
+	return (not has_moved_this_turn) or (get_available_habilities().any(func (x: HabilityRes): 
+			return not x.isPassive)) 

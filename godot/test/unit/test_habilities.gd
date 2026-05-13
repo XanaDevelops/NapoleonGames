@@ -75,6 +75,17 @@ func test_passive() -> void:
 	#enemy.advance_turn()
 	assert_gt(enemy.hp, old_hp)
 	
+func test_passive2() -> void:
+	var ally := ally_units[1] #ranged
+	var enemy := enemy_units[0] #melee
+	
+	var old_hp := enemy.hp
+	# manualmente avanzar turno del enemigo
+	GameManager.get_turn_manager().advance_turn()
+	GameManager.get_turn_manager().advance_turn()
+	#enemy.advance_turn()
+	assert_lt(enemy.hp, old_hp)
+	
 func test_alter_state() -> void:
 	var ally := ally_units[1]
 	
@@ -108,10 +119,29 @@ func test_alter_state() -> void:
 		
 	assert_eq(enemy_units[3].hp, old_hps[3])
 	
+func test_alter_state2():
+	var tm := GameManager.get_turn_manager()
+	
+	var ally := ally_units[0]
+	#kaboom
+	var hab_kaboom := ally.get_all_habilities()[2]
+	
+	var old_hps := enemy_units.map(func (x: UnitGame) -> int: return x.hp)
+	
+	tm._on_unit_hability_use(ally.get_current_position(), [], hab_kaboom)
+	tm.advance_turn()
+	tm.advance_turn()
+	
+	for i in range(4):
+		assert_lt(enemy_units[i].hp, old_hps[i], "Unidad: " + str(i))
+	
+
+func test_condition():
+	pass
+	
 	
 func before_all():
 	# Crea y guarda el mapa de prueba
-	
 	var map_ids := [[0,0,0,0,0],
 					[0,1,0,1,0],
 					[0,1,0,1,0],
@@ -156,6 +186,7 @@ func before_each():
 	tm.turn_order = [user_ally, user_enemy]
 	GameManager.register_turn_manager(tm)
 	GameManager.set_map(map_game)
+	GameManager._app_state = GameManager.APP_STATE.IN_GAME
 	
 	unit = UnitGame.new(card_melee, user_ally)
 	map_game.place_unit(unit, Vector2i(0,0))

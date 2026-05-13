@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="3_5je53"]
 [ext_resource type="Resource" uid="uid://cbs40flw0dc1c" path="res://test/test_res/hab_pasiva_cura.tres" id="3_ll81n"]
 [ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="4_ll81n"]
+[ext_resource type="Resource" uid="uid://ck5bwmcsoj647" path="res://test/test_res/hab_set_kaboom.tres" id="4_yy4e5"]
 
 [resource]
 script = ExtResource("3_5je53")
@@ -15,5 +16,5 @@ hp = 20
 mana = 5
 speed = 4
 dodge = 0.25
-habilities = Array[ExtResource("1_ct0dh")]([ExtResource("2_5je53"), ExtResource("3_ll81n")])
+habilities = Array[ExtResource("1_ct0dh")]([ExtResource("2_5je53"), ExtResource("3_ll81n"), ExtResource("4_yy4e5")])
 metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

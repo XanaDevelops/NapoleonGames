@@ -69,6 +69,14 @@ func _init() -> void:
 		push_error("Habilidad sin objetivo valido!\nValor por defecto ENEMY")
 		assert(false)
 
+## true si la habilidad SOLO afecta a self
+static func inflicts_strict_self(obj: int) -> bool:
+	return obj == SEL_SELF_FLAG
+
+## true si la habilidad SOLO afecta a self
+func _inflicts_strict_self(obj: int) -> bool:
+	return inflicts_strict_self(obj)
+	
 ## true si la habilidad afecta a uno mismo
 static func inflicts_self(obj: int) -> bool:
 	return obj & SEL_SELF_FLAG
