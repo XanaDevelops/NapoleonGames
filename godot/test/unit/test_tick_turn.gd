@@ -1,8 +1,8 @@
 extends GutTest
 
 
-const CARD_A_PATH = "res://resources/cards/0001.tres"
-const CARD_B_PATH = "res://resources/cards/0002.tres"
+const CARD_A_PATH = "res://test/test_res/card_melee.tres"
+const CARD_B_PATH = "res://test/test_res/card_ranged.tres"
 
 func _create_test_unit(card_path: String, owner: UserRes) -> UnitGame:
 	var card = load(card_path) as CardRes
@@ -33,7 +33,7 @@ func _advance_and_wait(tm: TurnManager) -> void:
 	await wait_physics_frames(2)
 
 func _setup_game_environment() -> Dictionary:
-	var gr := GameResources.load_from()
+	var gr := GameResources.load_from("res://test/test_res/all_test_resources.tres")
 	var map := TestMapGame.new().create_test_map()
 	GameManager._gameMap = map
 	GameManager._user_a = gr.users[0]

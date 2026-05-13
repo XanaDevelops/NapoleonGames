@@ -5,7 +5,7 @@ var map : MapGame
 
 
 func before_all():
-	self._gr = GameManager.get_game_resources()
+	self._gr = GameResources.load_from("res://test/test_res/all_test_resources.tres")
 	self.map = MapGame.new(TestHabilities.gen_test_map())
 	GameManager.set_map(self.map)
 	

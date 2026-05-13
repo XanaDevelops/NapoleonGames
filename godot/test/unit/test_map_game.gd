@@ -3,7 +3,7 @@ extends GutTest
 var gr : GameResources
 var map : MapRes
 func before_all():
-	self.gr = GameResources.load_from()
+	self.gr = GameResources.load_from("res://test/test_res/all_test_resources.tres")
 	
 	# generar un mapa
 	
