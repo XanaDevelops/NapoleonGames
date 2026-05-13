@@ -12,6 +12,25 @@ func _ready() -> void:
 	if _SERVER == &"http://127.0.0.1:8080":
 		print("API conectada a backend local 8080")
 
+func get_game_resource(uid: int, res: Script) -> void:
+	if res not in GameResources.game_resources:
+		push_error("Se quiere obtener del server algo que no es un GameResource")
+		return
+
+	make_request(
+		"/" + _get_format({"id": uid}),
+		{},
+		HTTPClient.Method.METHOD_GET
+	)
+	
+func _get_format(body: Dictionary[String, Variant]) -> String:
+	var res = "?"
+
+	for key in body:
+		res += key + "=" + str(body[key]) + "&"
+
+	return res
+
 func make_request(
 		endpoint: StringName,
 		request: Dictionary,
