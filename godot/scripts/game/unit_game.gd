@@ -248,7 +248,7 @@ func get_current_position() -> Vector2i:
 	
 ## Actualiza un valor acorde a los estados alterados vigentes
 ## Notese que solo cuentan estados alterados que afecten a la unidad
-## *IMPORTANTE* esto **NO** aplica la probabilidad de acierto de un estado alterado, calcular una unica vez por uso
+## *IMPORTANTE* esto **SÍ** aplica la probabilidad de acierto de un estado alterado, calcular una unica vez por uso
 func _update_val_alter_states(init_val : float, stat_name:StringName, type: AttackType = null) -> float:
 	var final_val := init_val
 	
@@ -259,8 +259,8 @@ func _update_val_alter_states(init_val : float, stat_name:StringName, type: Atta
 			continue
 
 		# ojo que randf() es [0,1] no [0,1)
-		#if randf() > alter.hitP:
-		#	continue
+		if randf() > alter.hitP:
+			continue
 			
 		if alter.stat.name != stat_name:
 			continue

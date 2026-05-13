@@ -1,3 +1,4 @@
+class_name TestHabilities
 extends GutTest
 
 
@@ -7,7 +8,7 @@ extends GutTest
 @onready var user_ally : UserRes = preload("res://test/test_res/user_ally.tres")
 @onready var user_enemy : UserRes = preload("res://test/test_res/user_enemy.tres")
 
-@onready var tiles : Dictionary[int, TileTypeRes] = {
+static var tiles : Dictionary[int, TileTypeRes] = {
 	0: preload("res://test/test_res/tile_type_pasto.tres"),
 	1: preload("res://test/test_res/tile_type_montaña.tres")
 }
@@ -140,15 +141,15 @@ func test_condition():
 	pass
 	
 	
-func before_all():
-	# Crea y guarda el mapa de prueba
+	
+static func gen_test_map() -> MapRes:
 	var map_ids := [[0,0,0,0,0],
 					[0,1,0,1,0],
 					[0,1,0,1,0],
 					[0,1,0,1,0],
 					[0,0,0,0,0]]
 					
-	self.map_test = MapRes.new()
+	var map_test := MapRes.new()
 	
 	map_test.name = &"test_map_01"
 	map_test.tamX = 5
@@ -171,7 +172,12 @@ func before_all():
 	map_test.mapData[3][4].height = 100000
 	
 	if ResourceSaver.save(map_test, "res://test/test_res/map_test.tres") != OK:
-		fail_test("error al guardar!")
+		push_error("error al guardar!")
+	return map_test
+	
+func before_all():
+	# Crea y guarda el mapa de prueba
+	self.map_test = gen_test_map()
 	
 
 func before_each():
