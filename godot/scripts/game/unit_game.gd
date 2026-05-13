@@ -38,10 +38,8 @@ signal health_changed(current: int)
 signal mana_changed(current: int)
 signal died(unit: UnitGame, pos: Vector2i)
 
-
-## TODO estados alterados y toda la pesca
 var has_moved_this_turn : bool = false
-var has_hability_this_turn := false
+var has_used_hability_this_turn := false
 
 func _init(cardRes: CardRes, owner: UserRes) -> void:
 	self._cardRes = cardRes
@@ -103,7 +101,7 @@ func advance_turn() -> void:
 	_tick()
 	
 	has_moved_this_turn = false
-	has_hability_this_turn = false	
+	has_used_hability_this_turn = false	
 	
 	_proc_passives()
 	_proc_alter_states()
@@ -115,26 +113,10 @@ func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
 		printerr("Habilidad no disponible")
 		return false
 		
-	## TODO: acabar condiciones
-	if hab.condition != HabilityRes.CONDITION.NA:
-		pass
-		
-	if self.mana < hab.manaCost:
-		return false
+	# Tecnicamente es codigo duplicado de get_avaliable_habilities
 		
 	# calcular valor final
-	var valor_final := hab.value
-	# Por cada estado alterado que pueda afectar a la habilidad
-	for alter : AlterStateRes in self._currentAlterStates:
-		# Si afecta a la misma estadistica
-		if alter.stat.name == hab.stat.name:
-			# Si es ataque asegurarse que afecta al mismo tipo de ataque
-			if alter.stat.name == StatData.ATTACK and (alter.type != hab.attackType):
-				continue
-			if alter.stat.isPercent:
-				valor_final *= alter.value
-			else:
-				valor_final += alter.value
+	var valor_final := _update_val_alter_states(hab.value, hab.stat.name, hab.attackType)
 	# por cada objetivo
 	for obj: UnitGame in dest:
 		_apply_hab(hab.stat, hab.attackType, valor_final, obj)
@@ -145,7 +127,7 @@ func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
 	
 	# Las pasivas no gastan una habilidad
 	if not hab.isPassive:
-		has_hability_this_turn = true
+		has_used_hability_this_turn = true
 		
 	_habilities[hab] = hab.cooldown
 	return true	
@@ -179,24 +161,7 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 		push_warning("No se ha configurado valor de defensa para " + type.name + ", se asume 0")
 		defense = 0
 	
-	# Comprobar si algun estado alterado altera ese valor
-	for state in self._currentAlterStates:
-		if !HabilityRes.inflicts_self(state.objectiu):
-			continue
-			
-		# ojo que randf() es [0,1] no [0,1)
-		if randf() > state.hitP:
-			continue
-		
-		## FIXME no me acaba de gustar esto
-		if state.stat.name != StatData.DEFENSE:
-			continue
-		if state.type != type:
-			continue
-		if state.stat.isPercent:
-			defense *= state.value
-		else:
-			defense += state.value
+	defense = _update_val_alter_states(defense, StatData.DEFENSE, type)
 			
 	## PLACEHOLDER!
 	var inflict_damage := maxi(0, damage-defense)
@@ -222,6 +187,8 @@ func kill() -> void:
 func heal(value: int, type: StatData) -> void:
 	if value < 0:
 		print("Curando por un valor negativo?? ", value)
+		
+	value = _update_val_alter_states(value, StatData.HEALTH)
 	if type.isPercent:
 		self.hp += self.max_hp * value
 	else:
@@ -236,24 +203,22 @@ func add_alter_state(alter: AlterStateRes) -> void:
 func _get_height() -> int:
 	return _tile.get_height()
 	
-## Devuelve las habilidades que se pueden usar
+## Devuelve las habilidades (activas y pasivas) que se pueden usar
+## Las pasivas no deberian ser lanzadas por el jugador
 func get_available_habilities() -> Array[HabilityRes]:
 	var ret : Array[HabilityRes] = []
 	for key in self._habilities:
 		var cd := _habilities[key]
 		if cd > 0:
 			continue
-		var condition_ok = true
+		
+		if key.manaCost > self.mana:
+			continue
 		if key.condition != HabilityRes.CONDITION.NA and key.condition_stat != null:
-			var unit= _tile.get_unit()
-			var current_value = key._get_stat_value(unit, key.condition_stat)
-			condition_ok = key.applies(current_value)
-			var is_available = key.isPassive or key.manaCost>unit._currentMana or not condition_ok
-			if is_available:
+			var current_value :float = get(key.condition_stat.name)
+			if key.applies(current_value):
 				ret.append(key)
-				
-		## TODO comprobar si aplica
-		if condition_ok:
+		else:
 			ret.append(key)
 
 	return ret
@@ -266,10 +231,39 @@ func get_texture2D() -> Texture2D:
 	return self._cardRes.img
 	
 func get_speed() -> int:
-	## TODO modificadores de velocidad!
-	return self._cardRes.speed
+	var base_speed := self._cardRes.speed
+	
+	return _update_val_alter_states(base_speed, StatData.SPEED)
 	
 ## Obtiene de la referencia al _tile la posicion de este
 ## Util para llamar pasivas
 func get_current_position() -> Vector2i:
 	return _tile.get_position()
+	
+## Actualiza un valor acorde a los estados alterados vigentes
+## Notese que solo cuentan estados alterados que afecten a la unidad
+## *IMPORTANTE* esto **NO** aplica la probabilidad de acierto de un estado alterado, calcular una unica vez por uso
+func _update_val_alter_states(init_val : float, stat_name:StringName, type: AttackType = null) -> float:
+	var final_val := init_val
+	
+	var multipliers := 1.0
+	
+	for alter in self._currentAlterStates:
+		if not HabilityRes.inflicts_self(alter.objectiu):
+			continue
+
+		# ojo que randf() es [0,1] no [0,1)
+		#if randf() > alter.hitP:
+		#	continue
+			
+		if alter.stat.name != stat_name:
+			continue
+		if type and alter.type != type:
+			continue
+			
+		if alter.stat.isPercent:
+			multipliers += alter.value
+		else:
+			final_val += alter.value
+	
+	return final_val * multipliers

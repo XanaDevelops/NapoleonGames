@@ -15,7 +15,7 @@ func _assert_subscribed(tm: TurnManager, unit: UnitGame, expected: bool, msg: St
 func _set_unit_used(unit: UnitGame, hab: HabilityRes, cooldown: int) -> void:
 	unit._habilities[hab] = cooldown
 	unit.has_moved_this_turn = true
-	unit.has_hability_this_turn = true
+	unit.has_used_hability_this_turn = true
 
 func _create_poison() -> AlterStateRes:
 	var state = AlterStateRes.new()
@@ -83,7 +83,7 @@ func test_advance_turn_updates_units() -> void:
 	
 	assert_eq(unit_b._habilities[hab_b], 2, "Cooldown B debe bajar a 2")
 	assert_false(unit_b.has_moved_this_turn, "B debe poder moverse")
-	assert_false(unit_b.has_hability_this_turn, "B debe poder usar habilidad")
+	assert_false(unit_b.has_used_hability_this_turn, "B debe poder usar habilidad")
 	assert_eq(unit_a._habilities[hab_a], 2, "Cooldown A no debe cambiar")
 	assert_true(unit_a.has_moved_this_turn, "A no debe resetearse aún")
 	
