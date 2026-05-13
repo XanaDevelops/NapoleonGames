@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="147e4084-ca6e-4a1f-9cdb-0d72ba1a47ed" name="Changes" comment="Afegim JWT amb token real, no mockejat." />
+    <list default="true" id="147e4084-ca6e-4a1f-9cdb-0d72ba1a47ed" name="Changes" comment="Afegim JWT amb token real, no mockejat.">
+      <change beforePath="$PROJECT_DIR$/godot/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/godot/project.godot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/godot/scenes/login.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scenes/login.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/godot/scenes/registro.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scenes/registro.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/godot/scripts/API/api_adapter.gd" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scripts/API/api_adapter.gd" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,12 +86,6 @@
     </key>
   </component>
   <component name="RunAnythingCache">
-    <myKeys>
-      <visibility group="Gradle Tasks" flag="true" />
-      <visibility group="Maven Goals" flag="true" />
-      <visibility group="Recent projects" flag="true" />
-      <visibility group="Run configurations" flag="true" />
-    </myKeys>
     <option name="myCommands">
       <command value="mvn clean package -DskipTests" />
       <command value="docker build -t napoleon-backend:latest ." />

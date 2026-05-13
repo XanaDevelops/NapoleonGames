@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dbvfn3475ma44"]
 
 [ext_resource type="Texture2D" uid="uid://dwcsqv5dddx4o" path="res://assets/sprites/ui/fondos_de_pantalla/fondoPantallaUsuario.png" id="1_b6b30"]
+[ext_resource type="Script" uid="uid://dx3cpfkgi482v" path="res://scripts/ui/login.gd" id="1_r3fp8"]
 [ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://assets/themes/ui/estilo_botones.tres" id="3_feuqc"]
 [ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://assets/themes/ui/InputsUserMenu.tres" id="3_w8jpj"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="4_cs5o2"]
@@ -24,6 +25,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_r3fp8")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=344544644]
 layout_mode = 0
@@ -81,7 +83,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/VBoxContainer5" unique_id=570197511]
 layout_mode = 2
-text = "Correo electronicó"
+text = "Nombre de usuario"
 
 [node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/VBoxContainer5" unique_id=1001443272]
 layout_mode = 2
@@ -97,6 +99,7 @@ text = "Contraseña"
 [node name="LineEdit" type="LineEdit" parent="Panel/VBoxContainer/VBoxContainer3" unique_id=54506817]
 layout_mode = 2
 theme = ExtResource("3_w8jpj")
+secret = true
 
 [node name="Button" type="Button" parent="Panel" unique_id=989612180]
 layout_mode = 1
