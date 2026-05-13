@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://t1ban4n8bjp1"]
+[gd_scene format=3 uid="uid://djdhm6u0d4kxb"]
 
 [ext_resource type="Script" uid="uid://c5ce6viwo631e" path="res://scripts/ui/selector_de_oponente.gd" id="1_lt5ip"]
 [ext_resource type="Texture2D" uid="uid://ddks1rpvd3dai" path="res://assets/sprites/ui/fondos_de_pantalla/fondo_pantalla_de_selector_enemigo.png" id="2_curts"]

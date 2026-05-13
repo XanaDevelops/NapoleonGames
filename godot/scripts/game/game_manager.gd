@@ -46,6 +46,11 @@ func start_game(playerA: UserRes, playerB:UserRes, map:MapRes, armyA: ArmyRes, a
 
 	UiManager.cambiar_a_escena("juego")
 	
+
+# resetea la partida
+func restart_current_game() -> void:
+	var mapa_original = self._gameMap._mapRes
+	start_game(self._user_a, self._user_b, mapa_original, self._army_a, self._army_b)
 	
 ## Placeholder para obtener la info de configuración de una partida[br]
 ## Como puede ser los jugadores que se enfrentan, el mapa y ejercitos 

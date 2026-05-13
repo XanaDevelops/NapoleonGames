@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bqmbg1ddpsc00"]
+[gd_scene format=3 uid="uid://bcs50hq6eih4d"]
 
 [ext_resource type="Script" uid="uid://dq56ihplqx8es" path="res://scripts/ui/selector_de_mapas.gd" id="1_tvmoj"]
 [ext_resource type="Texture2D" uid="uid://d0bfj5qi1yigb" path="res://assets/sprites/ui/fondos_de_pantalla/fondo selector de mapas.png" id="2_byp17"]

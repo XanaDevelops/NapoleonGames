@@ -20,34 +20,15 @@ func get_tile_at(pos : Vector2i) -> TileGame:
 	return self._map[pos.y][pos.x]
 
 func get_neightbours(pos: Vector2i) -> Array[Vector2i]:
-	var x := pos.x
-	var y := pos.y
-	
-	var neight : Array[Vector2i] = []
-	# los laterales son comunes
-	if x-1 >= 0:
-		neight.append(Vector2i(x-1, y))
-	if y-1 >= 0:
-		neight.append(Vector2i(x, y-1))
-	if x+1 < _map[y].size():
-		neight.append(Vector2i(x+1, y))
-	if y+1 < _map.size():
-		neight.append(Vector2i(x, y+1))
-	
-	# No existen arrays hexagonales, por lo que segun la paridad de la posicion
-	# se calculan unos vecinos u otros
-	if x%2 == 1:
-		y += 1
-	else:
-		y -= 1
-		
-	if y >= 0 and y < _map.size():
-		if x-1 >= 0:
-			neight.append(Vector2i(x-1, y))
-		if x+1 < _map[y].size():
-			neight.append(Vector2i(x+1, y))
-	
-	return neight
+	var neighbors: Array[Vector2i] = []
+
+	# En TileMaps hexagonales con offset horizontal, las filas alternan el desplazamiento;
+	# por tanto, la paridad relevante es la de 'y' (fila), no la de 'x'.
+	for candidate in _get_clockwise_neighbors(pos):
+		if _is_in_map_bounds(candidate):
+			neighbors.append(candidate)
+
+	return neighbors
 ## Mueve una unidad de 'start' a 'end'
 ## Ten en cuenta que esto no comprueba si la casilla es alcanzable
 ## De eso TurnManager (TODO)
@@ -73,10 +54,11 @@ func get_units_range(pos: Vector2i, range: int, filter: int) -> Array[Vector2i]:
 		if distances[key] <= range and get_tile_at(key).has_unit():
 			if key == pos and HabilityRes.inflicts_self(filter):
 				ret_pos.append(key)
+				continue
 				
 			var same_own := get_tile_at(key).get_unit()._owner == unit._owner
-			if      same_own and HabilityRes.inflicts_ally(filter) or \
-				not same_own and HabilityRes.inflicts_enemy(filter):
+			if      (same_own and HabilityRes.inflicts_ally(filter)) or \
+				(not same_own) and HabilityRes.inflicts_enemy(filter):
 				ret_pos.append(key)
 				
 	
@@ -104,7 +86,7 @@ func get_accesible_moves(pos: Vector2i) -> Array[Vector2i]:
 	
 ## Good ol' Dijkstra
 func _calculate_distances(pos: Vector2i, unit: UnitGame) -> Dictionary[Vector2i, int]:
-	const MAX_INT := 9223372036854775807
+	const MAX_INT := 9223372036854775806
 	
 	var distances : Dictionary[Vector2i, int] = {pos: 0}
 	# No existen genericos, no tipas la lambda

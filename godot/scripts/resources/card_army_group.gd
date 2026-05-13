@@ -8,3 +8,4 @@ extends GameResource
 
 func get_weight() -> int:
 	return cardType.weight * n
+	
