@@ -46,8 +46,6 @@ var objective := SEL_ENEMY_FLAG
 @export var radius: int  # conflicto con "range"
 ## Coste de maná
 @export var manaCost := 0
-## Duración en turnos
-@export var duration := 0  # (0 solo actua ese turno)
 ## Cooldown en turnos
 @export var cooldown := 1 # (1, en el siguiente está disponible
 ## Probabilidad de acierto
