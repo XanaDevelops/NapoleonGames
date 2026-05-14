@@ -36,7 +36,7 @@ func before_all():
 	
 	gr.maps.append(map)
 	
-	gr.save_to()
+	gr.save_to("res://test/test_res/all_test_resources.tres")
 	
 
 func test_dijkstra() -> void:

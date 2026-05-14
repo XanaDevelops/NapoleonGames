@@ -190,7 +190,7 @@ func kill() -> void:
 
 func heal(value: int, type: StatData) -> void:
 	if value < 0:
-		print("Curando por un valor negativo?? ", value)
+		printerr("Curando por un valor negativo?? ", value)
 		
 	value = _update_val_alter_states(value, StatData.HEALTH)
 	if type.isPercent:
