@@ -1,6 +1,9 @@
 class_name UnitGame
 extends RuntimeResource
 
+## Maná por turno
+const PASSIVE_MANA := 5
+
 @export var _cardRes: CardRes
 
 @export var _owner: UserRes
@@ -22,13 +25,20 @@ var speed : int :
 var height : int :
 	get : return _tile.get_height()
 	set(x) : pass
+	
+var dodge : float :
+	get : return _update_val_alter_states(_cardRes.dodge, StatData.DODGE)
 
 ## Manà actual
 @export var mana: int:
 	set(val):
-		mana = maxi(0, val)
+		mana = clampi(val, 0, max_mana)
 		mana_changed.emit(mana)
 
+## Maná maximo
+var max_mana: int :
+	get() : return self._cardRes.mana
+	
 ## estados alterados en activo con su duración restante
 @export var _currentAlterStates: Dictionary[AlterStateRes, int] = {}
 ## habilidades disponibles con su tiempo de espera (0 se puede usar)
@@ -106,6 +116,9 @@ func advance_turn() -> void:
 	has_moved_this_turn = false
 	has_used_hability_this_turn = false	
 	
+	# maná pasivo
+	self.mana += PASSIVE_MANA
+	
 	_proc_passives()
 	_proc_alter_states()
 	
@@ -146,6 +159,9 @@ func _apply_hab(stat: StatData, atkType:AttackType, val:float, obj: UnitGame):
 				obj.kill()
 		StatData.HEALTH:
 			obj.heal(val, stat)
+			# Ponder en algun lado si curar mata
+			if obj.hp == 0:
+				obj.kill()
 		# Estadisticas que no se pueden modificar con una habilidad
 		StatData.HEIGHT, StatData.MAX_HEALTH, StatData.MAX_MANA:
 			push_error("Esto no se puede modificar con una habilidad!!")
@@ -157,6 +173,14 @@ func _apply_hab(stat: StatData, atkType:AttackType, val:float, obj: UnitGame):
 ## funcion que calcula el daño recibido
 ## true si la mata
 func recieve_attack(damage: int, type: AttackType) -> bool:
+	# Calcular esquive
+	
+	# ojo que randf() es [0,1] no [0,1)
+	if randf() > self.dodge:
+		print("esquive!")
+		return false
+	
+	
 	# Calcular defensa base a ese tipo
 	var defense: int
 	if self._cardRes.resistances.has(type):
@@ -187,7 +211,7 @@ func kill() -> void:
 	died.emit(self, _tile._position)
 	_tile = null 
 
-
+## Cura una unidad
 func heal(value: int, type: StatData) -> void:
 	if value < 0:
 		printerr("Curando por un valor negativo?? ", value)
@@ -197,7 +221,7 @@ func heal(value: int, type: StatData) -> void:
 		self.hp += self.max_hp * value
 	else:
 		self.hp += value
-		
+
 
 func add_alter_state(alter: AlterStateRes) -> void:
 	self._currentAlterStates.set(alter, alter.duration)

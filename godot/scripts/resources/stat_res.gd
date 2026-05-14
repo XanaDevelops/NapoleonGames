@@ -47,6 +47,9 @@ static var MANA := &"mana"
 ## Mana maximo
 static var MAX_MANA := &"max_mana"
 
+## Esquive de unidad
+static var DODGE := &"dodge"
+
 #Los valors MAX es por si se quiere hacer algo que afecte al total
 # por ejemplo, curar un 20% de vida maxima, NO afecta al valor máximo (aunque se pueda hacer...)
 
