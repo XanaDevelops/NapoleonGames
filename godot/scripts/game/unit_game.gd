@@ -176,7 +176,7 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	# Calcular esquive
 	
 	# ojo que randf() es [0,1] no [0,1)
-	if randf() > self.dodge:
+	if randf() < self.dodge:
 		print("esquive!")
 		return false
 	
@@ -206,15 +206,18 @@ func kill() -> void:
 			tm.tick_turn.disconnect(self.advance_turn)
 			#GameManager.get_map().get_tile_at(_tile._position).set_unit(null)
 			#notificar al turn_manager
-	_tile.set_unit(null)
-
-	died.emit(self, _tile._position)
+	if not _tile:
+		push_error("no hay tile")
+	else:
+		_tile.set_unit(null)
+		died.emit(self, _tile._position)
+		
 	_tile = null 
 
 ## Cura una unidad
 func heal(value: int, type: StatData) -> void:
 	if value < 0:
-		printerr("Curando por un valor negativo?? ", value)
+		print_rich("[color=yellow]Curando por un valor negativo[/color] ", value)
 		
 	value = _update_val_alter_states(value, StatData.HEALTH)
 	if type.isPercent:

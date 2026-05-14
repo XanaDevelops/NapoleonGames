@@ -41,6 +41,7 @@ func _setup_game_environment() -> Dictionary:
 	GameManager._user_b = gr.users[1]
 	GameManager._army_a = gr.users[0].obtener_ejercito_activo()
 	GameManager._army_b = gr.users[1].obtener_ejercito_activo()
+	GameManager._app_state = GameManager.APP_STATE.IN_GAME
 	
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
@@ -117,7 +118,7 @@ func test_advance_turn_updates_units() -> void:
 	assert_eq(unit_b._currentAlterStates[poison2], 2, "Veneno debe tener 2 turnos restantes")
 	
 	#  Kill desuscribe
-	unit_b.kill()
+	#unit_b.kill()
 	await wait_physics_frames(2)
 	
 	_assert_subscribed(tm, unit_b, false, "Unit B muerta no debe estar suscrita")

@@ -49,8 +49,8 @@ Este documento describe, por acción, qué atributos se tienen en cuenta y cuál
 ## Acciones de habilidades y combate
 
 ### Cobertura de estadísticas en habilidades
-- Se tiene en cuenta: `ATTACK` aplica daño directo; `HEALTH` cura; `SPEED` afecta movimiento; `DEFENSE` afecta reducción de daño; `MANA` solo como coste.
-- No se tiene en cuenta: `DODGE` no interviene en impactos; `HEIGHT` no se modifica por habilidades.
+- Se tiene en cuenta: `ATTACK` aplica daño directo; `HEALTH` cura; `SPEED` afecta movimiento; `DEFENSE` afecta reducción de daño; `DODGE` interviene en impactos; `MANA` solo como coste.
+- No se tiene en cuenta: `HEIGHT` no se modifica por habilidades.
 - No se tiene en cuenta: `MAX_HEALTH`/`MAX_MANA` como cambios directos (bloqueados en la lógica actual).
 
 ### Condiciones de habilidades: estadísticas y definición esperada
@@ -78,8 +78,8 @@ Este documento describe, por acción, qué atributos se tienen en cuenta y cuál
 - No se tiene en cuenta: acumulación múltiple del mismo estado (se reemplaza por clave en diccionario).
 
 ### Acción: recibir daño
-- Se tiene en cuenta: defensa por tipo de ataque, modificadores por estados alterados, daño mínimo 0.
-- No se tiene en cuenta: esquiva (`dodge`) ni críticos.
+- Se tiene en cuenta: defensa por tipo de ataque, modificadores por estados alterados, daño mínimo 0 y esquiva (`dodge`).
+- No se tiene en cuenta: críticos.
 
 ### Acción: curar
 - Se tiene en cuenta: curación plana o porcentual sobre vida máxima.
