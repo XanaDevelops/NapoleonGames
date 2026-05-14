@@ -8,7 +8,6 @@
 ## - objective: Objetivo de la habilidad (enum HAB_DEST).[br]
 ## - value: Valor de la habilidad.[br]
 ## - manaCost: Coste de maná.[br]
-## - duration: Duración en turnos.[br]
 ## - isPassive: Indica si es pasiva.[br]
 ## - alter_states: Estados alterados aplicados (Array[[AlterStateRes]]).[br]
 ##

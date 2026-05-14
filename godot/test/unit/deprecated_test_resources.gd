@@ -39,7 +39,6 @@ func before_all():
 	hab1.stat = stat
 	hab1.attackType = attack_type
 	hab1.manaCost = 1
-	hab1.duration = 0
 	hab1.isPassive = false
 
 	# Crear carta melee
@@ -91,7 +90,6 @@ func before_all():
 	hab_range.attackType = attack_type
 	hab_range.radius = 3
 	hab_range.manaCost = 2
-	hab_range.duration = 0
 	hab_range.isPassive = false
 
 	# Crear carta a distancia

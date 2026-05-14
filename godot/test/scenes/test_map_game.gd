@@ -133,7 +133,6 @@ func _create_physical_attack() -> HabilityRes:
 	hab.manaCost = 0
 	hab.radius = 1
 	hab.cooldown = 1
-	hab.duration = 0
 	hab.isPassive = false
 	hab.value = 15.0
 	hab.alter_states = [] as Array[AlterStateRes]
@@ -157,7 +156,6 @@ func _create_magic_attack() -> HabilityRes:
 	hab.manaCost = 25
 	hab.radius = 3
 	hab.cooldown = 2
-	hab.duration = 0
 	hab.isPassive = false
 	hab.value = 30.0
 	hab.alter_states = [] as Array[AlterStateRes]
@@ -179,7 +177,6 @@ func _create_heal() -> HabilityRes:
 	hab.manaCost = 15
 	hab.radius = 2
 	hab.cooldown = 2
-	hab.duration = 0
 	hab.isPassive = false
 	hab.value = 20.0
 	hab.alter_states = [] as Array[AlterStateRes]
@@ -255,7 +252,6 @@ func generate_habilities() -> Array[HabilityRes]:
 			h.manaCost = 10
 			h.radius = 0
 			h.cooldown = 3
-			h.duration = 0
 			h.isPassive = false
 			h.value = 0.0
 			h.alter_states = [_create_shield_buff()] as Array[AlterStateRes]
@@ -269,7 +265,6 @@ func generate_habilities() -> Array[HabilityRes]:
 			h.manaCost = 15
 			h.radius = 3
 			h.cooldown = 2
-			h.duration = 0
 			h.isPassive = false
 			h.value = 0.0
 			h.alter_states = [_create_speed_debuff()] as Array[AlterStateRes]
@@ -283,7 +278,6 @@ func generate_habilities() -> Array[HabilityRes]:
 			h.manaCost = 30
 			h.radius = 2
 			h.cooldown = 3
-			h.duration = 0
 			h.isPassive = false
 			h.value = 20.0
 			h.alter_states = [] as Array[AlterStateRes]
