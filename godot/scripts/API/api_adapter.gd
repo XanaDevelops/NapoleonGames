@@ -1,73 +1,117 @@
 class_name APIAdapter
 extends Node
 
-var _SERVER : StringName = &"http://127.0.0.1:8000"
+var _SERVER: StringName = &"http://127.0.0.1:8080"
 
-const _HEADER : PackedStringArray = []
+const _HEADER: PackedStringArray = [
+	"Content-Type: application/json",
+	"Accept: application/json"
+]
 
 func _ready() -> void:
-	if _SERVER == &"http://127.0.0.1:8000":
-		push_warning("Se está usando localhost (127.0.0.1) como _SERVER")
-	
-## Manda al server el recurso
-## Si este tiene subrecursos, los enviará antes
-func send_game_resource(res : GameResource)	-> void:
-	var body := res.to_json_dict()
-	
-	
+	if _SERVER == &"http://127.0.0.1:8080":
+		print("API conectada a backend local 8080")
 
-		
-	
-## Guarda en el GameResources de GameManager el recurso solicitado
-## Si ya existe, lo actualiza
-## Si no existe, lo guarda
-## Si el GameResource solicitado tiene dependencias, las pedirá i actualizará
 func get_game_resource(uid: int, res: Script) -> void:
 	if res not in GameResources.game_resources:
 		push_error("Se quiere obtener del server algo que no es un GameResource")
 		return
-	make_request("/" + _get_format({"id":uid}), {}, HTTPClient.Method.METHOD_GET)
 
+	make_request(
+		"/" + _get_format({"id": uid}),
+		{},
+		HTTPClient.Method.METHOD_GET
+	)
+	
 func _get_format(body: Dictionary[String, Variant]) -> String:
 	var res = "?"
+
 	for key in body:
 		res += key + "=" + str(body[key]) + "&"
+
 	return res
 
-## Envia un request en formato diccionario
-## Por ejemplo
-## {a : 123,
-##  b : [1,2,3],
-##  c : {x:1, y:"hola"}} 
-func make_request(endpoint: StringName, request: Dictionary[StringName, Variant],
-					method := HTTPClient.Method.METHOD_GET , server := _SERVER):
-	_make_request(endpoint, JSON.stringify(request), method, server)
+func make_request(
+		endpoint: StringName,
+		request: Dictionary,
+		method := HTTPClient.METHOD_GET,
+		server := _SERVER
+	) -> void:
 	
-func _make_request(endpoint: StringName, request: String, method: HTTPClient.Method, server: StringName):
+	_make_request(endpoint, JSON.stringify(request), method, server)
+
+func _make_request(
+		endpoint: StringName,
+		request: String,
+		method: int,
+		server: StringName
+	) -> void:
+	
 	var http := HTTPRequest.new()
 	add_child(http)
-	
-	http.use_threads = true
-	http.request_completed.connect(_parse_response)
-	
-	
-	var _route := server+endpoint
-	print(_route)
-	# realiza la petición
-	var error := http.request(server+endpoint, _HEADER, method, request)
-	
-	if error != OK:
-		push_error("ERROR in HTTP Request", error)
-		
-	
-func _parse_response(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> JSON:
-	var json := JSON.new()
-	json.parse(body.get_string_from_utf8())
-	
-	var response : Variant= json.data
-	
-	print(response)
-	return json
-	
 
+	http.use_threads = true
+	http.request_completed.connect(_parse_response.bind(http))
+
+	var route := server + endpoint
+
+	print("REQUEST: ", route)
+	print("BODY: ", request)
+
+	var error := http.request(route, _HEADER, method, request)
+
+	if error != OK:
+		push_error("ERROR in HTTP Request: " + str(error))
+
+func _parse_response(
+		result: int,
+		response_code: int,
+		headers: PackedStringArray,
+		body: PackedByteArray,
+		http: HTTPRequest
+	) -> void:
 	
+	var text := body.get_string_from_utf8()
+
+	print("STATUS: ", response_code)
+	print("RAW RESPONSE: ", text)
+
+	var json := JSON.new()
+	var parse_error := json.parse(text)
+
+	if parse_error != OK:
+		push_error("Invalid JSON response")
+		http.queue_free()
+		return
+
+	var response = json.data
+
+	print("JSON RESPONSE: ", response)
+
+	http.queue_free()
+
+func login(username: String, password: String) -> void:
+	var body := {
+		"username": username,
+		"password": password
+	}
+
+	make_request("/api/auth/login", body, HTTPClient.METHOD_POST)
+
+func signin(
+		username: String,
+		email: String,
+		password: String,
+		display_name: String,
+		profile_img: String = ""
+	) -> void:
+	
+	var body := {
+		"username": username,
+		"email": email,
+		"password": password,
+		"displayName": display_name,
+		"profileImg": profile_img
+	}
+
+	make_request("/api/auth/signin", body, HTTPClient.METHOD_POST)
