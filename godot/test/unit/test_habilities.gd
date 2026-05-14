@@ -137,10 +137,40 @@ func test_alter_state2():
 		assert_lt(enemy_units[i].hp, old_hps[i], "Unidad: " + str(i))
 	
 
-func test_condition():
-	pass
+func test_condition_height():
 	
+	var ally := ally_units[1] # ranged
 	
+	var old_hps := enemy_units.map(func (x: UnitGame) -> int: return x.hp)
+
+	assert_false(ally.use_hability(ally.get_all_habilities()[3], enemy_units), "No se usa")
+	assert_eq_deep(enemy_units.map(func (x:UnitGame): return x.hp), old_hps)
+	
+	ally._tile._tileRes.height = 100
+	assert_true(ally.use_hability(ally.get_all_habilities()[3], enemy_units))
+	for i in range(4):
+		assert_lt(enemy_units[i].hp, old_hps[i], "Unidad: " + str(i))
+
+
+func test_condition_hp():
+	
+	var ally := ally_units[0] # meele
+	
+	ally.hp = 3
+	
+	assert_true(ally.use_hability(ally.get_all_habilities()[3], [ally]))
+	assert_eq(ally.hp, ally.max_hp)
+	
+	GameManager.get_turn_manager().advance_turn()
+	
+	ally.hp = 11
+	
+	assert_false(ally.use_hability(ally.get_all_habilities()[4], [ally]))
+	
+	ally.hp = 1
+	
+	assert_true(ally.use_hability(ally.get_all_habilities()[4], [ally]))
+	assert_eq(ally.hp, ally.max_hp)
 	
 static func gen_test_map() -> MapRes:
 	var map_ids := [[0,0,0,0,0],

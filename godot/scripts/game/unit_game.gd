@@ -8,7 +8,7 @@ extends RuntimeResource
 ## Vida actual, si <=0 estas muerto
 @export var hp: int:
 	set(val):
-		hp = maxi(0, val)
+		hp = clampi(val, 0, max_hp)
 		health_changed.emit(hp)
 
 var max_hp : int :
@@ -149,6 +149,7 @@ func _apply_hab(stat: StatData, atkType:AttackType, val:float, obj: UnitGame):
 		# Estadisticas que no se pueden modificar con una habilidad
 		StatData.HEIGHT, StatData.MAX_HEALTH, StatData.MAX_MANA:
 			push_error("Esto no se puede modificar con una habilidad!!")
+			printerr("En el caso de MAX_HEALTH o MAX_MANA, hazlo con HP con isPercent=True, respectivamente")
 		_:
 			print("afectando por defecto ", stat.name, " por valor de ", val)
 			obj.set(stat.name, obj.get(stat.name) + val)
@@ -197,7 +198,6 @@ func heal(value: int, type: StatData) -> void:
 	else:
 		self.hp += value
 		
-	self.hp = mini(self.hp, self.max_hp)
 
 func add_alter_state(alter: AlterStateRes) -> void:
 	self._currentAlterStates.set(alter, alter.duration)
@@ -222,12 +222,17 @@ func get_available_habilities() -> Array[HabilityRes]:
 			continue
 		if key.condition != HabilityRes.CONDITION.NA and key.condition_stat != null:
 			var current_value :float = get(key.condition_stat.name)
+			if key.condition_stat.isPercent:
+				# Asumimos que queremos comparar con un valor max de la estadistica
+				assert(key.condition_stat.name.contains("max_"))
+				current_value = get(key.condition_stat.name.trim_prefix("max_")) / current_value
 			if key.applies(current_value):
 				ret.append(key)
 		else:
 			ret.append(key)
 
 	return ret
+
 
 ## Devuelve todas las habilidades de la carta referencia
 func get_all_habilities() -> Array[HabilityRes]:
