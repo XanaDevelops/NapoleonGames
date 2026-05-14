@@ -16,6 +16,5 @@ desc = "test ranged"
 hp = 10
 mana = 15
 speed = 7
-dodge = 0.35
 habilities = Array[ExtResource("1_pv25n")]([ExtResource("2_gtena"), ExtResource("3_b26a2"), ExtResource("4_0nbpr"), ExtResource("5_0nbpr")])
 metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

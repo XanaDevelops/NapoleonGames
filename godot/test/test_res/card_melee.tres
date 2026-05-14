@@ -17,6 +17,5 @@ desc = "test melee"
 hp = 20
 mana = 5
 speed = 4
-dodge = 0.25
 habilities = Array[ExtResource("1_ct0dh")]([ExtResource("2_5je53"), ExtResource("3_ll81n"), ExtResource("4_yy4e5"), ExtResource("5_yy4e5"), ExtResource("6_1bhc3")])
 metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

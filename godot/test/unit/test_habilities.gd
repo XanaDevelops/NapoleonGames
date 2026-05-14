@@ -115,7 +115,7 @@ func test_alter_state() -> void:
 	GameManager.get_turn_manager().advance_turn()
 	# Recuerda que tambien aplica la cura, la diferencia deberia ser de 1!
 	for i in range(3):
-		assert_lt(enemy_units[i].hp, old_hps[i])
+		assert_lt(enemy_units[i].hp, old_hps[i], str(i))
 		assert_eq(enemy_units[i]._currentAlterStates.size(),1)
 		
 	assert_eq(enemy_units[3].hp, old_hps[3])
@@ -254,19 +254,3 @@ func before_each():
 	
 	
 	seed(666)
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
