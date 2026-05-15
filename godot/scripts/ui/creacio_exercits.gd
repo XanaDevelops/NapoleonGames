@@ -179,6 +179,7 @@ func _seleccionar_destino(nodo_destino: CardUI) -> void:
 	if limite_transferencia > 0:
 		label_cantidad.text = str(cantidad_transferencia)  
 		_actualizar_texto_peso_teorico()
+		_restaurar_texto_guia()
 	else:
 		cantidad_transferencia = 0 
 		label_cantidad.text = "0"
@@ -226,6 +227,7 @@ func _resaltar_destinos_en_disponibles(carta: CardRes) -> void:
 		hueco.set_highlight(CardUI.HighlightMode.AVAILABLE)
 		hueco.carta_seleccionada.connect(_al_seleccionar_carta)
 		interfaz_disponibles[carta] = hueco
+		
 
 func _limpiar_resaltados() -> void:
 	var todos_los_nodos = interfaz_mazo.keys() + interfaz_disponibles.values()
