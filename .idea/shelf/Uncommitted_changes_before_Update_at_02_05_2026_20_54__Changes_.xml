@@ -1,0 +1,196 @@
+<changelist name="Uncommitted_changes_before_Update_at_02_05_2026_20_54_[Changes]" date="1777748054943" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_02_05_2026_20_54_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 02/05/2026 20:54 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/repository/CardTypeRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/common/exception/GlobalExceptionHandler.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/controller/UserController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/dto/UserCardSummaryResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/repository/CardRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/service/impl/UserServiceImpl.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/auth/service/AuthService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/entity/UserCardEntity$UserCardId.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/repository/ArmyRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/jacoco.exec" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/auth/dto/AuthResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/service/CardService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/entity/AbilityEntity.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/entity/AttackTypeEntity.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/dto/UpdateUserRequest.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/test-classes/com/napoleon/ApplicationTest.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/repository/UserMapRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/entity/CardCardTypeEntity$CardCardTypeId.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/common/exception/DuplicateResourceException.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/auth/dto/LoginRequest.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/auth/service/impl/AuthServiceImpl.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/backend-0.0.1-SNAPSHOT.jar.original" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/dto/CardResistanceResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/entity/UserEntity.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/service/impl/CardServiceImpl.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/common/exception/InvalidCredentialsException.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/auth/token/JwtService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/service/UserService.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/repository/AttackTypeRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/repository/CardCardTypeRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/auth/dto/SignInRequest.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/config/SecurityBeansConfig.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/entity/UserMapEntity$UserMapId.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/dto/CardAbilityResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/dto/CardResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/repository/AbilityRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/common/dto/ApiErrorResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/dto/UserArmySummaryResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/dto/UserFriendSummaryResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/dto/UserResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/auth/controller/AuthController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/entity/CardCardTypeEntity.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/Application.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/entity/CardResistanceEntity.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/backend-0.0.1-SNAPSHOT.jar" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/entity/UserMapEntity.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/entity/CardTypeEntity.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/dto/UpdateCardRequest.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/entity/CardEntity.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/auth/dto/AuthUserResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/repository/UserCardRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/entity/UserCardEntity.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/dto/CardTypeResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/entity/ArmyEntity.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/controller/CardController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/entity/CardResistanceEntity$CardResistanceId.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/common/exception/ResourceNotFoundException.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/dto/UserMapSummaryResponse.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/card/repository/CardResistanceRepository.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="backend/target/classes/com/napoleon/user/repository/UserRepository.class" />
+  </binary>
+</changelist>

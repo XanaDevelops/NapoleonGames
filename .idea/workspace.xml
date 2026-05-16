@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="147e4084-ca6e-4a1f-9cdb-0d72ba1a47ed" name="Changes" comment="Afegim JWT amb token real, no mockejat.">
+      <change beforePath="$PROJECT_DIR$/godot/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/godot/project.godot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/godot/scenes/login.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scenes/login.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/godot/scenes/registro.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scenes/registro.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/godot/scripts/API/api_adapter.gd" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scripts/API/api_adapter.gd" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Exception" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;jose260102&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/XanaDevelops/NapoleonGames.git&quot;,
+    &quot;accountId&quot;: &quot;6d388c95-96c1-481b-8e94-d69eaa499439&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="3BLxHVdmWgexQCzJ731Z5Q2IlDn" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Application.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.backend: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.backend [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.backend [clean,package,-DskipTests].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.backend [clean,package,-U].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.backend [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.backend [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.backend [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.backend [spring-boot:run].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/conexio-login-signin-front&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/josel/Desktop/NapoleonGames&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\josel\Desktop\NapoleonGames\backend\src\main\resources" />
+      <recent name="C:\Users\josel\Desktop\NapoleonGames" />
+      <recent name="C:\Users\josel\Desktop\NapoleonGames\backend\src\main" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean package -DskipTests" />
+      <command value="docker build -t napoleon-backend:latest ." />
+      <command value="mvn clean install" />
+      <command value="docker compose up --build" />
+      <command value="docker version" />
+      <command value="Get-Service *docker*" />
+      <command value="sudo docker compose down " />
+      <command value="mvn clean package -U" />
+      <command value="docker exec -it napoleon-mysql mysql -uroot -proot" />
+      <command value="docker compose down -v" />
+      <command value="mvn package" />
+      <command value="docker compose down" />
+      <command value="mvn spring-boot:run" />
+      <command value="mvn clean" />
+      <command value="mvn clean package " />
+    </option>
+  </component>
+  <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="borrar" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="NapoleonGames" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/borrar.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="backend.mysql: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="secondarySourceFiles">
+            <list>
+              <option value="docker-compose.yml" />
+            </list>
+          </option>
+          <option name="services">
+            <list>
+              <option value="mysql" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="backend/docker-compose.yml" />
+          <option name="upDetach" value="false" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Docker.backend.mysql: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+      <item itemvalue="Python.borrar" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+        <item itemvalue="Python.borrar" />
+        <item itemvalue="Docker.backend.mysql: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+        <item itemvalue="Docker.backend.mysql: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="147e4084-ca6e-4a1f-9cdb-0d72ba1a47ed" name="Changes" comment="" />
+      <created>1774282063960</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1774282063960</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Configuración pipelines entornos.">
+      <option name="closed" value="true" />
+      <created>1774284924835</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1774284924835</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Configuración pipelines entornos.">
+      <option name="closed" value="true" />
+      <created>1774285879002</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1774285879002</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Configuración pipelines entornos.">
+      <option name="closed" value="true" />
+      <created>1774286776248</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1774286776248</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Configuración pipelines entornos.">
+      <option name="closed" value="true" />
+      <created>1774461478856</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1774461478856</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Configuración pipelines entornos v3">
+      <option name="closed" value="true" />
+      <created>1774462599020</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1774462599020</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Configuración pipelines entornos v3">
+      <option name="closed" value="true" />
+      <created>1774467137278</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1774467137278</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Configuración pipelines entornos v5">
+      <option name="closed" value="true" />
+      <created>1774467299198</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1774467299198</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Configuración pipelines entornos v5">
+      <option name="closed" value="true" />
+      <created>1774468239631</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1774468239631</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Configuración pipelines entornos v6">
+      <option name="closed" value="true" />
+      <created>1774469604897</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1774469604897</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Configuración pipelines entorno, arreglo anchestry.">
+      <option name="closed" value="true" />
+      <created>1774470768180</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1774470768180</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Migraciones bbdd con flyway, modelo de datos.&#10;Endpoints creacion de usuarios, consulta de usuarios, login.&#10;Seeder de datos de pruebas.">
+      <option name="closed" value="true" />
+      <created>1775918488252</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1775918488252</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Endpoint de actaulización de usuarios.">
+      <option name="closed" value="true" />
+      <created>1775944945606</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1775944945606</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Endpoint de actaulización de usuarios.">
+      <option name="closed" value="true" />
+      <created>1776003017794</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1776003017794</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Endpoint de actaulización de usuarios.">
+      <option name="closed" value="true" />
+      <created>1776005942219</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1776005942219</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Afegim JWT amb token real, no mockejat.">
+      <option name="closed" value="true" />
+      <created>1776091070007</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1776091070007</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Afegim JWT amb token real, no mockejat.">
+      <option name="closed" value="true" />
+      <created>1777747940461</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1777747940462</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Afegim JWT amb token real, no mockejat.">
+      <option name="closed" value="true" />
+      <created>1777817115531</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1777817115531</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Afegim JWT amb token real, no mockejat.">
+      <option name="closed" value="true" />
+      <created>1777822547275</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1777822547276</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Configuración pipelines entornos." />
+    <MESSAGE value="Configuración pipelines entornos v3" />
+    <MESSAGE value="Configuración pipelines entornos v5" />
+    <MESSAGE value="Configuración pipelines entornos v6" />
+    <MESSAGE value="Configuración pipelines entorno, arreglo anchestry." />
+    <MESSAGE value="Migraciones bbdd con flyway, modelo de datos.&#10;Endpoints creacion de usuarios, consulta de usuarios, login.&#10;Seeder de datos de pruebas." />
+    <MESSAGE value="Endpoint de actaulización de usuarios." />
+    <MESSAGE value="Merge pull request #40 from XanaDevelops/feature/implementacion-navegacion-ui&#10;&#10;Feature/implementacion navegacion UI" />
+    <MESSAGE value="Afegim JWT amb token real, no mockejat." />
+    <option name="LAST_COMMIT_MESSAGE" value="Afegim JWT amb token real, no mockejat." />
+  </component>
+</project>
