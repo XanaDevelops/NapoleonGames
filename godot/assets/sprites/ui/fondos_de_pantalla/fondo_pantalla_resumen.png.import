@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brdanygic6i0l"
-path="res://.godot/imported/foto temporal carta mapa.jpg-efa0c78ee383b290a321b903a29a608f.ctex"
+uid="uid://bujp1fkbfto6"
+path="res://.godot/imported/fondo_pantalla_resumen.png-1a67065f81952bfd0adbee51ffba8d29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/fondos_de_pantalla/foto temporal carta mapa.jpg"
-dest_files=["res://.godot/imported/foto temporal carta mapa.jpg-efa0c78ee383b290a321b903a29a608f.ctex"]
+source_file="res://assets/sprites/ui/fondos_de_pantalla/fondo_pantalla_resumen.png"
+dest_files=["res://.godot/imported/fondo_pantalla_resumen.png-1a67065f81952bfd0adbee51ffba8d29.ctex"]
 
 [params]
 

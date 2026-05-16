@@ -17,7 +17,6 @@ func _ready() -> void:
 	_cargar_mapas_del_usuario()
 
 func _cargar_mapas_del_usuario() -> void:
-	# Buena práctica: Limpiamos cartas viejas por si se refresca el menú
 	for hijo in contenedor_mapas.get_children():
 		hijo.queue_free()
 

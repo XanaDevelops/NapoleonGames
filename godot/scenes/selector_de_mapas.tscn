@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d0bfj5qi1yigb" path="res://assets/sprites/ui/fondos_de_pantalla/fondo selector de mapas.png" id="2_byp17"]
 [ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="3_67sv7"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="4_byp17"]
+[ext_resource type="FontFile" uid="uid://cmiuntu71oyl3" path="res://addons/gut/fonts/LobsterTwo-Bold.ttf" id="4_dlenf"]
 [ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="4_m6ygq"]
 [ext_resource type="Theme" uid="uid://cs2ycfq76kcvr" path="res://assets/themes/ui/estilo_botones_negacion_suave.tres" id="5_dlenf"]
 [ext_resource type="Theme" uid="uid://cuaadii4ueb8" path="res://assets/themes/ui/estilo_botones_confirmacion_suave.tres" id="7_l11yq"]
@@ -36,12 +37,29 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -925.0
-offset_top = -325.0
+offset_top = -350.0
 offset_right = 925.0
-offset_bottom = 425.0
+offset_bottom = 470.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("3_67sv7")
+
+[node name="TituloPanel" type="Label" parent="Panel2" unique_id=566813239]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -105.5
+offset_top = 50.0
+offset_right = 105.5
+offset_bottom = 125.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.9019608, 0.7607843, 0.47843137, 1)
+theme_override_fonts/font = ExtResource("4_dlenf")
+theme_override_font_sizes/font_size = 60
+text = "Elige tu Destino"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Panel" type="Panel" parent="Panel2" unique_id=2109317266]
 layout_mode = 1
@@ -51,9 +69,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -875.0
-offset_top = -325.0
+offset_top = -275.0
 offset_right = 875.0
-offset_bottom = 225.0
+offset_bottom = 275.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("4_m6ygq")
@@ -89,9 +107,9 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 50.0
-offset_top = -100.0
+offset_top = -90.0
 offset_right = 200.0
-offset_bottom = -50.0
+offset_bottom = -40.0
 grow_vertical = 0
 theme = ExtResource("5_dlenf")
 text = "Volver"
@@ -109,10 +127,10 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -200.0
-offset_top = -100.0
+offset_top = -90.0
 offset_right = -50.0
-offset_bottom = -50.0
+offset_bottom = -40.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("7_l11yq")
-text = "Iniciar"
+text = "Siguiente"
