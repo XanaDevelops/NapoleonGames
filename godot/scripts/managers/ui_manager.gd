@@ -5,6 +5,7 @@ func cambiar_a_escena(identificador: String, parametros: Dictionary = {}) -> voi
 		var ruta_escena: String = EscenasConfig.MAPA_ESCENAS[identificador]
 		
 		if ResourceLoader.exists(ruta_escena):
+			AudioManager.change_music_section_by_scene(identificador)
 			var recurso_escena = load(ruta_escena)
 			var nueva_escena = recurso_escena.instantiate()
 			
@@ -19,6 +20,10 @@ func cambiar_a_escena(identificador: String, parametros: Dictionary = {}) -> voi
 			
 			if escena_actual:
 				escena_actual.queue_free()
+			
+			
+			
+			
 		else:
 			push_error("UIManager: La ruta no existe: " + ruta_escena)
 	else:
