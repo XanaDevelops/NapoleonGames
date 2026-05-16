@@ -14,7 +14,7 @@ enum APP_STATE {
 	DEPLOYMENT,
 	IN_GAME,
 }
-@export var _app_state := APP_STATE.IN_GAME
+@export var _app_state := APP_STATE.MENU_HUB
 
 ## Indica si es servidor
 var is_server := false
@@ -24,7 +24,7 @@ func _init() -> void:
 	_gameRes = GameResources.load_from()
 	#temporal
 	#self.turn_manager= TurnManager.new()
-	_app_state = APP_STATE.DEPLOYMENT
+	_app_state = APP_STATE.MENU_HUB
 	#phase_changed.emit(_app_state)
 	set_users()
 	

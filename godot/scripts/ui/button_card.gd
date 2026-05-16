@@ -1,36 +1,65 @@
 extends Button
 class_name CardUI
 
-signal click_simple(nodo_carta: CardUI)
-signal doble_click(nodo_carta: CardUI)
-signal click_derecho(nodo_carta: CardUI)
+signal carta_seleccionada(carta_ui: CardUI)
 
-@onready var image_card = $ImageCard
-@onready var name_label = $VBoxContainer/Name
-@onready var quantity_label = $VBoxContainer/Quantity
 
-var mi_carta_res: CardRes
+enum HighlightMode {
+	NONE,
+	ORIGIN,
+	AVAILABLE,
+	SELECTED
+}
+
+@export var tema_por_defecto: Theme
+@export var tema_origen: Theme
+@export var tema_disponible: Theme
+@export var tema_seleccionado: Theme
+
+
+@onready var icono_carta = $ImageCard 
+@onready var label_nombre = $VBoxContainer/Name
+@onready var label_cantidad = $VBoxContainer/Quantity
+
+var carta_res: CardRes
+var en_mazo: bool = false 
+var es_fantasma: bool = false
 
 func _ready() -> void:
-	button_mask = MOUSE_BUTTON_MASK_LEFT | MOUSE_BUTTON_MASK_RIGHT
+	pressed.connect(_al_pulsar)
+	mouse_entered.connect(_on_mouse_interaction.bind(true))
+	mouse_exited.connect(_on_mouse_interaction.bind(false))
 
-func configurar(carta: CardRes, cantidad: int) -> void:
-	mi_carta_res = carta
-	name_label.text = carta.name
-	quantity_label.text = "x" + str(cantidad)
-	
+func configurar(carta: CardRes, cantidad: int, es_mazo: bool) -> void:
+	carta_res = carta
+	en_mazo = es_mazo
+	label_nombre.text = carta.name
+	actualizar_cantidad(cantidad)
 	if carta.img != null:
-		image_card.texture = carta.img
+		icono_carta.texture = carta.img
 
 func actualizar_cantidad(nueva_cantidad: int) -> void:
-	quantity_label.text = "x" + str(nueva_cantidad)
+	label_cantidad.text = "x" + str(nueva_cantidad) if nueva_cantidad > 0 else ""
 
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.double_click:
-				doble_click.emit(self)
-			else:
-				click_simple.emit(self)
-		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			click_derecho.emit(self)
+
+func set_highlight(mode: HighlightMode) -> void:
+	match mode:
+		HighlightMode.ORIGIN:
+			theme = tema_origen
+		HighlightMode.AVAILABLE:
+			theme = tema_disponible
+		HighlightMode.SELECTED:
+			theme = tema_seleccionado
+		HighlightMode.NONE, _:
+			theme = tema_por_defecto
+
+func _al_pulsar() -> void:
+	carta_seleccionada.emit(self)
+
+func _on_mouse_interaction(is_hover: bool) -> void:
+	var target_scale = Vector2(1.05, 1.05) if is_hover else Vector2.ONE
+	var target_mod = Color(1.2, 1.2, 1.2) if (is_hover and not es_fantasma) else Color.WHITE
+	
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(self, "scale", target_scale, 0.1)
+	tween.tween_property(self, "modulate", target_mod, 0.1)

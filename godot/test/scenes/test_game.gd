@@ -23,6 +23,7 @@ func test_full_game_from_start() -> void:
 	UserManager.meter_nuevo_usuario(gr.users[1])
 	UserManager.establecer_usuario_actual(gr.users[0].email)
 	UiManager.cambiar_a_escena("inicio")
+	autoqfree(get_tree().current_scene)
 	gut.pause_before_teardown()
 	pass_test("Partida desde inicio")
 
@@ -40,6 +41,9 @@ func test_full_game_session() -> void:
 	)
 	
 	await wait_until(func(): return GameManager.turn_manager != null, 5)
+	autoqfree(get_tree().current_scene)
+	var ingame_map = get_tree().current_scene.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
 	
 	assert_true(GameManager.turn_manager.is_deployment_phase)
 	gut.pause_before_teardown()
