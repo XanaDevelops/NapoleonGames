@@ -16,16 +16,36 @@ enum APP_STATE {
 }
 @export var _app_state := APP_STATE.IN_GAME
 
+## Indica si es servidor
+var is_server := false
 
 func _init() -> void:
+	
 	_gameRes = GameResources.load_from()
 	#temporal
 	#self.turn_manager= TurnManager.new()
 	_app_state = APP_STATE.DEPLOYMENT
 	#phase_changed.emit(_app_state)
 	set_users()
+	
+func _ready() -> void:
+	print(OS.get_cmdline_args())
+	var cmd_args := OS.get_cmdline_args()
+	if "--server" in cmd_args:
+		_configure_server()
+	else:
+		_configure_client()
 
-
+func _configure_server() -> void:
+	if not Online.create_server():
+		return
+	is_server = true
+	print_rich("[color=yellow]SOMOS servidor[/color]")
+	
+func _configure_client() -> void:
+	if not Online.join_server():
+		return
+	print_rich("[color=yellow]SOMOS cliente[/color]")
 
 func set_users() -> void:
 	var gr := GameResources.load_from() 
