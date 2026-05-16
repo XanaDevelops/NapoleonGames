@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://duyb5pv17toxt"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_nxudb"]
+[ext_resource type="Resource" uid="uid://bw2xo1v1mpllw" path="res://test/test_res/attack_type_fire.tres" id="2_cvtns"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="2_o75ei"]
+[ext_resource type="Resource" uid="uid://dmc4jstoyeoun" path="res://test/test_res/stat_attack_linear.tres" id="4_8l34g"]
+
+[resource]
+script = ExtResource("2_o75ei")
+name = &"bomba psiquica"
+desc = "kaboom"
+objective = 12
+value = 3.0
+stat = ExtResource("4_8l34g")
+attackType = ExtResource("2_cvtns")
+radius = 4
+manaCost = 2
+isPassive = true
+metadata/_custom_type_script = "uid://eihee83yhkpg"

@@ -1,8 +1,8 @@
 extends GutTest
 
 
-const CARD_A_PATH = "res://resources/cards/0001.tres"
-const CARD_B_PATH = "res://resources/cards/0002.tres"
+const CARD_A_PATH = "res://test/test_res/card_melee.tres"
+const CARD_B_PATH = "res://test/test_res/card_ranged.tres"
 
 func _create_test_unit(card_path: String, owner: UserRes) -> UnitGame:
 	var card = load(card_path) as CardRes
@@ -15,7 +15,7 @@ func _assert_subscribed(tm: TurnManager, unit: UnitGame, expected: bool, msg: St
 func _set_unit_used(unit: UnitGame, hab: HabilityRes, cooldown: int) -> void:
 	unit._habilities[hab] = cooldown
 	unit.has_moved_this_turn = true
-	unit.has_hability_this_turn = true
+	unit.has_used_hability_this_turn = true
 
 func _create_poison() -> AlterStateRes:
 	var state = AlterStateRes.new()
@@ -33,13 +33,15 @@ func _advance_and_wait(tm: TurnManager) -> void:
 	await wait_physics_frames(2)
 
 func _setup_game_environment() -> Dictionary:
-	var gr := GameResources.load_from()
-	var map := TestMapGame.new().create_test_map()
+	var gr := GameResources.load_from("res://test/test_res/all_test_resources.tres")
+	var test_map_game : TestMapGame = autofree(TestMapGame.new())
+	var map := test_map_game.create_test_map()
 	GameManager._gameMap = map
 	GameManager._user_a = gr.users[0]
 	GameManager._user_b = gr.users[1]
 	GameManager._army_a = gr.users[0].obtener_ejercito_activo()
 	GameManager._army_b = gr.users[1].obtener_ejercito_activo()
+	GameManager._app_state = GameManager.APP_STATE.IN_GAME
 	
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
@@ -68,6 +70,8 @@ func test_advance_turn_updates_units() -> void:
 	
 	await wait_until(func(): return tm.is_inside_tree(), 5)
 	await wait_physics_frames(2)
+	var ingame_map = tm.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
 	
 
 	_assert_subscribed(tm, unit_a, true, "Unit A debe estar suscrita")
@@ -83,7 +87,7 @@ func test_advance_turn_updates_units() -> void:
 	
 	assert_eq(unit_b._habilities[hab_b], 2, "Cooldown B debe bajar a 2")
 	assert_false(unit_b.has_moved_this_turn, "B debe poder moverse")
-	assert_false(unit_b.has_hability_this_turn, "B debe poder usar habilidad")
+	assert_false(unit_b.has_used_hability_this_turn, "B debe poder usar habilidad")
 	assert_eq(unit_a._habilities[hab_a], 2, "Cooldown A no debe cambiar")
 	assert_true(unit_a.has_moved_this_turn, "A no debe resetearse aún")
 	
@@ -114,7 +118,7 @@ func test_advance_turn_updates_units() -> void:
 	assert_eq(unit_b._currentAlterStates[poison2], 2, "Veneno debe tener 2 turnos restantes")
 	
 	#  Kill desuscribe
-	unit_b.kill()
+	#unit_b.kill()
 	await wait_physics_frames(2)
 	
 	_assert_subscribed(tm, unit_b, false, "Unit B muerta no debe estar suscrita")

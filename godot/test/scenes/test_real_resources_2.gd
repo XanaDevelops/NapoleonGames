@@ -14,6 +14,8 @@ func test_sandbox_interactivo_movimiento() -> void:
 	add_child_autoqfree(map_instance)
 	
 	await wait_frames(2)
+	var ingame_map = map_instance.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
 	
 	var turn_manager = map_instance
 	var visualizer = _find_visualizer_node(map_instance)

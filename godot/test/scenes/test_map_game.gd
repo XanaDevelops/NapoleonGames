@@ -16,6 +16,7 @@ func test_visualizer() -> void:
 	await wait_until(func():
 		return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
+	autoqfree(instance._hab_manager)
 
 	gut.pause_before_teardown()
 	pass_test("ok, check UI")
@@ -41,6 +42,8 @@ func test_hability_applies_to_bars() -> void:
 
 	await wait_until(func(): return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
+	var ingame_map = instance.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
 
 	var unit_info = instance.get_node("IngameMap/VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo")
 	assert_not_null(unit_info, "UnitInfo debe existir")
@@ -130,7 +133,6 @@ func _create_physical_attack() -> HabilityRes:
 	hab.manaCost = 0
 	hab.radius = 1
 	hab.cooldown = 1
-	hab.duration = 0
 	hab.isPassive = false
 	hab.value = 15.0
 	hab.alter_states = [] as Array[AlterStateRes]
@@ -154,7 +156,6 @@ func _create_magic_attack() -> HabilityRes:
 	hab.manaCost = 25
 	hab.radius = 3
 	hab.cooldown = 2
-	hab.duration = 0
 	hab.isPassive = false
 	hab.value = 30.0
 	hab.alter_states = [] as Array[AlterStateRes]
@@ -176,7 +177,6 @@ func _create_heal() -> HabilityRes:
 	hab.manaCost = 15
 	hab.radius = 2
 	hab.cooldown = 2
-	hab.duration = 0
 	hab.isPassive = false
 	hab.value = 20.0
 	hab.alter_states = [] as Array[AlterStateRes]
@@ -252,7 +252,6 @@ func generate_habilities() -> Array[HabilityRes]:
 			h.manaCost = 10
 			h.radius = 0
 			h.cooldown = 3
-			h.duration = 0
 			h.isPassive = false
 			h.value = 0.0
 			h.alter_states = [_create_shield_buff()] as Array[AlterStateRes]
@@ -266,7 +265,6 @@ func generate_habilities() -> Array[HabilityRes]:
 			h.manaCost = 15
 			h.radius = 3
 			h.cooldown = 2
-			h.duration = 0
 			h.isPassive = false
 			h.value = 0.0
 			h.alter_states = [_create_speed_debuff()] as Array[AlterStateRes]
@@ -280,7 +278,6 @@ func generate_habilities() -> Array[HabilityRes]:
 			h.manaCost = 30
 			h.radius = 2
 			h.cooldown = 3
-			h.duration = 0
 			h.isPassive = false
 			h.value = 20.0
 			h.alter_states = [] as Array[AlterStateRes]
@@ -459,6 +456,8 @@ func test_bars_react_to_signals() -> void:
 	
 	await wait_until(func(): return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
+	var ingame_map = instance.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
 	
 	var unit_info = instance.get_node("IngameMap/VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo")
 	var hp_bar: ProgressBar = unit_info.current_health

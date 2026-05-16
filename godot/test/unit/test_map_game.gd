@@ -3,7 +3,7 @@ extends GutTest
 var gr : GameResources
 var map : MapRes
 func before_all():
-	self.gr = GameResources.load_from()
+	self.gr = GameResources.load_from("res://test/test_res/all_test_resources.tres")
 	
 	# generar un mapa
 	
@@ -36,7 +36,7 @@ func before_all():
 	
 	gr.maps.append(map)
 	
-	gr.save_to()
+	gr.save_to("res://test/test_res/all_test_resources.tres")
 	
 
 func test_dijkstra() -> void:

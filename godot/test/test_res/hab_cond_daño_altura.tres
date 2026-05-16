@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://drlxjkpuo8uo0"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_7arxu"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="2_cdqlr"]
+[ext_resource type="Resource" uid="uid://2u4830mftyn8" path="res://test/test_res/attack_type_physic.tres" id="2_vyfxt"]
+[ext_resource type="Resource" uid="uid://rkvpuobtd0gh" path="res://test/test_res/stat_altura.tres" id="3_06h5w"]
+[ext_resource type="Resource" uid="uid://dmc4jstoyeoun" path="res://test/test_res/stat_attack_linear.tres" id="4_06h5w"]
+
+[resource]
+script = ExtResource("2_cdqlr")
+name = &"superflecha"
+desc = "solo de altura"
+objective = 12
+value = 6.0
+stat = ExtResource("4_06h5w")
+attackType = ExtResource("2_vyfxt")
+radius = 9999
+manaCost = 5
+cooldown = 2
+condition = 4
+condition_stat = ExtResource("3_06h5w")
+condition_value = 5.0
+metadata/_custom_type_script = "uid://eihee83yhkpg"
