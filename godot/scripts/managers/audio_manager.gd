@@ -196,8 +196,21 @@ func _on_player_finished(player_index: int) -> void:
 		_skip_to_next_track()
 
 func stop_music_with_fade() -> void:
+	
+	var reproduciendo_algo := false
+	for player in music_players:
+		if player.playing:
+			reproduciendo_algo = true
+			break
+			
+	
+	if not reproduciendo_algo:
+		return
+
+	
 	if fade_tween and fade_tween.is_valid():
 		fade_tween.kill()
+		
 	fade_tween = create_tween().set_parallel(true)
 	
 	for player in music_players:
