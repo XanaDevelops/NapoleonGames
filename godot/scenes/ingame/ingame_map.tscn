@@ -118,13 +118,16 @@ handle_input_locally = false
 size = Vector2i(1919, 747)
 render_target_update_mode = 4
 
-[node name="mapVisualizer" type="Node2D" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment")]
+[node name="mapVisualizer" type="Node2D" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment", "tile_map_layer_hover", "tile_map_layer_owner_p1", "tile_map_layer_owner_p2")]
 script = ExtResource("1_7udv5")
 tile_map_layer_texture = NodePath("TileMapLayer_texture")
 tile_map_layer_units = NodePath("TileMapLayer_units")
 tile_map_layer_selection = NodePath("TileMapLayer_selection")
 tile_map_layer_highlight = NodePath("TileMapLayer_highlights")
 tile_map_layer_deployment = NodePath("TileMapLayer_deployment")
+tile_map_layer_hover = NodePath("TileMapLayer_hover")
+tile_map_layer_owner_p1 = NodePath("TileMapLayer_owner_p1")
+tile_map_layer_owner_p2 = NodePath("TileMapLayer_owner_p2")
 metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
 
 [node name="TileMapLayer_texture" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=479184065]
@@ -133,6 +136,12 @@ tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAU
 [node name="TileMapLayer_deployment" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1706908201]
 
 [node name="TileMapLayer_units" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1642646471]
+
+[node name="TileMapLayer_owner_p1" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=72154031]
+
+[node name="TileMapLayer_owner_p2" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1430528210]
+
+[node name="TileMapLayer_hover" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=993284346]
 
 [node name="TileMapLayer_selection" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1342848487]
 
@@ -200,6 +209,7 @@ layout_mode = 2
 stretch_mode = 5
 
 [node name="DescriptionContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=545130055]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
@@ -233,6 +243,12 @@ autowrap_mode = 2
 justification_flags = 131
 text_direction = 1
 
+[node name="DescriptionButton" type="Button" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=408557480]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Description"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=312636863]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -241,10 +257,18 @@ theme_override_constants/separation = 15
 [node name="HeightLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer" unique_id=1457569625]
 layout_mode = 2
 size_flags_vertical = 1
+theme_override_font_sizes/font_size = 28
 
 [node name="CostLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer" unique_id=2129641801]
 layout_mode = 2
 size_flags_vertical = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="PositionLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer" unique_id=1622334366]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 28
 
 [node name="UnitInfo" type="Control" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer" unique_id=551573519]
 visible = false
@@ -267,6 +291,7 @@ theme_override_constants/separation = 10
 
 [node name="UnitLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1696254877]
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 
 [node name="UnitTextureRect" type="TextureRect" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1491441126]
 custom_minimum_size = Vector2(48, 48)
@@ -276,7 +301,14 @@ size_flags_vertical = 4
 expand_mode = 3
 stretch_mode = 5
 
+[node name="DescriptionButton" type="Button" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1918322796]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Description"
+
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1419014336]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
@@ -312,15 +344,19 @@ size_flags_stretch_ratio = 0.5
 
 [node name="OwnerLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1458816575]
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 
 [node name="SpeedLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1357048857]
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 
 [node name="DodgeLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=504645439]
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 
 [node name="WeightLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1058537696]
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 
 [node name="Bars" type="VBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=610434549]
 layout_mode = 2
@@ -328,23 +364,14 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 theme_override_constants/separation = 20
 
-[node name="healthLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=251841302]
-layout_mode = 2
-text = "Health"
-
-[node name="HealthBar" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=1894103332 instance=ExtResource("7_6nuks")]
-custom_minimum_size = Vector2(100, 20)
-layout_mode = 2
-size_flags_vertical = 4
-
 [node name="ManaLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=269184968]
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 text = "Mana"
 
 [node name="ManaBar" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=51318480 instance=ExtResource("7_6nuks")]
 custom_minimum_size = Vector2(100, 20)
 layout_mode = 2
-size_flags_vertical = 4
 
 [node name="HabilitiesContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=966613889]
 layout_mode = 2
@@ -357,6 +384,7 @@ layout_mode = 2
 [node name="HabilitiesLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer" unique_id=168499739]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.08235294, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
 text = "Habilidades"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer" unique_id=1387866945]

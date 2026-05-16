@@ -46,6 +46,7 @@ func advance_turn() -> void:
 	print("Turno de ", user.username)
 	turn_number += 1
 	tick_turn.emit()
+	map_visualizer._clear_selection()
 	
 	
 func get_current_user() -> UserRes:

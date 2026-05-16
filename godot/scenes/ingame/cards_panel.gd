@@ -53,7 +53,7 @@ func paint_unit_info(tile: TileGame) -> void:
 	tabs.visible = true
 	unit_info.paint(tile)
 	tabs.set_tab_hidden(1, false)
-	tabs.current_tab = 0
+	tabs.current_tab = 1
 
 func clear_unit_info() -> void:
 	tabs.set_tab_hidden(1, true)
