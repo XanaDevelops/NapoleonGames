@@ -20,8 +20,8 @@ email = "xana@lyoko.com"
 img = ExtResource("8_vr1gt")
 token = "666"
 availableCards = Dictionary[ExtResource("1_0url1"), int]({
-ExtResource("2_m3u0r"): 3,
-ExtResource("3_i5a77"): 2
+ExtResource("2_m3u0r"): 15,
+ExtResource("3_i5a77"): 10
 })
 availableMaps = Array[ExtResource("4_w8ttf")]([ExtResource("5_c1g2p"), ExtResource("6_ynih6"), ExtResource("7_m3u0r")])
 userArmys = Array[ExtResource("9_fqwmf")]([ExtResource("10_wyo1t")])
