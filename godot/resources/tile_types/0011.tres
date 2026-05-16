@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="TileTypeRes" format=3]
+[gd_resource type="Resource" script_class="TileTypeRes" format=3 uid="uid://bbekcey5fnig8"]
 
-[ext_resource type="Script" path="res://scripts/resources/tile_mod_res.gd" id="1_8q8ns"]
-[ext_resource type="Script" path="res://scripts/resources/tile_type_res.gd" id="2_ld5h2"]
-[ext_resource type="Texture2D" path="res://assets/tiles/EverHex-Forest Lite/Forest/7.png" id="3_nfe3b"]
+[ext_resource type="Script" uid="uid://cnh4gjirdr73b" path="res://scripts/resources/tile_mod_res.gd" id="1_8q8ns"]
+[ext_resource type="Script" uid="uid://d4fyta6ugot35" path="res://scripts/resources/tile_type_res.gd" id="2_ld5h2"]
+[ext_resource type="Texture2D" uid="uid://bqqbsx3wbj8wc" path="res://assets/tiles/EverHex-Forest Lite/Forest/7.png" id="3_nfe3b"]
 
 [resource]
 script = ExtResource("2_ld5h2")

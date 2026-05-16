@@ -1,3 +1,4 @@
+class_name TestHabilities
 extends GutTest
 
 
@@ -7,7 +8,7 @@ extends GutTest
 @onready var user_ally : UserRes = preload("res://test/test_res/user_ally.tres")
 @onready var user_enemy : UserRes = preload("res://test/test_res/user_enemy.tres")
 
-@onready var tiles : Dictionary[int, TileTypeRes] = {
+static var tiles : Dictionary[int, TileTypeRes] = {
 	0: preload("res://test/test_res/tile_type_pasto.tres"),
 	1: preload("res://test/test_res/tile_type_montaña.tres")
 }
@@ -75,6 +76,17 @@ func test_passive() -> void:
 	#enemy.advance_turn()
 	assert_gt(enemy.hp, old_hp)
 	
+func test_passive2() -> void:
+	var ally := ally_units[1] #ranged
+	var enemy := enemy_units[0] #melee
+	
+	var old_hp := enemy.hp
+	# manualmente avanzar turno del enemigo
+	GameManager.get_turn_manager().advance_turn()
+	GameManager.get_turn_manager().advance_turn()
+	#enemy.advance_turn()
+	assert_lt(enemy.hp, old_hp)
+	
 func test_alter_state() -> void:
 	var ally := ally_units[1]
 	
@@ -103,22 +115,71 @@ func test_alter_state() -> void:
 	GameManager.get_turn_manager().advance_turn()
 	# Recuerda que tambien aplica la cura, la diferencia deberia ser de 1!
 	for i in range(3):
-		assert_lt(enemy_units[i].hp, old_hps[i])
+		assert_lt(enemy_units[i].hp, old_hps[i], str(i))
 		assert_eq(enemy_units[i]._currentAlterStates.size(),1)
 		
 	assert_eq(enemy_units[3].hp, old_hps[3])
 	
+func test_alter_state2():
+	var tm := GameManager.get_turn_manager()
 	
-func before_all():
-	# Crea y guarda el mapa de prueba
+	var ally := ally_units[0]
+	#kaboom
+	var hab_kaboom := ally.get_all_habilities()[2]
 	
+	var old_hps := enemy_units.map(func (x: UnitGame) -> int: return x.hp)
+	
+	tm._on_unit_hability_use(ally.get_current_position(), [], hab_kaboom)
+	tm.advance_turn()
+	tm.advance_turn()
+	
+	for i in range(4):
+		assert_lt(enemy_units[i].hp, old_hps[i], "Unidad: " + str(i))
+	
+
+func test_condition_height():
+	
+	var ally := ally_units[1] # ranged
+	
+	var old_hps := enemy_units.map(func (x: UnitGame) -> int: return x.hp)
+
+	assert_false(ally.use_hability(ally.get_all_habilities()[3], enemy_units), "No se usa")
+	assert_eq_deep(enemy_units.map(func (x:UnitGame): return x.hp), old_hps)
+	
+	ally._tile._tileRes.height = 100
+	assert_true(ally.use_hability(ally.get_all_habilities()[3], enemy_units))
+	for i in range(4):
+		assert_lt(enemy_units[i].hp, old_hps[i], "Unidad: " + str(i))
+
+
+func test_condition_hp():
+	
+	var ally := ally_units[0] # meele
+	
+	ally.hp = 3
+	
+	assert_true(ally.use_hability(ally.get_all_habilities()[3], [ally]))
+	assert_eq(ally.hp, ally.max_hp)
+	
+	GameManager.get_turn_manager().advance_turn()
+	
+	ally.hp = 11
+	
+	assert_false(ally.use_hability(ally.get_all_habilities()[4], [ally]))
+	
+	ally.hp = 1
+	
+	assert_true(ally.use_hability(ally.get_all_habilities()[4], [ally]))
+	assert_eq(ally.hp, ally.max_hp)
+	
+static func gen_test_map() -> MapRes:
 	var map_ids := [[0,0,0,0,0],
 					[0,1,0,1,0],
 					[0,1,0,1,0],
 					[0,1,0,1,0],
 					[0,0,0,0,0]]
 					
-	self.map_test = MapRes.new()
+	var map_test := MapRes.new()
 	
 	map_test.name = &"test_map_01"
 	map_test.tamX = 5
@@ -141,7 +202,12 @@ func before_all():
 	map_test.mapData[3][4].height = 100000
 	
 	if ResourceSaver.save(map_test, "res://test/test_res/map_test.tres") != OK:
-		fail_test("error al guardar!")
+		push_error("error al guardar!")
+	return map_test
+	
+func before_all():
+	# Crea y guarda el mapa de prueba
+	self.map_test = gen_test_map()
 	
 
 func before_each():
@@ -156,6 +222,7 @@ func before_each():
 	tm.turn_order = [user_ally, user_enemy]
 	GameManager.register_turn_manager(tm)
 	GameManager.set_map(map_game)
+	GameManager._app_state = GameManager.APP_STATE.IN_GAME
 	
 	unit = UnitGame.new(card_melee, user_ally)
 	map_game.place_unit(unit, Vector2i(0,0))
@@ -187,19 +254,3 @@ func before_each():
 	
 	
 	seed(666)
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
