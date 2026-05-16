@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://cl4k0d1mh51p"]
+
+[ext_resource type="FontFile" uid="uid://ufrct3eoe0g4" path="res://assets/themes/ui/Urbanist/static/Urbanist-Medium.ttf" id="1_xvrms"]
+
+[resource]
+default_font = ExtResource("1_xvrms")
+default_font_size = 19

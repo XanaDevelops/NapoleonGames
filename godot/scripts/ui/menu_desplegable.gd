@@ -4,7 +4,7 @@ extends Button
 enum Lado { DERECHA, IZQUIERDA, ARRIBA, ABAJO }
 
 @export var posicion_menu: Lado = Lado.DERECHA 
-@export var separacion: float = 5.0           
+@export var separacion: float = 0.0           
 
 var menu_interno: Panel = null
 
