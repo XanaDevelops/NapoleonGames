@@ -8,7 +8,6 @@
 ## - objective: Objetivo de la habilidad (enum HAB_DEST).[br]
 ## - value: Valor de la habilidad.[br]
 ## - manaCost: Coste de maná.[br]
-## - duration: Duración en turnos.[br]
 ## - isPassive: Indica si es pasiva.[br]
 ## - alter_states: Estados alterados aplicados (Array[[AlterStateRes]]).[br]
 ##
@@ -46,8 +45,6 @@ var objective := SEL_ENEMY_FLAG
 @export var radius: int  # conflicto con "range"
 ## Coste de maná
 @export var manaCost := 0
-## Duración en turnos
-@export var duration := 0  # (0 solo actua ese turno)
 ## Cooldown en turnos
 @export var cooldown := 1 # (1, en el siguiente está disponible
 ## Probabilidad de acierto
@@ -69,6 +66,14 @@ func _init() -> void:
 		push_error("Habilidad sin objetivo valido!\nValor por defecto ENEMY")
 		assert(false)
 
+## true si la habilidad SOLO afecta a self
+static func inflicts_strict_self(obj: int) -> bool:
+	return obj == SEL_SELF_FLAG
+
+## true si la habilidad SOLO afecta a self
+func _inflicts_strict_self(obj: int) -> bool:
+	return inflicts_strict_self(obj)
+	
 ## true si la habilidad afecta a uno mismo
 static func inflicts_self(obj: int) -> bool:
 	return obj & SEL_SELF_FLAG

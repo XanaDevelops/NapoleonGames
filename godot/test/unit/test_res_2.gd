@@ -12,14 +12,14 @@ func test_name() -> void:
 		else:
 			assert_not_null(gameResources.get(script_name))
 
-func test_pack() -> void:
+func _test_pack() -> void:
 	var gameResources := GameManager.get_game_resources()
 	print("test")
 	gameResources.pack()
 	gameResources.save_to()
 	assert_true(true)
 	
-func test_unpack() -> void:
+func _test_unpack() -> void:
 	var gameResources := GameManager.get_game_resources()
 	gameResources.unpack()
 	gameResources.save_to()

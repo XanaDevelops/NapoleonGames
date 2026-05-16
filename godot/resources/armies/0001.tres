@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ArmyRes" format=3 uid="uid://bhnm4vhuxkhh8"]
+[gd_resource type="Resource" script_class="ArmyRes" format=3 uid="uid://ceu0io2rklge0"]
 
 [ext_resource type="Script" uid="uid://chjdn7qg0thht" path="res://scripts/resources/card_army_group.gd" id="1_vuud0"]
 [ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="2_lef3q"]

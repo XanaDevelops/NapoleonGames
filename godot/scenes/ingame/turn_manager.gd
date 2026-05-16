@@ -126,7 +126,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
 func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability: HabilityRes) -> void:
 	var map : MapGame = GameManager.get_map()
 	var unit_source := map.get_tile_at(tile).get_unit()
-	if unit_source.has_hability_this_turn:
+	if unit_source.has_used_hability_this_turn:
 		print("La unidad ya ha usado una habilidad activa!")
 		return
 		

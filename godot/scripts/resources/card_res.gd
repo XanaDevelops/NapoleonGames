@@ -32,7 +32,7 @@ extends GameResource
 ## Velocidad de la carta
 @export var speed: int  #valor de la velocidad
 ## Probabilidad de esquiva
-@export var dodge: float
+@export var dodge: float = 0.0
 ## Imagen de la carta ([Texture2D])
 @export var portrait: Texture2D #tambien podria ser path a la imagen
 ## Imagen para dentro del juego

@@ -1,10 +1,13 @@
 extends GutTest
 
 var _gr : GameResources
+var map : MapGame
+
 
 func before_all():
-	self._gr = GameManager.get_game_resources()
-	
+	self._gr = GameResources.load_from("res://test/test_res/all_test_resources.tres")
+	self.map = MapGame.new(TestHabilities.gen_test_map())
+	GameManager.set_map(self.map)
 	
 func test_getters() -> void:
 	var atacker := UnitGame.new(_gr.cards[0], null) #mele
@@ -14,11 +17,12 @@ func test_getters() -> void:
 ## Comprueba el calculo del daño de una unidad
 func test_damage() -> void:
 	var atacker := UnitGame.new(_gr.cards[0], null) #mele
+	map.place_unit(atacker, Vector2i(0, 0))
 	var defender := UnitGame.new(_gr.cards[1], null) #arquero
-		
+	map.place_unit(defender, Vector2i(0, 0))
 	var currentHP := defender.hp
 	
-	var h := atacker.get_available_habilities()[0]
+	var h := atacker.get_all_habilities()[0]
 	
 	defender.recieve_attack(h.value, h.attackType)
 	

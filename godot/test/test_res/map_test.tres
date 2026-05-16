@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MapRes" format=3 uid="uid://b7ioxq6kltign"]
+[gd_resource type="Resource" script_class="MapRes" format=3 uid="uid://b1v7j2dlgua76"]
 
 [ext_resource type="Script" uid="uid://bmy17ix6av5bg" path="res://scripts/resources/tile_res.gd" id="1_co4aq"]
 [ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="1_jtlvq"]
