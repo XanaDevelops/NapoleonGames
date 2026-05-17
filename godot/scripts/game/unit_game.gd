@@ -62,7 +62,6 @@ func _init(cardRes: CardRes, owner: UserGame) -> void:
 		
 	self._owner = owner
 	
-
 ## Avanza los contadores de habilidades y estados alterados
 func _tick() -> void:
 	for key in self._currentAlterStates.keys():

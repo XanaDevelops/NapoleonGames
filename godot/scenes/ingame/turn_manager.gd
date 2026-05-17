@@ -49,19 +49,26 @@ func register_turn(turn: TurnAction) -> bool:
 func replay_turn(turn: TurnAction) -> bool:
 	match turn.action:
 		TurnAction.ACTION.DEPLOYMENT:
-			pass
+			_replay_deployment(turn)
 		TurnAction.ACTION.MOVEMENT:
 			pass
 		TurnAction.ACTION.ACTIVE, TurnAction.ACTION.PASSIVE:
 			pass
 		_:
-			push_error("[TurnManager] Accion desconocida ", turn.action)
+			push_error("[TurnManager] Accion no implementada ", turn.action)
 			return false
 			
 			
 	return true
 		
+func _replay_deployment(turn: TurnDeploy) -> bool:
+	return true
 
+func _replay_movement(turn: TurnMove) -> bool:
+	return true
+	
+func _replay_hability(turn: TurnHability) -> bool:
+	return true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -102,11 +109,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
 		unit.has_moved_this_turn = true
 		map_visualizer.plot_unit_moved(start, end)
 		
-		var action = TurnAction.new()
-		action.player = unit._owner
-		action.action = TurnAction.ACTION.MOVEMENT
-		action.start = start
-		action.end = end
+		var action := TurnMove.create(unit, start, end)
 		register_turn(action)
 	else:
 		print("Acción denegada: No es el turno del dueño de esta unidad")
@@ -141,18 +144,7 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 		print("No se cumple las condiciones para usar esta habilidad!")
 		return
 		
-	var action := TurnAction.new()
-	if hability.isPassive:
-		action.action = TurnAction.ACTION.PASSIVE
-	else:
-		action.action = TurnAction.ACTION.ACTIVE
-	action.action = TurnAction.ACTION.ACTIVE
-	action.player = unit_source._owner
-	action.unit = unit_source
-	action.start = tile
-	action.end = tile
-	action.dest = objectives
-	
+	var action := TurnHability.create(unit_source, tile, hability, objectives)
 	register_turn(action)
 		
 
@@ -199,12 +191,9 @@ func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vect
 		map_visualizer.draw_tile(pos.x, pos.y, GameManager._gameMap.get_tile_at(pos))
 
 		new_unit.died.connect(_on_unit_died)
-		var action := TurnAction.new()
-		action.player = user_game
-		action.action = TurnAction.ACTION.DEPLOYMENT
-		action.unit = new_unit
-		action.deploy_pos = pos
-		register_turn(action)
+		
+	var action := TurnDeploy.create(user_game, click_pos, group.cardType, group.n)
+	register_turn(action)
 
 	if map_visualizer:
 		map_visualizer.clear_deployment_preview()
