@@ -16,9 +16,9 @@ var turn_number: int = 0
 var is_deployment_phase: bool = false
 
 func advance_turn() -> void:
+	turn_number += 1
 	var user : UserGame = turn_order[turn_number % turn_order.size()]
 	print("Turno de ", user.get_user_res().username)
-	turn_number += 1
 	tick_turn.emit()
 	
 	
