@@ -1,10 +1,8 @@
 extends Node
 
 signal handle_local_id_assignment(local_id: int)
-signal handle_remote_id_assignment(remote_id: int)
 
 var id: int = -1
-var remote_ids: Array[int]
 
 func _ready() -> void:
 	Online.on_client_packet.connect(on_client_packet)
@@ -25,13 +23,4 @@ func manage_ids(id_assignment: IDAssignment) -> void:
 		id = id_assignment.id
 		handle_local_id_assignment.emit(id_assignment.id)
 
-		remote_ids = id_assignment.remote_ids
-		for remote_id in remote_ids:
-			if remote_id == id: continue
-			handle_remote_id_assignment.emit(remote_id)
-
-	else: # When id != -1, we already own an id, and just append the remote ids by the sent id
-		remote_ids.append(id_assignment.id)
-		handle_remote_id_assignment.emit(id_assignment.id)
-		
-	prints("my id", id, "others", remote_ids)
+	prints("my id", id)
