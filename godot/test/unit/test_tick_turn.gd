@@ -4,7 +4,7 @@ extends GutTest
 const CARD_A_PATH = "res://test/test_res/card_melee.tres"
 const CARD_B_PATH = "res://test/test_res/card_ranged.tres"
 
-func _create_test_unit(card_path: String, owner: UserRes) -> UnitGame:
+func _create_test_unit(card_path: String, owner: UserGame) -> UnitGame:
 	var card = load(card_path) as CardRes
 	assert_not_null(card, "No se pudo cargar: " + card_path)
 	return UnitGame.new(card, owner)
@@ -42,19 +42,21 @@ func _setup_game_environment() -> Dictionary:
 	GameManager._army_a = gr.users[0].obtener_ejercito_activo()
 	GameManager._army_b = gr.users[1].obtener_ejercito_activo()
 	GameManager._app_state = GameManager.APP_STATE.IN_GAME
+	var user_a_game := UserGame.new(gr.users[0])
+	var user_b_game := UserGame.new(gr.users[1])
 	
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
 	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate() as TurnManager
-	instance.turn_order = [gr.users[0], gr.users[1]]
+	instance.turn_order = [user_a_game, user_b_game]
 	instance.turn_number = 0
 	add_child_autoqfree(instance)
 	
 	return {
 		"tm": instance,
 		"map": map,
-		"user_a": gr.users[0],
-		"user_b": gr.users[1],
+		"user_a": user_a_game,
+		"user_b": user_b_game,
 		"prev_add_target": prev_add_target,
 	}
 func test_advance_turn_updates_units() -> void:

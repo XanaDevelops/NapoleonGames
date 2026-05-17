@@ -9,7 +9,7 @@ enum ACTION {
 	DEPLOYMENT
 }
 
-var player: UserRes
+var player: UserGame
 var action: ACTION
 var unit: UnitGame
 var start: Vector2i

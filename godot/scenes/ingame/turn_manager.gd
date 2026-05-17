@@ -2,7 +2,7 @@ class_name TurnManager
 extends Node
 
 
-signal card_deployed(player: UserRes, remaining: int)
+signal card_deployed(player: UserGame, remaining: int)
 ## Los UnitGame deben subscribirse a esto para avanzar el turno
 signal tick_turn
 
@@ -11,22 +11,18 @@ signal tick_turn
 @onready var map_visualizer = $IngameMap/VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer
 @onready var players_panel= $IngameMap/VBoxContainer/PlayersPanel
 @export var turns: Array[TurnAction] = []
-var turn_order: Array[UserRes] = []
+var turn_order: Array[UserGame] = []
 var turn_number: int = 0
-
-var player_deployment_data: Dictionary[UserRes, Array] = {}
-var living_units: Dictionary[UserRes, int] = {}
-var pending_deployment_group: CardArmyGroup = null
 var is_deployment_phase: bool = false
 
 func advance_turn() -> void:
-	var user : UserRes = turn_order[turn_number % turn_order.size()]
-	print("Turno de ", user.username)
+	var user : UserGame = turn_order[turn_number % turn_order.size()]
+	print("Turno de ", user.get_user_res().username)
 	turn_number += 1
 	tick_turn.emit()
 	
 	
-func get_current_user() -> UserRes:
+func get_current_user() -> UserGame:
 	return turn_order[turn_number % turn_order.size()]
 	
 func get_current_user_number() -> int:
@@ -36,10 +32,8 @@ func is_player1_turn() -> bool:
 	return self.get_current_user()==turn_order[0]
 ## Placeholder para 
 
-func get_player_cards(player:UserRes) -> int:
-	if player_deployment_data.has(player):
-		return player_deployment_data[player].size()
-	return 0
+func get_player_cards(player: UserGame) -> int:
+	return player.get_deployment_count()
 	
 	
 func register_turn(turn: TurnAction) -> bool:
@@ -67,18 +61,17 @@ func replay_turn(turn: TurnAction) -> bool:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	GameManager.turn_manager = self 
-	deployment_box.unit_selected_for_deployment.connect(_on_card_selected_in_ui)
-	map_visualizer.tile_clicked.connect(_on_hex_clicked)
 	if turn_order.is_empty() :
-		turn_order = [GameManager._user_a, GameManager._user_b]
-	
-	if player_deployment_data.is_empty():
-		## FIXME: usar .deep_duplicate
-		player_deployment_data[turn_order[0]] = _clone_army(GameManager._army_a)
-		player_deployment_data[turn_order[1]] = _clone_army(GameManager._army_b)
-	
+		turn_order = [UserGame.new(GameManager._user_a), UserGame.new(GameManager._user_b)]
+
+	if turn_order.size() >= 2:
+		if turn_order[0].deployment_data.is_empty():
+			turn_order[0].set_deployment_data(_clone_army(GameManager._army_a))
+		if turn_order[1].deployment_data.is_empty():
+			turn_order[1].set_deployment_data(_clone_army(GameManager._army_b))
+
 	for usuario in turn_order:
-		living_units[usuario] = 0
+		usuario.living_units = 0
 	players_panel.setup(self)
 	start_deployment_phase()
 	
@@ -160,70 +153,65 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 
 func start_deployment_phase() -> void:
 	is_deployment_phase = true
+	GameManager._app_state = GameManager.APP_STATE.DEPLOYMENT
 	players_panel.set_phase_deployment()
 	cards_panel.set_deployment_phase(true)
 	_refresh_ui_for_current_player()
 	_highlight_current_deployment_zone()
-	
-	if map_visualizer and not map_visualizer.tile_hovered.is_connected(_on_map_tile_hovered):
-		map_visualizer.tile_hovered.connect(_on_map_tile_hovered)
 
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
+	GameManager._app_state = GameManager.APP_STATE.IN_GAME
 	players_panel.set_phase_battle()
 
 	cards_panel.set_deployment_phase(false)
 	map_visualizer.movement_requested.connect(_on_unit_movement_requested)
-	#GameManager._app_state= GameManager.APP_STATE.IN_GAME
 	
 	if map_visualizer:
 		map_visualizer.clear_deployment_zone()
 		map_visualizer.clear_deployment_preview()
-		
-		if map_visualizer.tile_hovered.is_connected(_on_map_tile_hovered):
-			map_visualizer.tile_hovered.disconnect(_on_map_tile_hovered)
 
-func _on_hex_clicked(click_pos: Vector2i, _tile: TileGame = null) -> void:
-	if pending_deployment_group == null:
-		return
-		
-	var current_user := get_current_user()
-	var result:Dictionary = GameManager._gameMap.calculate_deployment(get_current_user_number(), pending_deployment_group.n, click_pos)
-	
+func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vector2i) -> bool:
+	if not is_deployment_phase:
+		return false
+	if user_game != get_current_user():
+		return false
+	if group == null:
+		return false
+	if not user_game.deployment_data.has(group):
+		return false
+
+	var result: Dictionary = GameManager._gameMap.calculate_deployment(get_current_user_number(), group.n, click_pos)
 	if not result["is_valid"]:
-		return
-	
-	living_units[current_user] +=pending_deployment_group.n 
-	
+		return false
+
+	user_game.add_living_units(group.n)
+
 	for pos in result["tiles"]:
-		var new_unit := UnitGame.new(pending_deployment_group.cardType, get_current_user())
-		new_unit._owner = current_user
-		
+		var new_unit := UnitGame.new(group.cardType, user_game)
+		new_unit._owner = user_game
+
 		GameManager._gameMap.place_unit(new_unit, pos)
 		map_visualizer.draw_tile(pos.x, pos.y, GameManager._gameMap.get_tile_at(pos))
-		
+
 		new_unit.died.connect(_on_unit_died)
 		var action := TurnAction.new()
-		action.player = current_user
+		action.player = user_game
 		action.action = TurnAction.ACTION.DEPLOYMENT
 		action.unit = new_unit
 		action.deploy_pos = pos
 		register_turn(action)
-		
+
 	if map_visualizer:
 		map_visualizer.clear_deployment_preview()
-		
-	_consume_current_card()
 
-func _consume_current_card() -> void:
-	var current_user := get_current_user()
-	if player_deployment_data.has(current_user):
-		player_deployment_data[current_user].erase(pending_deployment_group)
-		deployment_box.remove_card_visual(pending_deployment_group)
-		card_deployed.emit(current_user, player_deployment_data[current_user].size())
+	_consume_current_card(user_game, group)
+	return true
 
-	
-	pending_deployment_group = null
+func _consume_current_card(user_game: UserGame, group: CardArmyGroup) -> void:
+	if user_game.consume_deployment_group(group):
+		deployment_box.remove_card_visual(group)
+		card_deployed.emit(user_game, user_game.get_deployment_count())
 
 	_handle_next_deployment_step()
 
@@ -248,29 +236,14 @@ func _handle_next_deployment_step() -> void:
 
 func _refresh_ui_for_current_player() -> void:
 	var user := get_current_user()
-	
-	if player_deployment_data.has(user):
-		
-		deployment_box.populate(player_deployment_data[user])
+	deployment_box.populate(user.deployment_data)
 
-func _has_cards_to_deploy(user: UserRes) -> bool:
-	return player_deployment_data.has(user) and not player_deployment_data[user].is_empty()
-
-func _on_card_selected_in_ui(army_group: CardArmyGroup) -> void:
-	pending_deployment_group = army_group
+func _has_cards_to_deploy(user: UserGame) -> bool:
+	return user.has_deployment_cards()
 
 func _highlight_current_deployment_zone() -> void:
 	var zone_tiles:Array[Vector2i] = GameManager._gameMap.get_deployment_zone_tiles(get_current_user_number())
 	map_visualizer.show_deployment_zone(zone_tiles)
-
-func _on_map_tile_hovered(coords: Vector2i) -> void:
-	if pending_deployment_group == null:
-		if map_visualizer: 
-			map_visualizer.clear_deployment_preview()
-		return
-		
-	var result:Dictionary= GameManager._gameMap.calculate_deployment(get_current_user_number(), pending_deployment_group.n, coords)
-	map_visualizer.show_deployment_preview(result["tiles"], result["is_valid"])
 
 
 #esta función se ejecuta caundo una unidad emite que ha muerto
@@ -281,17 +254,17 @@ func _on_unit_died(unit: UnitGame, pos: Vector2i) -> void:
 			tick_turn.disconnect(unit.advance_turn)
 	
 	cards_panel.clear_unit_info()
-	
-	living_units[unit._owner] -= 1
-	print(unit._owner.name + " ha perdido una unidad. Le quedan: ", living_units[unit._owner])
+
+	unit._owner.dec_living_units(1)
+	print(unit._owner.get_user_res().name + " ha perdido una unidad. Le quedan: ", unit._owner.living_units)
 		
 		# Si llega a 0, la partida termina inmediatamente
-	if living_units[unit._owner] <= 0:
+	if unit._owner.living_units <= 0:
 			
 		var ganador = turn_order[0] if unit._owner == turn_order[1] else turn_order[1]
 			
-		print("¡Partida terminada! El ganador es: ", ganador.name)
-		finalizar_partida(ganador.name)
+		print("¡Partida terminada! El ganador es: ", ganador.get_user_res().name)
+		finalizar_partida(ganador.get_user_res().name)
 
 func finalizar_partida(nombre_del_vencedor: String):
 	

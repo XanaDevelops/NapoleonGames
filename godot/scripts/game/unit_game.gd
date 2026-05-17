@@ -6,7 +6,7 @@ const PASSIVE_MANA := 5
 
 @export var _cardRes: CardRes
 
-@export var _owner: UserRes
+@export var _owner: UserGame
 @export var _tile: TileGame
 ## Vida actual, si <=0 estas muerto
 @export var hp: int:
@@ -51,7 +51,7 @@ signal died(unit: UnitGame, pos: Vector2i)
 var has_moved_this_turn : bool = false
 var has_used_hability_this_turn := false
 
-func _init(cardRes: CardRes, owner: UserRes) -> void:
+func _init(cardRes: CardRes, owner: UserGame) -> void:
 	self._cardRes = cardRes
 	
 	self.hp = cardRes.hp
