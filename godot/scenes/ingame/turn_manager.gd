@@ -90,9 +90,6 @@ func _clone_army(army: ArmyRes) -> Array[CardArmyGroup]:
 		for group in army.agrupations:
 			copy.append(group.duplicate())
 	return copy
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
 	var map_logic = GameManager.get_map()
