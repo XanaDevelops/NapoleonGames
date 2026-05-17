@@ -195,7 +195,7 @@ func _create_poison() -> AlterStateRes:
 	state.value = -5.0
 	state.hitP = 1.0
 	state.duration = 3
-	state.objectiu = HabilityRes.SEL_ENEMY_FLAG
+	state.objective = HabilityRes.SEL_ENEMY_FLAG
 	return state
 
 func _create_shield_buff() -> AlterStateRes:
@@ -206,7 +206,7 @@ func _create_shield_buff() -> AlterStateRes:
 	state.value = 10.0
 	state.hitP = 1.0
 	state.duration = 2
-	state.objectiu = HabilityRes.SEL_SELF_FLAG
+	state.objective = HabilityRes.SEL_SELF_FLAG
 	return state
 
 func _create_speed_debuff() -> AlterStateRes:
@@ -217,7 +217,7 @@ func _create_speed_debuff() -> AlterStateRes:
 	state.value = -3.0
 	state.hitP = 0.75
 	state.duration = 2
-	state.objectiu = HabilityRes.SEL_ENEMY_FLAG
+	state.objective = HabilityRes.SEL_ENEMY_FLAG
 	return state
 
 

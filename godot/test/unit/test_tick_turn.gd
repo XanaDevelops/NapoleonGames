@@ -25,7 +25,7 @@ func _create_poison() -> AlterStateRes:
 	state.value = -5.0
 	state.hitP = 1.0
 	state.duration = 3
-	state.objectiu = HabilityRes.SEL_SELF_FLAG
+	state.objective = HabilityRes.SEL_SELF_FLAG
 	return state
 	
 func _advance_and_wait(tm: TurnManager) -> void:

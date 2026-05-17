@@ -94,10 +94,10 @@ func _proc_alter_states() -> void:
 			
 		# Reutilizar esta funcion, un AlterState no deja de ser una minihabilidad
 		var dest : Array[UnitGame] = []
-		if HabilityRes.inflicts_strict_self(alter.objectiu):
+		if HabilityRes.inflicts_strict_self(alter.objective):
 			dest.append(self)
 		else:
-			dest.append_array(GameManager.get_map().get_units_range(_tile.get_position(), alter.radius, alter.objectiu) \
+			dest.append_array(GameManager.get_map().get_units_range(_tile.get_position(), alter.radius, alter.objective) \
 					.map(func (x: Vector2i): return GameManager.get_map().get_tile_at(x).get_unit()) as Array[UnitGame])
 		for obj in dest:
 			_apply_hab(alter.stat, alter.type, alter.value, obj)
@@ -287,7 +287,7 @@ func _update_val_alter_states(init_val : float, stat_name:StringName, type: Atta
 	var multipliers := 1.0
 	
 	for alter in self._currentAlterStates:
-		if not HabilityRes.inflicts_self(alter.objectiu):
+		if not HabilityRes.inflicts_self(alter.objective):
 			continue
 
 		# ojo que randf() es [0,1] no [0,1)
