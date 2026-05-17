@@ -12,7 +12,7 @@ func on_peer_connected(peer_id: int) -> void:
 	peer_ids.append(peer_id)
 
 	IDAssignment.create(peer_id, peer_ids).broadcast(Online.connection)
-
+	print("[Server] enviado IDAssignment ", peer_id)
 
 func on_peer_disconnected(peer_id: int) -> void:
 	peer_ids.erase(peer_id)

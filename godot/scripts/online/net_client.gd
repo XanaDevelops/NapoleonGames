@@ -33,3 +33,5 @@ func manage_ids(id_assignment: IDAssignment) -> void:
 	else: # When id != -1, we already own an id, and just append the remote ids by the sent id
 		remote_ids.append(id_assignment.id)
 		handle_remote_id_assignment.emit(id_assignment.id)
+		
+	prints("my id", id, "others", remote_ids)
