@@ -6,7 +6,7 @@ const PASSIVE_MANA := 5
 
 @export var _cardRes: CardRes
 
-@export var _owner: UserGame
+@export var _owner: UserRes
 @export var _tile: TileGame
 ## Vida actual, si <=0 estas muerto
 @export var hp: int:
@@ -51,7 +51,7 @@ signal died(unit: UnitGame, pos: Vector2i)
 var has_moved_this_turn : bool = false
 var has_used_hability_this_turn := false
 
-func _init(cardRes: CardRes, owner: UserGame) -> void:
+func _init(cardRes: CardRes, owner: UserRes) -> void:
 	self._cardRes = cardRes
 	
 	self.hp = cardRes.hp
@@ -94,10 +94,10 @@ func _proc_alter_states() -> void:
 			
 		# Reutilizar esta funcion, un AlterState no deja de ser una minihabilidad
 		var dest : Array[UnitGame] = []
-		if HabilityRes.inflicts_strict_self(alter.objective):
+		if HabilityRes.inflicts_strict_self(alter.objectiu):
 			dest.append(self)
 		else:
-			dest.append_array(GameManager.get_map().get_units_range(_tile.get_position(), alter.radius, alter.objective) \
+			dest.append_array(GameManager.get_map().get_units_range(_tile.get_position(), alter.radius, alter.objectiu) \
 					.map(func (x: Vector2i): return GameManager.get_map().get_tile_at(x).get_unit()) as Array[UnitGame])
 		for obj in dest:
 			_apply_hab(alter.stat, alter.type, alter.value, obj)
@@ -287,7 +287,7 @@ func _update_val_alter_states(init_val : float, stat_name:StringName, type: Atta
 	var multipliers := 1.0
 	
 	for alter in self._currentAlterStates:
-		if not HabilityRes.inflicts_self(alter.objective):
+		if not HabilityRes.inflicts_self(alter.objectiu):
 			continue
 
 		# ojo que randf() es [0,1] no [0,1)

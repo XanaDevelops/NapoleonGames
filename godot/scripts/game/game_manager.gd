@@ -11,6 +11,7 @@ var turn_manager: TurnManager
 signal phase_changed(phase: APP_STATE)
 enum APP_STATE {
 	MENU_HUB,
+	DEPLOYMENT,
 	IN_GAME,
 }
 @export var _app_state := APP_STATE.MENU_HUB
@@ -40,7 +41,8 @@ func start_game(playerA: UserRes, playerB:UserRes, map:MapRes, armyA: ArmyRes, a
 	self._army_a = armyA
 	self._army_b = armyB
 
-	_app_state = APP_STATE.IN_GAME
+	#_app_state = APP_STATE.IN_GAME
+	_app_state = APP_STATE.DEPLOYMENT
 
 	UiManager.cambiar_a_escena("juego")
 	
@@ -75,3 +77,11 @@ func get_turn_manager() -> TurnManager:
 ## si hay que configurar signals y cosas de esas aquí
 func register_turn_manager(tm: TurnManager) -> void:
 	self.turn_manager = tm
+
+func get_current_phase() -> String:
+	match _app_state:
+		APP_STATE.DEPLOYMENT:
+			return "Despliegue"
+		APP_STATE.IN_GAME: 
+			return "Combate"
+	return ""

@@ -19,8 +19,8 @@ extends Control
 var turnManager:TurnManager
 var  total_cards_p1:int
 var  total_cards_p2:int
-var _p1: UserGame
-var _p2: UserGame
+var _p1: UserRes
+var _p2: UserRes
 var phase
 
 #
@@ -44,12 +44,10 @@ func setup(tm: TurnManager) -> void:
 	_p1 = tm.turn_order[0]
 	_p2 = tm.turn_order[1]
 	
-	var p1_res := _p1.get_user_res()
-	var p2_res := _p2.get_user_res()
-	p1_name.text = p1_res.username
-	p1_avatar.texture = p1_res.img
-	p2_name.text = p2_res.username
-	p2_avatar.texture = p2_res.img
+	p1_name.text = _p1.username
+	p1_avatar.texture = _p1.img
+	p2_name.text = _p2.username
+	p2_avatar.texture = _p2.img
 
 func set_phase_deployment() -> void:
 	phase_label.text = "Fase de DESPLIEGUE"
@@ -68,7 +66,7 @@ func set_phase_deployment() -> void:
 	#añadir más info..
 
 
-func update_cards_number(player: UserGame, remaining_cards: int) -> void:
+func update_cards_number(player: UserRes, remaining_cards: int) -> void:
 	if player == _p1:
 		var placed = total_cards_p1 - remaining_cards
 		p1_num_cards.text = "Cards %d/%d" % [placed, total_cards_p1]
