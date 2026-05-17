@@ -28,6 +28,11 @@ func get_current_user() -> UserGame:
 func get_current_user_number() -> int:
 	return turn_number % turn_order.size()
 
+func get_current_phase() -> String:
+	if is_deployment_phase:
+		return "Despliegue"
+	return "Combate"
+
 func is_player1_turn() -> bool:
 	return self.get_current_user()==turn_order[0]
 ## Placeholder para 
