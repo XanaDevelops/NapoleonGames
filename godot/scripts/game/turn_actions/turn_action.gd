@@ -1,3 +1,4 @@
+@abstract
 class_name TurnAction
 extends GameResource
 
@@ -13,12 +14,9 @@ enum ACTION {
 
 var player: UserGame
 var action: ACTION
+## duplicate no funciona si _init(..args), en teoria lo que nos hace falta no cambia
 var unit: UnitGame
-var start: Vector2i
-var end: Vector2i
-var hability: HabilityRes
-var dest: Array[Vector2i]
-var deploy_pos: Vector2i
+
 
 
 func _init() -> void:
