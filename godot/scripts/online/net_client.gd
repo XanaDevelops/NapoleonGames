@@ -13,7 +13,8 @@ func on_client_packet(data: PackedByteArray) -> void:
 	match packet_type:
 		NetPacket.PACKET_TYPE.ID_ASSIGNMENT:
 			manage_ids(IDAssignment.create_from_data(data))
-
+		NetPacket.PACKET_TYPE.PING:
+			manage_ping(PingPacket.create_from_data(data))
 		_:
 			push_error("Packet type with index ", data[0], " unhandled!")
 
@@ -24,3 +25,7 @@ func manage_ids(id_assignment: IDAssignment) -> void:
 		handle_local_id_assignment.emit(id_assignment.id)
 
 	prints("my id", id)
+
+
+func manage_ping(ping : PingPacket) -> void:
+	print("["+str(id)+"] "+"PING: ", ping.message)

@@ -22,5 +22,16 @@ func on_peer_disconnected(peer_id: int) -> void:
 
 func on_server_packet(peer_id: int, data: PackedByteArray) -> void:
 	match data[0]:
+		NetPacket.PACKET_TYPE.PING:
+			manage_ping(PingPacket.create_from_data(data))
 		_:
 			push_error("Packet type with index ", data[0], " unhandled!")
+
+
+func manage_ping(ping : PingPacket) -> void:
+	ping.message = "From server: " + ping.message
+	_broadcast(ping)
+	
+	
+func _broadcast(packet : NetPacket) -> void:
+	Online.connection.broadcast(0, packet.encode(), packet.flag)

@@ -49,6 +49,12 @@ func _configure_client() -> void:
 	if not Online.start_client():
 		return
 	print_rich("[color=yellow]SOMOS cliente[/color]")
+	NetClient.handle_local_id_assignment.connect(func (pid: int):
+		var ping_n := randi()
+		print("Mi randi ", ping_n)
+		PingPacket.create(pid, "Hola que tal? soy:" + str(pid) + "num: "+str(ping_n)).send(Online.server_peer)	
+	)
+	
 
 func set_users() -> void:
 	var gr := GameResources.load_from() 
