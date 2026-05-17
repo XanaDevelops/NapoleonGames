@@ -1,21 +1,6 @@
 extends Control
 
 
-#@onready var unit_label: Label = $VBoxContainer/VBoxContainer/UnitLabel
-#@onready var unit_texture: TextureRect = $VBoxContainer/VBoxContainer/UnitTextureRect
-#
-#@onready var owner_label: Label = $VBoxContainer/VBoxContainer2/OwnerLabel
-#@onready  var speed_label: Label = $VBoxContainer/VBoxContainer2/SpeedLabel
-#@onready var dodge_label: Label = $VBoxContainer/VBoxContainer2/DodgeLabel
-#@onready var weight_label : Label = $VBoxContainer/VBoxContainer2/WeightLabel
-#@onready var resistances_container: PanelContainer = $VBoxContainer/ResistancesContainer
-#@onready var habilities_container: PanelContainer = $VBoxContainer/HabilitiesContainer
-#@onready var currrentAlterStates_container: PanelContainer = $VBoxContainer/CurrenAlterStatesContainer
-#@onready var habilities_grid: GridContainer= $VBoxContainer/HabilitiesContainer/VBoxContainer/ScrollContainer/GridContainer
-#@onready var grid_scroll: ScrollContainer = $VBoxContainer/HabilitiesContainer/VBoxContainer/ScrollContainer
-#@onready var resistances_grid : GridContainer= $VBoxContainer/ResistancesContainer/VBoxContainer/ResistancesScrollContainer/ResistancesGridContainer
-#@onready var alter_states_grid: GridContainer = $VBoxContainer/CurrenAlterStatesContainer/VBoxContainer/ScrollContainer/AlterStatesGridContainer
-#@onready var current_mana: ProgressBar = $VBoxContainer/Bars/ManaBar
 
 @export var unit_label: Label 
 @export var unit_texture: TextureRect 

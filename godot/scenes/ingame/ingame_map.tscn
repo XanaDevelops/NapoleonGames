@@ -7,7 +7,7 @@
 [ext_resource type="Shader" uid="uid://cemlqbvowjq1m" path="res://scenes/ingame/ingame_map.gdshader" id="3_g5sqw"]
 [ext_resource type="Script" uid="uid://bm6sp4ow1l2qv" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
 [ext_resource type="StyleBox" uid="uid://b0p3mdn4roxd6" path="res://assets/themes/ui/menu_styleboxflat.tres" id="4_m7qbv"]
-[ext_resource type="Script" uid="uid://c7mxpxq37rib7" path="res://scenes/ingame/top_menu.gd" id="5_f4drf"]
+[ext_resource type="Script" path="res://scenes/ingame/top_menu.gd" id="5_f4drf"]
 [ext_resource type="Texture2D" uid="uid://djq6xq2lkbdqi" path="res://assets/images/logo.png" id="5_l3gkr"]
 [ext_resource type="Script" uid="uid://boaagd3hgel75" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
 [ext_resource type="Texture2D" uid="uid://d0oowyo84ttju" path="res://assets/images/hamburger.png" id="6_l3gkr"]
