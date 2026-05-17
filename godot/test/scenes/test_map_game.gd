@@ -36,7 +36,9 @@ func test_hability_applies_to_bars() -> void:
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
 	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate() as TurnManager
-	instance.turn_order = [gr.users[0], gr.users[1]]
+	var user_a_game := UserGame.new(gr.users[0])
+	var user_b_game := UserGame.new(gr.users[1])
+	instance.turn_order = [user_a_game, user_b_game]
 	instance.turn_number = 0
 	add_child_autoqfree(instance)
 
@@ -67,8 +69,8 @@ func test_hability_applies_to_bars() -> void:
 	card_target.habilities = [] as Array[HabilityRes]
 	card_target.resistances = {} as Dictionary[AttackType, int]
 
-	var attacker = UnitGame.new(card_attacker, gr.users[0])
-	var target = UnitGame.new(card_target, gr.users[1])
+	var attacker = UnitGame.new(card_attacker, user_a_game)
+	var target = UnitGame.new(card_target, user_b_game)
 
 	# Colocar unidades en el mapa
 	var attacker_pos = Vector2i(5, 5)
@@ -450,7 +452,9 @@ func test_bars_react_to_signals() -> void:
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
 	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate()  as TurnManager
-	instance.turn_order = [gr.users[0], gr.users[1]]
+	var user_a_game := UserGame.new(gr.users[0])
+	var user_b_game := UserGame.new(gr.users[1])
+	instance.turn_order = [user_a_game, user_b_game]
 	instance.turn_number = 0
 	add_child_autoqfree(instance)
 	
