@@ -19,28 +19,6 @@ var living_units: Dictionary[UserRes, int] = {}
 var pending_deployment_group: CardArmyGroup = null
 var is_deployment_phase: bool = false
 
-
-class TurnAction extends GameResource:
-	enum ACTION {
-		MOVEMENT, #movimiento
-		ACTIVE,   #uso de habilidad activa
-		PASSIVE,   #activación de habilidad pasiva
-		DEPLOYMENT
-	}
-	var player: UserRes
-	var action : ACTION
-	var unit : UnitGame
-	var start : Vector2i
-	var end : Vector2i
-	var hability : HabilityRes
-	var dest : Array[Vector2i]
-	var deploy_pos : Vector2i
-	
-	func _init() -> void:
-		pass
-		
-			
-
 func advance_turn() -> void:
 	var user : UserRes = turn_order[turn_number % turn_order.size()]
 	print("Turno de ", user.username)
@@ -62,11 +40,28 @@ func get_player_cards(player:UserRes) -> int:
 	if player_deployment_data.has(player):
 		return player_deployment_data[player].size()
 	return 0
+	
+	
 func register_turn(turn: TurnAction) -> bool:
 	
 	turns.append(turn)
 	return true
 
+func replay_turn(turn: TurnAction) -> bool:
+	match turn.action:
+		TurnAction.ACTION.DEPLOYMENT:
+			pass
+		TurnAction.ACTION.MOVEMENT:
+			pass
+		TurnAction.ACTION.ACTIVE, TurnAction.ACTION.PASSIVE:
+			pass
+		_:
+			push_error("[TurnManager] Accion desconocida ", turn.action)
+			return false
+			
+			
+	return true
+		
 
 
 # Called when the node enters the scene tree for the first time.
