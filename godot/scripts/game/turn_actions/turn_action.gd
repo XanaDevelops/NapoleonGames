@@ -6,7 +6,9 @@ enum ACTION {
 	MOVEMENT, #movimiento
 	ACTIVE,   #uso de habilidad activa
 	PASSIVE,   #activacion de habilidad pasiva
-	DEPLOYMENT
+	ALTER_STATE, #activación de un estado alterado
+	DEPLOYMENT, 
+	PASS_TURN
 }
 
 var player: UserGame
