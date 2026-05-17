@@ -158,7 +158,6 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 
 func start_deployment_phase() -> void:
 	is_deployment_phase = true
-	GameManager._app_state = GameManager.APP_STATE.DEPLOYMENT
 	players_panel.set_phase_deployment()
 	cards_panel.set_deployment_phase(true)
 	_refresh_ui_for_current_player()
