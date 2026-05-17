@@ -218,6 +218,7 @@ text = "Salir"
 script = ExtResource("7_2fm8f")
 
 [node name="CanviarMenuEjercito" type="Button" parent="." unique_id=1454433896]
+visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5

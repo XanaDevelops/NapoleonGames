@@ -1,14 +1,12 @@
 class_name GameScene
 extends Control
 
-@onready var vbox:          VBoxContainer        = $VBoxContainer
-@onready var players_panel: Control              = $VBoxContainer/PlayersPanel
-@onready var map_container: SubViewportContainer = $VBoxContainer/PanelContainer/SubViewportContainer
+@export var map_container: SubViewportContainer 
 
-@onready var cards_panel:   Control              = $VBoxContainer/CardsPanel
-@onready var sub_viewport:  SubViewport          = $VBoxContainer/PanelContainer/SubViewportContainer/SubViewport
-@onready var map_visualizer: mapVisualizer       = $VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer
-@onready var unit_info:     Control              = $VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo
+@export var cards_panel:   Control              
+@export var sub_viewport:  SubViewport          
+@export var map_visualizer: mapVisualizer       
+@export var unit_info:     Control              
 
 enum UnitState {
 	IDLE,
@@ -29,7 +27,11 @@ func _ready() -> void:
 		map = TestMapGame.new().create_test_map()
 		GameManager.set_map(map)
 	map_visualizer._setup_map(map)
-
+	
+	await get_tree().process_frame
+	await get_tree().process_frame
+	map_visualizer.center_camera(Vector2(sub_viewport.size))
+	
 	_hab_manager = HabilityManager.new()
 	_connect_hab_manager()
 
@@ -38,32 +40,14 @@ func _ready() -> void:
 	_setup_viewport()
 	clear()
 	map_visualizer.tile_clicked.connect(_on_tile_clicked)
-	#GameManager.phase_changed.connect(_on_phase_change)
-	#_on_phase_change(GameManager._app_state)
+
 	unit_info.hability_use_requested.connect(_on_hability_use_requested)
 
 	cards_panel.confirmed.connect(_hab_manager.confirm)
 	cards_panel.cancelled.connect(_hab_manager.cancel)
 
 
-#func _enter_battle()-> void:
-	#unit_info.hability_use_requested.connect(_on_hability_use_requested)
-	#cards_panel.confirmed.connect(_hab_manager.confirm)
-	#cards_panel.cancelled.connect(_hab_manager.cancel)
-	#cards_panel.set_phase_battle()
-	#players_panel.set_phase_battle()
-#
-#func _enter_deployment() -> void:
-	#players_panel.set_phase_deployment()
-	#cards_panel.set_phase_deployment()
-	#
-	#
-#func _on_phase_change(phase:GameManager.APP_STATE) -> void:
-	#match phase:
-		#GameManager.APP_STATE.DEPLOYMENT:
-			#_enter_deployment()
-		#GameManager.APP_STATE.IN_GAME:
-			#_enter_battle()
+
 func clear() -> void:
 	cards_panel.clear()
 

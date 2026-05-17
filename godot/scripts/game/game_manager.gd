@@ -22,7 +22,6 @@ func _init() -> void:
 	#temporal
 	#self.turn_manager= TurnManager.new()
 	_app_state = APP_STATE.MENU_HUB
-	#phase_changed.emit(_app_state)
 	set_users()
 
 

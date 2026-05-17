@@ -6,10 +6,11 @@ signal card_deployed(player: UserRes, remaining: int)
 ## Los UnitGame deben subscribirse a esto para avanzar el turno
 signal tick_turn
 
-@onready var cards_panel = $IngameMap/VBoxContainer/CardsPanel
-@onready var deployment_box = $IngameMap/VBoxContainer/CardsPanel/MarginContainer/DeploymentBox
-@onready var map_visualizer = $IngameMap/VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer
-@onready var players_panel= $IngameMap/VBoxContainer/PlayersPanel
+@onready var cards_panel = $IngameMap/CardsPanel
+@onready var deployment_box = $IngameMap/CardsPanel/MarginContainer/DeploymentBox
+@onready var map_visualizer = $IngameMap/SubViewportContainer/SubViewport/mapVisualizer
+@onready var players_panel= $IngameMap/PlayersPanel
+@onready var end_button= $IngameMap/EndTurnButton
 @export var turns: Array[TurnAction] = []
 var turn_order: Array[UserRes] = []
 var turn_number: int = 0
@@ -180,6 +181,8 @@ func start_deployment_phase() -> void:
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
 	players_panel.set_phase_battle()
+	end_button.show_battle()
+	
 
 	cards_panel.set_deployment_phase(false)
 	map_visualizer.movement_requested.connect(_on_unit_movement_requested)

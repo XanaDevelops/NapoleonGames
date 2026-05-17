@@ -8,7 +8,7 @@ script = ExtResource("1_4n5kr")
 
 [node name="IngameMap" parent="." unique_id=594307947 instance=ExtResource("2_rqqua")]
 
-[node name="SubViewportContainer" parent="IngameMap/VBoxContainer/PanelContainer" parent_id_path=PackedInt32Array(594307947, 1473323759) index="0" unique_id=959567450]
-size_flags_horizontal = 4
+[node name="PlayersPanel" parent="IngameMap" index="1" unique_id=69587996]
+anchors_preset = 10
 
 [editable path="IngameMap"]

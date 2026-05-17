@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://c15khdt2jjukx"]
+
+[ext_resource type="Texture2D" uid="uid://br3nihpuci7q" path="res://assets/images/grunge-smokey-background-beige.jpg" id="1_0h6wq"]
+[ext_resource type="Texture2D" uid="uid://djq6xq2lkbdqi" path="res://assets/images/logo.png" id="1_70ind"]
+[ext_resource type="Script" uid="uid://cxd5fsqx8vmem" path="res://scenes/ingame/progress_bar.gd" id="2_1oiqd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0h6wq"]
+bg_color = Color(0.11303865, 0.29103416, 0.4949726, 1)
+
+[node name="LoadGame" type="Control" unique_id=680690134]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=454645175]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_0h6wq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=354793827]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -271.5
+offset_right = 256.0
+offset_bottom = 271.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer" unique_id=1205852587]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = ExtResource("1_70ind")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer" unique_id=605091998 node_paths=PackedStringArray("progress_bar")]
+custom_minimum_size = Vector2(300, 35)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_styles/fill = SubResource("StyleBoxFlat_0h6wq")
+show_percentage = false
+script = ExtResource("2_1oiqd")
+progress_bar = NodePath(".")

@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://bjoqt2vxcerlr"]
+
+[ext_resource type="Shader" uid="uid://dra0upjwmslx2" path="res://scenes/end_turn_button.gdshader" id="1_tql3q"]
+[ext_resource type="Script" uid="uid://b5h3vvwriy8r5" path="res://scenes/end_turn_button.gd" id="2_pfrco"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pfrco"]
+shader = ExtResource("1_tql3q")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ff0n"]
+shader = ExtResource("1_tql3q")
+
+[node name="EndTurnButton" type="Control" unique_id=1726048997 node_paths=PackedStringArray("label", "boton")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("2_pfrco")
+label = NodePath("Button/Label")
+boton = NodePath("Button")
+
+[node name="OuterCircle" type="ColorRect" parent="." unique_id=875493354]
+material = SubResource("ShaderMaterial_pfrco")
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(1, 1, 1, 0)
+
+[node name="InnerCircle" type="ColorRect" parent="." unique_id=1492770235]
+material = SubResource("ShaderMaterial_6ff0n")
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="." unique_id=1326488000]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 16.0
+offset_right = 86.0
+offset_bottom = 82.0
+flat = true
+
+[node name="Label" type="Label" parent="Button" unique_id=124655222]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 23.0
+offset_right = 63.0
+offset_bottom = 41.0
+theme_override_font_sizes/font_size = 13
+text = "End Turn"

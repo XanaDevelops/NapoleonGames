@@ -3,19 +3,19 @@ extends Control
 
 
 #PLAYER 1
-@onready var p1_avatar: TextureRect = $HBoxContainer/PlayerCardP1/AvatarP1
-@onready var p1_name: Label = $HBoxContainer/PlayerCardP1/NameP1
-@onready var p1_card: HBoxContainer = $HBoxContainer/PlayerCardP1
-@onready var p1_num_cards:Label= $HBoxContainer/PlayerCardP1/NumCardsP1
+@export var p1_avatar: TextureRect 
+@export var p1_name: Label 
+@export var p1_card: HBoxContainer 
+@export var p1_num_cards:Label
 #PLAYER 2
-@onready var p2_avatar: TextureRect = $HBoxContainer/PlayerCardP2/AvatarP2
-@onready var p2_name: Label = $HBoxContainer/PlayerCardP2/NameP2
-@onready var p2_card: HBoxContainer = $HBoxContainer/PlayerCardP2
-@onready var p2_num_cards:Label = $HBoxContainer/PlayerCardP2/NumCardsP2
-#PHASE
-@onready var phase_label: Label = $HBoxContainer/CenterInfo/Phase
-@onready var btn_end_turn: Button = $HBoxContainer/CenterInfo/EndTurn
+@export var p2_avatar: TextureRect 
+@export var p2_name: Label 
+@export var p2_card: HBoxContainer 
+@export var p2_num_cards:Label 
 
+#PHASE
+@export var phase_label: Label 
+@export var TurnLabel:Label
 var turnManager:TurnManager
 var  total_cards_p1:int
 var  total_cards_p2:int
@@ -25,12 +25,11 @@ var phase
 
 #
 func set_phase_battle() -> void:
-	phase_label.text= "COMBATE"
-	self.btn_end_turn.visible= false
-	self.btn_end_turn.pressed.connect(pass_turn)
+	phase_label.text= "FASE DE COMBATE"
+	
+
 	self.turnManager.tick_turn.connect(update_turn_info)
-	#p1_num_cards.visible= false
-	#p2_num_cards.visible= false
+
 	p1_num_cards.text= ""
 	p2_num_cards.text= ""
 	
@@ -50,8 +49,7 @@ func setup(tm: TurnManager) -> void:
 	p2_avatar.texture = _p2.img
 
 func set_phase_deployment() -> void:
-	phase_label.text = "Fase de DESPLIEGUE"
-	btn_end_turn.visible = false
+	phase_label.text = "FASE DE DESPLIEGUE"
 	
 	total_cards_p1 = turnManager.get_player_cards(_p1)
 	total_cards_p2 = turnManager.get_player_cards(_p2)
@@ -63,7 +61,6 @@ func set_phase_deployment() -> void:
 	
 	if not turnManager.card_deployed.is_connected(update_cards_number):
 		turnManager.card_deployed.connect(update_cards_number)
-	#añadir más info..
 
 
 func update_cards_number(player: UserRes, remaining_cards: int) -> void:
@@ -75,14 +72,16 @@ func update_cards_number(player: UserRes, remaining_cards: int) -> void:
 		p2_num_cards.text = "Cards %d/%d" % [placed, total_cards_p2]
 		
 func update_turn_info() -> void:
-	phase_label.text = "FASE DE COMBATE\n Turno %d" %  turnManager.turn_number
+	TurnLabel.text= "TURNO %d" %turnManager.turn_number
+	#phase_label.text = "FASE DE COMBATE\n Turno %d" %  turnManager.turn_number
 	self.set_active_player()
 
 func set_active_player() -> void:
 	var is_p1:bool= turnManager.is_player1_turn()
 	p1_card.modulate = Color.WHITE if is_p1 else Color(0.5, 0.5, 0.5)
 	p2_card.modulate = Color(0.5, 0.5, 0.5) if is_p1 else Color.WHITE
-	btn_end_turn.visible = true
-
-func pass_turn() -> void:
-	turnManager.advance_turn()
+	#btn_end_turn.visible = true
+	
+#
+#func pass_turn() -> void:
+	#turnManager.advance_turn()

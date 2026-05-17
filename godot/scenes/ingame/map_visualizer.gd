@@ -44,6 +44,13 @@ const COLOR_DEPLOYMENT_ZONE = Color.DARK_CYAN
 
 const COLOR_OWNER_P1 = Color(0.2, 0.4, 1.0, 0.6)   
 const COLOR_OWNER_P2 = Color(1.0, 0.2, 0.2, 0.6) 
+
+@export var camera:Camera2D
+const ZOOM_MIN = Vector2(0.3, 0.3)
+const ZOOM_MAX = Vector2(2.5, 2.5)
+const ZOOM_STEP= 0.1
+const PAN_SPEED= 10.0
+var _is_panning:bool= false
 		
 func _setup_highlight_tiles() -> void:
 	var tex := load(HIGHLIGHT_TEXTURE) as Texture2D
@@ -63,7 +70,7 @@ func _ready() -> void:
 	_setup_highlight_tiles()
 	if GameManager.turn_manager!=null:
 		GameManager.turn_manager.tick_turn.connect(_clear_selection)
-	
+
 func _setup_tileset() -> TileSet:
 	var tileset = TileSet.new()
 	tileset.tile_shape = TileSet.TILE_SHAPE_HEXAGON
@@ -184,22 +191,65 @@ func clear_deployment_preview() -> void:
 func _process(delta: float) -> void:
 	pass
 
+
+
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		var local_pos = tile_map_layer_texture.to_local(event.global_position)
-		var coords = tile_map_layer_texture.local_to_map(local_pos)
-		_handle_click(coords)
+	# ZOOM using wheel
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
+			_zoom_at_mouse(ZOOM_STEP, event.global_position)
+			get_viewport().set_input_as_handled()
+			return
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
+			_zoom_at_mouse(-ZOOM_STEP, event.global_position)
+			get_viewport().set_input_as_handled()
+			return
 		
+		# Moving the map
+		elif event.button_index == MOUSE_BUTTON_RIGHT or event.button_index == MOUSE_BUTTON_MIDDLE:
+			_is_panning = event.pressed
+			get_viewport().set_input_as_handled()
+			return
+		
+		# selection
+		elif event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			if _is_panning:
+				return
+			var coords =  _get_map_coords(event.global_position)
+			_handle_click(coords)
+	
 	elif event is InputEventMouseMotion:
-		var local_pos := tile_map_layer_texture.to_local(event.global_position)
-		var coords := tile_map_layer_texture.local_to_map(local_pos)
+		# panning
+		if _is_panning:
+			camera.position -= event.relative / camera.zoom
+			get_viewport().set_input_as_handled()
+			return
 		
+		# hove
+		var coords := _get_map_coords(event.global_position)
 		if coords != _last_hovered_tile:
 			_last_hovered_tile = coords
 			tile_hovered.emit(coords)
 			_update_hover(coords)
 
-
+func _get_map_coords(global_mouse_pos: Vector2) -> Vector2i:
+	var canvas_transform = get_canvas_transform()
+	var world_pos = canvas_transform.affine_inverse() * global_mouse_pos
+	var local_pos = tile_map_layer_texture.to_local(world_pos)
+	return tile_map_layer_texture.local_to_map(local_pos)
+	
+func _zoom_at_mouse(step: float, mouse_global_pos: Vector2) -> void:
+	var old_zoom = camera.zoom
+	var new_zoom = (old_zoom + Vector2(step, step)).clamp(ZOOM_MIN, ZOOM_MAX)
+	
+	if new_zoom == old_zoom:
+		return
+	
+	
+	var mouse_local = (mouse_global_pos - get_viewport().get_visible_rect().size / 2.0) / old_zoom
+	camera.position += mouse_local * (1.0 - old_zoom.x / new_zoom.x)
+	camera.zoom = new_zoom
+	
 func _update_hover(coords: Vector2i) -> void:
 	tile_map_layer_hover.clear()
 	tile_map_layer_hover.self_modulate = COLOR_HOVER
@@ -295,3 +345,22 @@ func _move_owner_highlight(from: Vector2i, to: Vector2i) -> void:
 	elif tile_map_layer_owner_p2.get_cell_source_id(from) != -1:
 		tile_map_layer_owner_p2.erase_cell(from)
 		tile_map_layer_owner_p2.set_cell(to, _owner_id, Vector2i.ZERO)
+
+func center_camera(viewport_size: Vector2) -> void:
+	camera.make_current()
+	var celdas = tile_map_layer_texture.get_used_cells()
+	if celdas.is_empty(): return
+	
+	var min_p = Vector2(INF, INF)
+	var max_p = Vector2(-INF, -INF)
+	for celda in celdas:
+		var p = tile_map_layer_texture.map_to_local(celda)
+		min_p.x = min(min_p.x, p.x)
+		min_p.y = min(min_p.y, p.y)
+		max_p.x = max(max_p.x, p.x)
+		max_p.y = max(max_p.y, p.y)
+	
+	camera.position = (min_p + max_p) / 2.0
+	var map_size = (max_p - min_p) + Vector2(TILE_SIZE_WIDTH, TILE_SIZE_HEIGHT)
+	var zoom_f = min(viewport_size.x / map_size.x, viewport_size.y / map_size.y) * 0.9
+	camera.zoom = Vector2(zoom_f, zoom_f)

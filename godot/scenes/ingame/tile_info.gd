@@ -1,11 +1,19 @@
 extends Control 
 
-@onready var name_label: Label =$MarginContainer/HBoxContainer/VBoxContainer/NameLabel
-@onready var texture_rect: TextureRect= $MarginContainer/HBoxContainer/VBoxContainer/TextureRect
-@onready var height_label: Label = $MarginContainer/HBoxContainer/HBoxContainer/HeightLabel
-@onready var cost_label: Label = $MarginContainer/HBoxContainer/HBoxContainer/CostLabel
-@onready var position_label: Label= $MarginContainer/HBoxContainer/HBoxContainer/PositionLabel
-@onready var description_button: Button= $MarginContainer/HBoxContainer/DescriptionButton
+#@onready var name_label: Label =$MarginContainer/HBoxContainer/VBoxContainer/NameLabel
+#@onready var texture_rect: TextureRect= $MarginContainer/HBoxContainer/VBoxContainer/TextureRect
+#@onready var height_label: Label = $MarginContainer/HBoxContainer/HBoxContainer/HeightLabel
+#@onready var cost_label: Label = $MarginContainer/HBoxContainer/HBoxContainer/CostLabel
+#@onready var position_label: Label= $MarginContainer/HBoxContainer/HBoxContainer/PositionLabel
+#@onready var description_button: Button= $MarginContainer/HBoxContainer/DescriptionButton
+
+@export var name_label: Label 
+@export var texture_rect: TextureRect
+@export var height_label: Label 
+@export var cost_label: Label 
+@export var position_label: Label
+@export var description_button: Button
+
 
 var _current_tile: TileGame = null
 # Called every frame. 'delta' is the elapsed time since the previous frame.

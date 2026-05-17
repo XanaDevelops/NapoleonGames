@@ -1,9 +1,9 @@
 extends Control
 
-@onready var tile_info: Control  = $MarginContainer/TabContainer/TileInfo
-@onready var unit_info: Control  = $MarginContainer/TabContainer/UnitInfo
-@onready var tabs: TabContainer  = $MarginContainer/TabContainer
-@onready var deployment_box: HBoxContainer = $MarginContainer/DeploymentBox
+@export var tile_info: Control  
+@export var unit_info: Control  
+@export var tabs: TabContainer  
+@export var deployment_box: HBoxContainer 
 
 var _confirm_dialog: AcceptDialog = null
 
@@ -25,14 +25,7 @@ func _setup_pages() -> void:
 	tile_info.custom_minimum_size = Vector2(size.x, size.y)
 	unit_info.custom_minimum_size = Vector2(size.x, size.y)
 
-#func set_phase_battle() -> void:
-	#clear()
-	#deployment_box.visible= false
-	
-#func set_phase_deployment() -> void:
-	#tabs.visible= false
-	#deployment_box.visible= true
-	#
+
 func paint_tile_info(tile: TileGame) -> void:
 	
 	if is_deployment_active: 
