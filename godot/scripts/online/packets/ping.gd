@@ -22,7 +22,8 @@ static func create_from_data(data: PackedByteArray) -> PingPacket:
 
 func encode() -> PackedByteArray:
 	var data: PackedByteArray = super.encode()
-	data.resize(2)
+	var text := message.to_utf8_buffer()
+	data.resize(2+text.size())
 	data.encode_u8(1, sender_id)
 	data.append_array(message.to_utf8_buffer())
 

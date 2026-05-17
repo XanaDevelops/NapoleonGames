@@ -1,9 +1,10 @@
 class_name NetPacket
-extends RefCounted
+extends Resource
 
 # Don't make values above 255, since we send "packet_type" as a single byte
 enum PACKET_TYPE {
 	ID_ASSIGNMENT = 0,
+	TURN_ACTION = 0x10,
 	PING = 255,
 }
 
