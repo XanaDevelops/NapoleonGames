@@ -15,7 +15,7 @@ func cambiar_a_escena(identificador: String, parametros: Dictionary = {}) -> voi
 			var arbol_principal = get_tree()
 			var escena_actual = arbol_principal.current_scene
 			
-			arbol_principal.root.add_child.call_deferred(nueva_escena)
+			arbol_principal.root.add_child(nueva_escena)
 			arbol_principal.current_scene = nueva_escena
 			
 			if escena_actual:

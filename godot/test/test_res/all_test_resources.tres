@@ -796,12 +796,140 @@ tamY = 4
 mapData = Array[Array]([Array[ExtResource("12_17yll")]([SubResource("Resource_fd11o"), SubResource("Resource_jcsge"), SubResource("Resource_5kcxh"), SubResource("Resource_krd2u"), SubResource("Resource_odghc")]), Array[ExtResource("12_17yll")]([SubResource("Resource_q700n"), SubResource("Resource_840td"), SubResource("Resource_oq0yr"), SubResource("Resource_0k5to"), SubResource("Resource_obcvc")]), Array[ExtResource("12_17yll")]([SubResource("Resource_sdn5o"), SubResource("Resource_60mkl"), SubResource("Resource_0s5v0"), SubResource("Resource_g1qc0"), SubResource("Resource_qpif8")]), Array[ExtResource("12_17yll")]([SubResource("Resource_yi7cr"), SubResource("Resource_d7w7a"), SubResource("Resource_3b2l7"), SubResource("Resource_ep81y"), SubResource("Resource_bpjqe")])])
 uid = 1
 
+[sub_resource type="Resource" id="Resource_l3g16"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 1
+
+[sub_resource type="Resource" id="Resource_qt75m"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 2
+
+[sub_resource type="Resource" id="Resource_hwdmw"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 3
+
+[sub_resource type="Resource" id="Resource_ymua3"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 4
+
+[sub_resource type="Resource" id="Resource_orpmm"]
+script = ExtResource("12_17yll")
+height = 100
+type = ExtResource("22_ptf7x")
+uid = 5
+
+[sub_resource type="Resource" id="Resource_b4fnt"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 6
+
+[sub_resource type="Resource" id="Resource_bl804"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("23_uu4tw")
+uid = 7
+
+[sub_resource type="Resource" id="Resource_evnok"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 8
+
+[sub_resource type="Resource" id="Resource_4nksc"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("23_uu4tw")
+uid = 9
+
+[sub_resource type="Resource" id="Resource_nlwpg"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 10
+
+[sub_resource type="Resource" id="Resource_uaire"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 11
+
+[sub_resource type="Resource" id="Resource_qyc41"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("23_uu4tw")
+uid = 12
+
+[sub_resource type="Resource" id="Resource_14y1c"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 13
+
+[sub_resource type="Resource" id="Resource_jcdws"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("23_uu4tw")
+uid = 14
+
+[sub_resource type="Resource" id="Resource_xnquo"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 15
+
+[sub_resource type="Resource" id="Resource_26ctf"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 16
+
+[sub_resource type="Resource" id="Resource_b4pku"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 17
+
+[sub_resource type="Resource" id="Resource_aqdkv"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 18
+
+[sub_resource type="Resource" id="Resource_uvxpn"]
+script = ExtResource("12_17yll")
+height = 1
+type = ExtResource("22_ptf7x")
+uid = 19
+
+[sub_resource type="Resource" id="Resource_y5uko"]
+script = ExtResource("12_17yll")
+height = 100
+type = ExtResource("22_ptf7x")
+uid = 20
+
+[sub_resource type="Resource" id="Resource_ba5bm"]
+script = ExtResource("7_v3wyj")
+name = &"test_map_01"
+tamX = 5
+tamY = 4
+mapData = Array[Array]([Array[ExtResource("12_17yll")]([SubResource("Resource_l3g16"), SubResource("Resource_qt75m"), SubResource("Resource_hwdmw"), SubResource("Resource_ymua3"), SubResource("Resource_orpmm")]), Array[ExtResource("12_17yll")]([SubResource("Resource_b4fnt"), SubResource("Resource_bl804"), SubResource("Resource_evnok"), SubResource("Resource_4nksc"), SubResource("Resource_nlwpg")]), Array[ExtResource("12_17yll")]([SubResource("Resource_uaire"), SubResource("Resource_qyc41"), SubResource("Resource_14y1c"), SubResource("Resource_jcdws"), SubResource("Resource_xnquo")]), Array[ExtResource("12_17yll")]([SubResource("Resource_26ctf"), SubResource("Resource_b4pku"), SubResource("Resource_aqdkv"), SubResource("Resource_uvxpn"), SubResource("Resource_y5uko")])])
+uid = 1
+
 [resource]
 script = ExtResource("8_2obhi")
 users = Array[ExtResource("13_b8vvb")]([ExtResource("16_v3wyj"), ExtResource("17_2obhi")])
 cards = Array[ExtResource("5_kdr8l")]([ExtResource("6_kdr8l"), ExtResource("7_2ym1e")])
 habilities = Array[ExtResource("6_2ym1e")]([ExtResource("11_ptf7x"), ExtResource("12_uu4tw"), ExtResource("13_yk6kr"), ExtResource("14_j6ham"), ExtResource("15_7b4bf"), ExtResource("16_838kx")])
 tile_types = Array[ExtResource("11_qx8eh")]([ExtResource("22_ptf7x"), ExtResource("23_uu4tw")])
-maps = Array[ExtResource("7_v3wyj")]([SubResource("Resource_jgcne"), SubResource("Resource_xiqqn"), SubResource("Resource_kfe8r"), SubResource("Resource_ihe70"), SubResource("Resource_71e67"), SubResource("Resource_8i3xi")])
+maps = Array[ExtResource("7_v3wyj")]([SubResource("Resource_jgcne"), SubResource("Resource_xiqqn"), SubResource("Resource_kfe8r"), SubResource("Resource_ihe70"), SubResource("Resource_71e67"), SubResource("Resource_8i3xi"), SubResource("Resource_ba5bm")])
 alter_states = Array[ExtResource("1_0ys6n")]([ExtResource("2_b8vvb"), ExtResource("3_eabsc")])
 metadata/_custom_type_script = "uid://c1o5v8x6fs24v"
