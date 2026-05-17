@@ -58,12 +58,11 @@ func _ready() -> void:
 	#cards_panel.set_phase_deployment()
 	#
 	#
-#func _on_phase_change(phase:GameManager.APP_STATE) -> void:
-	#match phase:
-		#GameManager.APP_STATE.DEPLOYMENT:
-			#_enter_deployment()
-		#GameManager.APP_STATE.IN_GAME:
-			#_enter_battle()
+#func _on_phase_change(is_deployment_phase: bool) -> void:
+	#if is_deployment_phase:
+		#_enter_deployment()
+	#else:
+		#_enter_battle()
 func clear() -> void:
 	cards_panel.clear()
 
