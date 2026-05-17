@@ -4,8 +4,20 @@
 [ext_resource type="Texture2D" uid="uid://djq6xq2lkbdqi" path="res://assets/images/logo.png" id="1_70ind"]
 [ext_resource type="Script" uid="uid://cxd5fsqx8vmem" path="res://scenes/ingame/progress_bar.gd" id="2_1oiqd"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mp67j"]
+bg_color = Color(0.5705783, 0.57057834, 0.5705782, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0h6wq"]
 bg_color = Color(0.11303865, 0.29103416, 0.4949726, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+corner_detail = 15
 
 [node name="LoadGame" type="Control" unique_id=680690134]
 layout_mode = 3
@@ -52,6 +64,7 @@ custom_minimum_size = Vector2(300, 35)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
+theme_override_styles/background = SubResource("StyleBoxFlat_mp67j")
 theme_override_styles/fill = SubResource("StyleBoxFlat_0h6wq")
 show_percentage = false
 script = ExtResource("2_1oiqd")

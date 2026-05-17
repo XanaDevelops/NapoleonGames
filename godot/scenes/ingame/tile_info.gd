@@ -1,11 +1,5 @@
 extends Control 
 
-#@onready var name_label: Label =$MarginContainer/HBoxContainer/VBoxContainer/NameLabel
-#@onready var texture_rect: TextureRect= $MarginContainer/HBoxContainer/VBoxContainer/TextureRect
-#@onready var height_label: Label = $MarginContainer/HBoxContainer/HBoxContainer/HeightLabel
-#@onready var cost_label: Label = $MarginContainer/HBoxContainer/HBoxContainer/CostLabel
-#@onready var position_label: Label= $MarginContainer/HBoxContainer/HBoxContainer/PositionLabel
-#@onready var description_button: Button= $MarginContainer/HBoxContainer/DescriptionButton
 
 @export var name_label: Label 
 @export var texture_rect: TextureRect
