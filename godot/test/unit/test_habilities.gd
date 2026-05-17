@@ -16,6 +16,8 @@ static var tiles : Dictionary[int, TileTypeRes] = {
 var map_game : MapGame
 var ally_units : Array[UnitGame] = []
 var enemy_units: Array[UnitGame] = []
+var user_ally_game: UserGame
+var user_enemy_game: UserGame
 
 
 func test_ranges() -> void:
@@ -215,39 +217,41 @@ func before_each():
 	
 	ally_units.clear()
 	enemy_units.clear()
+	user_ally_game = UserGame.new(user_ally)
+	user_enemy_game = UserGame.new(user_enemy)
 	
 	# Crear unidades
 	var unit: UnitGame
 	var tm : TurnManager = autofree(TurnManager.new())
-	tm.turn_order = [user_ally, user_enemy]
+	tm.turn_order = [user_ally_game, user_enemy_game]
 	GameManager.register_turn_manager(tm)
 	GameManager.set_map(map_game)
 	GameManager._app_state = GameManager.APP_STATE.IN_GAME
 	
-	unit = UnitGame.new(card_melee, user_ally)
+	unit = UnitGame.new(card_melee, user_ally_game)
 	map_game.place_unit(unit, Vector2i(0,0))
 	#tm.tick_turn.connect(unit.advance_turn)
 	ally_units.append(unit)
 	
-	unit = UnitGame.new(card_ranged, user_ally)
+	unit = UnitGame.new(card_ranged, user_ally_game)
 	map_game.place_unit(unit, Vector2i(0,1))
 	#tm.tick_turn.connect(unit.advance_turn)
 
 	ally_units.append(unit)
 	
-	unit = UnitGame.new(card_melee, user_enemy)
+	unit = UnitGame.new(card_melee, user_enemy_game)
 	map_game.place_unit(unit, Vector2i(1,0))
 	#tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
-	unit = UnitGame.new(card_melee, user_enemy)
+	unit = UnitGame.new(card_melee, user_enemy_game)
 	map_game.place_unit(unit, Vector2i(2,0))
 	#tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
-	unit = UnitGame.new(card_melee, user_enemy)
+	unit = UnitGame.new(card_melee, user_enemy_game)
 	map_game.place_unit(unit, Vector2i(3,0))
 	#tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
-	unit = UnitGame.new(card_melee, user_enemy)
+	unit = UnitGame.new(card_melee, user_enemy_game)
 	map_game.place_unit(unit, Vector2i(4,4))
 	#tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
