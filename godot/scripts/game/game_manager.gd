@@ -20,7 +20,11 @@ enum APP_STATE {
 var is_server := false
 
 func _init() -> void:
-	
+	print(OS.get_cmdline_args())
+	var cmd_args := OS.get_cmdline_args()
+	if "--server" in cmd_args:
+		is_server = true
+		
 	_gameRes = GameResources.load_from()
 	#temporal
 	#self.turn_manager= TurnManager.new()
@@ -29,21 +33,20 @@ func _init() -> void:
 	set_users()
 	
 func _ready() -> void:
-	print(OS.get_cmdline_args())
-	var cmd_args := OS.get_cmdline_args()
-	if "--server" in cmd_args:
+	if is_server:
 		_configure_server()
 	else:
 		_configure_client()
 
 func _configure_server() -> void:
-	if not Online.create_server():
+	if not Online.start_server():
 		return
-	is_server = true
+
 	print_rich("[color=yellow]SOMOS servidor[/color]")
+	UiManager.cambiar_a_escena("server")
 	
 func _configure_client() -> void:
-	if not Online.join_server():
+	if not Online.start_client():
 		return
 	print_rich("[color=yellow]SOMOS cliente[/color]")
 

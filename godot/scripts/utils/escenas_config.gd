@@ -12,7 +12,8 @@ const MAPA_ESCENAS: Dictionary[String, String] = {
 	"oponente":"res://scenes/selector_de_oponente.tscn",
 	"resumen":"res://scenes/pantalla_resumen.tscn",
 	"juego":"res://scenes/ingame/game_scene.tscn",
-	"finalizacion":"res://scenes/pantalla_finalitzacio.tscn"
+	"finalizacion":"res://scenes/pantalla_finalitzacio.tscn",
+	"server": "res://scenes/server/server_scene.tscn"
 }
 
 
@@ -26,7 +27,8 @@ const SECCIONES_POR_ESCENA: Dictionary[String, String] = {
 	"oponente": "menus",
 	"resumen":"menus",
 	"juego": "",
-	"finalizacion": "" 
+	"finalizacion": "",
+	"server": ""
 }
 
 
