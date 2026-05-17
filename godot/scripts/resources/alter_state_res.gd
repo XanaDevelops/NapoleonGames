@@ -6,7 +6,7 @@
 ## [br]
 ##
 ## Atributos:[br]
-## - objectiu: Objetivo del estado alterado ([HabilityRes.HAB_DEST]).[br]
+## - objective: Objetivo del estado alterado ([HabilityRes.HAB_DEST]).[br]
 ## - value: Valor del estado alterado.[br]
 ## - stat: Estadistica a la que afecta
 ## - type: Tipo del ataque (si stat es defensa
@@ -18,7 +18,7 @@ extends GameResource
 
 ## Objetivo del estado alterado ([HabilityRes.HAB_DEST])
 @export_flags("self:1", "ally:2", "enemy:4", "multiple:8", "everyone:15")
-var objectiu := HabilityRes.SEL_SELF_FLAG #Si nos ponemos creativos puede ser diferente a self
+var objective := HabilityRes.SEL_SELF_FLAG #Si nos ponemos creativos puede ser diferente a self
 ## Valor del estado alterado
 @export var value: float
 ## Estadistica a la que afecta
@@ -33,7 +33,7 @@ var objectiu := HabilityRes.SEL_SELF_FLAG #Si nos ponemos creativos puede ser di
 @export var radius := 1 
 
 func _init() -> void:
-	if objectiu == 0:
-		objectiu = HabilityRes.SEL_ALLY_FLAG
+	if objective == 0:
+		objective = HabilityRes.SEL_ALLY_FLAG
 		push_error("Estado alterado sin objetivo valido!\nValor por defecto SELF")
 		assert(false)
