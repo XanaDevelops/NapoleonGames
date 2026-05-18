@@ -4,6 +4,8 @@ extends RuntimeResource
 ## Maná por turno
 const PASSIVE_MANA := 5
 
+signal hit_received(type: AttackType)
+
 @export var _cardRes: CardRes
 
 @export var _owner: UserRes
@@ -196,6 +198,7 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	print("inflicted_damage: " + str(inflict_damage))
 	self.hp -= inflict_damage
 	
+	hit_received.emit(type)
 
 		
 	return self.hp <= 0

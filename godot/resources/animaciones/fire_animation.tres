@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="VFXEffectData" format=3 uid="uid://6gy5d5epbtce"]
+
+[ext_resource type="Texture2D" uid="uid://dwaej3n2lh2fj" path="res://assets/particles/nova_0.png" id="1_8dabq"]
+[ext_resource type="Script" uid="uid://coqlqo81l8ahe" path="res://scripts/resources/vfx_effect_data.gd" id="1_afx8a"]
+[ext_resource type="Shader" uid="uid://wiqqr2wcedbj" path="res://scenes/shader_fuego.gdshader" id="3_ele4s"]
+[ext_resource type="Resource" uid="uid://dnbyq4cqriq" path="res://resources/attack_types/0002.tres" id="4_ele4s"]
+
+[sub_resource type="Gradient" id="Gradient_8dabq"]
+offsets = PackedFloat32Array(0, 0, 1)
+colors = PackedColorArray(1, 0.9, 0, 1, 1, 0.4, 0, 1, 0.8, 0.1, 0, 1)
+
+[resource]
+script = ExtResource("1_afx8a")
+trigger_attack_type = ExtResource("4_ele4s")
+shader = ExtResource("3_ele4s")
+core_color = Color(1, 0.9, 0, 1)
+mid_color = Color(1, 0.4, 0, 1)
+edge_color = Color(0.8, 0.1, 0, 1)
+flame_squash_factor = 2.2
+wave_speed = 7.0
+wave_amplitude = 0.05
+wave_frequency = 13.0
+particle_texture = ExtResource("1_8dabq")
+color_ramp = SubResource("Gradient_8dabq")
+scale_multiplier = 2.0
+gravity = Vector3(0, -140, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 90.0
+movement_spread = 90.0
+use_turbulence = true
+turbulence_strength = 5.0
+emission_position = 0
+movement_direction = 0
+duration = 2.0
+metadata/_custom_type_script = "uid://coqlqo81l8ahe"

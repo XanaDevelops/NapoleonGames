@@ -34,6 +34,9 @@ const HIGHLIGHT_TEXTURES: Dictionary = {
 const TILE_SIZE_HEIGHT = 64 * 1.5
 const TILE_SIZE_WIDTH = 55 * 1.5 # TILE_SIZE_HEIGHT/2 * root(3)
 
+@export var vfx_database: Dictionary = {}
+
+@export var vfx_scene: PackedScene
 
 func _setup_highlight_tiles() -> void:
 	for type in HIGHLIGHT_TEXTURES.keys():
@@ -47,6 +50,9 @@ func _ready() -> void:
 		tml.tile_set = tileset
 	_setup_highlight_tiles()
 	
+
+
+		
 func _setup_tileset() -> TileSet:
 	var tileset = TileSet.new()
 	tileset.tile_shape = TileSet.TILE_SHAPE_HEXAGON
@@ -74,9 +80,17 @@ func draw_tile(i: int, y: int, tile: TileGame) -> void:
 	tile_map_layer_texture.set_cell(coords, tile_source_id, Vector2i.ZERO)
 	
 	if tile.has_unit():
+		var unit = tile.get_unit()
 		var unit_source_id = add_texture_to_tileset(tile.get_unit().get_texture2D())
 		tile_map_layer_units.set_cell(coords, unit_source_id, Vector2i.ZERO)
+		
+		if not unit.hit_received.is_connected(_on_unit_hit):
+			unit.hit_received.connect(_on_unit_hit.bind(unit))
 
+func _on_unit_hit(attack_type: AttackType, unit: UnitGame) -> void:
+	# Reproduce la animación exactamente en la posición de la unidad
+	play_attack_vfx(unit.get_current_position(), attack_type)
+				
 func add_texture_to_tileset(texture: Texture2D) -> int:
 	for tex_id in texture_to_source_id.keys():
 		if texture_to_source_id[tex_id] == texture:
@@ -204,3 +218,38 @@ func _clear_selection() -> void:
 	current_accesible_moves = []
 	tile_map_layer_selection.clear()
 	tile_map_layer_highlight.clear()
+	
+func play_attack_vfx(target_coords: Vector2i, attack_type: AttackType) -> void:
+	if not vfx_scene or not attack_type:
+		return
+
+	# 1. BUSCAR EN EL DICCIONARIO
+	var current_vfx: VFXEffectData = null
+	
+	# Comprobamos si el diccionario tiene guardado el nombre de este ataque
+	if vfx_database.has(attack_type.name):
+		current_vfx = vfx_database[attack_type.name] as VFXEffectData
+		
+	if current_vfx == null:
+		print("Atención: No hay animación en el diccionario para el ataque: ", attack_type.name)
+		return
+
+	# 2. INSTANCIAR (El resto del código se queda igual)
+	var unit_texture_resized: Texture2D
+	var source_id = tile_map_layer_units.get_cell_source_id(target_coords)
+	
+	if source_id != -1 and texture_to_source_id.has(source_id):
+		unit_texture_resized = texture_to_source_id[source_id]
+	else:
+		var fallback_tex = PlaceholderTexture2D.new()
+		fallback_tex.size = Vector2(TILE_SIZE_WIDTH, TILE_SIZE_HEIGHT)
+		unit_texture_resized = fallback_tex
+		
+	var vfx_instance = vfx_scene.instantiate()
+	add_child(vfx_instance)
+	vfx_instance.z_index = 100 
+	
+	var local_pos = tile_map_layer_units.map_to_local(target_coords)
+	vfx_instance.position = local_pos
+	
+	vfx_instance.setup_vfx(unit_texture_resized, current_vfx, 0.48, 1.15)
