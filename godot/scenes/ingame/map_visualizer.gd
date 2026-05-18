@@ -34,7 +34,7 @@ const HIGHLIGHT_TEXTURES: Dictionary = {
 const TILE_SIZE_HEIGHT = 64 * 1.5
 const TILE_SIZE_WIDTH = 55 * 1.5 # TILE_SIZE_HEIGHT/2 * root(3)
 
-@export var vfx_database: Dictionary = {}
+@export var vfx_database: Dictionary[StringName, VFXEffectData] = {}
 
 @export var vfx_scene: PackedScene
 

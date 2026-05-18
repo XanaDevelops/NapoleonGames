@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://ci0qry8pts1xv" path="res://scenes/ingame/turn_manager.gd" id="1_4n5kr"]
 [ext_resource type="PackedScene" uid="uid://7np40cgmy80w" path="res://scenes/ingame/ingame_map.tscn" id="2_rqqua"]
+[ext_resource type="Script" uid="uid://coqlqo81l8ahe" path="res://scripts/resources/vfx_effect_data.gd" id="3_rn5k7"]
 [ext_resource type="PackedScene" uid="uid://b14kq4rlyq2kk" path="res://scenes/vfx_conteiner.tscn" id="3_sxwm6"]
+[ext_resource type="Resource" uid="uid://6gy5d5epbtce" path="res://resources/animaciones/fire_animation.tres" id="4_iquwj"]
 
 [node name="GameScene" type="Node" unique_id=1075307019]
 script = ExtResource("1_4n5kr")
@@ -13,7 +15,10 @@ script = ExtResource("1_4n5kr")
 size_flags_horizontal = 4
 
 [node name="mapVisualizer" parent="IngameMap/VBoxContainer/PanelContainer/SubViewportContainer/SubViewport" parent_id_path=PackedInt32Array(594307947, 1514874787) index="0" unique_id=19580803]
+vfx_database = Dictionary[StringName, ExtResource("3_rn5k7")]({
+&"magic": ExtResource("4_iquwj"),
+&"physic": ExtResource("4_iquwj")
+})
 vfx_scene = ExtResource("3_sxwm6")
-vfx_folder_path = "res://resources/animaciones"
 
 [editable path="IngameMap"]

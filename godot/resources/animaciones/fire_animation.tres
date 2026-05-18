@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://dwaej3n2lh2fj" path="res://assets/particles/nova_0.png" id="1_8dabq"]
 [ext_resource type="Script" uid="uid://coqlqo81l8ahe" path="res://scripts/resources/vfx_effect_data.gd" id="1_afx8a"]
 [ext_resource type="Shader" uid="uid://wiqqr2wcedbj" path="res://scenes/shader_fuego.gdshader" id="3_ele4s"]
-[ext_resource type="Resource" uid="uid://dnbyq4cqriq" path="res://resources/attack_types/0002.tres" id="4_ele4s"]
 
 [sub_resource type="Gradient" id="Gradient_8dabq"]
 offsets = PackedFloat32Array(0, 0, 1)
@@ -11,7 +10,6 @@ colors = PackedColorArray(1, 0.9, 0, 1, 1, 0.4, 0, 1, 0.8, 0.1, 0, 1)
 
 [resource]
 script = ExtResource("1_afx8a")
-trigger_attack_type = ExtResource("4_ele4s")
 shader = ExtResource("3_ele4s")
 core_color = Color(1, 0.9, 0, 1)
 mid_color = Color(1, 0.4, 0, 1)
