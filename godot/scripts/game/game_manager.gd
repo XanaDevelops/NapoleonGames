@@ -20,7 +20,7 @@ func _init() -> void:
 	if "--server" in cmd_args:
 		is_server = true
 		
-	_gameRes = GameResources.load_from()
+	game_res = GameResources.load_from()
 	#temporal
 	#self.turn_manager= TurnManager.new()
 	app_state = APP_STATE.MENU_HUB
