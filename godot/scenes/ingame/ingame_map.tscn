@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://c0k4getxqisq6" path="res://scenes/tile_info.tscn" id="16_nd88s"]
 [ext_resource type="PackedScene" uid="uid://djgay43k7icbq" path="res://scenes/unit_info.tscn" id="17_87c6t"]
 [ext_resource type="PackedScene" uid="uid://u3jxahf3mymo" path="res://scenes/habilities.tscn" id="18_87c6t"]
+[ext_resource type="PackedScene" uid="uid://coif4sl3oeh3l" path="res://scenes/mana.tscn" id="19_k55sq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3gkr"]
 bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
@@ -404,17 +405,17 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 28
 
-[node name="UnitInfo" type="Control" parent="MarginContainer/TabContainer" unique_id=551573519 node_paths=PackedStringArray("resistances_container", "currrentAlterStates_container", "resistances_grid", "alter_states_grid", "current_mana")]
+[node name="UnitInfo" type="Control" parent="MarginContainer/TabContainer" unique_id=551573519 node_paths=PackedStringArray("current_mana", "resistances_container", "currrentAlterStates_container", "resistances_grid", "alter_states_grid")]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("6_smdvi")
+current_mana = NodePath("VBoxContainer/Bars/ManaBar")
 resistances_container = NodePath("VBoxContainer/ResistancesContainer")
 currrentAlterStates_container = NodePath("VBoxContainer/CurrenAlterStatesContainer")
 resistances_grid = NodePath("VBoxContainer/ResistancesContainer/VBoxContainer/ResistancesScrollContainer/ResistancesGridContainer")
 alter_states_grid = NodePath("VBoxContainer/CurrenAlterStatesContainer/VBoxContainer/ScrollContainer/AlterStatesGridContainer")
-current_mana = NodePath("VBoxContainer/Bars/ManaBar")
 metadata/_tab_index = 1
 
 [node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/UnitInfo" unique_id=598713077]
@@ -583,7 +584,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="CardsPanel" type="Control" parent="." unique_id=1431020749 node_paths=PackedStringArray("deployment_box", "tile_info", "unit_info", "habilities")]
+[node name="CardsPanel" type="Control" parent="." unique_id=1431020749 node_paths=PackedStringArray("deployment_box", "tile_info", "UnitPanel")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -596,8 +597,7 @@ size_flags_stretch_ratio = 2.2
 script = ExtResource("4_0htj4")
 deployment_box = NodePath("DeploymentBox")
 tile_info = NodePath("HBoxContainer/TileInfo")
-unit_info = NodePath("HBoxContainer/UnitInfo")
-habilities = NodePath("HBoxContainer/Habilities")
+UnitPanel = NodePath("HBoxContainer/UnitPanel")
 
 [node name="DeploymentBox" type="HBoxContainer" parent="CardsPanel" unique_id=484191042]
 layout_mode = 1
@@ -611,21 +611,57 @@ grow_vertical = 0
 script = ExtResource("8_rtl0i")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CardsPanel" unique_id=1941141629]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="TileInfo" parent="CardsPanel/HBoxContainer" unique_id=1453422024 node_paths=PackedStringArray("name_label", "texture_rect", "height_label", "cost_label", "position_label", "description_button", "tile_info") instance=ExtResource("16_nd88s")]
+layout_mode = 2
+script = ExtResource("5_x30bk")
+name_label = NodePath("PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/NameLabel")
+texture_rect = NodePath("PanelContainer/MarginContainer/PanelContainer/VBoxContainer/TextureRect")
+height_label = NodePath("../../../MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer/HeightLabel")
+cost_label = NodePath("../../../MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer/CostLabel")
+position_label = NodePath("../../../MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer/PositionLabel")
+description_button = NodePath("PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/DescriptionButton")
+tile_info = NodePath(".")
+
+[node name="NameLabel" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 1280806302) index="1" unique_id=1820895288]
+vertical_alignment = 1
+
+[node name="UnitPanel" type="Control" parent="CardsPanel/HBoxContainer" unique_id=356783508 node_paths=PackedStringArray("unit_label", "unit_texture", "owner_label", "speed_label", "dodge_label", "habilities_grid", "current_mana", "descriptionButton", "unit_info")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("6_smdvi")
+unit_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VBoxContainer/UnitHBoxContainer/NameLabel")
+unit_texture = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VBoxContainer/UnitHBoxContainer/UnitTextureRect")
+owner_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/HBoxContainer/OwnerLabel")
+speed_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/SpeedHBoxContainer/SpeedLabel")
+dodge_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/DodgeHBoxContainer2/DodgeLabel")
+habilities_grid = NodePath("HBoxContainer/Habilities/MarginContainer/VBoxContainer/ScrollContainer/GridContainer")
+current_mana = NodePath("HBoxContainer/Mana/PanelContainer/VBoxContainer/HealthBar")
+descriptionButton = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/HBoxContainer/DescriptionButton")
+unit_info = NodePath("HBoxContainer/UnitInfo")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CardsPanel/HBoxContainer/UnitPanel" unique_id=1650413846]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme_override_constants/separation = 20
 
-[node name="TileInfo" parent="CardsPanel/HBoxContainer" unique_id=1453422024 instance=ExtResource("16_nd88s")]
+[node name="UnitInfo" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" unique_id=722150641 instance=ExtResource("17_87c6t")]
 layout_mode = 2
-script = ExtResource("5_x30bk")
+size_flags_horizontal = 3
 
-[node name="UnitInfo" parent="CardsPanel/HBoxContainer" unique_id=722150641 instance=ExtResource("17_87c6t")]
+[node name="Mana" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" unique_id=1760166787 instance=ExtResource("19_k55sq")]
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
-script = ExtResource("6_smdvi")
+size_flags_vertical = 4
 
-[node name="Habilities" parent="CardsPanel/HBoxContainer" unique_id=399533923 instance=ExtResource("18_87c6t")]
-visible = false
+[node name="Habilities" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" unique_id=399533923 instance=ExtResource("18_87c6t")]
 layout_mode = 2
 
 [node name="EndTurnButton" parent="." unique_id=1726048997 instance=ExtResource("15_pwbjq")]
@@ -641,4 +677,6 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [editable path="CardsPanel/HBoxContainer/TileInfo"]
-[editable path="CardsPanel/HBoxContainer/Habilities"]
+[editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/UnitInfo"]
+[editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Mana"]
+[editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Habilities"]

@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://mu05au6g8yvy"]
+
+[ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="1_62k28"]
+[ext_resource type="FontFile" uid="uid://803fy2pa5mht" path="res://assets/themes/ui/fonts/Urbanist/Urbanist-VariableFont_wght.ttf" id="1_xl7vw"]
+[ext_resource type="Script" uid="uid://dhy3u2u1th8uj" path="res://scenes/description.gd" id="2_gwr0b"]
+
+[sub_resource type="Theme" id="Theme_gwr0b"]
+default_font = ExtResource("1_xl7vw")
+default_font_size = 10
+
+[node name="Description" type="PanelContainer" unique_id=654029298 node_paths=PackedStringArray("descriptionLabel")]
+custom_minimum_size = Vector2(100, 40)
+size_flags_vertical = 3
+theme = SubResource("Theme_gwr0b")
+script = ExtResource("2_gwr0b")
+descriptionLabel = NodePath("MarginContainer/ScrollContainer/DescriptionLabel")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=903442104]
+layout_mode = 2
+texture = ExtResource("1_62k28")
+region_rect = Rect2(19, 18, 116, 75)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2114074189]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=1696024225]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/ScrollContainer" unique_id=745457424]
+custom_minimum_size = Vector2(40, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+autowrap_mode = 2

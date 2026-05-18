@@ -23,6 +23,10 @@ func paint(hab:HabilityRes) -> void:
 	DescriptionButton.pressed.connect(_on_description_requested)
 	
 
-
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		if not get_global_rect().has_point(event.global_position):
+			queue_free()
+			
 func _on_description_requested() -> void:
 	pass

@@ -2,8 +2,9 @@ extends Control
 
 @export var deployment_box: HBoxContainer
 @export var tile_info: Control      
-@export var unit_info: PanelContainer     
-@export var habilities:PanelContainer
+#@export var unit_info: PanelContainer     
+#@export var habilities:PanelContainer
+@export var UnitPanel: Control
 var _confirm_dialog: AcceptDialog = null
 var is_deployment_active: bool = false
 
@@ -13,9 +14,9 @@ signal cancelled
 func _ready() -> void:
 	if tile_info:
 		tile_info.visible = false
-	if unit_info:
-		unit_info.visible = false
-		habilities.visible= false
+	if UnitPanel:
+		UnitPanel.visible= false
+	
 
 func paint_tile_info(tile: TileGame) -> void:
 	if is_deployment_active:
@@ -27,22 +28,22 @@ func paint_tile_info(tile: TileGame) -> void:
 func paint_unit_info(tile: TileGame) -> void:
 	if is_deployment_active:
 		return
-	if unit_info:
-		unit_info.visible = true
-		unit_info.paint(tile)
-		habilities.visible= true
+	if UnitPanel:
+		UnitPanel.visible = true
+		UnitPanel.paint(tile)
 		
 		
 
 func clear_unit_info() -> void:
-	if unit_info:
-		unit_info.visible = false
+	if UnitPanel:
+		UnitPanel.visible = false
+		pass
 
 func clear() -> void:
 	if tile_info:
 		tile_info.visible = false
-	if unit_info:
-		unit_info.visible = false
+	if UnitPanel:
+		UnitPanel.visible = false
 
 func set_deployment_phase(is_active: bool) -> void:
 	is_deployment_active = is_active

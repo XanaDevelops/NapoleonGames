@@ -9,6 +9,10 @@ script = ExtResource("1_4n5kr")
 [node name="IngameMap" parent="." unique_id=594307947 instance=ExtResource("2_rqqua")]
 
 [node name="PlayersPanel" parent="IngameMap" index="1" unique_id=69587996]
-anchors_preset = 10
+offset_bottom = 0.0
 
 [editable path="IngameMap"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/TileInfo"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/UnitInfo"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Mana"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Habilities"]

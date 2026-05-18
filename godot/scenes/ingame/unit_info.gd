@@ -2,20 +2,21 @@ extends Control
 
 
 
-@onready var unit_label: Label = $MarginContainer/VBoxContainer/VBoxContainer/UnitHBoxContainer/NameLabel
-@onready var unit_texture: TextureRect = $MarginContainer/VBoxContainer/VBoxContainer/UnitHBoxContainer/TextureRect
+@export var unit_label: Label 
+@export var unit_texture: TextureRect
 
-@onready var owner_label: Label = $MarginContainer/VBoxContainer/HBoxContainer/OwnerLabel
-@onready  var speed_label: Label = $MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/SpeedHBoxContainer/Label2
-@onready var dodge_label: Label =$MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/DodgeHBoxContainer2/Label2
-@onready var habilities_container: PanelContainer = $Habilities
-@onready var habilities_grid: GridContainer = $MarginContainer/VBoxContainer/ScrollContainer/GridContainer
+@export var owner_label: Label
+@export  var speed_label: Label 
+@export var dodge_label: Label 
+@export var habilities_grid: GridContainer 
+@export var current_mana: ProgressBar 
+@export var descriptionButton:Button
+@export var unit_info: PanelContainer
 
 @export var resistances_container: PanelContainer 
 @export var currrentAlterStates_container: PanelContainer 
 @export var resistances_grid : GridContainer
 @export var alter_states_grid: GridContainer 
-@export var current_mana: ProgressBar 
 
 const HEADERS_RESISTANCES= ["Tipo de ataque", "Resistencia"]
 const ALTER_HEADERS = ["Estado", "Turnos Faltantes", "Efecto"]
@@ -24,21 +25,26 @@ signal hability_use_requested(hab: HabilityRes)
 var _observed_unit: UnitGame = null
 func _ready() -> void:
 	await get_tree().process_frame
-	
-
+		
 	
 
 func paint(tile: TileGame) -> void:
+	
 	self.unit_label.text =tile.get_tile_name() 
 	self.owner_label.text = str(tile.get_owner_name())
 	self.unit_texture.texture= tile.get_unit_portrait()
 	self.speed_label.text = str(tile.get_speed())
 	self.dodge_label.text = str(tile.get_dodge())
+	for conn in descriptionButton.pressed.get_connections():
+		descriptionButton.pressed.disconnect(conn.callable)
+	descriptionButton.pressed.connect(_on_show_description.bind(tile.get_tile_desc()))
+
+	
 
 
-	#paint_resistances(tile.get_resistances())
 	paint_habilities(tile.get_habilities(),tile.get_availableHabilities())
-	paint_AlterStates(tile.get_AlterStates())
+	#paint_resistances(tile.get_resistances())
+	#paint_AlterStates(tile.get_AlterStates())
 
 func paint_habilities(habilities: Array[HabilityRes], available_habilities: Dictionary[HabilityRes, int]) -> void:
 	if habilities== null:
@@ -49,33 +55,41 @@ func paint_habilities(habilities: Array[HabilityRes], available_habilities: Dict
 	for hab in habilities:
 		_add_row(hab, available_habilities.get(hab, 0)==0)
 
-func _on_hability_info_requested(hab: HabilityRes) -> void:
-	var dialog = AcceptDialog.new()
-	dialog.title = str(hab.name)
-	dialog.dialog_text = """
-		Descripción: %s
-		Objetivo: %s
-		Maná: %d
-		Rango: %d
-		Cooldown: %dt
-		Pasiva: %s
-	""" % [
-		hab.desc,
-		hab._objective_text(),
-		hab.manaCost,
-		hab.radius,
-		hab.cooldown,
-		"Sí" if hab.isPassive else "No"
-	]
-	add_child(dialog)
-	dialog.popup_centered()
-	dialog.confirmed.connect(func(): dialog.queue_free())
-	dialog.canceled.connect(func(): dialog.queue_free())
-	
-	var hability_scene= preload("res://scenes/hability.tscn").instantiate()
-	hability_scene.paint(hab)
 
- 
+func _on_show_description(text:String) -> void:
+	#crear un escena
+	var existing = get_node_or_null("UnitDescription")
+	if existing:
+		existing.queue_free()
+	
+	var description_scene = preload("res://scenes/description.tscn").instantiate()
+	description_scene.name = "UnitDescription"
+	add_child(description_scene)
+	description_scene.paint(text)
+	
+	# Posicionar al lado derecho del UnitInfo
+	await get_tree().process_frame
+	var grid_global = unit_info.global_position
+	var grid_height = unit_info.size.y
+	description_scene.global_position = Vector2(grid_global.x , grid_global.y-grid_height)
+  
+
+func _on_hability_info_requested(hab: HabilityRes) -> void:
+	var existing = get_node_or_null("HabilityPanel")
+	if existing:
+		existing.queue_free()
+	
+	var hability_scene = preload("res://scenes/hability.tscn").instantiate()
+	hability_scene.name = "HabilityPanel"
+	add_child(hability_scene)
+	hability_scene.paint(hab)
+	
+	# Posicionar al lado derecho del UnitInfo
+	await get_tree().process_frame
+	var grid_global = habilities_grid.global_position
+	var grid_width = habilities_grid.size.x
+	hability_scene.global_position = Vector2(grid_global.x + grid_width, grid_global.y)
+	
 func _create_cell(text: String, color: Color, is_header: bool = false) -> PanelContainer:
 	var panel = PanelContainer.new()
 	
@@ -115,30 +129,16 @@ func _add_row(hab: HabilityRes, available: bool) -> void:
 	var btn_info = Button.new()
 	btn_info.text = "i"
 
-	btn_info.pressed.connect(func(): _show_hability_info(hab))
+	btn_info.pressed.connect(func(): _on_hability_info_requested(hab))
 	row.add_child(btn_info)
 	
 	
 	habilities_grid.columns = 1
 	habilities_grid.add_child(row)
 
-func _show_hability_info(hab: HabilityRes) -> void:
-	var dialog = AcceptDialog.new()
-	dialog.title = str(hab.name)
-	dialog.dialog_text = "Descripción: %s\nObjetivo: %s\nManá: %d\nRango: %d\nCD: %dt\nPasiva: %s" % [
-		hab.desc,
-		hab._objective_text(),
-		hab.manaCost,
-		hab.radius,
-		hab.cooldown,
-		"Sí" if hab.isPassive else "No"
-	]
-	add_child(dialog)
-	dialog.popup_centered()
-	dialog.confirmed.connect(func(): dialog.queue_free())
-	dialog.canceled.connect(func(): dialog.queue_free())
 
-  
+
+
 
 func _add_row_resistance(attack: AttackType, resistance: int) -> void:
 	var values = [

@@ -45,5 +45,6 @@ offset_left = 6.0
 offset_top = 23.0
 offset_right = 63.0
 offset_bottom = 41.0
+theme_override_colors/font_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
 theme_override_font_sizes/font_size = 13
 text = "End Turn"
