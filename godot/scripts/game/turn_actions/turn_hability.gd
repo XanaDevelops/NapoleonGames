@@ -2,16 +2,19 @@ class_name TurnHability
 extends TurnAction
 
 
+# posicion origen
 var pos: Vector2i
+# uid de habilidad
 var hability_uid: int
+# destinos objetivos
 var dest: Array[Vector2i]
 
 
 static func create(unit: UnitGame, pos: Vector2i, hab: HabilityRes, dest: Array[Vector2i]) -> TurnHability:
 	var turn := TurnHability.new()
 	turn.action = ACTION.PASSIVE if hab.isPassive else ACTION.ACTIVE
-	turn.player = unit._owner
-	turn.unit = unit
+	turn.player_uid = unit._owner.get_user_res().uid
+	turn.unit_uid = unit._cardRes.uid
 	turn.pos = pos
 	turn.hability_uid = hab.uid
 	turn.dest = dest
@@ -20,7 +23,7 @@ static func create(unit: UnitGame, pos: Vector2i, hab: HabilityRes, dest: Array[
 
 func encode() -> PackedByteArray:
 	var data := super.encode()
-	var offset := 2
+	var offset := 10
 	var dest_count := dest.size()
 	data.resize(offset + 16 + (dest_count * 8))
 	data.encode_s32(offset, pos.x)
@@ -40,7 +43,7 @@ func encode() -> PackedByteArray:
 
 func decode(data: PackedByteArray) -> void:
 	super.decode(data)
-	var offset := 2
+	var offset := 10
 	var x := data.decode_s32(offset)
 	offset += 4
 	var y := data.decode_s32(offset)

@@ -12,16 +12,21 @@ enum ACTION {
 	PASS_TURN
 }
 
-var player: UserGame
+# uid del usuario
+var player_uid: int
+# tipo de accion
 var action: ACTION
+# uid de la carta/unidad
 ## duplicate no funciona si _init(..args), en teoria lo que nos hace falta no cambia
-var unit: UnitGame
+var unit_uid: int
 
 # Override function in derived classes
 func encode() -> PackedByteArray:
 	var data := super.encode()
-	data.resize(2)
+	data.resize(10)
 	data.encode_u8(1, action)
+	data.encode_s32(2, player_uid)
+	data.encode_s32(6, unit_uid)
 	return data
 
 
@@ -29,6 +34,8 @@ func encode() -> PackedByteArray:
 func decode(data: PackedByteArray) -> void:
 	super.decode(data)
 	action = data.decode_u8(1)
+	player_uid = data.decode_s32(2)
+	unit_uid = data.decode_s32(6)
 
 func _init() -> void:
 	pass

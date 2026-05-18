@@ -92,8 +92,18 @@ func replay_turn(turn: TurnAction) -> bool:
 			
 			
 	return true
-		
+
+func _get_UserGame_(uid: int) -> UserGame:
+	if get_user_a().uid == uid:
+		return turn_order[0]
+	elif get_user_b().uid == uid:
+		return turn_order[1]
+	return null
+	
+
+## Reproduce un Deploy, principalmente del server, por lo que correcto
 func _replay_deployment(turn: TurnDeploy) -> bool:
+	#_on_deploy_group()
 	return true
 
 func _replay_movement(turn: TurnMove) -> bool:
