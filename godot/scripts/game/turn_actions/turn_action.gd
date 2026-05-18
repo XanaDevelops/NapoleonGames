@@ -20,13 +20,14 @@ var unit: UnitGame
 # Override function in derived classes
 func encode() -> PackedByteArray:
 	var data := super.encode()
+	data.resize(2)
 	data.encode_u8(1, action)
 	return data
 
 
 # Override function in derived classes
 func decode(data: PackedByteArray) -> void:
-	packet_type = data.decode_u8(0)
+	super.decode(data)
 	action = data.decode_u8(1)
 
 func _init() -> void:
