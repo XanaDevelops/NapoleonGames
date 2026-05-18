@@ -86,6 +86,9 @@ func replay_turn(turn: TurnAction) -> bool:
 			pass
 		TurnAction.ACTION.ACTIVE, TurnAction.ACTION.PASSIVE:
 			pass
+		TurnAction.ACTION.PASS_TURN:
+			# quizas comprobar esto sea correcto?
+			advance_turn()
 		_:
 			push_error("[TurnManager] Accion no implementada ", turn.action)
 			return false
@@ -101,16 +104,26 @@ func _get_UserGame_(uid: int) -> UserGame:
 	return null
 	
 
-## Reproduce un Deploy, principalmente del server, por lo que correcto
+## Reproduce un Deploy, principalmente del server, por lo deberia correcto
 func _replay_deployment(turn: TurnDeploy) -> bool:
-	#_on_deploy_group()
-	return true
+	var user_game := _get_UserGame_(turn.player_uid)
+	if not user_game:
+		return false
+	var card_army_i := user_game.deployment_data.find_custom(func (x: CardArmyGroup):
+		return x.cardType.uid == turn.unit_uid and x.n == turn.n)
+	var card_army := user_game.deployment_data[card_army_i]
+	
+	return _on_deploy_group(user_game, card_army, turn.deploy_pos)
 
 func _replay_movement(turn: TurnMove) -> bool:
-	return true
+	
+	# TODO: realizar más comprobaciones?
+	return _on_unit_movement_requested(turn.start_pos, turn.end_pos)
 	
 func _replay_hability(turn: TurnHability) -> bool:
-	return true
+	# TODO: más comprobaciones?
+	var hab : HabilityRes = GameManager.get_game_resources().get_res_from_uid(turn.hability_uid, HabilityRes)
+	return _on_unit_hability_use(turn.pos, turn.dest, hab)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -144,12 +157,12 @@ func _clone_army(army: ArmyRes) -> Array[CardArmyGroup]:
 			copy.append(group.duplicate())
 	return copy
 
-func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
+func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 	var map_logic = get_map()
 	var unit = map_logic.get_tile_at(start).get_unit()
 	if unit.has_moved_this_turn:
 		print("La unidad ya se ha movido")
-		return
+		return false
 		
 	if unit._owner == get_current_user():
 	
@@ -161,18 +174,20 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
 		register_turn(action)
 	else:
 		print("Acción denegada: No es el turno del dueño de esta unidad")
+		return false
+		
+	return true
 
-
-func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability: HabilityRes) -> void:
+func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability: HabilityRes) -> bool:
 	var map : MapGame = get_map()
 	var unit_source := map.get_tile_at(tile).get_unit()
 	if unit_source.has_used_hability_this_turn:
 		print("La unidad ya ha usado una habilidad activa!")
-		return
+		return false
 		
 	if unit_source._owner != get_current_user():
 		print("Acción denegada: No es el turno del dueño de esta unidad")
-		return
+		return false
 		
 	var _dest : Array[UnitGame] = []
 	
@@ -190,11 +205,12 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 	var res := unit_source.use_hability(hability, _dest)
 	if not res:
 		print("No se cumple las condiciones para usar esta habilidad!")
-		return
+		return false
 		
 	var action := TurnHability.create(unit_source, tile, hability, objectives)
 	register_turn(action)
 		
+	return true
 
 func start_deployment_phase() -> void:
 	is_deployment_phase = true
