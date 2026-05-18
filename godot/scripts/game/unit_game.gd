@@ -92,12 +92,14 @@ func _proc_alter_states() -> void:
 			continue
 			
 		# Reutilizar esta funcion, un AlterState no deja de ser una minihabilidad
+		var tm := GameManager.get_turn_manager()
+		var map := tm.get_map()
 		var dest : Array[UnitGame] = []
 		if HabilityRes.inflicts_strict_self(alter.objective):
 			dest.append(self)
-		else:
-			dest.append_array(GameManager.get_map().get_units_range(_tile.get_position(), alter.radius, alter.objective) \
-					.map(func (x: Vector2i): return GameManager.get_map().get_tile_at(x).get_unit()) as Array[UnitGame])
+		elif map:
+			dest.append_array(map.get_units_range(_tile.get_position(), alter.radius, alter.objective) \
+					.map(func (x: Vector2i): return map.get_tile_at(x).get_unit()) as Array[UnitGame])
 		for obj in dest:
 			_apply_hab(alter.stat, alter.type, alter.value, obj)
 		
@@ -105,10 +107,13 @@ func _proc_alter_states() -> void:
 ## se debe llamar cada turno del jugador
 ## Se debe vincular con TurnManager
 func advance_turn() -> void:
-	if GameManager.get_turn_manager().get_current_user() != _owner:
+	var tm := GameManager.get_turn_manager()
+	if tm == null:
+		return
+	if tm.get_current_user() != _owner:
 		return
 	# Si es despliegue ignoramos esta llamadas
-	if GameManager._app_state != GameManager.APP_STATE.IN_GAME:
+	if tm.get_app_state() != GameManager.APP_STATE.IN_GAME:
 		return
 	_tick()
 	
@@ -241,7 +246,11 @@ func get_available_habilities() -> Array[HabilityRes]:
 		if cd > 0:
 			continue
 			
-		if GameManager.get_map().get_units_range(_tile.get_position(), key.radius, key.objective).size() == 0:
+		var tm := GameManager.get_turn_manager()
+		var map := tm.get_map()
+		if map == null:
+			continue
+		if map.get_units_range(_tile.get_position(), key.radius, key.objective).size() == 0:
 			continue
 		
 		if key.manaCost > self.mana:

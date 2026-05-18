@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://ck5bwmcsoj647" path="res://test/test_res/hab_set_kaboom.tres" id="4_yy4e5"]
 [ext_resource type="Resource" uid="uid://b7brrj7g17r0f" path="res://test/test_res/hab_cond_hipercura.tres" id="5_yy4e5"]
 [ext_resource type="Resource" uid="uid://be8g0osouqn7r" path="res://test/test_res/hab_cond_megacura.tres" id="6_1bhc3"]
+[ext_resource type="Texture2D" uid="uid://cfhl3bp06jbqv" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="7_f6foa"]
 
 [resource]
 script = ExtResource("3_5je53")
@@ -17,5 +18,7 @@ desc = "test melee"
 hp = 20
 mana = 5
 speed = 4
+portrait = ExtResource("7_f6foa")
+img = ExtResource("7_f6foa")
 habilities = Array[ExtResource("1_ct0dh")]([ExtResource("2_5je53"), ExtResource("3_ll81n"), ExtResource("4_yy4e5"), ExtResource("5_yy4e5"), ExtResource("6_1bhc3")])
 metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

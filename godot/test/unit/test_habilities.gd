@@ -56,7 +56,7 @@ func test_attack_2() -> void:
 	var old_hps := enemy_units.map(func (x: UnitGame) -> int: return x.hp)
 	
 	# de paso comprobamos rangos
-	var ranges := GameManager.get_map().get_units_range(ally.get_current_position(), hab_arc.radius, hab_arc.objective)
+	var ranges := GameManager.get_turn_manager().get_map().get_units_range(ally.get_current_position(), hab_arc.radius, hab_arc.objective)
 	assert_eq(ranges.size(), 3)
 	
 	# usar TurnManager para variar
@@ -98,7 +98,7 @@ func test_alter_state() -> void:
 	var old_hps := enemy_units.map(func (x: UnitGame) -> int: return x.hp)
 	
 	# de paso comprobamos rangos
-	var ranges := GameManager.get_map().get_units_range(ally.get_current_position(), hab_fire.radius, hab_fire.objective)
+	var ranges := GameManager.get_turn_manager().get_map().get_units_range(ally.get_current_position(), hab_fire.radius, hab_fire.objective)
 	assert_eq(ranges.size(), 3)
 	
 	# usar TurnManager para variar
@@ -225,8 +225,15 @@ func before_each():
 	var tm : TurnManager = autofree(TurnManager.new())
 	tm.turn_order = [user_ally_game, user_enemy_game]
 	GameManager.register_turn_manager(tm)
-	GameManager.set_map(map_game)
-	GameManager._app_state = GameManager.APP_STATE.IN_GAME
+	GameManager.game_config = GameConfig.new(
+		user_ally,
+		user_enemy,
+		map_game._mapRes,
+		null,
+		null
+	)
+	tm.set_map(map_game)
+	tm.set_app_state(GameManager.APP_STATE.IN_GAME)
 	
 	unit = UnitGame.new(card_melee, user_ally_game)
 	map_game.place_unit(unit, Vector2i(0,0))

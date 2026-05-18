@@ -36,12 +36,13 @@ func _setup_game_environment() -> Dictionary:
 	var gr := GameResources.load_from("res://test/test_res/all_test_resources.tres")
 	var test_map_game : TestMapGame = autofree(TestMapGame.new())
 	var map := test_map_game.create_test_map()
-	GameManager._gameMap = map
-	GameManager._user_a = gr.users[0]
-	GameManager._user_b = gr.users[1]
-	GameManager._army_a = gr.users[0].obtener_ejercito_activo()
-	GameManager._army_b = gr.users[1].obtener_ejercito_activo()
-	GameManager._app_state = GameManager.APP_STATE.IN_GAME
+	GameManager.game_config = GameConfig.new(
+		gr.users[0],
+		gr.users[1],
+		map._mapRes,
+		gr.users[0].obtener_ejercito_activo(),
+		gr.users[1].obtener_ejercito_activo()
+	)
 	var user_a_game := UserGame.new(gr.users[0])
 	var user_b_game := UserGame.new(gr.users[1])
 	
@@ -50,7 +51,9 @@ func _setup_game_environment() -> Dictionary:
 	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate() as TurnManager
 	instance.turn_order = [user_a_game, user_b_game]
 	instance.turn_number = 0
+	instance.set_map(map)
 	add_child_autoqfree(instance)
+	instance.set_app_state(GameManager.APP_STATE.IN_GAME)
 	
 	return {
 		"tm": instance,

@@ -2,6 +2,7 @@ class_name TurnDeploy
 extends TurnAction
 
 var deploy_pos : Vector2i
+var card_res : CardRes
 var n : int
 
 static func create(player : UserGame, dpos: Vector2i, card_res: CardRes, n: int) -> TurnDeploy:

@@ -7,7 +7,10 @@ var map : MapGame
 func before_all():
 	self._gr = GameResources.load_from("res://test/test_res/all_test_resources.tres")
 	self.map = MapGame.new(TestHabilities.gen_test_map())
-	GameManager.set_map(self.map)
+	var tm := TurnManager.new()
+	GameManager.register_turn_manager(tm)
+	GameManager.game_config = GameConfig.new(null, null, self.map._mapRes, null, null)
+	tm.set_map(self.map)
 	
 func test_getters() -> void:
 	var atacker := UnitGame.new(_gr.cards[0], null) #mele
