@@ -28,11 +28,15 @@ var _selected_tile:   TileGame     = null
 var _selected_coords: Vector2i     = Vector2i(-1, -1)
 
 func _ready() -> void:
-	map = GameManager.get_map()
+	await get_tree().process_frame
+	if turn_manager == null:
+		turn_manager = GameManager.get_turn_manager()
+	map = turn_manager.get_map()
 	if map == null:
 		push_error("GameScene: no tiene mapa — usando mapa de test")
 		map = TestMapGame.new().create_test_map()
-		GameManager.set_map(map)
+		if turn_manager:
+			turn_manager.set_map(map)
 	map_visualizer._setup_map(map)
 
 	_hab_manager = HabilityManager.new()
@@ -144,7 +148,7 @@ func _on_map_tile_hovered(coords: Vector2i) -> void:
 			map_visualizer.clear_deployment_preview()
 		return
 
-	var result: Dictionary = GameManager._gameMap.calculate_deployment(
+	var result: Dictionary = map.calculate_deployment(
 		turn_manager.get_current_user_number(),
 		_pending_deployment_group.n,
 		coords

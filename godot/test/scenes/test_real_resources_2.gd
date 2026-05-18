@@ -7,8 +7,13 @@ func test_sandbox_interactivo_movimiento() -> void:
 	var gr = GameResources.load_from()
 	var user_a = gr.users[0]
 	var user_b = gr.users[1]
-	
-	GameManager._gameMap = MapGame.new(gr.maps[0])
+	GameManager.game_config = GameConfig.new(
+		user_a,
+		user_b,
+		gr.maps[0],
+		user_a.obtener_ejercito_activo(),
+		user_b.obtener_ejercito_activo()
+	)
 	
 	var map_instance = load(MAP_SCENE_PATH).instantiate()
 	add_child_autoqfree(map_instance)
