@@ -14,11 +14,13 @@ signal tick_turn
 var turn_order: Array[UserGame] = []
 var turn_number: int = 0
 var is_deployment_phase: bool = false
+var game_config: GameConfig
+var map_game: MapGame
 
 func advance_turn() -> void:
+	turn_number += 1
 	var user : UserGame = turn_order[turn_number % turn_order.size()]
 	print("Turno de ", user.get_user_res().username)
-	turn_number += 1
 	tick_turn.emit()
 	
 	
@@ -39,6 +41,36 @@ func is_player1_turn() -> bool:
 
 func get_player_cards(player: UserGame) -> int:
 	return player.get_deployment_count()
+
+func get_map() -> MapGame:
+	return map_game
+
+func set_map(new_map: MapGame) -> void:
+	map_game = new_map
+
+func get_game_config() -> GameConfig:
+	return game_config
+
+func get_game_resources() -> GameResources:
+	return GameManager.game_res
+
+func get_app_state() -> GameManager.APP_STATE:
+	return GameManager.app_state
+
+func set_app_state(state: GameManager.APP_STATE) -> void:
+	GameManager.app_state = state
+
+func get_user_a() -> UserRes:
+	return game_config.user_a
+
+func get_user_b() -> UserRes:
+	return game_config.user_b
+
+func get_army_a() -> ArmyRes:
+	return game_config.army_a
+
+func get_army_b() -> ArmyRes:
+	return game_config.army_b
 	
 	
 func register_turn(turn: TurnAction) -> bool:
@@ -72,15 +104,21 @@ func _replay_hability(turn: TurnHability) -> bool:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	GameManager.turn_manager = self 
+	GameManager.register_turn_manager(self)
+	game_config = GameManager.get_game_config()
+	if map_game == null and game_config and game_config.map_res:
+		map_game = MapGame.new(game_config.map_res)
 	if turn_order.is_empty() :
-		turn_order = [UserGame.new(GameManager._user_a), UserGame.new(GameManager._user_b)]
+		if game_config == null:
+			push_error("[TurnManager] Falta GameConfig para inicializar turn_order")
+		else:
+			turn_order = [UserGame.new(get_user_a()), UserGame.new(get_user_b())]
 
 	if turn_order.size() >= 2:
 		if turn_order[0].deployment_data.is_empty():
-			turn_order[0].set_deployment_data(_clone_army(GameManager._army_a))
+			turn_order[0].set_deployment_data(_clone_army(get_army_a()))
 		if turn_order[1].deployment_data.is_empty():
-			turn_order[1].set_deployment_data(_clone_army(GameManager._army_b))
+			turn_order[1].set_deployment_data(_clone_army(get_army_b()))
 
 	for usuario in turn_order:
 		usuario.living_units = 0
@@ -97,7 +135,7 @@ func _clone_army(army: ArmyRes) -> Array[CardArmyGroup]:
 	return copy
 
 func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
-	var map_logic = GameManager.get_map()
+	var map_logic = get_map()
 	var unit = map_logic.get_tile_at(start).get_unit()
 	if unit.has_moved_this_turn:
 		print("La unidad ya se ha movido")
@@ -116,7 +154,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
 
 
 func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability: HabilityRes) -> void:
-	var map : MapGame = GameManager.get_map()
+	var map : MapGame = get_map()
 	var unit_source := map.get_tile_at(tile).get_unit()
 	if unit_source.has_used_hability_this_turn:
 		print("La unidad ya ha usado una habilidad activa!")
@@ -157,7 +195,7 @@ func start_deployment_phase() -> void:
 
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
-	GameManager._app_state = GameManager.APP_STATE.IN_GAME
+	set_app_state(GameManager.APP_STATE.IN_GAME)
 	players_panel.set_phase_battle()
 
 	cards_panel.set_deployment_phase(false)
@@ -177,7 +215,7 @@ func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vect
 	if not user_game.deployment_data.has(group):
 		return false
 
-	var result: Dictionary = GameManager._gameMap.calculate_deployment(get_current_user_number(), group.n, click_pos)
+	var result: Dictionary = map_game.calculate_deployment(get_current_user_number(), group.n, click_pos)
 	if not result["is_valid"]:
 		return false
 
@@ -187,8 +225,8 @@ func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vect
 		var new_unit := UnitGame.new(group.cardType, user_game)
 		new_unit._owner = user_game
 
-		GameManager._gameMap.place_unit(new_unit, pos)
-		map_visualizer.draw_tile(pos.x, pos.y, GameManager._gameMap.get_tile_at(pos))
+		map_game.place_unit(new_unit, pos)
+		map_visualizer.draw_tile(pos.x, pos.y, map_game.get_tile_at(pos))
 
 		new_unit.died.connect(_on_unit_died)
 		
@@ -235,13 +273,13 @@ func _has_cards_to_deploy(user: UserGame) -> bool:
 	return user.has_deployment_cards()
 
 func _highlight_current_deployment_zone() -> void:
-	var zone_tiles:Array[Vector2i] = GameManager._gameMap.get_deployment_zone_tiles(get_current_user_number())
+	var zone_tiles:Array[Vector2i] = map_game.get_deployment_zone_tiles(get_current_user_number())
 	map_visualizer.show_deployment_zone(zone_tiles)
 
 
 #esta función se ejecuta caundo una unidad emite que ha muerto
 func _on_unit_died(unit: UnitGame, pos: Vector2i) -> void:
-	map_visualizer.remove_unit(pos, GameManager._gameMap.get_tile_at(pos))
+	map_visualizer.remove_unit(pos, map_game.get_tile_at(pos))
 
 	if tick_turn.is_connected(unit.advance_turn):
 			tick_turn.disconnect(unit.advance_turn)
