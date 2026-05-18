@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ArmyRes" format=3 uid="uid://d2yca68nrr53q"]
+[gd_resource type="Resource" script_class="ArmyRes" format=3 uid="uid://cysh13lk4exi5"]
 
 [ext_resource type="Script" uid="uid://chjdn7qg0thht" path="res://scripts/resources/card_army_group.gd" id="1_tp3i1"]
 [ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="2_ogtmr"]
@@ -85,7 +85,7 @@ uid = 2
 [sub_resource type="Resource" id="Resource_iuvtm"]
 script = ExtResource("1_tp3i1")
 cardType = SubResource("Resource_ridsy")
-n = 1
+n = 3
 uid = 2
 
 [resource]

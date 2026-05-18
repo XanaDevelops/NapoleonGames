@@ -16,6 +16,7 @@ func test_visualizer() -> void:
 	await wait_until(func():
 		return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
+	autoqfree(instance._hab_manager)
 
 	gut.pause_before_teardown()
 	pass_test("ok, check UI")
@@ -35,12 +36,16 @@ func test_hability_applies_to_bars() -> void:
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
 	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate() as TurnManager
-	instance.turn_order = [gr.users[0], gr.users[1]]
+	var user_a_game := UserGame.new(gr.users[0])
+	var user_b_game := UserGame.new(gr.users[1])
+	instance.turn_order = [user_a_game, user_b_game]
 	instance.turn_number = 0
 	add_child_autoqfree(instance)
 
 	await wait_until(func(): return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
+	var ingame_map = instance.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
 
 	var unit_info = instance.get_node("IngameMap/VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo")
 	assert_not_null(unit_info, "UnitInfo debe existir")
@@ -64,8 +69,8 @@ func test_hability_applies_to_bars() -> void:
 	card_target.habilities = [] as Array[HabilityRes]
 	card_target.resistances = {} as Dictionary[AttackType, int]
 
-	var attacker = UnitGame.new(card_attacker, gr.users[0])
-	var target = UnitGame.new(card_target, gr.users[1])
+	var attacker = UnitGame.new(card_attacker, user_a_game)
+	var target = UnitGame.new(card_target, user_b_game)
 
 	# Colocar unidades en el mapa
 	var attacker_pos = Vector2i(5, 5)
@@ -130,7 +135,6 @@ func _create_physical_attack() -> HabilityRes:
 	hab.manaCost = 0
 	hab.radius = 1
 	hab.cooldown = 1
-	hab.duration = 0
 	hab.isPassive = false
 	hab.value = 15.0
 	hab.alter_states = [] as Array[AlterStateRes]
@@ -154,7 +158,6 @@ func _create_magic_attack() -> HabilityRes:
 	hab.manaCost = 25
 	hab.radius = 3
 	hab.cooldown = 2
-	hab.duration = 0
 	hab.isPassive = false
 	hab.value = 30.0
 	hab.alter_states = [] as Array[AlterStateRes]
@@ -176,7 +179,6 @@ func _create_heal() -> HabilityRes:
 	hab.manaCost = 15
 	hab.radius = 2
 	hab.cooldown = 2
-	hab.duration = 0
 	hab.isPassive = false
 	hab.value = 20.0
 	hab.alter_states = [] as Array[AlterStateRes]
@@ -195,7 +197,7 @@ func _create_poison() -> AlterStateRes:
 	state.value = -5.0
 	state.hitP = 1.0
 	state.duration = 3
-	state.objectiu = HabilityRes.SEL_ENEMY_FLAG
+	state.objective = HabilityRes.SEL_ENEMY_FLAG
 	return state
 
 func _create_shield_buff() -> AlterStateRes:
@@ -206,7 +208,7 @@ func _create_shield_buff() -> AlterStateRes:
 	state.value = 10.0
 	state.hitP = 1.0
 	state.duration = 2
-	state.objectiu = HabilityRes.SEL_SELF_FLAG
+	state.objective = HabilityRes.SEL_SELF_FLAG
 	return state
 
 func _create_speed_debuff() -> AlterStateRes:
@@ -217,7 +219,7 @@ func _create_speed_debuff() -> AlterStateRes:
 	state.value = -3.0
 	state.hitP = 0.75
 	state.duration = 2
-	state.objectiu = HabilityRes.SEL_ENEMY_FLAG
+	state.objective = HabilityRes.SEL_ENEMY_FLAG
 	return state
 
 
@@ -252,7 +254,6 @@ func generate_habilities() -> Array[HabilityRes]:
 			h.manaCost = 10
 			h.radius = 0
 			h.cooldown = 3
-			h.duration = 0
 			h.isPassive = false
 			h.value = 0.0
 			h.alter_states = [_create_shield_buff()] as Array[AlterStateRes]
@@ -266,7 +267,6 @@ func generate_habilities() -> Array[HabilityRes]:
 			h.manaCost = 15
 			h.radius = 3
 			h.cooldown = 2
-			h.duration = 0
 			h.isPassive = false
 			h.value = 0.0
 			h.alter_states = [_create_speed_debuff()] as Array[AlterStateRes]
@@ -280,7 +280,6 @@ func generate_habilities() -> Array[HabilityRes]:
 			h.manaCost = 30
 			h.radius = 2
 			h.cooldown = 3
-			h.duration = 0
 			h.isPassive = false
 			h.value = 20.0
 			h.alter_states = [] as Array[AlterStateRes]
@@ -453,12 +452,16 @@ func test_bars_react_to_signals() -> void:
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
 	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate()  as TurnManager
-	instance.turn_order = [gr.users[0], gr.users[1]]
+	var user_a_game := UserGame.new(gr.users[0])
+	var user_b_game := UserGame.new(gr.users[1])
+	instance.turn_order = [user_a_game, user_b_game]
 	instance.turn_number = 0
 	add_child_autoqfree(instance)
 	
 	await wait_until(func(): return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
+	var ingame_map = instance.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
 	
 	var unit_info = instance.get_node("IngameMap/VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo")
 	var hp_bar: ProgressBar = unit_info.current_health

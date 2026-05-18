@@ -31,5 +31,14 @@ func get_total_cost(card: CardRes) -> int:
 				_cost += mod.value
 	return _cost
 	
+## Tiene en cuenta herencia
 func _check_match(types: Array[CardTypeRes], mod: CardTypeRes) -> bool:
-	return types.any(func (x: CardTypeRes) : return x.uid == mod.uid)
+	## lambda recursiva, yay
+	var _check_type := func (x: CardTypeRes, f : Callable) -> bool:
+		if x.uid == mod.uid:
+			return true
+		if x.parentType:
+			return f.call(x.parentType, f) as bool
+		return false
+	return types.any(func (x: CardTypeRes) :
+		return _check_type.call(x, _check_type))

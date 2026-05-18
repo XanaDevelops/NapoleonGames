@@ -9,6 +9,11 @@ extends Control
 @onready var sub_viewport:  SubViewport          = $VBoxContainer/PanelContainer/SubViewportContainer/SubViewport
 @onready var map_visualizer: mapVisualizer       = $VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer
 @onready var unit_info:     Control              = $VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo
+@onready var deployment_box: HBoxContainer       = $VBoxContainer/CardsPanel/MarginContainer/DeploymentBox
+
+@onready var turn_manager: TurnManager = get_parent() as TurnManager
+
+var _pending_deployment_group: CardArmyGroup = null
 
 enum UnitState {
 	IDLE,
@@ -38,12 +43,14 @@ func _ready() -> void:
 	_setup_viewport()
 	clear()
 	map_visualizer.tile_clicked.connect(_on_tile_clicked)
+	map_visualizer.tile_hovered.connect(_on_map_tile_hovered)
 	#GameManager.phase_changed.connect(_on_phase_change)
 	#_on_phase_change(GameManager._app_state)
 	unit_info.hability_use_requested.connect(_on_hability_use_requested)
 
 	cards_panel.confirmed.connect(_hab_manager.confirm)
 	cards_panel.cancelled.connect(_hab_manager.cancel)
+	deployment_box.unit_selected_for_deployment.connect(_on_card_selected_in_ui)
 
 
 #func _enter_battle()-> void:
@@ -58,12 +65,11 @@ func _ready() -> void:
 	#cards_panel.set_phase_deployment()
 	#
 	#
-#func _on_phase_change(phase:GameManager.APP_STATE) -> void:
-	#match phase:
-		#GameManager.APP_STATE.DEPLOYMENT:
-			#_enter_deployment()
-		#GameManager.APP_STATE.IN_GAME:
-			#_enter_battle()
+#func _on_phase_change(is_deployment_phase: bool) -> void:
+	#if is_deployment_phase:
+		#_enter_deployment()
+	#else:
+		#_enter_battle()
 func clear() -> void:
 	cards_panel.clear()
 
@@ -115,6 +121,10 @@ func _on_hab_cancelled() -> void:
 	cards_panel.hide_confirm_dialog()
 
 func _on_tile_clicked(coords: Vector2i, tile: TileGame) -> void:
+	if turn_manager and turn_manager.is_deployment_phase:
+		_try_deploy(coords)
+		return
+
 	match _state:
 		UnitState.IDLE, UnitState.UNIT_SELECTED:
 			_select_tile(coords, tile)
@@ -122,6 +132,34 @@ func _on_tile_clicked(coords: Vector2i, tile: TileGame) -> void:
 		UnitState.HABILITY_ACTIVE:
 			if not _hab_manager.try_select_target(coords):
 				_select_tile(coords, tile)
+
+func _on_card_selected_in_ui(army_group: CardArmyGroup) -> void:
+	_pending_deployment_group = army_group
+
+func _on_map_tile_hovered(coords: Vector2i) -> void:
+	if not turn_manager or not turn_manager.is_deployment_phase:
+		return
+	if _pending_deployment_group == null:
+		if map_visualizer:
+			map_visualizer.clear_deployment_preview()
+		return
+
+	var result: Dictionary = GameManager._gameMap.calculate_deployment(
+		turn_manager.get_current_user_number(),
+		_pending_deployment_group.n,
+		coords
+	)
+	map_visualizer.show_deployment_preview(result["tiles"], result["is_valid"])
+
+func _try_deploy(coords: Vector2i) -> void:
+	if _pending_deployment_group == null:
+		return
+	if not turn_manager:
+		return
+
+	var current_user := turn_manager.get_current_user()
+	if turn_manager._on_deploy_group(current_user, _pending_deployment_group, coords):
+		_pending_deployment_group = null
 
 
 func _select_tile(coords: Vector2i, tile: TileGame) -> void:
