@@ -1,16 +1,18 @@
 [gd_scene format=3 uid="uid://cuf4b80g1meii"]
 
-[ext_resource type="Texture2D" uid="uid://d2gt4jk0dig14" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_PIPO_pack2_white.png" id="1_8wju1"]
 [ext_resource type="Theme" uid="uid://cl4k0d1mh51p" path="res://assets/themes/ui/text_font.tres" id="1_v4w3n"]
-[ext_resource type="StyleBox" uid="uid://b0p3mdn4roxd6" path="res://assets/themes/ui/menu_styleboxflat.tres" id="2_chjap"]
 [ext_resource type="Script" uid="uid://kgfk6ji3tbyg" path="res://scenes/exit_game.gd" id="2_tyqcr"]
+[ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="3_tyqcr"]
 [ext_resource type="Texture2D" uid="uid://08npi8efy1yv" path="res://assets/images/reject.png" id="3_v4w3n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chjap"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttyqg"]
+bg_color = Color(0.6, 0.6, 0.6, 0.03529412)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2fxb1"]
-bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 0.050980393)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4w3n"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -49,12 +51,12 @@ no_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContain
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1940650628]
 z_index = 1
 layout_mode = 2
-texture = ExtResource("1_8wju1")
-region_rect = Rect2(16.132103, 411.53326, 196.67087, 91.84894)
+texture = ExtResource("3_tyqcr")
+region_rect = Rect2(19, 417, 190, 81)
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1362065379]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("2_chjap")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ttyqg")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1908187392]
 layout_mode = 2
@@ -75,6 +77,7 @@ theme_override_constants/separation = 25
 alignment = 1
 
 [node name="CancelButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1019626222]
+z_index = 1
 custom_minimum_size = Vector2(23, 23)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -87,6 +90,7 @@ vertical_icon_alignment = 0
 expand_icon = true
 
 [node name="MessageLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1518196266]
+z_index = 1
 layout_mode = 2
 size_flags_horizontal = 4
 text = "¿Estás seguro de que quieres abandonar el juego?"
@@ -98,6 +102,7 @@ theme_override_constants/margin_left = 30
 theme_override_constants/margin_right = 30
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=1782832567]
+z_index = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 70

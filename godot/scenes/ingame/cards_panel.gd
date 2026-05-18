@@ -1,62 +1,59 @@
 extends Control
 
-@export var tile_info: Control  
-@export var unit_info: Control  
-@export var tabs: TabContainer  
-@export var deployment_box: HBoxContainer 
-
+@export var deployment_box: HBoxContainer
+@export var tile_info: Control      
+@export var unit_info: PanelContainer     
+@export var habilities:PanelContainer
 var _confirm_dialog: AcceptDialog = null
-
-
-var is_deployment_active: bool =false
-
-
+var is_deployment_active: bool = false
 
 signal confirmed
 signal cancelled
 
 func _ready() -> void:
-	await get_tree().process_frame
-	_setup_pages()
-	
-
-func _setup_pages() -> void:
-	
-	tile_info.custom_minimum_size = Vector2(size.x, size.y)
-	unit_info.custom_minimum_size = Vector2(size.x, size.y)
-
+	if tile_info:
+		tile_info.visible = false
+	if unit_info:
+		unit_info.visible = false
+		habilities.visible= false
 
 func paint_tile_info(tile: TileGame) -> void:
-	
-	if is_deployment_active: 
-		return 
-	
-	
-	tabs.visible = true
-	tile_info.paint(tile)
-	tabs.set_tab_hidden(1, true)
-	tabs.current_tab = 0
+	if is_deployment_active:
+		return
+	if tile_info:
+		tile_info.visible = true
+		tile_info.paint(tile)
 
 func paint_unit_info(tile: TileGame) -> void:
-	
-	if is_deployment_active: 
-		return 
-	
-	
-	tabs.visible = true
-	unit_info.paint(tile)
-	tabs.set_tab_hidden(1, false)
-	tabs.current_tab = 1
+	if is_deployment_active:
+		return
+	if unit_info:
+		unit_info.visible = true
+		unit_info.paint(tile)
+		habilities.visible= true
+		
+		
 
 func clear_unit_info() -> void:
-	tabs.set_tab_hidden(1, true)
+	if unit_info:
+		unit_info.visible = false
 
 func clear() -> void:
-	tabs.visible = false
+	if tile_info:
+		tile_info.visible = false
+	if unit_info:
+		unit_info.visible = false
+
+func set_deployment_phase(is_active: bool) -> void:
+	is_deployment_active = is_active
+	if deployment_box:
+		deployment_box.visible = is_active
+	if is_active:
+		clear()
 
 func show_confirm_dialog(hab: HabilityRes, targets: Array[Vector2i], _unit: UnitGame) -> void:
 	_confirm_dialog = AcceptDialog.new()
-	_confirm_dialog.title       = hab.name
+	_confirm_dialog.title = hab.name
 	_confirm_dialog.dialog_text = "Descripción: %s\nObjetivo: %s\nManá: %d\nRango: %d\nCD: %dt\nPasiva: %s" % [
 		hab.desc,
 		hab._objective_text(),
@@ -66,10 +63,8 @@ func show_confirm_dialog(hab: HabilityRes, targets: Array[Vector2i], _unit: Unit
 		"Sí" if hab.isPassive else "No",
 	]
 	_confirm_dialog.add_cancel_button("Cancelar")
-
 	add_child(_confirm_dialog)
 	_confirm_dialog.popup_centered()
-
 	_confirm_dialog.confirmed.connect(_on_dialog_confirmed)
 	_confirm_dialog.canceled.connect(_on_dialog_cancelled)
 
@@ -82,20 +77,7 @@ func hide_confirm_dialog() -> void:
 func _on_dialog_confirmed() -> void:
 	hide_confirm_dialog()
 	emit_signal("confirmed")
-	
+
 func _on_dialog_cancelled() -> void:
 	hide_confirm_dialog()
 	emit_signal("cancelled")
-	
-func set_deployment_phase(is_active: bool) -> void:
-	is_deployment_active = is_active
-	tabs.visible = !is_active
-	if deployment_box:
-		deployment_box.visible = is_active
-
-
-#func populate_deployment(army_groups: Array) -> void:
-	#deployment_box.populate(army_groups)
-#
-#func remove_deployment_card(group: CardArmyGroup) -> void:
-	#deployment_box.remove_card_visual(group)

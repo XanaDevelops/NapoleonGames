@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://c1a53ks6siogi"]
+
+[ext_resource type="FontFile" uid="uid://d2t7gjiow2ny5" path="res://assets/themes/ui/fonts/Metamorphous/Metamorphous-Regular.ttf" id="1_2lrop"]
+[ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="1_cpayv"]
+[ext_resource type="Texture2D" uid="uid://dxw5p04alo4ls" path="res://assets/images/radius.png" id="2_jio8j"]
+[ext_resource type="Script" uid="uid://c5q7w3427lo1j" path="res://scenes/hability.gd" id="2_n2k16"]
+[ext_resource type="Texture2D" uid="uid://dxfpkiijcfskd" path="res://assets/images/target.png" id="3_pq3dm"]
+[ext_resource type="Texture2D" uid="uid://hqesp8umos15" path="res://assets/images/mana.png" id="4_1nxwj"]
+[ext_resource type="Texture2D" uid="uid://cqr2aauodvpl2" path="res://assets/images/information.png" id="4_i43y1"]
+[ext_resource type="Texture2D" uid="uid://beyiehho5g4kd" path="res://assets/images/hourglass.png" id="5_pq3dm"]
+[ext_resource type="Texture2D" uid="uid://8vigad6v8tnd" path="res://assets/images/passive.png" id="6_1nxwj"]
+
+[sub_resource type="Theme" id="Theme_n2k16"]
+default_font = ExtResource("1_2lrop")
+default_font_size = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ss5a"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Hability" type="PanelContainer" unique_id=735565531 node_paths=PackedStringArray("nameLabel", "RadiusLabel", "ObjectiveLabel", "ManaLabel", "PassiveLabel", "CoolDownLabel", "DescriptionButton")]
+custom_minimum_size = Vector2(200, 100)
+theme = SubResource("Theme_n2k16")
+script = ExtResource("2_n2k16")
+nameLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/NameLabel")
+RadiusLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/RadiusLabel")
+ObjectiveLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3/ObjectiveLabel")
+ManaLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ManaLabel")
+PassiveLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer5/PassiveLabel")
+CoolDownLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer4/CoolDownLabel")
+DescriptionButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/DescriptionButton")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=978403674]
+layout_mode = 2
+texture = ExtResource("1_cpayv")
+region_rect = Rect2(19, 18, 116, 75)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=393061927]
+layout_mode = 2
+theme_override_constants/margin_left = 17
+theme_override_constants/margin_top = 13
+theme_override_constants/margin_right = 17
+theme_override_constants/margin_bottom = 13
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1325596911]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1627017071]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1762458322]
+layout_mode = 2
+size_flags_horizontal = 10
+horizontal_alignment = 1
+
+[node name="DescriptionButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1723415598]
+custom_minimum_size = Vector2(25, 30)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_0ss5a")
+icon = ExtResource("4_i43y1")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1573294809]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1390721167]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=582957291]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_jio8j")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="RadiusLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=2084557992]
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1903395426]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=314100199]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_pq3dm")
+expand_mode = 5
+stretch_mode = 6
+
+[node name="ObjectiveLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=2045704516]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=624938670]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=936509916]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_1nxwj")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="ManaLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=338214873]
+layout_mode = 2
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1532993094]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer4" unique_id=1155749418]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_pq3dm")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="CoolDownLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer4" unique_id=1672289388]
+layout_mode = 2
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=271704512]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer5" unique_id=442827658]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_1nxwj")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="PassiveLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer5" unique_id=1124202447]
+layout_mode = 2

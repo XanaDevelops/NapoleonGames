@@ -2,18 +2,17 @@ extends Control
 
 
 
-@export var unit_label: Label 
-@export var unit_texture: TextureRect 
+@onready var unit_label: Label = $MarginContainer/VBoxContainer/VBoxContainer/UnitHBoxContainer/NameLabel
+@onready var unit_texture: TextureRect = $MarginContainer/VBoxContainer/VBoxContainer/UnitHBoxContainer/TextureRect
 
-@export var owner_label: Label 
-@export  var speed_label: Label 
-@export var dodge_label: Label 
-@export var weight_label : Label 
+@onready var owner_label: Label = $MarginContainer/VBoxContainer/HBoxContainer/OwnerLabel
+@onready  var speed_label: Label = $MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/SpeedHBoxContainer/Label2
+@onready var dodge_label: Label =$MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/DodgeHBoxContainer2/Label2
+@onready var habilities_container: PanelContainer = $Habilities
+@onready var habilities_grid: GridContainer = $MarginContainer/VBoxContainer/ScrollContainer/GridContainer
+
 @export var resistances_container: PanelContainer 
-@export var habilities_container: PanelContainer 
 @export var currrentAlterStates_container: PanelContainer 
-@export var habilities_grid: GridContainer
-@export var grid_scroll: ScrollContainer
 @export var resistances_grid : GridContainer
 @export var alter_states_grid: GridContainer 
 @export var current_mana: ProgressBar 
@@ -26,26 +25,18 @@ var _observed_unit: UnitGame = null
 func _ready() -> void:
 	await get_tree().process_frame
 	
-	await get_tree().process_frame
-	
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 	
 
 func paint(tile: TileGame) -> void:
 	self.unit_label.text =tile.get_tile_name() 
-	self.owner_label.text = "Owner: %s" %tile.get_owner_name()
-	self.weight_label.text=  "Altura: %d" % tile.get_unit_weight()
+	self.owner_label.text = str(tile.get_owner_name())
 	self.unit_texture.texture= tile.get_unit_portrait()
-	self.speed_label.text = "Speed : %d" % tile.get_speed()
-	self.dodge_label.text = "Dodge : %d" % tile.get_dodge()
+	self.speed_label.text = str(tile.get_speed())
+	self.dodge_label.text = str(tile.get_dodge())
 
 
-	paint_resistances(tile.get_resistances())
+	#paint_resistances(tile.get_resistances())
 	paint_habilities(tile.get_habilities(),tile.get_availableHabilities())
 	paint_AlterStates(tile.get_AlterStates())
 
@@ -80,6 +71,9 @@ func _on_hability_info_requested(hab: HabilityRes) -> void:
 	dialog.popup_centered()
 	dialog.confirmed.connect(func(): dialog.queue_free())
 	dialog.canceled.connect(func(): dialog.queue_free())
+	
+	var hability_scene= preload("res://scenes/hability.tscn").instantiate()
+	hability_scene.paint(hab)
 
  
 func _create_cell(text: String, color: Color, is_header: bool = false) -> PanelContainer:

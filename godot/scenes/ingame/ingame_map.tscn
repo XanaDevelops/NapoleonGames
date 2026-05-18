@@ -7,7 +7,7 @@
 [ext_resource type="Shader" uid="uid://cemlqbvowjq1m" path="res://scenes/ingame/ingame_map.gdshader" id="3_g5sqw"]
 [ext_resource type="Script" uid="uid://bm6sp4ow1l2qv" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
 [ext_resource type="StyleBox" uid="uid://b0p3mdn4roxd6" path="res://assets/themes/ui/menu_styleboxflat.tres" id="4_m7qbv"]
-[ext_resource type="Script" path="res://scenes/ingame/top_menu.gd" id="5_f4drf"]
+[ext_resource type="Script" uid="uid://c7mxpxq37rib7" path="res://scenes/ingame/top_menu.gd" id="5_f4drf"]
 [ext_resource type="Texture2D" uid="uid://djq6xq2lkbdqi" path="res://assets/images/logo.png" id="5_l3gkr"]
 [ext_resource type="Script" uid="uid://boaagd3hgel75" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
 [ext_resource type="Texture2D" uid="uid://d0oowyo84ttju" path="res://assets/images/hamburger.png" id="6_l3gkr"]
@@ -16,6 +16,9 @@
 [ext_resource type="FontFile" uid="uid://bh17wqfhcf5sr" path="res://assets/themes/ui/fonts/Urbanist/static/Urbanist-Black.ttf" id="7_k2m3r"]
 [ext_resource type="Script" uid="uid://b220xr4adcigk" path="res://scenes/ingame/deployment_box.gd" id="8_rtl0i"]
 [ext_resource type="PackedScene" uid="uid://bjoqt2vxcerlr" path="res://scenes/end_turn_button.tscn" id="15_pwbjq"]
+[ext_resource type="PackedScene" uid="uid://c0k4getxqisq6" path="res://scenes/tile_info.tscn" id="16_nd88s"]
+[ext_resource type="PackedScene" uid="uid://djgay43k7icbq" path="res://scenes/unit_info.tscn" id="17_87c6t"]
+[ext_resource type="PackedScene" uid="uid://u3jxahf3mymo" path="res://scenes/habilities.tscn" id="18_87c6t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3gkr"]
 bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
@@ -51,7 +54,7 @@ map_container = NodePath("SubViewportContainer")
 cards_panel = NodePath("CardsPanel")
 sub_viewport = NodePath("SubViewportContainer/SubViewport")
 map_visualizer = NodePath("SubViewportContainer/SubViewport/mapVisualizer")
-unit_info = NodePath("CardsPanel/MarginContainer/TabContainer/UnitInfo")
+unit_info = NodePath("MarginContainer/TabContainer/UnitInfo")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1501154111]
 layout_mode = 1
@@ -284,51 +287,32 @@ tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAU
 
 [node name="TileMapLayer_highlights" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=739722248]
 
-[node name="CardsPanel" type="Control" parent="." unique_id=1431020749 node_paths=PackedStringArray("tile_info", "unit_info", "tabs", "deployment_box")]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -150.0
-offset_right = 400.0
-grow_vertical = 0
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.2
-script = ExtResource("4_0htj4")
-tile_info = NodePath("MarginContainer/TabContainer/TileInfo")
-unit_info = NodePath("MarginContainer/TabContainer/UnitInfo")
-tabs = NodePath("MarginContainer/TabContainer")
-deployment_box = NodePath("MarginContainer/DeploymentBox")
-
-[node name="MarginContainer" type="MarginContainer" parent="CardsPanel" unique_id=1467012460]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1467012460]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 930.0
 offset_right = 55.0
+offset_bottom = 930.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TabContainer" type="TabContainer" parent="CardsPanel/MarginContainer" unique_id=1102639422]
+[node name="TabContainer" type="TabContainer" parent="MarginContainer" unique_id=1102639422]
 layout_mode = 2
 current_tab = 0
 tab_0/title = "Información del terreno"
 
-[node name="TileInfo" type="Control" parent="CardsPanel/MarginContainer/TabContainer" unique_id=12227352 node_paths=PackedStringArray("name_label", "texture_rect", "height_label", "cost_label", "position_label", "description_button")]
+[node name="TileInfo" type="Control" parent="MarginContainer/TabContainer" unique_id=12227352]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("5_x30bk")
-name_label = NodePath("MarginContainer/HBoxContainer/VBoxContainer/NameLabel")
-texture_rect = NodePath("MarginContainer/HBoxContainer/VBoxContainer/TextureRect")
-height_label = NodePath("MarginContainer/HBoxContainer/HBoxContainer/HeightLabel")
-cost_label = NodePath("MarginContainer/HBoxContainer/HBoxContainer/CostLabel")
-position_label = NodePath("MarginContainer/HBoxContainer/HBoxContainer/PositionLabel")
-description_button = NodePath("MarginContainer/HBoxContainer/DescriptionButton")
 metadata/_tab_index = 0
 metadata/_tab_name = "Información del terreno"
 
-[node name="MarginContainer" type="MarginContainer" parent="CardsPanel/MarginContainer/TabContainer/TileInfo" unique_id=1894420896]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/TileInfo" unique_id=1894420896]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -340,35 +324,35 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer" unique_id=1104634476]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/TileInfo/MarginContainer" unique_id=1104634476]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=1608742071]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=1608742071]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="NameLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1804881697]
+[node name="NameLabel" type="Label" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1804881697]
 layout_mode = 2
 size_flags_vertical = 1
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/VBoxContainer" unique_id=966611291]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/VBoxContainer" unique_id=966611291]
 layout_mode = 2
 stretch_mode = 5
 
-[node name="DescriptionContainer" type="PanelContainer" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=545130055]
+[node name="DescriptionContainer" type="PanelContainer" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=545130055]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="DescriptionContainer" type="VBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer" unique_id=1291994257]
+[node name="DescriptionContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer" unique_id=1291994257]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="DescriptionLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer/DescriptionContainer" unique_id=817314821]
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer/DescriptionContainer" unique_id=817314821]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -376,13 +360,13 @@ theme_override_constants/paragraph_spacing = 2
 text = "Description
 "
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer/DescriptionContainer" unique_id=1667812190]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer/DescriptionContainer" unique_id=1667812190]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 9.04
 horizontal_scroll_mode = 0
 
-[node name="DescriptionText" type="Label" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer/DescriptionContainer/ScrollContainer" unique_id=1717102641]
+[node name="DescriptionText" type="Label" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer/DescriptionContainer/ScrollContainer" unique_id=1717102641]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -393,71 +377,62 @@ autowrap_mode = 2
 justification_flags = 131
 text_direction = 1
 
-[node name="DescriptionButton" type="Button" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=408557480]
+[node name="DescriptionButton" type="Button" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=408557480]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Description"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=312636863]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=312636863]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
-[node name="HeightLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer" unique_id=1457569625]
+[node name="HeightLabel" type="Label" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer" unique_id=1457569625]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 28
 
-[node name="CostLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer" unique_id=2129641801]
+[node name="CostLabel" type="Label" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer" unique_id=2129641801]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 28
 
-[node name="PositionLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer" unique_id=1622334366]
+[node name="PositionLabel" type="Label" parent="MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer" unique_id=1622334366]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 28
 
-[node name="UnitInfo" type="Control" parent="CardsPanel/MarginContainer/TabContainer" unique_id=551573519 node_paths=PackedStringArray("unit_label", "unit_texture", "owner_label", "speed_label", "dodge_label", "weight_label", "resistances_container", "habilities_container", "currrentAlterStates_container", "habilities_grid", "grid_scroll", "resistances_grid", "alter_states_grid", "current_mana")]
+[node name="UnitInfo" type="Control" parent="MarginContainer/TabContainer" unique_id=551573519 node_paths=PackedStringArray("resistances_container", "currrentAlterStates_container", "resistances_grid", "alter_states_grid", "current_mana")]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("6_smdvi")
-unit_label = NodePath("VBoxContainer/VBoxContainer/UnitLabel")
-unit_texture = NodePath("VBoxContainer/VBoxContainer/UnitTextureRect")
-owner_label = NodePath("VBoxContainer/VBoxContainer2/OwnerLabel")
-speed_label = NodePath("VBoxContainer/VBoxContainer2/SpeedLabel")
-dodge_label = NodePath("VBoxContainer/VBoxContainer2/DodgeLabel")
-weight_label = NodePath("VBoxContainer/VBoxContainer2/WeightLabel")
 resistances_container = NodePath("VBoxContainer/ResistancesContainer")
-habilities_container = NodePath("VBoxContainer/HabilitiesContainer")
 currrentAlterStates_container = NodePath("VBoxContainer/CurrenAlterStatesContainer")
-habilities_grid = NodePath("VBoxContainer/HabilitiesContainer/VBoxContainer/ScrollContainer/GridContainer")
-grid_scroll = NodePath("VBoxContainer/HabilitiesContainer/VBoxContainer/ScrollContainer")
 resistances_grid = NodePath("VBoxContainer/ResistancesContainer/VBoxContainer/ResistancesScrollContainer/ResistancesGridContainer")
 alter_states_grid = NodePath("VBoxContainer/CurrenAlterStatesContainer/VBoxContainer/ScrollContainer/AlterStatesGridContainer")
 current_mana = NodePath("VBoxContainer/Bars/ManaBar")
 metadata/_tab_index = 1
 
-[node name="VBoxContainer" type="HBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo" unique_id=598713077]
+[node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/UnitInfo" unique_id=598713077]
 layout_mode = 1
 offset_right = 1920.0
 offset_bottom = 520.0
 theme_override_constants/separation = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1368475035]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1368475035]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="UnitLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1696254877]
+[node name="UnitLabel" type="Label" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1696254877]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 
-[node name="UnitTextureRect" type="TextureRect" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1491441126]
+[node name="UnitTextureRect" type="TextureRect" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1491441126]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -465,34 +440,34 @@ size_flags_vertical = 4
 expand_mode = 3
 stretch_mode = 5
 
-[node name="DescriptionButton" type="Button" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1918322796]
+[node name="DescriptionButton" type="Button" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1918322796]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Description"
 
-[node name="PanelContainer" type="PanelContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1419014336]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1419014336]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="HBoxContainer" type="VBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer" unique_id=1919011323]
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer" unique_id=1919011323]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="DescriptionLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer" unique_id=11764065]
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer" unique_id=11764065]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Description
 "
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer" unique_id=222068245]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer" unique_id=222068245]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="DescriptionText" type="Label" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer/ScrollContainer" unique_id=822122252]
+[node name="DescriptionText" type="Label" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer/ScrollContainer" unique_id=822122252]
 clip_contents = true
 custom_minimum_size = Vector2(200, 300)
 layout_mode = 2
@@ -501,116 +476,157 @@ size_flags_vertical = 3
 autowrap_mode = 2
 justification_flags = 131
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=413082808]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=413082808]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 
-[node name="OwnerLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1458816575]
+[node name="OwnerLabel" type="Label" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1458816575]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 
-[node name="SpeedLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1357048857]
+[node name="SpeedLabel" type="Label" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1357048857]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 
-[node name="DodgeLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=504645439]
+[node name="DodgeLabel" type="Label" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=504645439]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 
-[node name="WeightLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1058537696]
+[node name="WeightLabel" type="Label" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1058537696]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 
-[node name="Bars" type="VBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=610434549]
+[node name="Bars" type="VBoxContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=610434549]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 theme_override_constants/separation = 20
 
-[node name="ManaLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=269184968]
+[node name="ManaLabel" type="Label" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=269184968]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Mana"
 
-[node name="ManaBar" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=51318480 instance=ExtResource("7_6nuks")]
+[node name="ManaBar" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=51318480 instance=ExtResource("7_6nuks")]
 custom_minimum_size = Vector2(100, 20)
 layout_mode = 2
 
-[node name="HabilitiesContainer" type="PanelContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=966613889]
+[node name="HabilitiesContainer" type="PanelContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=966613889]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer" unique_id=610288405]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer" unique_id=610288405]
 layout_mode = 2
 
-[node name="HabilitiesLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer" unique_id=168499739]
+[node name="HabilitiesLabel" type="Label" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer" unique_id=168499739]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.08235294, 1, 1, 1)
 theme_override_font_sizes/font_size = 28
 text = "Habilidades"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer" unique_id=1387866945]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer" unique_id=1387866945]
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="GridContainer" type="GridContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer/ScrollContainer" unique_id=528124033]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer/ScrollContainer" unique_id=528124033]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ResistancesContainer" type="PanelContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1173079697]
+[node name="ResistancesContainer" type="PanelContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1173079697]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer" unique_id=823655304]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer" unique_id=823655304]
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="ResistancesLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer/VBoxContainer" unique_id=108796497]
+[node name="ResistancesLabel" type="Label" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer/VBoxContainer" unique_id=108796497]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.08235294, 1, 1, 1)
 text = "Resistencias
 "
 
-[node name="ResistancesScrollContainer" type="ScrollContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer/VBoxContainer" unique_id=1192865377]
+[node name="ResistancesScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer/VBoxContainer" unique_id=1192865377]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="ResistancesGridContainer" type="GridContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer/VBoxContainer/ResistancesScrollContainer" unique_id=1730249443]
+[node name="ResistancesGridContainer" type="GridContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer/VBoxContainer/ResistancesScrollContainer" unique_id=1730249443]
 layout_mode = 2
 
-[node name="CurrenAlterStatesContainer" type="PanelContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=875609769]
+[node name="CurrenAlterStatesContainer" type="PanelContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=875609769]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer" unique_id=64560316]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer" unique_id=64560316]
 layout_mode = 2
 
-[node name="AlterStatesLabel" type="Label" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer/VBoxContainer" unique_id=1766997239]
+[node name="AlterStatesLabel" type="Label" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer/VBoxContainer" unique_id=1766997239]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.08235294, 1, 1, 1)
 text = "Alter States
 "
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer/VBoxContainer" unique_id=1975082226]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer/VBoxContainer" unique_id=1975082226]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="AlterStatesGridContainer" type="GridContainer" parent="CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer/VBoxContainer/ScrollContainer" unique_id=883636518]
+[node name="AlterStatesGridContainer" type="GridContainer" parent="MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer/VBoxContainer/ScrollContainer" unique_id=883636518]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DeploymentBox" type="HBoxContainer" parent="CardsPanel/MarginContainer" unique_id=484191042]
-layout_mode = 2
+[node name="CardsPanel" type="Control" parent="." unique_id=1431020749 node_paths=PackedStringArray("deployment_box", "tile_info", "unit_info", "habilities")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+offset_right = 400.0
+grow_vertical = 0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.2
+script = ExtResource("4_0htj4")
+deployment_box = NodePath("DeploymentBox")
+tile_info = NodePath("HBoxContainer/TileInfo")
+unit_info = NodePath("HBoxContainer/UnitInfo")
+habilities = NodePath("HBoxContainer/Habilities")
+
+[node name="DeploymentBox" type="HBoxContainer" parent="CardsPanel" unique_id=484191042]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
 script = ExtResource("8_rtl0i")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CardsPanel" unique_id=1941141629]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 20
+
+[node name="TileInfo" parent="CardsPanel/HBoxContainer" unique_id=1453422024 instance=ExtResource("16_nd88s")]
+layout_mode = 2
+script = ExtResource("5_x30bk")
+
+[node name="UnitInfo" parent="CardsPanel/HBoxContainer" unique_id=722150641 instance=ExtResource("17_87c6t")]
+layout_mode = 2
+script = ExtResource("6_smdvi")
+
+[node name="Habilities" parent="CardsPanel/HBoxContainer" unique_id=399533923 instance=ExtResource("18_87c6t")]
+visible = false
+layout_mode = 2
 
 [node name="EndTurnButton" parent="." unique_id=1726048997 instance=ExtResource("15_pwbjq")]
 layout_mode = 1
@@ -623,3 +639,6 @@ offset_left = -105.0
 offset_top = -114.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[editable path="CardsPanel/HBoxContainer/TileInfo"]
+[editable path="CardsPanel/HBoxContainer/Habilities"]

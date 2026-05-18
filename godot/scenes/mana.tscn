@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://coif4sl3oeh3l"]
+
+[ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="2_x74g8"]
+[ext_resource type="FontFile" uid="uid://d2t7gjiow2ny5" path="res://assets/themes/ui/fonts/Metamorphous/Metamorphous-Regular.ttf" id="3_xeaph"]
+[ext_resource type="PackedScene" uid="uid://ygwgcu7ruh4u" path="res://scenes/health_bar.tscn" id="4_11bai"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6qcxo"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trt23"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x74g8"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Mana" type="PanelContainer" unique_id=1760166787]
+custom_minimum_size = Vector2(100, 40)
+offset_right = 100.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_6qcxo")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=95246604]
+layout_mode = 2
+texture = ExtResource("2_x74g8")
+region_rect = Rect2(19, 560, 217, 188)
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1520805401]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_trt23")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=548993361]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer" unique_id=1623528027]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_x74g8")
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer" unique_id=807592644]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_xeaph")
+theme_override_font_sizes/font_size = 9
+text = "⟡ Mana "
+horizontal_alignment = 1
+
+[node name="HealthBar" parent="PanelContainer/VBoxContainer" unique_id=1894103332 instance=ExtResource("4_11bai")]
+custom_minimum_size = Vector2(80, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
