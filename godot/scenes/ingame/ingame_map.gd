@@ -3,11 +3,11 @@ extends Control
 
 @export var map_container: SubViewportContainer 
 
-@onready var cards_panel:   Control              = $VBoxContainer/CardsPanel
-@onready var sub_viewport:  SubViewport          = $VBoxContainer/PanelContainer/SubViewportContainer/SubViewport
-@onready var map_visualizer: mapVisualizer       = $VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer
-@onready var unit_info:     Control              = $VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo
-@onready var deployment_box: HBoxContainer       = $VBoxContainer/CardsPanel/MarginContainer/DeploymentBox
+@export var cards_panel:   Control              
+@export var sub_viewport:  SubViewport          
+@export var map_visualizer: mapVisualizer      
+@export var unit_info:     PanelContainer              
+@export var deployment_box: HBoxContainer       
 
 @onready var turn_manager: TurnManager = get_parent() as TurnManager
 

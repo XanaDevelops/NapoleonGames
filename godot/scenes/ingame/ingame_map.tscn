@@ -46,7 +46,7 @@ shader_parameter/border_width = 0.03
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k55sq"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[node name="IngameMap" type="Control" unique_id=1560040291 node_paths=PackedStringArray("map_container", "cards_panel", "sub_viewport", "map_visualizer", "unit_info")]
+[node name="IngameMap" type="Control" unique_id=1560040291 node_paths=PackedStringArray("map_container", "cards_panel", "sub_viewport", "map_visualizer", "unit_info", "deployment_box")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,6 +59,7 @@ cards_panel = NodePath("CardsPanel")
 sub_viewport = NodePath("SubViewportContainer/SubViewport")
 map_visualizer = NodePath("SubViewportContainer/SubViewport/mapVisualizer")
 unit_info = NodePath("CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/UnitInfo")
+deployment_box = NodePath("CardsPanel/DeploymentBox")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1501154111]
 layout_mode = 1
