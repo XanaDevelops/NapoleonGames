@@ -75,15 +75,9 @@ func update_cards_number(player: UserGame, remaining_cards: int) -> void:
 		
 func update_turn_info() -> void:
 	TurnLabel.text= "TURNO %d" %turnManager.turn_number
-	#phase_label.text = "FASE DE COMBATE\n Turno %d" %  turnManager.turn_number
 	self.set_active_player()
 
 func set_active_player() -> void:
 	var is_p1:bool= turnManager.is_player1_turn()
 	p1_card.modulate = Color.WHITE if is_p1 else Color(0.5, 0.5, 0.5)
 	p2_card.modulate = Color(0.5, 0.5, 0.5) if is_p1 else Color.WHITE
-	#btn_end_turn.visible = true
-	
-#
-#func pass_turn() -> void:
-	#turnManager.advance_turn()

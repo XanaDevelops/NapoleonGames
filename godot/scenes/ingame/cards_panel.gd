@@ -2,7 +2,7 @@ extends Control
 
 @export var deployment_box: HBoxContainer
 @export var tile_info: Control      
-
+@export var deployment_panel: Panel
 @export var UnitPanel: PanelContainer
 var _confirm_dialog: AcceptDialog = null
 var is_deployment_active: bool = false
@@ -46,7 +46,8 @@ func clear() -> void:
 func set_deployment_phase(is_active: bool) -> void:
 	is_deployment_active = is_active
 	if deployment_box:
-		deployment_box.visible = is_active
+		#deployment_box.visible = is_active
+		deployment_panel.visible= is_active
 	if is_active:
 		clear()
 

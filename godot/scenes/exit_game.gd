@@ -1,7 +1,5 @@
 extends PanelContainer
 
-signal confirmed
-signal cancelled
 
 @export var cancel_button: Button
 @export var yes_button: Button
@@ -13,13 +11,10 @@ func _ready() -> void:
 	no_button.pressed.connect(_on_no)
 
 func _on_cancel() -> void:
-	cancelled.emit()
 	queue_free()
 
 func _on_yes() -> void:
-	confirmed.emit()
-	queue_free()
+	get_tree().quit()
 
 func _on_no() -> void:
-	cancelled.emit()
 	queue_free()

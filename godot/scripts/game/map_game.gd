@@ -155,6 +155,8 @@ func calculate_deployment(player_id: int, size: int, start_tile: Vector2i) -> Di
 
 	while ideal_shape.size() < size and not queue.is_empty():
 		var current: Vector2i = queue.pop_front()
+		if not _is_in_map_bounds(current):  
+			continue
 		ideal_shape.append(current)
 		
 		for neighbor in _get_clockwise_neighbors(current):

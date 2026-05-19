@@ -150,6 +150,7 @@ func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
 		has_used_hability_this_turn = true
 		
 	_habilities[hab] = hab.cooldown
+	
 	return true	
 
 ## Aplica el valor a una estadistica a un objetivo

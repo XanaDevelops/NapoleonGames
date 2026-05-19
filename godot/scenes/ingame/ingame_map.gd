@@ -10,7 +10,6 @@ extends Control
 @export var deployment_box: HBoxContainer       
 
 @onready var turn_manager: TurnManager = get_parent() as TurnManager
-
 var _pending_deployment_group: CardArmyGroup = null
 
 enum UnitState {
@@ -36,7 +35,6 @@ func _ready() -> void:
 		if turn_manager:
 			turn_manager.set_map(map)
 	map_visualizer._setup_map(map)
-	
 	await get_tree().process_frame
 	await get_tree().process_frame
 	map_visualizer.center_camera(Vector2(sub_viewport.size))
@@ -48,6 +46,7 @@ func _ready() -> void:
 	await get_tree().process_frame
 	_setup_viewport()
 	clear()
+
 	map_visualizer.tile_clicked.connect(_on_tile_clicked)
 	map_visualizer.tile_hovered.connect(_on_map_tile_hovered)
 	#GameManager.phase_changed.connect(_on_phase_change)
@@ -57,6 +56,7 @@ func _ready() -> void:
 	cards_panel.confirmed.connect(_hab_manager.confirm)
 	cards_panel.cancelled.connect(_hab_manager.cancel)
 	deployment_box.unit_selected_for_deployment.connect(_on_card_selected_in_ui)
+	
 
 
 

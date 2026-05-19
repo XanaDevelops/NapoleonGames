@@ -11,14 +11,14 @@ extends Control
 
 var _current_tile: TileGame = null
 var _desc_handler: DescriptionButtonHandler
-#var _drag: DraggablePanel
+var _drag: DraggablePanel
 var dragging:bool = false
 var offset :Vector2 = Vector2(0,0)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	await get_tree().process_frame
-	#_drag = DraggablePanel.new()
-	#_drag.setup(tile_info)
+	_drag = DraggablePanel.new()
+	_drag.setup(self)
 		
 
 func paint(selected_tile: TileGame) -> void:

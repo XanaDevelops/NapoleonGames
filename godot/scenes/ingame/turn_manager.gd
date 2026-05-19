@@ -17,7 +17,7 @@ var turn_number: int = 0
 var is_deployment_phase: bool = false
 var game_config: GameConfig
 var map_game: MapGame
-
+var _phase_transition:PhaseTransition
 func advance_turn() -> void:
 	turn_number += 1
 	var user : UserGame = turn_order[turn_number % turn_order.size()]
@@ -124,7 +124,10 @@ func _ready() -> void:
 
 	for usuario in turn_order:
 		usuario.living_units = 0
+	_phase_transition= PhaseTransition.new()
+	_phase_transition.setup(self)
 	players_panel.setup(self)
+
 	start_deployment_phase()
 	
 	#end_deployment_phase()
@@ -180,6 +183,7 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 
 	
 	var res := unit_source.use_hability(hability, _dest)
+	#map_visualizer._refresh_unit_states()
 	if not res:
 		print("No se cumple las condiciones para usar esta habilidad!")
 		return
@@ -190,6 +194,7 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 
 func start_deployment_phase() -> void:
 	is_deployment_phase = true
+	_phase_transition.show_deployment_phase()
 	players_panel.set_phase_deployment()
 	cards_panel.set_deployment_phase(true)
 	_refresh_ui_for_current_player()

@@ -1,15 +1,13 @@
 [gd_scene format=3 uid="uid://c0k4getxqisq6"]
 
-[ext_resource type="FontFile" uid="uid://d2t7gjiow2ny5" path="res://assets/themes/ui/fonts/Metamorphous/Metamorphous-Regular.ttf" id="1_5j6uu"]
 [ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="2_ccb5p"]
 [ext_resource type="Texture2D" uid="uid://cqr2aauodvpl2" path="res://assets/images/information.png" id="3_64khd"]
 [ext_resource type="Texture2D" uid="uid://cchoaf4y1ugwt" path="res://assets/images/location.png" id="4_j1sq1"]
 [ext_resource type="Texture2D" uid="uid://30a5jvvikwic" path="res://assets/images/altitude.png" id="5_a8a6l"]
 [ext_resource type="Texture2D" uid="uid://hqesp8umos15" path="res://assets/images/mana.png" id="6_0l31k"]
-[ext_resource type="Shader" uid="uid://b2u6768asag68" path="res://scenes/tile_info.gdshader" id="7_j1sq1"]
+[ext_resource type="Shader" path="res://scenes/tile_info.gdshader" id="7_j1sq1"]
 
 [sub_resource type="Theme" id="Theme_ccb5p"]
-default_font = ExtResource("1_5j6uu")
 default_font_size = 18
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8a6l"]

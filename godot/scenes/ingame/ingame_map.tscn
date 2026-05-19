@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://bm6sp4ow1l2qv" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
 [ext_resource type="StyleBox" uid="uid://b0p3mdn4roxd6" path="res://assets/themes/ui/menu_styleboxflat.tres" id="4_m7qbv"]
 [ext_resource type="Script" uid="uid://c7mxpxq37rib7" path="res://scenes/ingame/top_menu.gd" id="5_f4drf"]
-[ext_resource type="Texture2D" uid="uid://djq6xq2lkbdqi" path="res://assets/images/logo.png" id="5_l3gkr"]
 [ext_resource type="Script" uid="uid://boaagd3hgel75" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
 [ext_resource type="Texture2D" uid="uid://d0oowyo84ttju" path="res://assets/images/hamburger.png" id="6_l3gkr"]
 [ext_resource type="Script" uid="uid://b8ttj2gcfkh47" path="res://scenes/ingame/unit_info.gd" id="6_smdvi"]
@@ -18,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://c0k4getxqisq6" path="res://scenes/tile_info.tscn" id="16_nd88s"]
 [ext_resource type="PackedScene" uid="uid://cuor3ubmahmea" path="res://scenes/unit_info.tscn" id="17_87c6t"]
 [ext_resource type="PackedScene" uid="uid://2xspgv3scuc1" path="res://scenes/habilities.tscn" id="18_87c6t"]
+[ext_resource type="PackedScene" uid="uid://fjy32u56yj4m" path="res://scenes/deplyoment.tscn" id="18_k55sq"]
 [ext_resource type="PackedScene" uid="uid://dau808hhekv0d" path="res://scenes/mana.tscn" id="19_k55sq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3gkr"]
@@ -58,7 +58,7 @@ cards_panel = NodePath("CardsPanel")
 sub_viewport = NodePath("SubViewportContainer/SubViewport")
 map_visualizer = NodePath("SubViewportContainer/SubViewport/mapVisualizer")
 unit_info = NodePath("CardsPanel/HBoxContainer/UnitPanel")
-deployment_box = NodePath("CardsPanel/DeploymentBox")
+deployment_box = NodePath("CardsPanel/Deplyoment/MarginContainer/VBoxContainer/Panel/DeploymentBox")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1501154111]
 layout_mode = 1
@@ -70,6 +70,52 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_8i5nb")
 stretch_mode = 6
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=959567450]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1514874787]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="mapVisualizer" type="Node2D" parent="SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment", "tile_map_layer_hover", "tile_map_layer_owner_p1", "tile_map_layer_owner_p2", "camera")]
+script = ExtResource("1_7udv5")
+tile_map_layer_texture = NodePath("TileMapLayer_texture")
+tile_map_layer_units = NodePath("TileMapLayer_units")
+tile_map_layer_selection = NodePath("TileMapLayer_selection")
+tile_map_layer_highlight = NodePath("TileMapLayer_highlights")
+tile_map_layer_deployment = NodePath("TileMapLayer_deployment")
+tile_map_layer_hover = NodePath("TileMapLayer_hover")
+tile_map_layer_owner_p1 = NodePath("TileMapLayer_owner_p1")
+tile_map_layer_owner_p2 = NodePath("TileMapLayer_owner_p2")
+camera = NodePath("Camera2D")
+metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
+
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=51855087]
+
+[node name="TileMapLayer_texture" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=479184065]
+tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAUAAAAAAAIAAAAAAAUAAAAAAAAAAAABAAcAAAAAAP//AAAAAAcAAAABAP//AAABAAcAAAD/////AAAAAAcAAAD//wAAAAAAAAgAAAD+/wAAAAAGAAIAAAD9////AAAGAAIAAAD+////AAAGAAIAAAD8/wAAAAAAAAUAAAADAP//AAAAAAgAAAAEAP//AAAGAAIAAAA=")
+
+[node name="TileMapLayer_deployment" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1706908201]
+
+[node name="TileMapLayer_units" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1642646471]
+
+[node name="TileMapLayer_owner_p1" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=72154031]
+
+[node name="TileMapLayer_owner_p2" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1430528210]
+
+[node name="TileMapLayer_hover" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=993284346]
+
+[node name="TileMapLayer_selection" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1342848487]
+
+[node name="TileMapLayer_highlights" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=739722248]
 
 [node name="PlayersPanel" type="Control" parent="." unique_id=69587996 node_paths=PackedStringArray("p1_avatar", "p1_name", "p1_card", "p1_num_cards", "p2_avatar", "p2_name", "p2_card", "p2_num_cards", "phase_label", "TurnLabel")]
 custom_minimum_size = Vector2(0, 60)
@@ -121,13 +167,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 theme_override_constants/separation = 6
-
-[node name="LogoTexture" type="TextureRect" parent="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer/PanelContainer" unique_id=1668980967]
-custom_minimum_size = Vector2(50, 40)
-layout_mode = 2
-texture = ExtResource("5_l3gkr")
-expand_mode = 5
-stretch_mode = 6
 
 [node name="LogoLabel" type="Label" parent="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer/PanelContainer" unique_id=709653114]
 layout_mode = 2
@@ -246,53 +285,7 @@ size_flags_vertical = 4
 expand_mode = 1
 stretch_mode = 6
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=959567450]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1514874787]
-handle_input_locally = false
-size = Vector2i(1920, 1080)
-render_target_update_mode = 4
-
-[node name="mapVisualizer" type="Node2D" parent="SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment", "tile_map_layer_hover", "tile_map_layer_owner_p1", "tile_map_layer_owner_p2", "camera")]
-script = ExtResource("1_7udv5")
-tile_map_layer_texture = NodePath("TileMapLayer_texture")
-tile_map_layer_units = NodePath("TileMapLayer_units")
-tile_map_layer_selection = NodePath("TileMapLayer_selection")
-tile_map_layer_highlight = NodePath("TileMapLayer_highlights")
-tile_map_layer_deployment = NodePath("TileMapLayer_deployment")
-tile_map_layer_hover = NodePath("TileMapLayer_hover")
-tile_map_layer_owner_p1 = NodePath("TileMapLayer_owner_p1")
-tile_map_layer_owner_p2 = NodePath("TileMapLayer_owner_p2")
-camera = NodePath("Camera2D")
-metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
-
-[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=51855087]
-
-[node name="TileMapLayer_texture" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=479184065]
-tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAUAAAAAAAIAAAAAAAUAAAAAAAAAAAABAAcAAAAAAP//AAAAAAcAAAABAP//AAABAAcAAAD/////AAAAAAcAAAD//wAAAAAAAAgAAAD+/wAAAAAGAAIAAAD9////AAAGAAIAAAD+////AAAGAAIAAAD8/wAAAAAAAAUAAAADAP//AAAAAAgAAAAEAP//AAAGAAIAAAA=")
-
-[node name="TileMapLayer_deployment" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1706908201]
-
-[node name="TileMapLayer_units" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1642646471]
-
-[node name="TileMapLayer_owner_p1" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=72154031]
-
-[node name="TileMapLayer_owner_p2" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1430528210]
-
-[node name="TileMapLayer_hover" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=993284346]
-
-[node name="TileMapLayer_selection" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1342848487]
-
-[node name="TileMapLayer_highlights" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=739722248]
-
-[node name="CardsPanel" type="Control" parent="." unique_id=1431020749 node_paths=PackedStringArray("deployment_box", "tile_info", "UnitPanel")]
+[node name="CardsPanel" type="Control" parent="." unique_id=1431020749 node_paths=PackedStringArray("deployment_box", "tile_info", "deployment_panel", "UnitPanel")]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 1
 anchors_preset = 12
@@ -303,10 +296,10 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.2
-mouse_filter = 1
 script = ExtResource("4_0htj4")
-deployment_box = NodePath("DeploymentBox")
+deployment_box = NodePath("Deplyoment/MarginContainer/VBoxContainer/Panel/DeploymentBox")
 tile_info = NodePath("HBoxContainer/TileInfo")
+deployment_panel = NodePath("Deplyoment")
 UnitPanel = NodePath("HBoxContainer/UnitPanel")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CardsPanel" unique_id=1941141629]
@@ -369,14 +362,16 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="DeploymentBox" type="HBoxContainer" parent="CardsPanel" unique_id=484191042]
+[node name="Deplyoment" parent="CardsPanel" unique_id=120072488 instance=ExtResource("18_k55sq")]
+layout_mode = 0
+
+[node name="DeploymentBox" type="HBoxContainer" parent="CardsPanel/Deplyoment/MarginContainer/VBoxContainer/Panel" parent_id_path=PackedInt32Array(120072488, 750361709) index="0" unique_id=484191042]
 layout_mode = 1
-offset_left = 1062.0
-offset_top = -18.0
-offset_right = 1062.0
-offset_bottom = 200.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 script = ExtResource("8_rtl0i")
 
 [node name="EndTurnButton" parent="." unique_id=1726048997 instance=ExtResource("15_pwbjq")]
@@ -392,7 +387,10 @@ offset_right = 1520.0
 grow_horizontal = 0
 grow_vertical = 0
 
+[connection signal="pressed" from="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer/OptionsButton" to="PlayersPanel/VBoxContainer/PanelContainer" method="_on_options_button_pressed"]
+
 [editable path="CardsPanel/HBoxContainer/TileInfo"]
 [editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/UnitInfo"]
 [editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Mana"]
 [editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Habilities"]
+[editable path="CardsPanel/Deplyoment"]

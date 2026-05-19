@@ -5,26 +5,37 @@
 
 [node name="GameScene" type="Node" unique_id=1075307019 node_paths=PackedStringArray("deployment_box")]
 script = ExtResource("1_4n5kr")
-deployment_box = NodePath("IngameMap/CardsPanel/DeploymentBox")
-turns = null
+deployment_box = NodePath("IngameMap/CardsPanel/Deplyoment/MarginContainer/VBoxContainer/Panel/DeploymentBox")
 
 [node name="IngameMap" parent="." unique_id=594307947 instance=ExtResource("2_rqqua")]
 
-[node name="PlayersPanel" parent="IngameMap" index="1" unique_id=69587996]
+[node name="PlayersPanel" parent="IngameMap" index="2" unique_id=69587996]
 offset_bottom = 0.0
 
-[node name="DeploymentBox" parent="IngameMap/CardsPanel" parent_id_path=PackedInt32Array(594307947, 1431020749) index="1" unique_id=484191042]
+[node name="Deplyoment" parent="IngameMap/CardsPanel" parent_id_path=PackedInt32Array(594307947, 1431020749) index="1" unique_id=120072488]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -140.0
+offset_right = 250.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DeploymentBox" parent="IngameMap/CardsPanel/Deplyoment/MarginContainer/VBoxContainer/Panel" parent_id_path=PackedInt32Array(594307947, 120072488, 750361709) index="0" unique_id=484191042]
 mouse_filter = 0
 
 [node name="EndTurnButton" parent="IngameMap" index="4" unique_id=1726048997]
 offset_left = -105.0
 offset_right = 0.0
 
-[node name="MarginContainer" parent="IngameMap" index="5" unique_id=1467012460]
-visible = true
-
 [editable path="IngameMap"]
 [editable path="IngameMap/CardsPanel/HBoxContainer/TileInfo"]
 [editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/UnitInfo"]
 [editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Mana"]
 [editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Habilities"]
+[editable path="IngameMap/CardsPanel/Deplyoment"]
