@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cchoaf4y1ugwt" path="res://assets/images/location.png" id="4_j1sq1"]
 [ext_resource type="Texture2D" uid="uid://30a5jvvikwic" path="res://assets/images/altitude.png" id="5_a8a6l"]
 [ext_resource type="Texture2D" uid="uid://hqesp8umos15" path="res://assets/images/mana.png" id="6_0l31k"]
-[ext_resource type="Shader" path="res://scenes/tile_info.gdshader" id="7_j1sq1"]
+[ext_resource type="Shader" uid="uid://b2u6768asag68" path="res://scenes/tile_info.gdshader" id="7_j1sq1"]
 
 [sub_resource type="Theme" id="Theme_ccb5p"]
 default_font = ExtResource("1_5j6uu")

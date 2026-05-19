@@ -6,43 +6,15 @@
 [ext_resource type="Script" uid="uid://cikn58w4fmhfw" path="res://scripts/ui/menu_desplegable.gd" id="4_rfvtk"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="5_xg841"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="6_ru1hr"]
-[ext_resource type="Script" uid="uid://dge5103kuiwkj" path="res://scenes/salir_script.gd" id="7_2fm8f"]
 [ext_resource type="PackedScene" uid="uid://cdbdwv8lb0o74" path="res://scenes/panel_usuario.tscn" id="8_bxgl6"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bxgl6"]
-bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
-border_width_top = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dp8qp"]
-bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y25s7"]
-bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1lu1a"]
-bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ru1hr"]
-bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2fm8f"]
-bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0kd0"]
-bg_color = Color(0.29803923, 0.29803923, 0.29803923, 1)
+bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.29803923, 0.29803923, 0.29803923, 1)
+border_color = Color(0.54901963, 0.42745098, 0.24313726, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
@@ -84,7 +56,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_rfvtk")
 
 [node name="FondoDePantalla" type="TextureRect" parent="." unique_id=23116586]
 layout_mode = 1
@@ -94,42 +65,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2_ru1hr")
+texture = ExtResource("1_4xtsl")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1808234984]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 0
-offset_right = 275.0
-offset_bottom = 1081.0
-color = Color(0.11555825, 0.1656856, 0.2158129, 1)
-
-[node name="HBoxContainer" type="VBoxContainer" parent="ColorRect" unique_id=287743804]
-layout_mode = 0
-offset_right = 280.0
-offset_bottom = 141.0
-
-[node name="TextureRect" type="TextureRect" parent="ColorRect/HBoxContainer" unique_id=583128250]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-size_flags_vertical = 3
-texture = ExtResource("3_2fm8f")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="ColorRect/HBoxContainer" unique_id=1301363940]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("4_dp8qp")
-theme_override_font_sizes/font_size = 17
-text = "NAPOLEON GAMES"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect" unique_id=1901490112]
+[node name="Panel" type="Panel" parent="." unique_id=2135376305]
 layout_mode = 1
-anchors_preset = 14
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -400.0
 offset_top = -290.0
@@ -139,11 +84,17 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("2_bxgl6")
 
-[node name="Panel" type="Panel" parent="ColorRect/VBoxContainer/JuegoLocal" unique_id=1388505874]
+[node name="ContenedorDeMenu" type="VBoxContainer" parent="Panel" unique_id=1859239649]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -211.25
+offset_right = 360.0
+offset_bottom = 211.25
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 30
@@ -165,27 +116,33 @@ theme_override_styles/panel = ExtResource("2_bxgl6")
 
 [node name="ContenedorDesplegable" type="VBoxContainer" parent="Panel/ContenedorDeMenu/JuegoLocal/Panel" unique_id=1550129767]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -28.5
+offset_right = 140.0
+offset_bottom = 28.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="J vs J" type="Button" parent="ColorRect/VBoxContainer/JuegoLocal/Panel/ContenedorDesplegable" unique_id=1066952919]
+[node name="J vs J" type="Button" parent="Panel/ContenedorDeMenu/JuegoLocal/Panel/ContenedorDesplegable" unique_id=1066952919]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 19
-theme_override_styles/normal = SubResource("StyleBoxFlat_dp8qp")
+theme = ExtResource("3_bxgl6")
+theme_override_font_sizes/font_size = 30
 text = "J vs J"
 script = ExtResource("5_xg841")
 id_escena = "mapas"
 metadata/_custom_type_script = "uid://ct2doijn7j323"
 
-[node name="JuegoOnline" type="Button" parent="ColorRect/VBoxContainer" unique_id=226010011]
+[node name="JuegoOnline" type="Button" parent="Panel/ContenedorDeMenu" unique_id=467713305]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_y25s7")
-text = "Juego Online"
+theme = ExtResource("3_bxgl6")
+theme_override_font_sizes/font_size = 60
+text = "Juego online
+"
 script = ExtResource("4_rfvtk")
 separacion = 60.0
 
@@ -195,19 +152,24 @@ offset_right = 327.0
 offset_bottom = 100.0
 theme_override_styles/panel = ExtResource("2_bxgl6")
 
-[node name="ContenedorDeOpciones" type="VBoxContainer" parent="ColorRect/VBoxContainer/JuegoOnline/Panel" unique_id=961097025]
+[node name="ContenedorDeOpciones" type="VBoxContainer" parent="Panel/ContenedorDeMenu/JuegoOnline/Panel" unique_id=961097025]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -142.5
+offset_top = -28.5
+offset_right = 142.5
+offset_bottom = 28.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="EnemigoAleatorio" type="Button" parent="ColorRect/VBoxContainer/JuegoOnline/Panel/ContenedorDeOpciones" unique_id=1969486302]
+[node name="EnemigoAleatorio" type="Button" parent="Panel/ContenedorDeMenu/JuegoOnline/Panel/ContenedorDeOpciones" unique_id=1969486302]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 17
-theme_override_styles/normal = SubResource("StyleBoxFlat_1lu1a")
+theme = ExtResource("3_bxgl6")
+theme_override_font_sizes/font_size = 30
 text = "Enemigo Aleatorio"
 
 [node name="BotonNavegacion" type="Button" parent="Panel/ContenedorDeMenu" unique_id=1002694264]
@@ -231,8 +193,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -100.0
-offset_bottom = 100.0
+offset_left = -220.0
+offset_top = 20.0
+offset_right = -120.0
+offset_bottom = 120.0
 grow_horizontal = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_v0kd0")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_3re45")
@@ -260,5 +224,4 @@ expand_mode = 1
 stretch_mode = 6
 
 [node name="PanelUsuario" parent="MenuUsuario" unique_id=1116297954 instance=ExtResource("8_bxgl6")]
-visible = false
 layout_mode = 0
