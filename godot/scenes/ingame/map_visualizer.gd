@@ -326,7 +326,7 @@ func _move_unit_overlay(from: Vector2i, to: Vector2i) -> void:
 
 func _set_owner_highlight(coords: Vector2i, unit: UnitGame) -> void:
 	var tm = GameManager.get_turn_manager()
-	if tm == null or tm.turn_order.is_empty():
+	if tm == null or tm.turn_order.is_empty() or unit==null:
 		return
 	if unit._owner == tm.turn_order[0]:
 		tile_map_layer_owner_p1.set_cell(coords, _owner_id, Vector2i.ZERO)
