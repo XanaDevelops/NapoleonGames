@@ -3,11 +3,11 @@ extends TurnAction
 
 
 # posicion origen
-var pos: Vector2i
+@export var pos: Vector2i
 # uid de habilidad
-var hability_uid: int
+@export var hability_uid: int
 # destinos objetivos
-var dest: Array[Vector2i]
+@export var dest: Array[Vector2i]
 
 
 static func create(unit: UnitGame, pos: Vector2i, hab: HabilityRes, dest: Array[Vector2i]) -> TurnHability:
@@ -23,7 +23,7 @@ static func create(unit: UnitGame, pos: Vector2i, hab: HabilityRes, dest: Array[
 
 func encode() -> PackedByteArray:
 	var data := super.encode()
-	var offset := 10
+	var offset := BASE_ENCODE_SIZE
 	var dest_count := dest.size()
 	data.resize(offset + 16 + (dest_count * 8))
 	data.encode_s32(offset, pos.x)
@@ -43,7 +43,7 @@ func encode() -> PackedByteArray:
 
 func decode(data: PackedByteArray) -> void:
 	super.decode(data)
-	var offset := 10
+	var offset := BASE_ENCODE_SIZE
 	var x := data.decode_s32(offset)
 	offset += 4
 	var y := data.decode_s32(offset)

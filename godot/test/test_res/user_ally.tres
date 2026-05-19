@@ -13,4 +13,5 @@ username = &"tenmak"
 email = "tenmakenzo@yahoo.jp"
 token = "123abc"
 userArmys = Array[ExtResource("4_tscw1")]([ExtResource("5_tyjqp")])
+uid = 1
 metadata/_custom_type_script = "uid://ce5uvgu640fxr"

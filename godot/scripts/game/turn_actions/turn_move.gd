@@ -2,9 +2,9 @@ class_name TurnMove
 extends TurnAction
 
 # posicion inicial
-var start_pos : Vector2i
+@export var start_pos : Vector2i
 # posicion final
-var end_pos : Vector2i
+@export var end_pos : Vector2i
 
 static func create(unit: UnitGame, start: Vector2i, end: Vector2i) -> TurnMove:
 	var turn := TurnMove.new()
@@ -17,7 +17,7 @@ static func create(unit: UnitGame, start: Vector2i, end: Vector2i) -> TurnMove:
 
 func encode() -> PackedByteArray:
 	var data := super.encode()
-	var offset := 10
+	var offset := BASE_ENCODE_SIZE
 	data.resize(offset + 16)
 	data.encode_s32(offset, start_pos.x)
 	offset += 4
@@ -30,7 +30,7 @@ func encode() -> PackedByteArray:
 
 func decode(data: PackedByteArray) -> void:
 	super.decode(data)
-	var offset := 10
+	var offset := BASE_ENCODE_SIZE
 	var start_x := data.decode_s32(offset)
 	offset += 4
 	var start_y := data.decode_s32(offset)

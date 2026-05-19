@@ -2,9 +2,9 @@ class_name TurnDeploy
 extends TurnAction
 
 # posicion de despliegue
-var deploy_pos : Vector2i
+@export var deploy_pos : Vector2i
 # cantidad de unidades
-var n : int
+@export var n : int
 
 static func create(player : UserGame, dpos: Vector2i, card_res: CardRes, n: int) -> TurnDeploy:
 	var turn := TurnDeploy.new()
@@ -18,7 +18,7 @@ static func create(player : UserGame, dpos: Vector2i, card_res: CardRes, n: int)
 
 func encode() -> PackedByteArray:
 	var data := super.encode()
-	var offset := 10
+	var offset := BASE_ENCODE_SIZE
 	data.resize(offset + 12)
 	data.encode_s32(offset, deploy_pos.x)
 	offset += 4
@@ -29,7 +29,7 @@ func encode() -> PackedByteArray:
 
 func decode(data: PackedByteArray) -> void:
 	super.decode(data)
-	var offset := 10
+	var offset := BASE_ENCODE_SIZE
 	var x := data.decode_s32(offset)
 	offset += 4
 	var y := data.decode_s32(offset)

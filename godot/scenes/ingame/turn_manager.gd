@@ -5,22 +5,26 @@ extends Node
 signal card_deployed(player: UserGame, remaining: int)
 ## Los UnitGame deben subscribirse a esto para avanzar el turno
 signal tick_turn
-
+signal game_end
 @onready var cards_panel = $IngameMap/VBoxContainer/CardsPanel
 @onready var deployment_box = $IngameMap/VBoxContainer/CardsPanel/MarginContainer/DeploymentBox
 @onready var map_visualizer = $IngameMap/VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer
-@onready var players_panel= $IngameMap/VBoxContainer/PlayersPanel
+@onready var players_panel : PlayersPanel = $IngameMap/VBoxContainer/PlayersPanel
 @export var turns: Array[TurnAction] = []
 var turn_order: Array[UserGame] = []
 var turn_number: int = 0
+var global_action_count: int = 0
 var is_deployment_phase: bool = false
 var game_config: GameConfig
 var map_game: MapGame
 
 func advance_turn() -> void:
+	var user := get_current_user()
+	if not is_deployment_phase:
+		register_turn(TurnPass.create(user))
 	turn_number += 1
-	var user : UserGame = turn_order[turn_number % turn_order.size()]
-	print("Turno de ", user.get_user_res().username)
+	var next_user : UserGame = turn_order[turn_number % turn_order.size()]
+	print("Turno de ", next_user.get_user_res().username)
 	tick_turn.emit()
 	
 	
@@ -74,7 +78,9 @@ func get_army_b() -> ArmyRes:
 	
 	
 func register_turn(turn: TurnAction) -> bool:
-	
+	print("registered " + var_to_str(turn.action))
+	turn.action_order = global_action_count
+	global_action_count += 1
 	turns.append(turn)
 	return true
 
@@ -83,9 +89,9 @@ func replay_turn(turn: TurnAction) -> bool:
 		TurnAction.ACTION.DEPLOYMENT:
 			_replay_deployment(turn)
 		TurnAction.ACTION.MOVEMENT:
-			pass
+			_replay_movement(turn)
 		TurnAction.ACTION.ACTIVE, TurnAction.ACTION.PASSIVE:
-			pass
+			_replay_hability(turn)
 		TurnAction.ACTION.PASS_TURN:
 			# quizas comprobar esto sea correcto?
 			advance_turn()
@@ -123,6 +129,9 @@ func _replay_movement(turn: TurnMove) -> bool:
 func _replay_hability(turn: TurnHability) -> bool:
 	# TODO: más comprobaciones?
 	var hab : HabilityRes = GameManager.get_game_resources().get_res_from_uid(turn.hability_uid, HabilityRes)
+	# FIXME: las pasivas se autolanzan, por ende repetir la pasiva fallará (seguramente)
+	if hab.isPassive:
+		return true
 	return _on_unit_hability_use(turn.pos, turn.dest, hab)
 
 # Called when the node enters the scene tree for the first time.
@@ -221,7 +230,6 @@ func start_deployment_phase() -> void:
 
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
-	set_app_state(GameManager.APP_STATE.IN_GAME)
 	players_panel.set_phase_battle()
 
 	cards_panel.set_deployment_phase(false)
@@ -286,8 +294,9 @@ func _handle_next_deployment_step() -> void:
 	elif _has_cards_to_deploy(current_user):
 		pass # Opponent is out of cards, current user continues
 	else:
-		end_deployment_phase()
 		advance_turn()
+		end_deployment_phase()
+		
 
 
 
@@ -328,4 +337,6 @@ func finalizar_partida(nombre_del_vencedor: String):
 	var parametros_victoria = {
 		"nombre_ganador": nombre_del_vencedor
 	}
+	
+	game_end.emit()
 	UiManager.cambiar_a_escena("finalizacion", parametros_victoria)

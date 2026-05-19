@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TurnMove" format=3]
+
+[ext_resource type="Script" path="res://scripts/game/turn_actions/turn_move.gd" id="1_u02sk"]
+
+[resource]
+script = ExtResource("1_u02sk")
+start_pos = Vector2i(3, 0)
+end_pos = Vector2i(2, 3)
+action_order = 11
+player_uid = 1
+unit_uid = 1

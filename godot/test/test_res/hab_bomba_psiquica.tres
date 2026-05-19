@@ -16,4 +16,5 @@ attackType = ExtResource("2_cvtns")
 radius = 4
 manaCost = 2
 isPassive = true
+uid = 3
 metadata/_custom_type_script = "uid://eihee83yhkpg"

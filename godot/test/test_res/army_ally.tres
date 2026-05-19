@@ -9,4 +9,5 @@ script = ExtResource("2_c0iv1")
 nom = &"allyArmy"
 isActive = true
 agrupations = Array[ExtResource("1_8w2da")]([ExtResource("2_e2qqu")])
+uid = 1
 metadata/_custom_type_script = "uid://q3mvbqxdhool"

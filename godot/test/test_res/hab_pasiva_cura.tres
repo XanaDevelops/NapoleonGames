@@ -12,4 +12,5 @@ objective = 1
 value = 2.0
 stat = ExtResource("3_nthmj")
 isPassive = true
+uid = 8
 metadata/_custom_type_script = "uid://eihee83yhkpg"

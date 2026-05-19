@@ -7,4 +7,5 @@
 script = ExtResource("1_3sark")
 cardType = ExtResource("1_ye3mc")
 n = 1
+uid = 1
 metadata/_custom_type_script = "uid://chjdn7qg0thht"

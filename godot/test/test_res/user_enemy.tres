@@ -13,4 +13,5 @@ username = &"johan"
 email = "johan_tu_mejor_amigo@friends.com"
 token = "666"
 userArmys = Array[ExtResource("4_412dw")]([ExtResource("5_mnonq")])
+uid = 2
 metadata/_custom_type_script = "uid://ce5uvgu640fxr"
