@@ -14,19 +14,19 @@ offset_bottom = 0.0
 
 [node name="Deplyoment" parent="IngameMap/CardsPanel" parent_id_path=PackedInt32Array(594307947, 1431020749) index="1" unique_id=120072488]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 1.0
 offset_left = -250.0
-offset_top = -140.0
+offset_top = -200.0
 offset_right = 250.0
-offset_bottom = 100.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 
 [node name="DeploymentBox" parent="IngameMap/CardsPanel/Deplyoment/MarginContainer/VBoxContainer/Panel" parent_id_path=PackedInt32Array(594307947, 120072488, 750361709) index="0" unique_id=484191042]
+offset_bottom = 38.0
 mouse_filter = 0
 
 [node name="EndTurnButton" parent="IngameMap" index="4" unique_id=1726048997]

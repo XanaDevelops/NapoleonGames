@@ -3,7 +3,9 @@
 [ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="1_brm0h"]
 
 [node name="Deplyoment" type="Panel" unique_id=120072488]
-custom_minimum_size = Vector2(500, 240)
+custom_minimum_size = Vector2(500, 200)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_styles/panel = ExtResource("1_brm0h")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1432922257]
@@ -28,6 +30,5 @@ text = "Cartas de despliegue"
 horizontal_alignment = 1
 
 [node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer" unique_id=750361709]
-custom_minimum_size = Vector2(140, 180)
 layout_mode = 2
 size_flags_vertical = 3

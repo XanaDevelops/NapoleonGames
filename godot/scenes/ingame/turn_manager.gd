@@ -202,6 +202,8 @@ func start_deployment_phase() -> void:
 
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
+	await get_tree().create_timer(1).timeout
+	_phase_transition.show_battle_phase(turn_order[0], turn_order[1])
 	set_app_state(GameManager.APP_STATE.IN_GAME)
 	players_panel.set_phase_battle()
 	end_button.show_battle()
