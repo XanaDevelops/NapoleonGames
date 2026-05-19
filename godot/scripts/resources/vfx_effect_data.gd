@@ -1,7 +1,4 @@
-# ==============================================================================
-# vfx_effect_data.gd
-# RECURSO BASE FINAL: Plantilla neutral optimizada para Godot 4.
-# ==============================================================================
+
 class_name VFXEffectData
 extends Resource
 
@@ -36,7 +33,7 @@ enum MovementDirection { UP, DOWN, ALL_DIRECTIONS }
 @export var gravity: Vector3 = Vector3(0, 0, 0) 
 @export var initial_velocity_min: float = 0.0
 @export var initial_velocity_max: float = 0.0
-@export var movement_spread: float = 15.0 # Controla la dispersión hacia los lados
+@export var movement_spread: float = 15.0 
 
 @export_category("4. Turbulencia (Convección)")
 @export var use_turbulence: bool = false     
@@ -46,3 +43,12 @@ enum MovementDirection { UP, DOWN, ALL_DIRECTIONS }
 @export var emission_position: EmissionPosition = EmissionPosition.CENTER 
 @export var movement_direction: MovementDirection = MovementDirection.ALL_DIRECTIONS
 @export var duration: float = 1.0
+
+@export_category("6. Sonido Complementario")
+@export var sound_effect: AudioStream:
+	set(value):
+		sound_effect = value
+		notify_property_list_changed()
+
+@export var sound_volume_db: float = 0.0
+@export var sound_pitch_randomness: float = 0.1

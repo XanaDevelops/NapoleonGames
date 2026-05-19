@@ -32,7 +32,7 @@ const HIGHLIGHT_TEXTURES: Dictionary = {
 }
 
 const TILE_SIZE_HEIGHT = 64 * 1.5
-const TILE_SIZE_WIDTH = 55 * 1.5 # TILE_SIZE_HEIGHT/2 * root(3)
+const TILE_SIZE_WIDTH = 55 * 1.5 
 
 @export var vfx_database: Dictionary[StringName, VFXEffectData] = {}
 
@@ -88,7 +88,7 @@ func draw_tile(i: int, y: int, tile: TileGame) -> void:
 			unit.hit_received.connect(_on_unit_hit.bind(unit))
 
 func _on_unit_hit(attack_type: AttackType, unit: UnitGame) -> void:
-	# Reproduce la animación exactamente en la posición de la unidad
+	
 	play_attack_vfx(unit.get_current_position(), attack_type)
 				
 func add_texture_to_tileset(texture: Texture2D) -> int:
@@ -159,7 +159,7 @@ func clear_deployment_preview() -> void:
 	tile_map_layer_highlight.clear()
 	_last_hovered_tile = Vector2i(-999, -999)
 
-# --- Process & Input Handling ---
+
 func _process(delta: float) -> void:
 	pass
 
@@ -205,7 +205,7 @@ func _process_selection(coords: Vector2i, clicked_tile: TileGame) -> void:
 		
 		if not unit.has_moved_this_turn:
 			current_accesible_moves = map.get_accesible_moves(coords)
-			highlight_cells(current_accesible_moves) # Renders movement range
+			highlight_cells(current_accesible_moves) 
 		else:
 			current_accesible_moves = []
 			tile_map_layer_highlight.clear()
@@ -223,10 +223,10 @@ func play_attack_vfx(target_coords: Vector2i, attack_type: AttackType) -> void:
 	if not vfx_scene or not attack_type:
 		return
 
-	# 1. BUSCAR EN EL DICCIONARIO
+
 	var current_vfx: VFXEffectData = null
 	
-	# Comprobamos si el diccionario tiene guardado el nombre de este ataque
+	
 	if vfx_database.has(attack_type.name):
 		current_vfx = vfx_database[attack_type.name] as VFXEffectData
 		
@@ -234,7 +234,7 @@ func play_attack_vfx(target_coords: Vector2i, attack_type: AttackType) -> void:
 		print("Atención: No hay animación en el diccionario para el ataque: ", attack_type.name)
 		return
 
-	# 2. INSTANCIAR (El resto del código se queda igual)
+	
 	var unit_texture_resized: Texture2D
 	var source_id = tile_map_layer_units.get_cell_source_id(target_coords)
 	

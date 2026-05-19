@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="VFXEffectData" format=3 uid="uid://dsf2qbwjhlypl"]
+
+[ext_resource type="Script" uid="uid://coqlqo81l8ahe" path="res://scripts/resources/vfx_effect_data.gd" id="1_63wt5"]
+[ext_resource type="Texture2D" uid="uid://dsewljpindlkl" path="res://assets/particles/Splat2.png" id="1_yc1cc"]
+[ext_resource type="Shader" uid="uid://bfmvu3kuvd0v1" path="res://resources/shaders/physic_shader.gdshader" id="3_1arjv"]
+[ext_resource type="AudioStream" uid="uid://dpcna2u3467ke" path="res://assets/sonidos/sounds-and-pulse-of-a-beating-heart.mp3" id="4_cylq3"]
+
+[sub_resource type="Gradient" id="Gradient_5grlv"]
+colors = PackedColorArray(1, 0, 0, 1, 0.2, 0, 0, 0)
+
+[resource]
+script = ExtResource("1_63wt5")
+shader = ExtResource("3_1arjv")
+core_color = Color(1, 0.9372549, 0.9372549, 1)
+mid_color = Color(1, 0, 0, 1)
+edge_color = Color(1, 0.8, 0.8, 1)
+wave_speed = 0.4
+wave_amplitude = 0.06
+wave_frequency = 8.0
+particle_texture = ExtResource("1_yc1cc")
+color_ramp = SubResource("Gradient_5grlv")
+particle_base_size = 3.0
+scale_multiplier = 2.5
+gravity = Vector3(0, 40, 0)
+initial_velocity_min = 80.0
+initial_velocity_max = 150.0
+movement_spread = 180.0
+duration = 2.0
+sound_effect = ExtResource("4_cylq3")
+metadata/_custom_type_script = "uid://coqlqo81l8ahe"
