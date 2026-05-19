@@ -23,6 +23,8 @@ var tileset: TileSet
 var texture_to_source_id: Dictionary = {}
 enum HighlightType { MOVEMENT, ATTACK, SELECTED, SKILL }
 
+
+
 var highlight_source_ids: Dictionary[HighlightType, int] = {}
 
 const HIGHLIGHT_TEXTURES: Dictionary = {
@@ -34,6 +36,9 @@ const HIGHLIGHT_TEXTURES: Dictionary = {
 const TILE_SIZE_HEIGHT = 64 * 1.5
 const TILE_SIZE_WIDTH = 55 * 1.5 
 
+var current_mask_size: float
+var current_mask_scale_x: float
+
 @export var vfx_database: Dictionary[StringName, VFXEffectData] = {}
 
 @export var vfx_scene: PackedScene
@@ -44,13 +49,21 @@ func _setup_highlight_tiles() -> void:
 		highlight_source_ids[type] = add_texture_to_tileset(tex)
 		
 func _ready() -> void:
+	
+	current_mask_scale_x = float(TILE_SIZE_HEIGHT) / float(TILE_SIZE_WIDTH)
+	current_mask_scale_x *= 0.95
+	current_mask_size = 0.5 * 0.98
+	
 	tileset = _setup_tileset()
 	for tml in [tile_map_layer_texture, tile_map_layer_units,
 				tile_map_layer_selection, tile_map_layer_highlight, tile_map_layer_deployment]:
 		tml.tile_set = tileset
 	_setup_highlight_tiles()
 	
-
+	var units_mat = tile_map_layer_units.material as ShaderMaterial
+	if units_mat != null:
+		units_mat.set_shader_parameter("mask_size", current_mask_size)
+		units_mat.set_shader_parameter("mask_scale_x", current_mask_scale_x)
 
 		
 func _setup_tileset() -> TileSet:
@@ -86,10 +99,25 @@ func draw_tile(i: int, y: int, tile: TileGame) -> void:
 		
 		if not unit.hit_received.is_connected(_on_unit_hit):
 			unit.hit_received.connect(_on_unit_hit.bind(unit))
+			
+		
+		if not unit.dodged.is_connected(_on_unit_dodged):
+			unit.dodged.connect(_on_unit_dodged.bind(unit))
+			
+		if not unit.healed.is_connected(_on_unit_healed):
+			unit.healed.connect(_on_unit_healed.bind(unit))
 
 func _on_unit_hit(attack_type: AttackType, unit: UnitGame) -> void:
 	
 	play_attack_vfx(unit.get_current_position(), attack_type)
+
+func _on_unit_dodged(unit: UnitGame) -> void:
+	
+	play_vfx(unit.get_current_position(), &"protect")
+
+func _on_unit_healed(unit: UnitGame) -> void:
+	
+	play_vfx(unit.get_current_position(), &"heal")
 				
 func add_texture_to_tileset(texture: Texture2D) -> int:
 	for tex_id in texture_to_source_id.keys():
@@ -219,22 +247,26 @@ func _clear_selection() -> void:
 	tile_map_layer_selection.clear()
 	tile_map_layer_highlight.clear()
 	
-func play_attack_vfx(target_coords: Vector2i, attack_type: AttackType) -> void:
-	if not vfx_scene or not attack_type:
-		return
 
+func play_attack_vfx(target_coords: Vector2i, attack_type: AttackType) -> void:
+	if not attack_type:
+		return
+	play_vfx(target_coords, attack_type.name)
+
+
+func play_vfx(target_coords: Vector2i, effect_name: StringName) -> void:
+	if not vfx_scene or effect_name == &"":
+		return
 
 	var current_vfx: VFXEffectData = null
 	
-	
-	if vfx_database.has(attack_type.name):
-		current_vfx = vfx_database[attack_type.name] as VFXEffectData
+	if vfx_database.has(effect_name):
+		current_vfx = vfx_database[effect_name] as VFXEffectData
 		
 	if current_vfx == null:
-		print("Atención: No hay animación en el diccionario para el ataque: ", attack_type.name)
+		print("Atención: No hay animación en el diccionario para el efecto: ", effect_name)
 		return
 
-	
 	var unit_texture_resized: Texture2D
 	var source_id = tile_map_layer_units.get_cell_source_id(target_coords)
 	
@@ -252,4 +284,4 @@ func play_attack_vfx(target_coords: Vector2i, attack_type: AttackType) -> void:
 	var local_pos = tile_map_layer_units.map_to_local(target_coords)
 	vfx_instance.position = local_pos
 	
-	vfx_instance.setup_vfx(unit_texture_resized, current_vfx, 0.48, 1.15)
+	vfx_instance.setup_vfx(unit_texture_resized, current_vfx, current_mask_size, current_mask_scale_x)

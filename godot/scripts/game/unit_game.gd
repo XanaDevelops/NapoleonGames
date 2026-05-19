@@ -5,6 +5,8 @@ extends RuntimeResource
 const PASSIVE_MANA := 5
 
 signal hit_received(type: AttackType)
+signal dodged() 
+signal healed()
 
 @export var _cardRes: CardRes
 
@@ -180,6 +182,7 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	# ojo que randf() es [0,1] no [0,1)
 	if randf() < self.dodge:
 		print("esquive!")
+		dodged.emit()
 		return false
 	
 	
@@ -227,6 +230,8 @@ func heal(value: int, type: StatData) -> void:
 		self.hp += self.max_hp * value
 	else:
 		self.hp += value
+	
+	healed.emit()
 
 
 func add_alter_state(alter: AlterStateRes) -> void:
