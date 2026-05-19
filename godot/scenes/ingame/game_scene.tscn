@@ -3,13 +3,22 @@
 [ext_resource type="Script" uid="uid://ci0qry8pts1xv" path="res://scenes/ingame/turn_manager.gd" id="1_4n5kr"]
 [ext_resource type="PackedScene" uid="uid://7np40cgmy80w" path="res://scenes/ingame/ingame_map.tscn" id="2_rqqua"]
 
-[node name="GameScene" type="Node" unique_id=1075307019]
+[node name="GameScene" type="Node" unique_id=1075307019 node_paths=PackedStringArray("deployment_box")]
 script = ExtResource("1_4n5kr")
+deployment_box = NodePath("IngameMap/CardsPanel/DeploymentBox")
 
-[node name="IngameMap" parent="." unique_id=594307947 instance=ExtResource("2_rqqua")]
+[node name="IngameMap" parent="." unique_id=594307947 node_paths=PackedStringArray("unit_info") instance=ExtResource("2_rqqua")]
+unit_info = NodePath("CardsPanel/HBoxContainer/UnitPanel")
 
 [node name="PlayersPanel" parent="IngameMap" index="1" unique_id=69587996]
 offset_bottom = 0.0
+
+[node name="DeploymentBox" parent="IngameMap/CardsPanel" parent_id_path=PackedInt32Array(594307947, 1431020749) index="1" unique_id=484191042]
+mouse_filter = 0
+
+[node name="EndTurnButton" parent="IngameMap" index="4" unique_id=1726048997]
+offset_left = -105.0
+offset_right = 0.0
 
 [editable path="IngameMap"]
 [editable path="IngameMap/CardsPanel/HBoxContainer/TileInfo"]

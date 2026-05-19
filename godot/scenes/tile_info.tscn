@@ -6,10 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://cchoaf4y1ugwt" path="res://assets/images/location.png" id="4_j1sq1"]
 [ext_resource type="Texture2D" uid="uid://30a5jvvikwic" path="res://assets/images/altitude.png" id="5_a8a6l"]
 [ext_resource type="Texture2D" uid="uid://hqesp8umos15" path="res://assets/images/mana.png" id="6_0l31k"]
-[ext_resource type="Shader" uid="uid://b2u6768asag68" path="res://scenes/tile_info.gdshader" id="7_j1sq1"]
+[ext_resource type="Shader" path="res://scenes/tile_info.gdshader" id="7_j1sq1"]
 
-[sub_resource type="Theme" id="Theme_y0wvp"]
+[sub_resource type="Theme" id="Theme_ccb5p"]
 default_font = ExtResource("1_5j6uu")
+default_font_size = 18
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8a6l"]
 bg_color = Color(0.6, 0.6, 0.20392157, 0)
@@ -73,12 +74,12 @@ shader_parameter/fill_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
 shader_parameter/border_width = 0.03
 
 [node name="TileInfo" type="PanelContainer" unique_id=253659827]
-custom_minimum_size = Vector2(180, 100)
-offset_right = 239.0
-offset_bottom = 150.0
+custom_minimum_size = Vector2(350, 100)
+offset_right = 327.0
+offset_bottom = 213.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = SubResource("Theme_y0wvp")
+theme = SubResource("Theme_ccb5p")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=701756463]
 layout_mode = 2
@@ -102,9 +103,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ccb5p")
 
 [node name="VBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer" unique_id=1260199554]
 layout_mode = 2
+theme_override_constants/separation = 5
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer" unique_id=1149690751]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -126,20 +128,21 @@ theme_override_constants/separation = 5
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_font_sizes/font_size = 7
-text = "Información del terreno ⟡"
+theme_override_font_sizes/font_size = 18
+text = "Terreno ⟡"
 vertical_alignment = 1
 
 [node name="NameLabel" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1820895288]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_font_sizes/font_size = 7
+theme_override_font_sizes/font_size = 18
 
 [node name="DescriptionButton" type="Button" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1996510714]
 custom_minimum_size = Vector2(25, 30)
 layout_mode = 2
 size_flags_horizontal = 10
+tooltip_text = "Information"
 theme_override_styles/normal = SubResource("StyleBoxFlat_j1sq1")
 icon = ExtResource("3_64khd")
 icon_alignment = 1
@@ -148,6 +151,7 @@ expand_icon = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer" unique_id=170370509]
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_constants/separation = 1
 
 [node name="Panel" type="PanelContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer" unique_id=1661753480]
@@ -161,7 +165,7 @@ theme_override_constants/separation = 6
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel/HBoxContainer" unique_id=1579744261]
 material = SubResource("ShaderMaterial_ccb5p")
-custom_minimum_size = Vector2(25, 25)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("4_j1sq1")
@@ -170,12 +174,13 @@ stretch_mode = 6
 
 [node name="PositionLabel" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel/HBoxContainer" unique_id=613073172]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Label2" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel/HBoxContainer" unique_id=929438714]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_colors/font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 18
 text = "position "
 
 [node name="Panel2" type="PanelContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer" unique_id=243351354]
@@ -188,7 +193,7 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer" unique_id=1574008606]
 material = SubResource("ShaderMaterial_64khd")
-custom_minimum_size = Vector2(25, 25)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("5_a8a6l")
@@ -197,12 +202,13 @@ stretch_mode = 6
 
 [node name="HeightLabel" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer" unique_id=70541285]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Label2" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer" unique_id=279225562]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_colors/font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 18
 text = "height "
 
 [node name="Panel3" type="PanelContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer" unique_id=206055398]
@@ -215,7 +221,7 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer" unique_id=443016597]
 material = SubResource("ShaderMaterial_uw6go")
-custom_minimum_size = Vector2(25, 25)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("6_0l31k")
@@ -224,10 +230,11 @@ stretch_mode = 6
 
 [node name="CostLabel" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer" unique_id=1401388647]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Label2" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer" unique_id=1799215338]
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_colors/font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 18
 text = "cost "

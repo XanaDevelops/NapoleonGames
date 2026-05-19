@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://y2r1i1e0337n"]
+
+[ext_resource type="FontFile" uid="uid://d2t7gjiow2ny5" path="res://assets/themes/ui/fonts/Metamorphous/Metamorphous-Regular.ttf" id="1_qar4y"]
+
+[resource]
+default_font = ExtResource("1_qar4y")
+default_font_size = 18

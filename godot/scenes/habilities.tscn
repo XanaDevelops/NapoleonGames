@@ -1,17 +1,15 @@
-[gd_scene format=3 uid="uid://u3jxahf3mymo"]
+[gd_scene format=3 uid="uid://2xspgv3scuc1"]
 
-[ext_resource type="FontFile" uid="uid://d2t7gjiow2ny5" path="res://assets/themes/ui/fonts/Metamorphous/Metamorphous-Regular.ttf" id="1_nmn1m"]
+[ext_resource type="Theme" uid="uid://y2r1i1e0337n" path="res://assets/themes/ui/unit_info_theme.tres" id="1_nmn1m"]
 [ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="1_yrn0l"]
 
-[sub_resource type="Theme" id="Theme_2alnj"]
-default_font = ExtResource("1_nmn1m")
-default_font_size = 14
-
 [node name="Habilities" type="PanelContainer" unique_id=399533923]
-custom_minimum_size = Vector2(200, 100)
+custom_minimum_size = Vector2(250, 130)
+offset_right = 259.0
+offset_bottom = 143.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = SubResource("Theme_2alnj")
+theme = ExtResource("1_nmn1m")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=472039789]
 layout_mode = 2
@@ -30,7 +28,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1490463472]
 layout_mode = 2
-text = "Habilidades"
+text = "⟡ Habilidades"
 horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer" unique_id=1396703191]

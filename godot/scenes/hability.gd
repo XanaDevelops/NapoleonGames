@@ -6,8 +6,8 @@ extends PanelContainer
 @export var ManaLabel:Label
 @export var PassiveLabel:Label
 @export var CoolDownLabel:Label
-@export var DescriptionButton:Button
-
+#@export var DescriptionButton:Button
+@export var description_label: Label
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -20,7 +20,9 @@ func paint(hab:HabilityRes) -> void:
 	ManaLabel.text = str(hab.manaCost)
 	CoolDownLabel.text= str(hab.cooldown)
 	PassiveLabel.text = "SÍ" if hab.isPassive else "NO"
-	DescriptionButton.pressed.connect(_on_description_requested)
+	description_label.text= hab.desc if hab.desc!=null else "No description"
+	#DescriptionButton.pressed.connect(_on_description_requested)
+	
 	
 
 func _input(event: InputEvent) -> void:

@@ -17,8 +17,10 @@ default_font_size = 14
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ss5a"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[node name="Hability" type="PanelContainer" unique_id=735565531 node_paths=PackedStringArray("nameLabel", "RadiusLabel", "ObjectiveLabel", "ManaLabel", "PassiveLabel", "CoolDownLabel", "DescriptionButton")]
+[node name="Hability" type="PanelContainer" unique_id=735565531 node_paths=PackedStringArray("nameLabel", "RadiusLabel", "ObjectiveLabel", "ManaLabel", "PassiveLabel", "CoolDownLabel", "description_label")]
 custom_minimum_size = Vector2(200, 100)
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = SubResource("Theme_n2k16")
 script = ExtResource("2_n2k16")
 nameLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/NameLabel")
@@ -27,7 +29,7 @@ ObjectiveLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxConta
 ManaLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/ManaLabel")
 PassiveLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer5/PassiveLabel")
 CoolDownLabel = NodePath("MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer4/CoolDownLabel")
-DescriptionButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/DescriptionButton")
+description_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/DescriptionLabel")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=978403674]
 layout_mode = 2
@@ -43,8 +45,10 @@ theme_override_constants/margin_bottom = 13
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1325596911]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1627017071]
+[node name="HBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=72456787]
 layout_mode = 2
 
 [node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1762458322]
@@ -53,14 +57,19 @@ size_flags_horizontal = 10
 horizontal_alignment = 1
 
 [node name="DescriptionButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1723415598]
+visible = false
 custom_minimum_size = Vector2(25, 30)
 layout_mode = 2
 size_flags_horizontal = 10
+tooltip_text = "Descripción"
 theme_override_styles/normal = SubResource("StyleBoxFlat_0ss5a")
 icon = ExtResource("4_i43y1")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
+
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=2140297787]
+layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1573294809]
 layout_mode = 2
@@ -71,10 +80,12 @@ theme_override_constants/separation = 10
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=582957291]
-custom_minimum_size = Vector2(23, 23)
+self_modulate = Color(0.99646384, 0.99646395, 0.99646395, 1)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "Rango de ataque"
 texture = ExtResource("2_jio8j")
 expand_mode = 3
 stretch_mode = 6
@@ -86,10 +97,11 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=314100199]
-custom_minimum_size = Vector2(25, 25)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "Objectivo"
 texture = ExtResource("3_pq3dm")
 expand_mode = 5
 stretch_mode = 6
@@ -101,10 +113,11 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=936509916]
-custom_minimum_size = Vector2(25, 25)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "Coste de mana"
 texture = ExtResource("4_1nxwj")
 expand_mode = 3
 stretch_mode = 6
@@ -116,10 +129,11 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer4" unique_id=1155749418]
-custom_minimum_size = Vector2(25, 25)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "Cooldown"
 texture = ExtResource("5_pq3dm")
 expand_mode = 3
 stretch_mode = 6
@@ -131,10 +145,11 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer5" unique_id=442827658]
-custom_minimum_size = Vector2(25, 25)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "Pasiva"
 texture = ExtResource("6_1nxwj")
 expand_mode = 3
 stretch_mode = 6

@@ -10,8 +10,12 @@ extends Control
 @export var dodge_label: Label 
 @export var habilities_grid: GridContainer 
 @export var current_mana: ProgressBar 
-@export var descriptionButton:Button
+#@export var descriptionButton:Button
+
 @export var unit_info: PanelContainer
+#var _desc_handler: DescriptionButtonHandler
+var _drag: DraggablePanel
+
 
 @export var resistances_container: PanelContainer 
 @export var currrentAlterStates_container: PanelContainer 
@@ -25,6 +29,8 @@ signal hability_use_requested(hab: HabilityRes)
 var _observed_unit: UnitGame = null
 func _ready() -> void:
 	await get_tree().process_frame
+	_drag= DraggablePanel.new()
+	_drag.setup(self)
 		
 	
 
@@ -35,9 +41,6 @@ func paint(tile: TileGame) -> void:
 	self.unit_texture.texture= tile.get_unit_portrait()
 	self.speed_label.text = str(tile.get_speed())
 	self.dodge_label.text = str(tile.get_dodge())
-	for conn in descriptionButton.pressed.get_connections():
-		descriptionButton.pressed.disconnect(conn.callable)
-	descriptionButton.pressed.connect(_on_show_description.bind(tile.get_tile_desc()))
 
 	
 
@@ -55,24 +58,6 @@ func paint_habilities(habilities: Array[HabilityRes], available_habilities: Dict
 	for hab in habilities:
 		_add_row(hab, available_habilities.get(hab, 0)==0)
 
-
-func _on_show_description(text:String) -> void:
-	#crear un escena
-	var existing = get_node_or_null("UnitDescription")
-	if existing:
-		existing.queue_free()
-	
-	var description_scene = preload("res://scenes/description.tscn").instantiate()
-	description_scene.name = "UnitDescription"
-	add_child(description_scene)
-	description_scene.paint(text)
-	
-	# Posicionar al lado derecho del UnitInfo
-	await get_tree().process_frame
-	var grid_global = unit_info.global_position
-	var grid_height = unit_info.size.y
-	description_scene.global_position = Vector2(grid_global.x , grid_global.y-grid_height)
-  
 
 func _on_hability_info_requested(hab: HabilityRes) -> void:
 	var existing = get_node_or_null("HabilityPanel")

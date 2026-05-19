@@ -2,9 +2,8 @@ extends Control
 
 @export var deployment_box: HBoxContainer
 @export var tile_info: Control      
-#@export var unit_info: PanelContainer     
-#@export var habilities:PanelContainer
-@export var UnitPanel: Control
+
+@export var UnitPanel: PanelContainer
 var _confirm_dialog: AcceptDialog = null
 var is_deployment_active: bool = false
 
@@ -33,7 +32,6 @@ func paint_unit_info(tile: TileGame) -> void:
 		UnitPanel.paint(tile)
 		
 		
-
 func clear_unit_info() -> void:
 	if UnitPanel:
 		UnitPanel.visible = false

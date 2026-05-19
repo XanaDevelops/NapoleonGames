@@ -225,7 +225,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 		
-		# hove
+		# hover
 		var coords := _get_map_coords(event.global_position)
 		if coords != _last_hovered_tile:
 			_last_hovered_tile = coords

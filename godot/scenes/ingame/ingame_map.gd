@@ -6,7 +6,7 @@ extends Control
 @export var cards_panel:   Control              
 @export var sub_viewport:  SubViewport          
 @export var map_visualizer: mapVisualizer       
-@export var unit_info:     Control              
+@export var unit_info:     PanelContainer              
 
 enum UnitState {
 	IDLE,

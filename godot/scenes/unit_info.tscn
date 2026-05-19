@@ -1,15 +1,11 @@
-[gd_scene format=3 uid="uid://djgay43k7icbq"]
+[gd_scene format=3 uid="uid://cuor3ubmahmea"]
 
 [ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="1_n3df2"]
-[ext_resource type="FontFile" uid="uid://d2t7gjiow2ny5" path="res://assets/themes/ui/fonts/Metamorphous/Metamorphous-Regular.ttf" id="1_nayp3"]
+[ext_resource type="Theme" uid="uid://y2r1i1e0337n" path="res://assets/themes/ui/unit_info_theme.tres" id="1_nayp3"]
 [ext_resource type="Texture2D" uid="uid://cqr2aauodvpl2" path="res://assets/images/information.png" id="2_nayp3"]
 [ext_resource type="Texture2D" uid="uid://cqrofwn6gbo0m" path="res://assets/images/speed.png" id="3_1l5eg"]
-[ext_resource type="Shader" uid="uid://uejm0rwyhup8" path="res://scenes/unit_info.gdshader" id="4_fss6g"]
+[ext_resource type="Material" uid="uid://b688udwg5jd6i" path="res://assets/themes/ui/unit_shader.tres" id="4_nayp3"]
 [ext_resource type="Texture2D" uid="uid://4ll3e20q0r3b" path="res://assets/images/dodge.png" id="5_igeos"]
-
-[sub_resource type="Theme" id="Theme_1l5eg"]
-default_font = ExtResource("1_nayp3")
-default_font_size = 14
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wajhi"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -17,19 +13,9 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ocp8"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n3df2"]
-shader = ExtResource("4_fss6g")
-shader_parameter/fill_color = Color(0.258, 0, 0, 1)
-shader_parameter/border_width = 0.03
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mkyt6"]
-shader = ExtResource("4_fss6g")
-shader_parameter/fill_color = Color(0.25882354, 0, 0, 1)
-shader_parameter/border_width = 0.03
-
 [node name="UnitInfo" type="PanelContainer" unique_id=722150641]
-custom_minimum_size = Vector2(300, 160)
-theme = SubResource("Theme_1l5eg")
+custom_minimum_size = Vector2(350, 200)
+theme = ExtResource("1_nayp3")
 theme_override_styles/panel = SubResource("StyleBoxFlat_wajhi")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=2027589572]
@@ -63,6 +49,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(25, 30)
 layout_mode = 2
 size_flags_horizontal = 10
+tooltip_text = "Descripción"
 theme_override_styles/normal = SubResource("StyleBoxFlat_0ocp8")
 icon = ExtResource("2_nayp3")
 icon_alignment = 1
@@ -96,25 +83,31 @@ theme_override_constants/separation = 20
 layout_mode = 2
 
 [node name="SpeedTextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/SpeedHBoxContainer" unique_id=55287735]
-material = SubResource("ShaderMaterial_n3df2")
+material = ExtResource("4_nayp3")
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+tooltip_text = "Velocidad"
 texture = ExtResource("3_1l5eg")
 expand_mode = 3
 stretch_mode = 6
 
 [node name="SpeedLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/SpeedHBoxContainer" unique_id=280921235]
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="DodgeHBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=2141997219]
 layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="DodgeTextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/DodgeHBoxContainer2" unique_id=2086488747]
-material = SubResource("ShaderMaterial_mkyt6")
+material = ExtResource("4_nayp3")
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+tooltip_text = "Esquive"
 texture = ExtResource("5_igeos")
 expand_mode = 3
 stretch_mode = 6
 
 [node name="DodgeLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/DodgeHBoxContainer2" unique_id=1954809688]
 layout_mode = 2
+size_flags_horizontal = 3

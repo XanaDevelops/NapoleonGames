@@ -7,7 +7,7 @@ signal card_deployed(player: UserRes, remaining: int)
 signal tick_turn
 
 @onready var cards_panel = $IngameMap/CardsPanel
-@onready var deployment_box = $IngameMap/CardsPanel/DeploymentBox
+@export var deployment_box:HBoxContainer 
 @onready var map_visualizer = $IngameMap/SubViewportContainer/SubViewport/mapVisualizer
 @onready var players_panel= $IngameMap/PlayersPanel
 @onready var end_button= $IngameMap/EndTurnButton
