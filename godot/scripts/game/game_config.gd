@@ -16,6 +16,7 @@ enum ONLINE_USER{
 @export var army_b: ArmyRes
 @export var map_res: MapRes
 @export var user_online := ONLINE_USER.NO
+@export var game_pid := -1
 
 func _init(p_user_a: UserRes = null, p_user_b: UserRes = null, p_map_res: MapRes = null, p_army_a: ArmyRes = null, p_army_b: ArmyRes = null) -> void:
 	user_a = p_user_a

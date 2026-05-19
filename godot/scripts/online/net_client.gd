@@ -31,6 +31,17 @@ func manage_ids(id_assignment: IDAssignment) -> void:
 
 	prints("my id", id)
 	
+## TODO: preguntar por mapa, config, etc
+func request_online_game() -> void:
+	var user := UserManager.usuario_actual
+	
+	## PLACEHOLDER
+	var map := GameManager.get_game_resources().maps[2]
+	var packet := OnlineMatchRequest.create(user.uid, user.obtener_ejercito_activo().uid, map.uid)
+	packet.send(Online.server_peer)
+	
+	
+	
 func enter_online_game(lobby: GameLobby) -> void:
 	var gr := GameManager.get_game_resources()
 	GameManager.start_game(
@@ -39,7 +50,8 @@ func enter_online_game(lobby: GameLobby) -> void:
 		gr.get_res_from_uid(lobby.map_res_uid, MapRes) as MapRes,
 		gr.get_res_from_uid(lobby.army_a_uid, ArmyRes) as ArmyRes,
 		gr.get_res_from_uid(lobby.army_b_uid, ArmyRes) as ArmyRes,
-		true
+		true,
+		lobby.game_pid
 	)
 
 

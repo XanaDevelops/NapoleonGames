@@ -59,7 +59,9 @@ func set_users() -> void:
 	game_config.user_b = gr.users[1]
 	
 ## Placeholder
-func start_game(playerA: UserRes, playerB:UserRes, map:MapRes, armyA: ArmyRes, armyB:ArmyRes, isOnline:= false) -> void:
+func start_game(playerA: UserRes, playerB:UserRes, map:MapRes,
+	armyA: ArmyRes, armyB:ArmyRes, isOnline:= false, game_pid:= -1
+	) -> void:
 	game_config = GameConfig.new(playerA, playerB, map, armyA, armyB)
 	if isOnline:
 		if UserManager.usuario_actual == playerA:
@@ -71,7 +73,7 @@ func start_game(playerA: UserRes, playerB:UserRes, map:MapRes, armyA: ArmyRes, a
 		else:
 			push_error("Intentado iniciar una partida online sin el usuario actual!")
 			return
-			
+	game_config.game_pid = game_pid
 	app_state = APP_STATE.IN_GAME
 
 	if !is_server:

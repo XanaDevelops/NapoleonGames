@@ -6,6 +6,11 @@ extends TurnAction
 # posicion final
 @export var end_pos : Vector2i
 
+static func _static_init() -> void:
+	TurnAction.register(ACTION.MOVEMENT, func(data: PackedByteArray) -> TurnMove:
+		return TurnMove.create_from_data(data)
+	)
+
 static func create(unit: UnitGame, start: Vector2i, end: Vector2i) -> TurnMove:
 	var turn := TurnMove.new()
 	turn.action = ACTION.MOVEMENT

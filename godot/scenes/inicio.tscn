@@ -5,6 +5,7 @@
 [ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://assets/themes/ui/estilo_botones.tres" id="3_bxgl6"]
 [ext_resource type="Script" uid="uid://cikn58w4fmhfw" path="res://scripts/ui/menu_desplegable.gd" id="4_rfvtk"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="5_xg841"]
+[ext_resource type="Script" uid="uid://oip1dp0jjnjk" path="res://scenes/enemigo_aleatorio.gd" id="6_bxgl6"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="6_ru1hr"]
 [ext_resource type="PackedScene" uid="uid://cdbdwv8lb0o74" path="res://scenes/panel_usuario.tscn" id="8_bxgl6"]
 
@@ -171,6 +172,7 @@ layout_mode = 2
 theme = ExtResource("3_bxgl6")
 theme_override_font_sizes/font_size = 30
 text = "Enemigo Aleatorio"
+script = ExtResource("6_bxgl6")
 
 [node name="BotonNavegacion" type="Button" parent="Panel/ContenedorDeMenu" unique_id=1002694264]
 layout_mode = 2

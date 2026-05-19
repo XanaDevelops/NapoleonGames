@@ -1,6 +1,11 @@
 class_name TurnPass
 extends TurnAction
 
+static func _static_init() -> void:
+	TurnAction.register(ACTION.PASS_TURN, func(data: PackedByteArray) -> TurnPass:
+		return TurnPass.create_from_data(data)
+	)
+
 static func create(user: UserGame) -> TurnPass:
 	var turn := TurnPass.new()
 	turn.action = ACTION.PASS_TURN

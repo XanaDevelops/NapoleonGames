@@ -9,6 +9,14 @@ extends TurnAction
 # destinos objetivos
 @export var dest: Array[Vector2i]
 
+static func _static_init() -> void:
+	TurnAction.register(ACTION.ACTIVE, func(data: PackedByteArray) -> TurnHability:
+		return TurnHability.create_from_data(data)
+	)
+	TurnAction.register(ACTION.PASSIVE, func(data: PackedByteArray) -> TurnHability:
+		return TurnHability.create_from_data(data)
+	)
+
 
 static func create(unit: UnitGame, pos: Vector2i, hab: HabilityRes, dest: Array[Vector2i]) -> TurnHability:
 	var turn := TurnHability.new()

@@ -6,6 +6,11 @@ extends TurnAction
 # cantidad de unidades
 @export var n : int
 
+static func _static_init() -> void:
+	TurnAction.register(ACTION.DEPLOYMENT, func(data: PackedByteArray) -> TurnDeploy:
+		return TurnDeploy.create_from_data(data)
+	)
+
 static func create(player : UserGame, dpos: Vector2i, card_res: CardRes, n: int) -> TurnDeploy:
 	var turn := TurnDeploy.new()
 	turn.action = ACTION.DEPLOYMENT

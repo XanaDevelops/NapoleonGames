@@ -14,6 +14,19 @@ enum ACTION {
 
 const BASE_ENCODE_SIZE := 14
 
+static var _registry: Dictionary[ACTION, Callable] = {}
+
+static func register(action_type: ACTION, ctor: Callable) -> void:
+	_registry[action_type] = ctor
+
+static func create_from_data(data: PackedByteArray) -> TurnAction:
+	var action_value := data.decode_u8(1)
+
+	if not _registry.has(action_value):
+		push_error("Unhandled TurnAction action: %s" % str(action_value))
+		return null
+	return _registry[action_value].call(data)
+
 # orden de acción
 @export var action_order: int
 # uid del usuario
