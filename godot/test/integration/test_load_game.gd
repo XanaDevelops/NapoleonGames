@@ -13,6 +13,7 @@ func before_each():
 	UserManager.establecer_usuario_actual(user0.email)
 	
 	UiManager.cambiar_a_escena("inicio")
+	await wait_until(func(): return get_tree().current_scene != null, 2)
 	autoqfree(get_tree().current_scene)
 	
 	gut.pause_before_teardown()
@@ -25,6 +26,10 @@ func test_load_game_auto() -> void:
 	GameManager.start_game(user0, user1,
 			GameManager.get_game_resources().maps[0],
 			user0.obtener_ejercito_activo(), user1.obtener_ejercito_activo())
+	await wait_until(func():
+		return get_tree().current_scene != null and get_tree().current_scene.has_node("IngameMap"),
+		5
+	)
 	autoqfree(get_tree().current_scene)
 	var ingame_map = get_tree().current_scene.get_node("IngameMap")
 	autoqfree(ingame_map._hab_manager)

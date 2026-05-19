@@ -14,7 +14,7 @@
 [resource]
 script = ExtResource("7_slsko")
 name = &"Ranged Unit"
-desc = "Unidad a distancia"
+desc = "Una unidad de hostigamiento excepcionalmente ágil, entrenada para diezmar a las líneas enemigas desde la distancia antes de que el combate cuerpo a cuerpo comience. Aunque su constitución es frágil y no soporta el daño directo, lo compensa con unos reflejos prodigiosos que le permiten esquivar ataques mortales con facilidad. Además de su maestría sin igual con el arco, ha sido instruida en las artes arcanas, canalizando su reserva de maná para conjurar devastadoras bolas de fuego que reducen a cenizas a cualquier oponente que intente acorralarla."
 hp = 10
 mana = 10
 speed = 6

@@ -12,6 +12,7 @@ config_version=5
 
 config/name="NapoleonGames"
 run/main_scene="uid://cllpyrjg508jg"
+run/enable_alt_space_menu=true
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -21,13 +22,14 @@ GameManager="*uid://crfipueiwb0h0"
 UiManager="*uid://c7x52jkqmybks"
 UserManager="*uid://dugu0fxresru"
 ApiAdapter="*uid://dfb2v02pw1ss2"
+AudioManager="*uid://cfgeh4loe71nm"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/window_width_override=900
-window/size/window_height_override=900
+window/size/window_width_override=720
+window/size/window_height_override=405
 window/stretch/mode="canvas_items"
 
 [editor]

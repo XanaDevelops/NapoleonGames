@@ -1,8 +1,16 @@
 [gd_scene format=3 uid="uid://djdhm6u0d4kxb"]
 
 [ext_resource type="Script" uid="uid://c5ce6viwo631e" path="res://scripts/ui/selector_de_oponente.gd" id="1_lt5ip"]
+[ext_resource type="Theme" uid="uid://dm0p6ixmo660q" path="res://assets/themes/ui/pestaña_ejercito.tres" id="2_3q4l1"]
 [ext_resource type="Texture2D" uid="uid://ddks1rpvd3dai" path="res://assets/sprites/ui/fondos_de_pantalla/fondo_pantalla_de_selector_enemigo.png" id="2_curts"]
+[ext_resource type="Theme" uid="uid://d42d7i75rf1k" path="res://assets/themes/ui/pestaña_ejercito_activo.tres" id="3_a0gsv"]
+[ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="3_gjpk3"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="3_mo552"]
+[ext_resource type="PackedScene" uid="uid://did61qto33dha" path="res://scenes/card_ui.tscn" id="4_7ayyx"]
+[ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="5_hyqir"]
+[ext_resource type="Theme" uid="uid://cs2ycfq76kcvr" path="res://assets/themes/ui/estilo_botones_negacion_suave.tres" id="7_7ayyx"]
+[ext_resource type="Theme" uid="uid://cuaadii4ueb8" path="res://assets/themes/ui/estilo_botones_confirmacion_suave.tres" id="9_oyg6h"]
+[ext_resource type="FontFile" uid="uid://cmiuntu71oyl3" path="res://addons/gut/fonts/LobsterTwo-Bold.ttf" id="11_oyg6h"]
 
 [node name="Control" type="Control" unique_id=1443894714]
 layout_mode = 3
@@ -12,6 +20,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lt5ip")
+tema_pestana_activa = ExtResource("3_a0gsv")
+tema_pestana_inactiva = ExtResource("2_3q4l1")
+tema_jugador_seleccionado = ExtResource("3_a0gsv")
+tema_jugador_no_seleccionado = ExtResource("2_3q4l1")
+escena_carta_ui = ExtResource("4_7ayyx")
 
 [node name="ImagenDeFondo" type="TextureRect" parent="." unique_id=286016913]
 layout_mode = 1
@@ -24,72 +37,58 @@ texture = ExtResource("2_curts")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="PanelDeOponente" type="Panel" parent="." unique_id=1040917842]
-custom_minimum_size = Vector2(700, 600)
+[node name="Panel" type="Panel" parent="." unique_id=1420219080]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -555.0
+offset_top = -400.0
+offset_right = 555.0
+offset_bottom = 450.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_gjpk3")
 
-[node name="TituloJ2" type="Label" parent="PanelDeOponente" unique_id=239735659]
+[node name="TituloPanel" type="Label" parent="Panel" unique_id=1489308650]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -291.0
-offset_top = 20.0
-offset_right = 291.0
-offset_bottom = 89.0
+offset_left = -182.5
+offset_top = 25.0
+offset_right = 182.5
+offset_bottom = 100.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 50
-text = "Seleccione su oponente "
+theme_override_colors/font_color = Color(0.9019608, 0.7607843, 0.47843137, 1)
+theme_override_fonts/font = ExtResource("11_oyg6h")
+theme_override_font_sizes/font_size = 60
+text = "Elige a tu Rival"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelDeOponente" unique_id=1798635924]
-custom_minimum_size = Vector2(600, 450)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -205.0
-offset_right = 300.0
-offset_bottom = 245.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Oponentes" type="VBoxContainer" parent="PanelDeOponente/ScrollContainer" unique_id=280697535]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Vover" type="Button" parent="." unique_id=696326894]
-custom_minimum_size = Vector2(100, 50)
+[node name="Vover" type="Button" parent="Panel" unique_id=696326894]
+custom_minimum_size = Vector2(150, 50)
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 100.0
-offset_top = -150.0
+offset_left = 50.0
+offset_top = -100.0
 offset_right = 200.0
-offset_bottom = -100.0
+offset_bottom = -50.0
 grow_vertical = 0
+theme = ExtResource("7_7ayyx")
 text = "Volver"
 script = ExtResource("3_mo552")
 id_escena = "mapas"
 metadata/_custom_type_script = "uid://ct2doijn7j323"
 
-[node name="IniciarPartida" type="Button" parent="." unique_id=565434186]
-custom_minimum_size = Vector2(100, 50)
+[node name="IniciarPartida" type="Button" parent="Panel" unique_id=565434186]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 50)
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -97,10 +96,158 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -200.0
-offset_top = -150.0
-offset_right = -100.0
-offset_bottom = -100.0
+offset_top = -100.0
+offset_right = -50.0
+offset_bottom = -50.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "Iniciar
+theme = ExtResource("9_oyg6h")
+text = "Siguiente
 "
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel" unique_id=1233902577]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -502.0
+offset_top = -300.0
+offset_right = 502.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="PanelDeOponente" type="Panel" parent="Panel/HBoxContainer" unique_id=1040917842]
+custom_minimum_size = Vector2(300, 600)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("5_hyqir")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/PanelDeOponente" unique_id=1190708675]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Panel" type="Panel" parent="Panel/HBoxContainer/PanelDeOponente/MarginContainer" unique_id=190569241]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/HBoxContainer/PanelDeOponente/MarginContainer/Panel" unique_id=1798635924]
+layout_mode = 0
+offset_right = 260.0
+offset_bottom = 560.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/PanelDeOponente/MarginContainer/Panel/ScrollContainer" unique_id=1323912198]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="Oponentes" type="VBoxContainer" parent="Panel/HBoxContainer/PanelDeOponente/MarginContainer/Panel/ScrollContainer/MarginContainer" unique_id=280697535]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelEjercito" type="Panel" parent="Panel/HBoxContainer" unique_id=983271931]
+custom_minimum_size = Vector2(700, 600)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("5_hyqir")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/PanelEjercito" unique_id=1021058645]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/PanelEjercito/VBoxContainer" unique_id=1680687453]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="Panel/HBoxContainer/PanelEjercito/VBoxContainer/MarginContainer" unique_id=822266732]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/HBoxContainer/PanelEjercito/VBoxContainer/MarginContainer/Panel" unique_id=674582839]
+custom_minimum_size = Vector2(640, 40)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -20.0
+offset_right = 320.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="PestanasMazos" type="HBoxContainer" parent="Panel/HBoxContainer/PanelEjercito/VBoxContainer/MarginContainer/Panel/ScrollContainer" unique_id=540034148]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/HBoxContainer/PanelEjercito/VBoxContainer" unique_id=1738282834]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Panel" type="Panel" parent="Panel/HBoxContainer/PanelEjercito/VBoxContainer/MarginContainer2" unique_id=1410470571]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/HBoxContainer/PanelEjercito/VBoxContainer/MarginContainer2/Panel" unique_id=1914242437]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/HBoxContainer/PanelEjercito/VBoxContainer/MarginContainer2/Panel/ScrollContainer" unique_id=53465478]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ContenedorCartas" type="GridContainer" parent="Panel/HBoxContainer/PanelEjercito/VBoxContainer/MarginContainer2/Panel/ScrollContainer/MarginContainer" unique_id=1066261547]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 20
+columns = 4
