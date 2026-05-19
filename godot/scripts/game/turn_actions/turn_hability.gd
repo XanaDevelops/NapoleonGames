@@ -32,37 +32,37 @@ func encode() -> PackedByteArray:
 	var offset := BASE_ENCODE_SIZE
 	var dest_count := dest.size()
 	data.resize(offset + 16 + (dest_count * 8))
-	data.encode_s32(offset, pos.x)
+	data.encode_u32(offset, pos.x)
 	offset += 4
-	data.encode_s32(offset, pos.y)
+	data.encode_u32(offset, pos.y)
 	offset += 4
-	data.encode_s32(offset, hability_uid)
+	data.encode_u32(offset, hability_uid)
 	offset += 4
-	data.encode_s32(offset, dest_count)
+	data.encode_u32(offset, dest_count)
 	offset += 4
 	for target in dest:
-		data.encode_s32(offset, target.x)
+		data.encode_u32(offset, target.x)
 		offset += 4
-		data.encode_s32(offset, target.y)
+		data.encode_u32(offset, target.y)
 		offset += 4
 	return data
 
 func decode(data: PackedByteArray) -> void:
 	super.decode(data)
 	var offset := BASE_ENCODE_SIZE
-	var x := data.decode_s32(offset)
+	var x := data.decode_u32(offset)
 	offset += 4
-	var y := data.decode_s32(offset)
+	var y := data.decode_u32(offset)
 	offset += 4
 	pos = Vector2i(x, y)
-	hability_uid = data.decode_s32(offset)
+	hability_uid = data.decode_u32(offset)
 	offset += 4
-	var dest_count := data.decode_s32(offset)
+	var dest_count := data.decode_u32(offset)
 	offset += 4
 	dest = []
 	for i in dest_count:
-		var dest_x := data.decode_s32(offset)
+		var dest_x := data.decode_u32(offset)
 		offset += 4
-		var dest_y := data.decode_s32(offset)
+		var dest_y := data.decode_u32(offset)
 		offset += 4
 		dest.append(Vector2i(dest_x, dest_y))

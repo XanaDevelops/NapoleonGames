@@ -26,19 +26,19 @@ func encode() -> PackedByteArray:
 	var data := super.encode()
 	var offset := BASE_ENCODE_SIZE
 	data.resize(offset + 12)
-	data.encode_s32(offset, deploy_pos.x)
+	data.encode_u32(offset, deploy_pos.x)
 	offset += 4
-	data.encode_s32(offset, deploy_pos.y)
+	data.encode_u32(offset, deploy_pos.y)
 	offset += 4
-	data.encode_s32(offset, n)
+	data.encode_u32(offset, n)
 	return data
 
 func decode(data: PackedByteArray) -> void:
 	super.decode(data)
 	var offset := BASE_ENCODE_SIZE
-	var x := data.decode_s32(offset)
+	var x := data.decode_u32(offset)
 	offset += 4
-	var y := data.decode_s32(offset)
+	var y := data.decode_u32(offset)
 	offset += 4
 	deploy_pos = Vector2i(x, y)
-	n = data.decode_s32(offset)
+	n = data.decode_u32(offset)

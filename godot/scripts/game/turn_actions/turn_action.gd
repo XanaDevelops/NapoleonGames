@@ -29,9 +29,9 @@ func encode() -> PackedByteArray:
 	var data := super.encode()
 	data.resize(BASE_ENCODE_SIZE)
 	data.encode_u8(1, action)
-	data.encode_s32(2, player_uid)
-	data.encode_s32(6, unit_uid)
-	data.encode_s32(10, action_order)
+	data.encode_u32(2, player_uid)
+	data.encode_u32(6, unit_uid)
+	data.encode_u32(10, action_order)
 	return data
 
 
@@ -39,9 +39,9 @@ func encode() -> PackedByteArray:
 func decode(data: PackedByteArray) -> void:
 	super.decode(data)
 	action = data.decode_u8(1)
-	player_uid = data.decode_s32(2)
-	unit_uid = data.decode_s32(6)
-	action_order = data.decode_s32(10)
+	player_uid = data.decode_u32(2)
+	unit_uid = data.decode_u32(6)
+	action_order = data.decode_u32(10)
 
 func _init() -> void:
 	pass

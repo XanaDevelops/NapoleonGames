@@ -16,8 +16,8 @@ func on_client_packet(data: PackedByteArray) -> void:
 		NetPacket.PACKET_TYPE.PING:
 			manage_ping(PingPacket.create_from_data(data))
 		NetPacket.PACKET_TYPE.SET_GAME_LOBBY:
-			GameLobby.create_from_data(data)
-			pass
+			enter_online_game(GameLobby.create_from_data(data))
+			
 		NetPacket.PACKET_TYPE.TURN_ACTION:
 			pass
 		_:
@@ -30,6 +30,17 @@ func manage_ids(id_assignment: IDAssignment) -> void:
 		handle_local_id_assignment.emit(id_assignment.id)
 
 	prints("my id", id)
+	
+func enter_online_game(lobby: GameLobby) -> void:
+	var gr := GameManager.get_game_resources()
+	GameManager.start_game(
+		gr.get_res_from_uid(lobby.user_a_uid, UserRes) as UserRes,
+		gr.get_res_from_uid(lobby.user_b_uid, UserRes) as UserRes,
+		gr.get_res_from_uid(lobby.map_res_uid, MapRes) as MapRes,
+		gr.get_res_from_uid(lobby.army_a_uid, ArmyRes) as ArmyRes,
+		gr.get_res_from_uid(lobby.army_b_uid, ArmyRes) as ArmyRes,
+		true
+	)
 
 
 func manage_ping(ping : PingPacket) -> void:

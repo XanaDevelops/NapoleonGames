@@ -34,31 +34,31 @@ func encode() -> PackedByteArray:
 	var data: PackedByteArray = super.encode()
 	data.resize(25)
 	var offset := 1
-	data.encode_s32(offset, game_pid)
+	data.encode_u32(offset, game_pid)
 	offset += 4
-	data.encode_s32(offset, user_a_uid)
+	data.encode_u32(offset, user_a_uid)
 	offset += 4
-	data.encode_s32(offset, user_b_uid)
+	data.encode_u32(offset, user_b_uid)
 	offset += 4
-	data.encode_s32(offset, army_a_uid)
+	data.encode_u32(offset, army_a_uid)
 	offset += 4
-	data.encode_s32(offset, army_b_uid)
+	data.encode_u32(offset, army_b_uid)
 	offset += 4
-	data.encode_s32(offset, map_res_uid)
+	data.encode_u32(offset, map_res_uid)
 	return data
 
 
 func decode(data: PackedByteArray) -> void:
 	super.decode(data)
 	var offset := 1
-	game_pid = data.decode_s32(offset)
+	game_pid = data.decode_u32(offset)
 	offset += 4
-	user_a_uid = data.decode_s32(offset)
+	user_a_uid = data.decode_u32(offset)
 	offset += 4
-	user_b_uid = data.decode_s32(offset)
+	user_b_uid = data.decode_u32(offset)
 	offset += 4
-	army_a_uid = data.decode_s32(offset)
+	army_a_uid = data.decode_u32(offset)
 	offset += 4
-	army_b_uid = data.decode_s32(offset)
+	army_b_uid = data.decode_u32(offset)
 	offset += 4
-	map_res_uid = data.decode_s32(offset)
+	map_res_uid = data.decode_u32(offset)
