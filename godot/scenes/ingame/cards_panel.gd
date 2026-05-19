@@ -18,6 +18,32 @@ signal cancelled
 func _ready() -> void:
 	await get_tree().process_frame
 	_setup_pages()
+	_connect_turn_manager()
+
+
+func _connect_turn_manager() -> void:
+	var turn_manager: TurnManager = GameManager.get_turn_manager()
+	if turn_manager == null:
+		return
+
+	if not turn_manager.deployment_phase_started.is_connected(_on_deployment_phase_started):
+		turn_manager.deployment_phase_started.connect(_on_deployment_phase_started)
+	if not turn_manager.battle_phase_started.is_connected(_on_battle_phase_started):
+		turn_manager.battle_phase_started.connect(_on_battle_phase_started)
+	if not turn_manager.unit_info_cleared.is_connected(_on_unit_info_cleared):
+		turn_manager.unit_info_cleared.connect(_on_unit_info_cleared)
+
+
+func _on_deployment_phase_started() -> void:
+	set_deployment_phase(true)
+
+
+func _on_battle_phase_started() -> void:
+	set_deployment_phase(false)
+
+
+func _on_unit_info_cleared() -> void:
+	clear_unit_info()
 	
 
 func _setup_pages() -> void:

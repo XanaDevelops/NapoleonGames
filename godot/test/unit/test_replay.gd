@@ -37,7 +37,7 @@ func test_replay():
 		
 	var tm := GameManager.get_turn_manager()
 	autoqfree(get_tree().current_scene)
-
+	await get_tree().process_frame
 	for t in turns:
 		assert_true(tm.replay_turn(t))
 		#await wait_seconds(0.5)

@@ -6,10 +6,19 @@ signal card_deployed(player: UserGame, remaining: int)
 ## Los UnitGame deben subscribirse a esto para avanzar el turno
 signal tick_turn
 signal game_end
-@onready var cards_panel = $IngameMap/VBoxContainer/CardsPanel
-@onready var deployment_box = $IngameMap/VBoxContainer/CardsPanel/MarginContainer/DeploymentBox
-@onready var map_visualizer = $IngameMap/VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer
-@onready var players_panel : PlayersPanel = $IngameMap/VBoxContainer/PlayersPanel
+signal ui_setup_requested(turn_manager: TurnManager)
+signal deployment_phase_started
+signal battle_phase_started
+signal deployment_data_refreshed(groups: Array)
+signal deployment_card_consumed(group: CardArmyGroup)
+signal unit_moved(start: Vector2i, end: Vector2i)
+signal tile_draw_requested(pos: Vector2i, tile: TileGame)
+signal deployment_zone_updated(tiles: Array[Vector2i])
+signal deployment_zone_cleared
+signal deployment_preview_cleared
+signal unit_removed(pos: Vector2i, tile: TileGame)
+signal movement_enabled
+signal unit_info_cleared
 @export var turns: Array[TurnAction] = []
 var turn_order: Array[UserGame] = []
 var turn_number: int = 0
@@ -87,11 +96,11 @@ func register_turn(turn: TurnAction) -> bool:
 func replay_turn(turn: TurnAction) -> bool:
 	match turn.action:
 		TurnAction.ACTION.DEPLOYMENT:
-			_replay_deployment(turn)
+			return _replay_deployment(turn)
 		TurnAction.ACTION.MOVEMENT:
-			_replay_movement(turn)
+			return _replay_movement(turn)
 		TurnAction.ACTION.ACTIVE, TurnAction.ACTION.PASSIVE:
-			_replay_hability(turn)
+			return _replay_hability(turn)
 		TurnAction.ACTION.PASS_TURN:
 			# quizas comprobar esto sea correcto?
 			advance_turn()
@@ -134,8 +143,7 @@ func _replay_hability(turn: TurnHability) -> bool:
 		return true
 	return _on_unit_hability_use(turn.pos, turn.dest, hab)
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _init() -> void:
 	GameManager.register_turn_manager(self)
 	game_config = GameManager.get_game_config()
 	if map_game == null and game_config and game_config.map_res:
@@ -154,8 +162,15 @@ func _ready() -> void:
 
 	for usuario in turn_order:
 		usuario.living_units = 0
-	players_panel.setup(self)
-	start_deployment_phase()
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	var defer:= func():
+		await get_tree().process_frame
+	
+		ui_setup_requested.emit(self)
+		start_deployment_phase()
+	defer.call_deferred()
 	
 	#end_deployment_phase()
 
@@ -177,7 +192,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 	
 		map_logic.move_unit(start, end)
 		unit.has_moved_this_turn = true
-		map_visualizer.plot_unit_moved(start, end)
+		unit_moved.emit(start, end)
 		
 		var action := TurnMove.create(unit, start, end)
 		register_turn(action)
@@ -223,21 +238,16 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 
 func start_deployment_phase() -> void:
 	is_deployment_phase = true
-	players_panel.set_phase_deployment()
-	cards_panel.set_deployment_phase(true)
+	deployment_phase_started.emit()
 	_refresh_ui_for_current_player()
 	_highlight_current_deployment_zone()
 
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
-	players_panel.set_phase_battle()
-
-	cards_panel.set_deployment_phase(false)
-	map_visualizer.movement_requested.connect(_on_unit_movement_requested)
-	
-	if map_visualizer:
-		map_visualizer.clear_deployment_zone()
-		map_visualizer.clear_deployment_preview()
+	battle_phase_started.emit()
+	movement_enabled.emit()
+	deployment_zone_cleared.emit()
+	deployment_preview_cleared.emit()
 
 func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vector2i) -> bool:
 	if not is_deployment_phase:
@@ -260,22 +270,21 @@ func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vect
 		new_unit._owner = user_game
 
 		map_game.place_unit(new_unit, pos)
-		map_visualizer.draw_tile(pos.x, pos.y, map_game.get_tile_at(pos))
+		tile_draw_requested.emit(pos, map_game.get_tile_at(pos))
 
 		new_unit.died.connect(_on_unit_died)
 		
 	var action := TurnDeploy.create(user_game, click_pos, group.cardType, group.n)
 	register_turn(action)
 
-	if map_visualizer:
-		map_visualizer.clear_deployment_preview()
+	deployment_preview_cleared.emit()
 
 	_consume_current_card(user_game, group)
 	return true
 
 func _consume_current_card(user_game: UserGame, group: CardArmyGroup) -> void:
 	if user_game.consume_deployment_group(group):
-		deployment_box.remove_card_visual(group)
+		deployment_card_consumed.emit(group)
 		card_deployed.emit(user_game, user_game.get_deployment_count())
 
 	_handle_next_deployment_step()
@@ -302,24 +311,24 @@ func _handle_next_deployment_step() -> void:
 
 func _refresh_ui_for_current_player() -> void:
 	var user := get_current_user()
-	deployment_box.populate(user.deployment_data)
+	deployment_data_refreshed.emit(user.deployment_data)
 
 func _has_cards_to_deploy(user: UserGame) -> bool:
 	return user.has_deployment_cards()
 
 func _highlight_current_deployment_zone() -> void:
 	var zone_tiles:Array[Vector2i] = map_game.get_deployment_zone_tiles(get_current_user_number())
-	map_visualizer.show_deployment_zone(zone_tiles)
+	deployment_zone_updated.emit(zone_tiles)
 
 
 #esta función se ejecuta caundo una unidad emite que ha muerto
 func _on_unit_died(unit: UnitGame, pos: Vector2i) -> void:
-	map_visualizer.remove_unit(pos, map_game.get_tile_at(pos))
+	unit_removed.emit(pos, map_game.get_tile_at(pos))
 
 	if tick_turn.is_connected(unit.advance_turn):
 			tick_turn.disconnect(unit.advance_turn)
 	
-	cards_panel.clear_unit_info()
+	unit_info_cleared.emit()
 
 	unit._owner.dec_living_units(1)
 	print(unit._owner.get_user_res().name + " ha perdido una unidad. Le quedan: ", unit._owner.living_units)

@@ -37,7 +37,34 @@ func set_phase_battle() -> void:
 	
 
 func _ready() -> void:
-	pass  
+	await get_tree().process_frame
+	_connect_turn_manager()
+
+
+func _connect_turn_manager() -> void:
+	var turn_manager: TurnManager = GameManager.get_turn_manager()
+	if turn_manager == null:
+		return
+
+	if not turn_manager.ui_setup_requested.is_connected(_on_ui_setup_requested):
+		turn_manager.ui_setup_requested.connect(_on_ui_setup_requested)
+	if not turn_manager.deployment_phase_started.is_connected(_on_deployment_phase_started):
+		turn_manager.deployment_phase_started.connect(_on_deployment_phase_started)
+	if not turn_manager.battle_phase_started.is_connected(_on_battle_phase_started):
+		turn_manager.battle_phase_started.connect(_on_battle_phase_started)
+
+	setup(turn_manager)
+
+func _on_ui_setup_requested(tm: TurnManager) -> void:
+	setup(tm)
+
+
+func _on_deployment_phase_started() -> void:
+	set_phase_deployment()
+
+
+func _on_battle_phase_started() -> void:
+	set_phase_battle()
 
 func setup(tm: TurnManager) -> void:
 	turnManager = tm
