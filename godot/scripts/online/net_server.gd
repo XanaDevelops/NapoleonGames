@@ -24,6 +24,11 @@ func on_server_packet(peer_id: int, data: PackedByteArray) -> void:
 	match data[0]:
 		NetPacket.PACKET_TYPE.PING:
 			manage_ping(PingPacket.create_from_data(data))
+		NetPacket.PACKET_TYPE.REQUEST_ONLINE:
+			OnlineMatchRequest.create_from_data(data)
+			pass
+		NetPacket.PACKET_TYPE.TURN_ACTION:
+			pass
 		_:
 			push_error("Packet type with index ", data[0], " unhandled!")
 

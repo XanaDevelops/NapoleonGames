@@ -16,6 +16,12 @@ static func create(player : UserGame, dpos: Vector2i, card_res: CardRes, n: int)
 	
 	return turn
 
+
+static func create_from_data(data: PackedByteArray) -> TurnDeploy:
+	var turn := TurnDeploy.new()
+	turn.decode(data)
+	return turn
+
 func encode() -> PackedByteArray:
 	var data := super.encode()
 	var offset := BASE_ENCODE_SIZE

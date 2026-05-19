@@ -7,3 +7,9 @@ static func create(user: UserGame) -> TurnPass:
 	turn.player_uid = user.get_user_res().uid
 	turn.unit_uid = 0
 	return turn
+
+
+static func create_from_data(data: PackedByteArray) -> TurnPass:
+	var turn := TurnPass.new()
+	turn.decode(data)
+	return turn

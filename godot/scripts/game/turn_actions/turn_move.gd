@@ -15,6 +15,12 @@ static func create(unit: UnitGame, start: Vector2i, end: Vector2i) -> TurnMove:
 	turn.end_pos = end
 	return turn
 
+
+static func create_from_data(data: PackedByteArray) -> TurnMove:
+	var turn := TurnMove.new()
+	turn.decode(data)
+	return turn
+
 func encode() -> PackedByteArray:
 	var data := super.encode()
 	var offset := BASE_ENCODE_SIZE

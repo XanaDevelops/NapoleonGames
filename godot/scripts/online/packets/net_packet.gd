@@ -4,6 +4,8 @@ extends Resource
 # Don't make values above 255, since we send "packet_type" as a single byte
 enum PACKET_TYPE {
 	ID_ASSIGNMENT = 0,
+	REQUEST_ONLINE = 0x05,
+	SET_GAME_LOBBY = 0x06,
 	TURN_ACTION = 0x10,
 	PING = 255,
 }

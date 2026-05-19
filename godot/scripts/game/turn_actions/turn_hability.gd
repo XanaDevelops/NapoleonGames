@@ -21,6 +21,12 @@ static func create(unit: UnitGame, pos: Vector2i, hab: HabilityRes, dest: Array[
 	
 	return turn
 
+
+static func create_from_data(data: PackedByteArray) -> TurnHability:
+	var turn := TurnHability.new()
+	turn.decode(data)
+	return turn
+
 func encode() -> PackedByteArray:
 	var data := super.encode()
 	var offset := BASE_ENCODE_SIZE
