@@ -225,8 +225,28 @@ func place_unit(unit: UnitGame, pos: Vector2i) -> bool:
 		tm.tick_turn.connect(unit.advance_turn)
 	
 	var map_visualizer= GameManager.get_turn_manager().map_visualizer
-	if map_visualizer:
-		if not unit.action_performed.is_connected(map_visualizer._refresh_unit_states):
-			unit.action_performed.connect(map_visualizer._refresh_unit_states)
 
 	return true
+
+	# Implementa BFS para encontrar el camino más corto
+func _find_path(src: Vector2i, target: Vector2i) -> Array[Vector2i]:
+	var came_from: Dictionary = {src: null}
+	var queue: Array[Vector2i] = [src]
+	
+	while not queue.is_empty():
+		var current = queue.pop_front()
+		if current == target:
+			break
+		for neighbor in get_neightbours(current):
+			if not came_from.has(neighbor) and not get_tile_at(neighbor).has_unit():
+				came_from[neighbor] = current
+				queue.append(neighbor)
+	
+	# Reconstruir camino
+	var path: Array[Vector2i] = []
+	var current = target
+	while current != null:
+		path.push_front(current)
+		current = came_from.get(current, null)
+	return path
+	

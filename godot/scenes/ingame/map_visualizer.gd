@@ -61,7 +61,7 @@ func _setup_highlight_tiles() -> void:
 	tile_map_layer_owner_p1.self_modulate = COLOR_OWNER_P1
 	tile_map_layer_owner_p2.self_modulate = COLOR_OWNER_P2
 	#tile_map_layer_exhausted.self_modulate = Color(0.4, 0.4, 0.4, 0.6) 
-	tile_map_layer_exhausted.self_modulate = Color.BLACK
+	tile_map_layer_exhausted.self_modulate =  Color.BLACK
 
 func _ready() -> void:
 	tileset = _setup_tileset()
@@ -73,7 +73,7 @@ func _ready() -> void:
 	_setup_highlight_tiles()
 	if GameManager.turn_manager!=null:
 		GameManager.turn_manager.tick_turn.connect(_clear_selection)
-		GameManager.turn_manager.tick_turn.connect(_refresh_unit_states)
+		#GameManager.turn_manager.tick_turn.connect(_refresh_unit_states)
 
 func _setup_tileset() -> TileSet:
 	var tileset = TileSet.new()
@@ -133,19 +133,52 @@ func _scale_texture(texture: Texture2D) -> ImageTexture:
 	return ImageTexture.create_from_image(img)
 
 
+
 func plot_unit_moved(src: Vector2i, target: Vector2i) -> void:
 	var source_id = tile_map_layer_units.get_cell_source_id(src)
-	tile_map_layer_units.set_cell(target, source_id, Vector2i.ZERO)
+	var path = map._find_path(src, target)
+	
+	# Reutilizar el tile_map_layer_deplyoment 
+	tile_map_layer_deployment.clear()
+	tile_map_layer_deployment.self_modulate = Color(0.2, 0.5, 1.0, 0.6)
+	for cell in path:
+		tile_map_layer_deployment.set_cell(cell, _highlight_id, Vector2i.ZERO)
+	
+	await get_tree().create_timer(0.3).timeout
+	
 	tile_map_layer_units.erase_cell(src)
+	
+	var tex = texture_to_source_id[source_id]
+	var sprite = Sprite2D.new()
+	sprite.texture = tex
+	add_child(sprite)
+	sprite.position = tile_map_layer_texture.map_to_local(src)
+	
+	if _unit_overlays.has(src):
+		_unit_overlays[src].visible = false
+	
+	for i in range(1, path.size()):
+		var cell_pos = tile_map_layer_texture.map_to_local(path[i])
+		var tween = create_tween()
+		tween.tween_property(sprite, "position", cell_pos, 0.10)\
+			 .set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		await tween.finished
+		tile_map_layer_deployment.erase_cell(path[i - 1])
+	
+	sprite.queue_free()
+	tile_map_layer_deployment.clear()
+	tile_map_layer_units.set_cell(target, source_id, Vector2i.ZERO)
 	_move_unit_overlay(src, target)
+	_unit_overlays[target].visible = true
 	_move_owner_highlight(src, target)
-		
+	
 func refresh_unit_died(coords: Vector2i):
 	tile_map_layer_units.erase_cell(coords)
 	_remove_unit_overlay(coords)
+	tile_map_layer_owner_p1.erase_cell(coords)
+	tile_map_layer_owner_p2.erase_cell(coords)
 
 func highlight_selected_cell(pos: Vector2i) -> void:
-	print("selected_cell; ", pos)
 	tile_map_layer_selection.clear()
 	clear_highlights()
 	tile_map_layer_selection.self_modulate = COLOR_SELECTED
@@ -261,6 +294,7 @@ func _update_hover(coords: Vector2i) -> void:
 	tile_map_layer_hover.self_modulate = COLOR_HOVER
 	if map._is_in_map_bounds(coords):
 		tile_map_layer_hover.set_cell(coords, _highlight_id, Vector2i.ZERO)
+		
 func _handle_click(coords: Vector2i) -> void:
 	if not map._is_in_map_bounds(coords):
 		_clear_selection()
@@ -375,16 +409,19 @@ func center_camera(viewport_size: Vector2) -> void:
 	var zoom_f = min(viewport_size.x / map_size.x, viewport_size.y / map_size.y) * 0.9
 	camera.zoom = Vector2(zoom_f, zoom_f)
 
-
 func _refresh_unit_states() -> void:
+	tile_map_layer_exhausted.clear()
+	var tm = GameManager.get_turn_manager()
+	if tm == null:
+		return
+	var current_user = tm.get_current_user()
 	
-	for coords in _unit_overlays: #tiles con unidades activas
+	for coords in _unit_overlays:
 		var tile = map.get_tile_at(coords)
 		if tile.has_unit():
 			var unit = tile.get_unit()
-			var exhausted= not unit.has_pending_actions()
-			print("active cell: ", coords)
-			print("is_exhausted: ", exhausted)
-			tile_map_layer_exhausted.set_cell(coords, -1, Vector2i.ZERO)
-			_unit_overlays[coords].set_exhausted(exhausted)
-			
+			# Solo afectar unidades del jugador actual
+			if unit._owner == current_user:
+				var exhausted = not unit.has_pending_actions()
+				if exhausted:
+					tile_map_layer_exhausted.set_cell(coords, _highlight_id, Vector2i.ZERO)

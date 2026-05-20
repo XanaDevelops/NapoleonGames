@@ -28,8 +28,7 @@ var _observed_unit: UnitGame = null
 func _ready() -> void:
 	await get_tree().process_frame
 
-		
-	
+
 
 func paint(tile: TileGame) -> void:
 	
@@ -237,6 +236,7 @@ func observe(unit: UnitGame) -> void:
 	_observed_unit = unit
 	current_mana.init(unit._cardRes.mana)
 	current_mana.update(unit.mana)
+	print("current mana ", unit.mana)
 
 	unit.mana_changed.connect(_on_mana_changed)
 	

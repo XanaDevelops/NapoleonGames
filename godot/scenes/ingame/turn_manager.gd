@@ -17,12 +17,12 @@ var turn_number: int = 0
 var is_deployment_phase: bool = false
 var game_config: GameConfig
 var map_game: MapGame
-var _phase_transition:PhaseTransition
 func advance_turn() -> void:
 	turn_number += 1
 	var user : UserGame = turn_order[turn_number % turn_order.size()]
 	print("Turno de ", user.get_user_res().username)
 	tick_turn.emit()
+	map_visualizer._refresh_unit_states()
 
 	
 	
@@ -124,13 +124,11 @@ func _ready() -> void:
 
 	for usuario in turn_order:
 		usuario.living_units = 0
-	_phase_transition= PhaseTransition.new()
-	_phase_transition.setup(self)
+
 	players_panel.setup(self)
 
 	start_deployment_phase()
 	
-	#end_deployment_phase()
 
 func _clone_army(army: ArmyRes) -> Array[CardArmyGroup]:
 	var copy: Array[CardArmyGroup] = []
@@ -148,9 +146,10 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
 		
 	if unit._owner == get_current_user():
 	
-		map_logic.move_unit(start, end)
 		unit.has_moved_this_turn = true
-		map_visualizer.plot_unit_moved(start, end)
+		await map_visualizer.plot_unit_moved(start, end)
+		map_logic.move_unit(start, end)
+		map_visualizer._refresh_unit_states()
 		
 		var action := TurnMove.create(unit, start, end)
 		register_turn(action)
@@ -186,22 +185,19 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 	if not res:
 		print("No se cumple las condiciones para usar esta habilidad!")
 		return
-		
+	map_visualizer._refresh_unit_states()	
 	var action := TurnHability.create(unit_source, tile, hability, objectives)
 	register_turn(action)
 		
 
 func start_deployment_phase() -> void:
 	is_deployment_phase = true
-	_phase_transition.show_deployment_phase()
 	players_panel.set_phase_deployment()
 	cards_panel.set_deployment_phase(true)
 	_refresh_ui_for_current_player()
 	_highlight_current_deployment_zone()
 
 func end_deployment_phase() -> void:
-	#esperar hasta que finalize la animación 
-	await _phase_transition.show_battle_phase(turn_order[0], turn_order[1])
 	is_deployment_phase = false
 	set_app_state(GameManager.APP_STATE.IN_GAME)
 	players_panel.set_phase_battle()
@@ -288,6 +284,7 @@ func _highlight_current_deployment_zone() -> void:
 #esta función se ejecuta caundo una unidad emite que ha muerto
 func _on_unit_died(unit: UnitGame, pos: Vector2i) -> void:
 	map_visualizer.remove_unit(pos, map_game.get_tile_at(pos))
+	map_visualizer.refresh_unit_died(pos)
 
 	if tick_turn.is_connected(unit.advance_turn):
 			tick_turn.disconnect(unit.advance_turn)
