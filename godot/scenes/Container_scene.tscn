@@ -1,20 +1,16 @@
 [gd_scene format=3 uid="uid://2xspgv3scuc1"]
 
-[ext_resource type="Theme" uid="uid://y2r1i1e0337n" path="res://assets/themes/ui/unit_info_theme.tres" id="1_nmn1m"]
-[ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="1_yrn0l"]
+[ext_resource type="Theme" uid="uid://y2r1i1e0337n" path="res://assets/themes/ui/unit_info_theme.tres" id="1_fcqoe"]
+[ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="2_fcqoe"]
 
-[node name="Habilities" type="PanelContainer" unique_id=399533923]
+[node name="Container_scene" type="PanelContainer" unique_id=399533923]
 custom_minimum_size = Vector2(250, 130)
 offset_right = 259.0
 offset_bottom = 143.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("1_nmn1m")
-
-[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=472039789]
-layout_mode = 2
-texture = ExtResource("1_yrn0l")
-region_rect = Rect2(19, 18, 116, 75)
+theme = ExtResource("1_fcqoe")
+theme_override_styles/panel = ExtResource("2_fcqoe")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=810477248]
 layout_mode = 2
@@ -28,7 +24,6 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1490463472]
 layout_mode = 2
-text = "⟡ Habilidades"
 horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer" unique_id=1396703191]

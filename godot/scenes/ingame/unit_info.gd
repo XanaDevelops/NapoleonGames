@@ -1,4 +1,4 @@
-extends Control
+extends PanelContainer
 
 
 
@@ -10,11 +10,10 @@ extends Control
 @export var dodge_label: Label 
 @export var habilities_grid: GridContainer 
 @export var current_mana: ProgressBar 
-#@export var descriptionButton:Button
+@export var descriptionButton:Button
 
 @export var unit_info: PanelContainer
-#var _desc_handler: DescriptionButtonHandler
-var _drag: DraggablePanel
+var _desc_handler: DescriptionButtonHandler
 
 
 @export var resistances_container: PanelContainer 
@@ -23,31 +22,32 @@ var _drag: DraggablePanel
 @export var alter_states_grid: GridContainer 
 
 const HEADERS_RESISTANCES= ["Tipo de ataque", "Resistencia"]
-const ALTER_HEADERS = ["Estado", "Turnos Faltantes", "Efecto"]
 signal hability_use_requested(hab: HabilityRes)
 # UnitInfo
 var _observed_unit: UnitGame = null
 func _ready() -> void:
 	await get_tree().process_frame
-	_drag= DraggablePanel.new()
-	_drag.setup(self)
+
 		
 	
 
 func paint(tile: TileGame) -> void:
 	
-	self.unit_label.text =tile.get_tile_name() 
+	self.unit_label.text =tile.get_unit_name()
 	self.owner_label.text = str(tile.get_owner_name())
 	self.unit_texture.texture= tile.get_unit_portrait()
 	self.speed_label.text = str(tile.get_speed())
 	self.dodge_label.text = str(tile.get_dodge())
-
-	
-
+	_desc_handler = DescriptionButtonHandler.new()
+	_desc_handler.setup(
+		descriptionButton,
+		unit_info,
+		func(): return tile.get_unit_desc()
+	)
 
 	paint_habilities(tile.get_habilities(),tile.get_availableHabilities())
+	paint_AlterStates(tile.get_AlterStates())
 	#paint_resistances(tile.get_resistances())
-	#paint_AlterStates(tile.get_AlterStates())
 
 func paint_habilities(habilities: Array[HabilityRes], available_habilities: Dictionary[HabilityRes, int]) -> void:
 	if habilities== null:
@@ -60,21 +60,39 @@ func paint_habilities(habilities: Array[HabilityRes], available_habilities: Dict
 
 
 func _on_hability_info_requested(hab: HabilityRes) -> void:
-	var existing = get_node_or_null("HabilityPanel")
+	var root = get_tree().root
+	var existing = root.get_node_or_null("HabilityPanel")
+	
+	# Si está abierto cerrarlo y salir
 	if existing:
 		existing.queue_free()
+		return
 	
 	var hability_scene = preload("res://scenes/hability.tscn").instantiate()
 	hability_scene.name = "HabilityPanel"
-	add_child(hability_scene)
+	root.add_child(hability_scene)
 	hability_scene.paint(hab)
 	
-	# Posicionar al lado derecho del UnitInfo
 	await get_tree().process_frame
-	var grid_global = habilities_grid.global_position
-	var grid_width = habilities_grid.size.x
-	hability_scene.global_position = Vector2(grid_global.x + grid_width, grid_global.y)
+	await get_tree().process_frame
 	
+	var anchor_global = habilities_grid.global_position
+	var anchor_size = habilities_grid.size
+	var scene_size = hability_scene.size
+	var vp_size = get_viewport_rect().size
+	
+	# Posición base: a la derecha del grid de habilidades
+	var pos = Vector2(anchor_global.x + anchor_size.x + 5, anchor_global.y)
+	
+	# Ajustar si se sale por la derecha
+	if pos.x + scene_size.x > vp_size.x:
+		pos.x = anchor_global.x - scene_size.x - 5
+	
+	# Ajustar si se sale por abajo
+	if pos.y + scene_size.y > vp_size.y:
+		pos.y = vp_size.y - scene_size.y
+	
+	hability_scene.global_position = pos
 func _create_cell(text: String, color: Color, is_header: bool = false) -> PanelContainer:
 	var panel = PanelContainer.new()
 	
@@ -149,26 +167,6 @@ func paint_resistances(resistances: Dictionary[AttackType, int]) -> void:
 
 
 
-func paint_AlterStates(states: Dictionary[AlterStateRes, int]) -> void:
-	if states==null:
-		return 
-	for child in alter_states_grid.get_children():
-		child.queue_free()
-	
-
-	alter_states_grid.columns = ALTER_HEADERS.size()
-	
-
-	for header in ALTER_HEADERS:
-		alter_states_grid.add_child(_create_cell(header, Color.YELLOW, true))
-	
-	for state in states.keys():
-		var turns_remaining: int = states[state]
-		alter_states_grid.add_child(_create_cell(state.stat.name, Color.WHITE))
-		alter_states_grid.add_child(_create_cell("%d" % turns_remaining, Color.WHITE))
-		alter_states_grid.add_child(_create_cell(_get_effect_text(state), Color.WHITE))
-
-
 func _get_effect_text(state: AlterStateRes) -> String:
 	if state.stat == null:
 		return "-"
@@ -179,12 +177,55 @@ func _get_effect_text(state: AlterStateRes) -> String:
 	if state.stat.isPercent:
 		value_text = "%s%.0f%%" % [sign, state.value * 100]
 	else:
-		value_text = "%s%.0f " % [sign, state.value]
+		value_text = "%s%.0f" % [sign, state.value]
 	
+	var prob_text = ""
 	if state.hitP < 1.0:
-		return "%s (%.0f%%)" % [value_text, state.hitP * 100]
-	else:
-		return value_text
+		prob_text = " (%.0f%%)" % (state.hitP * 100)
+	
+	return value_text + prob_text
+
+func _get_stat_icon(stat_name: StringName) -> String:
+	match stat_name:
+		StatData.DEFENSE:   return "🛡"
+		StatData.SPEED:     return "⚡"
+		StatData.HEALTH:    return "❤"
+		StatData.ATTACK:    return "⚔"
+		StatData.MANA:      return "💧"
+		_:                  return "◆"
+
+func paint_AlterStates(states: Dictionary[AlterStateRes, int]) -> void:
+	if states == null:
+		return
+	for child in alter_states_grid.get_children():
+		child.queue_free()
+	
+	if states.is_empty():
+		alter_states_grid.add_child(_create_cell("Sin estados activos", Color.GRAY))
+		return
+	
+	alter_states_grid.columns = 3
+	
+	# Headers
+	for header in ["Efecto", "Valor", "Turnos"]:
+		alter_states_grid.add_child(_create_cell(header, Color.YELLOW, true))
+	
+	for state in states.keys():
+		var turns_remaining: int = states[state]
+		var icon = _get_stat_icon(state.stat.name if state.stat else &"")
+		
+		alter_states_grid.add_child(_create_cell(
+			"%s %s" % [icon, state.stat.name if state.stat else "?"],
+			Color.WHITE if state.value >= 0 else Color.TOMATO
+		))
+		alter_states_grid.add_child(_create_cell(
+			_get_effect_text(state),
+			Color.LIGHT_GREEN if state.value >= 0 else Color.TOMATO
+		))
+		alter_states_grid.add_child(_create_cell(
+			"%dt" % turns_remaining,
+			Color.YELLOW if turns_remaining <= 1 else Color.WHITE
+		))
 
 
 

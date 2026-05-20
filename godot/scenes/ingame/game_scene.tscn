@@ -13,6 +13,7 @@ deployment_box = NodePath("IngameMap/CardsPanel/Deplyoment/MarginContainer/VBoxC
 offset_bottom = 0.0
 
 [node name="Deplyoment" parent="IngameMap/CardsPanel" parent_id_path=PackedInt32Array(594307947, 1431020749) index="1" unique_id=120072488]
+visible = true
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -36,6 +37,6 @@ offset_right = 0.0
 [editable path="IngameMap"]
 [editable path="IngameMap/CardsPanel/HBoxContainer/TileInfo"]
 [editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/UnitInfo"]
-[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Mana"]
-[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Habilities"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer/Mana"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer/Habilities"]
 [editable path="IngameMap/CardsPanel/Deplyoment"]

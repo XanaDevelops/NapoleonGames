@@ -224,4 +224,9 @@ func place_unit(unit: UnitGame, pos: Vector2i) -> bool:
 	if tm != null and not tm.tick_turn.is_connected(unit.advance_turn):
 		tm.tick_turn.connect(unit.advance_turn)
 	
+	var map_visualizer= GameManager.get_turn_manager().map_visualizer
+	if map_visualizer:
+		if not unit.action_performed.is_connected(map_visualizer._refresh_unit_states):
+			unit.action_performed.connect(map_visualizer._refresh_unit_states)
+
 	return true

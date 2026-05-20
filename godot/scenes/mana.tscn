@@ -1,13 +1,10 @@
 [gd_scene format=3 uid="uid://dau808hhekv0d"]
 
-[ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="2_x74g8"]
+[ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="1_6qcxo"]
 [ext_resource type="PackedScene" uid="uid://ygwgcu7ruh4u" path="res://scenes/health_bar.tscn" id="4_11bai"]
 
 [sub_resource type="Theme" id="Theme_6qcxo"]
 default_font_size = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6qcxo"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trt23"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -22,12 +19,7 @@ offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource("Theme_6qcxo")
-theme_override_styles/panel = SubResource("StyleBoxFlat_6qcxo")
-
-[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=95246604]
-layout_mode = 2
-texture = ExtResource("2_x74g8")
-region_rect = Rect2(19, 560, 217, 188)
+theme_override_styles/panel = ExtResource("1_6qcxo")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1520805401]
 layout_mode = 2

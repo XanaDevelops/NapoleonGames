@@ -8,7 +8,7 @@
 [ext_resource type="Theme" uid="uid://dmnaanofnyo81" path="res://assets/themes/ui/carta_destino_selected.tres" id="5_xou0u"]
 
 [node name="ButtonCard" type="Button" unique_id=2067365788]
-custom_minimum_size = Vector2(137, 177)
+custom_minimum_size = Vector2(120, 150)
 offset_right = 137.0
 offset_bottom = 177.0
 size_flags_horizontal = 4

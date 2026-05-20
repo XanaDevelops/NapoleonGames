@@ -47,9 +47,17 @@ var max_mana: int :
 signal health_changed(current: int)
 signal mana_changed(current: int)
 signal died(unit: UnitGame, pos: Vector2i)
-
-var has_moved_this_turn : bool = false
-var has_used_hability_this_turn := false
+signal action_performed
+var has_moved_this_turn : bool = false:
+	set(val):
+		has_moved_this_turn=val
+		if val:
+			action_performed.emit()
+var has_used_hability_this_turn := false:
+	set(val):
+		has_moved_this_turn= val
+		if val:
+			action_performed.emit()
 
 func _init(cardRes: CardRes, owner: UserGame) -> void:
 	self._cardRes = cardRes
@@ -268,7 +276,6 @@ func get_available_habilities() -> Array[HabilityRes]:
 			ret.append(key)
 
 	return ret
-
 
 ## Devuelve todas las habilidades de la carta referencia
 func get_all_habilities() -> Array[HabilityRes]:

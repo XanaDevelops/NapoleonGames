@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://c0k4getxqisq6"]
 
-[ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="2_ccb5p"]
+[ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="1_ccb5p"]
+[ext_resource type="Texture2D" uid="uid://dh1y3p0beadlo" path="res://assets/tiles/EverHex-Forest Lite/Forest/1.png" id="2_64khd"]
 [ext_resource type="Texture2D" uid="uid://cqr2aauodvpl2" path="res://assets/images/information.png" id="3_64khd"]
 [ext_resource type="Texture2D" uid="uid://cchoaf4y1ugwt" path="res://assets/images/location.png" id="4_j1sq1"]
 [ext_resource type="Texture2D" uid="uid://30a5jvvikwic" path="res://assets/images/altitude.png" id="5_a8a6l"]
 [ext_resource type="Texture2D" uid="uid://hqesp8umos15" path="res://assets/images/mana.png" id="6_0l31k"]
-[ext_resource type="Shader" path="res://scenes/tile_info.gdshader" id="7_j1sq1"]
 
 [sub_resource type="Theme" id="Theme_ccb5p"]
 default_font_size = 18
@@ -21,7 +21,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 shadow_color = Color(1, 1, 1, 0.6)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64khd"]
-bg_color = Color(0.54509807, 0, 0, 1)
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -33,12 +33,9 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ccb5p"]
-shader = ExtResource("7_j1sq1")
-shader_parameter/fill_color = Color(0.114, 0.165, 0.216, 1)
-shader_parameter/border_width = 0.03
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l31k"]
-bg_color = Color(0.54509807, 0, 0, 1)
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -48,14 +45,9 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_64khd"]
-shader = ExtResource("7_j1sq1")
-shader_parameter/fill_color = Color(0.114, 0.165, 0.216, 1)
-shader_parameter/border_width = 0.03
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0wvp"]
-bg_color = Color(0.54509807, 0, 0, 1)
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -65,11 +57,6 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uw6go"]
-shader = ExtResource("7_j1sq1")
-shader_parameter/fill_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
-shader_parameter/border_width = 0.03
 
 [node name="TileInfo" type="PanelContainer" unique_id=253659827]
 custom_minimum_size = Vector2(350, 100)
@@ -78,11 +65,7 @@ offset_bottom = 213.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource("Theme_ccb5p")
-
-[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=701756463]
-layout_mode = 2
-texture = ExtResource("2_ccb5p")
-region_rect = Rect2(19, 560, 217, 188)
+theme_override_styles/panel = ExtResource("1_ccb5p")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1965329182]
 layout_mode = 2
@@ -104,11 +87,12 @@ layout_mode = 2
 theme_override_constants/separation = 5
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer" unique_id=1149690751]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(90, 90)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-expand_mode = 3
+texture = ExtResource("2_64khd")
+expand_mode = 5
 stretch_mode = 6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer" unique_id=139820394]
@@ -190,7 +174,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_0l31k")
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer" unique_id=1574008606]
-material = SubResource("ShaderMaterial_64khd")
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 4
@@ -218,7 +201,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_y0wvp")
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer" unique_id=443016597]
-material = SubResource("ShaderMaterial_uw6go")
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 4

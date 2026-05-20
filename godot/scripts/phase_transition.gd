@@ -17,7 +17,7 @@ func show_deployment_phase() -> void:
 	if existing:
 		existing.queue_free()
 
-	var scene = preload("res://scenes/deplyoment_animation.tscn").instantiate()
+	var scene = preload("res://scenes/deployment_animation.tscn").instantiate()
 	scene.name = "PhaseBanner"
 	scene.modulate.a = 0.0
 	_root.add_child(scene)
@@ -37,7 +37,7 @@ func show_deployment_phase() -> void:
 	var tween = scene.create_tween()
 	tween.tween_property(scene, "modulate:a", 1.0, FADE_IN_DURATION)\
 		 .set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tween.tween_interval(HOLD_DURATION)
+	tween.tween_interval(HOLD_DURATION/2)
 	tween.tween_property(scene, "modulate:a", 0.0, FADE_OUT_DURATION)\
 		 .set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	tween.tween_callback(scene.queue_free)

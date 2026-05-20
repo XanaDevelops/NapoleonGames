@@ -38,9 +38,5 @@ func cleanup() -> void:
 		_unit.health_changed.disconnect(_on_health_changed)
 	queue_free()
 
-# En unit_overlay.gd
 func set_exhausted(exhausted: bool) -> void:
-	if exhausted:
-		modulate = Color(0.4, 0.4, 0.4, 1.0)
-	else:
-		modulate = Color.WHITE
+	modulate = Color(0.081, 0.081, 0.081, 1.0) if exhausted else Color.WHITE

@@ -1,6 +1,5 @@
 extends PanelContainer
 
-@export var nameLabel: Label
 @export var RadiusLabel:Label
 @export var ObjectiveLabel:Label
 @export var ManaLabel:Label
@@ -14,7 +13,7 @@ func _ready() -> void:
 
 
 func paint(hab:HabilityRes) -> void:
-	nameLabel.text = hab.name
+
 	RadiusLabel.text= str(hab.radius)
 	ObjectiveLabel.text = str(hab.objective)
 	ManaLabel.text = str(hab.manaCost)

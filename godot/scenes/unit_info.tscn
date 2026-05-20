@@ -1,14 +1,11 @@
 [gd_scene format=3 uid="uid://cuor3ubmahmea"]
 
-[ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="1_n3df2"]
 [ext_resource type="Theme" uid="uid://y2r1i1e0337n" path="res://assets/themes/ui/unit_info_theme.tres" id="1_nayp3"]
+[ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="2_1l5eg"]
 [ext_resource type="Texture2D" uid="uid://cqr2aauodvpl2" path="res://assets/images/information.png" id="2_nayp3"]
 [ext_resource type="Texture2D" uid="uid://cqrofwn6gbo0m" path="res://assets/images/speed.png" id="3_1l5eg"]
 [ext_resource type="Material" uid="uid://b688udwg5jd6i" path="res://assets/themes/ui/unit_shader.tres" id="4_nayp3"]
 [ext_resource type="Texture2D" uid="uid://4ll3e20q0r3b" path="res://assets/images/dodge.png" id="5_igeos"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wajhi"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ocp8"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -16,12 +13,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [node name="UnitInfo" type="PanelContainer" unique_id=722150641]
 custom_minimum_size = Vector2(350, 200)
 theme = ExtResource("1_nayp3")
-theme_override_styles/panel = SubResource("StyleBoxFlat_wajhi")
-
-[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=2027589572]
-layout_mode = 2
-texture = ExtResource("1_n3df2")
-region_rect = Rect2(19, 417, 190, 81)
+theme_override_styles/panel = ExtResource("2_1l5eg")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1768652552]
 layout_mode = 2

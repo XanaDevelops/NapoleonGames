@@ -70,7 +70,7 @@ func _ready() -> void:
 	_setup_highlight_tiles()
 	if GameManager.turn_manager!=null:
 		GameManager.turn_manager.tick_turn.connect(_clear_selection)
-		#GameManager.turn_manager.tick_turn.connect(_refresh_unit_states)
+		GameManager.turn_manager.tick_turn.connect(_refresh_unit_states)
 
 func _setup_tileset() -> TileSet:
 	var tileset = TileSet.new()
@@ -136,7 +136,6 @@ func plot_unit_moved(src: Vector2i, target: Vector2i) -> void:
 	tile_map_layer_units.erase_cell(src)
 	_move_unit_overlay(src, target)
 	_move_owner_highlight(src, target)
-	#_refresh_unit_states()
 		
 func refresh_unit_died(coords: Vector2i):
 	tile_map_layer_units.erase_cell(coords)
@@ -369,10 +368,11 @@ func center_camera(viewport_size: Vector2) -> void:
 	camera.zoom = Vector2(zoom_f, zoom_f)
 
 
-#func _refresh_unit_states() -> void:
-	#for coords in _unit_overlays: #tiles con unidades activas
-		#var tile = map.get_tile_at(coords)
-		#if tile.has_unit():
-			#var unit = tile.get_unit()
-			#var exhausted = not unit.has_pending_actions()
+func _refresh_unit_states() -> void:
+	for coords in _unit_overlays: #tiles con unidades activas
+		var tile = map.get_tile_at(coords)
+		if tile.has_unit():
+			var unit = tile.get_unit()
+			var exhausted= not unit.has_pending_actions()
 			#_unit_overlays[coords].set_exhausted(exhausted)
+			

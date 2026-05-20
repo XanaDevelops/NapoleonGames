@@ -183,7 +183,6 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 
 	
 	var res := unit_source.use_hability(hability, _dest)
-	#map_visualizer._refresh_unit_states()
 	if not res:
 		print("No se cumple las condiciones para usar esta habilidad!")
 		return
@@ -202,7 +201,6 @@ func start_deployment_phase() -> void:
 
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
-	await get_tree().create_timer(1).timeout
 	_phase_transition.show_battle_phase(turn_order[0], turn_order[1])
 	set_app_state(GameManager.APP_STATE.IN_GAME)
 	players_panel.set_phase_battle()
