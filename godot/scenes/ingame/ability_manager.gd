@@ -24,8 +24,8 @@ func request(hab: HabilityRes, coords: Vector2i, tile: TileGame) -> bool:
 	if _pending_hab != null:
 		cancel()
 
-var tm := GameManager.get_turn_manager()
-	var map := tm.get_map()
+	var tm := GameManager.get_turn_manager()
+	var map:= tm.get_map()
 	
 	if map == null:
 		return false
@@ -61,7 +61,7 @@ func try_select_target(coords: Vector2i) -> bool:
 	if _phase != Phase.SELECTING_TARGET:
 		return false
 
-var tm := GameManager.get_turn_manager()
+	var tm := GameManager.get_turn_manager()
 	var map := tm.get_map()
 	if map == null:
 		cancel()
