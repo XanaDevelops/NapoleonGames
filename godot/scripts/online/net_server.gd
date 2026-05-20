@@ -12,6 +12,10 @@ class _InnerGameInfo:
 		
 var peer_ids: Array[int]
 
+##Control de randf
+var randf_values: Array[float] = []
+var randf_indexes: Dictionary[int, int] = {-1: 0}
+
 ## Juegos activos
 var current_games: Dictionary[int, _InnerGameInfo] = {}
 
@@ -22,6 +26,7 @@ func _ready() -> void:
 	Online.on_peer_connected.connect(on_peer_connected)
 	Online.on_peer_disconnected.connect(on_peer_disconnected)
 	Online.on_server_packet.connect(on_server_packet)
+	
 
 
 func on_peer_connected(peer_id: int) -> void:
@@ -29,6 +34,14 @@ func on_peer_connected(peer_id: int) -> void:
 
 	IDAssignment.create(peer_id).send(Online.client_peers[peer_id])
 	print("[Server] enviado IDAssignment ", peer_id)
+	
+	## Tema random, clientes nuevos continuan por donde estan el resto
+	if not peer_id in randf_indexes:
+		var max_val : int = randf_indexes.keys().reduce(func(k: int, ret:int): 
+			return maxi(k, ret), 0)
+		randf_indexes.set(peer_id, max_val)
+		
+	print("[SERVER] ranf_indx: ", randf_indexes)
 
 func on_peer_disconnected(peer_id: int) -> void:
 	peer_ids.erase(peer_id)
@@ -44,6 +57,8 @@ func on_server_packet(peer_id: int, data: PackedByteArray) -> void:
 			manage_game_request(peer_id, OnlineMatchRequest.create_from_data(data))
 		NetPacket.PACKET_TYPE.TURN_ACTION:
 			manage_turn(peer_id, TurnAction.create_from_data(data))
+		NetPacket.PACKET_TYPE.RANDF:
+			manage_randf(peer_id, NetRandF.create_from_data(data))
 		_:
 			push_error("Packet type with index ", data[0], " unhandled!")
 
@@ -52,6 +67,23 @@ func manage_ping(ping : PingPacket) -> void:
 	ping.message = "From server: " + ping.message
 	_broadcast(ping)
 	
+	
+func manage_randf(pid: int, packet: NetRandF) -> float:
+		
+	var i := randf_indexes[pid]
+	if i >= randf_values.size():
+		randf_values.append(randf())
+	
+	var rand_val := randf_values[i]
+	packet.randf_val = rand_val
+	randf_indexes[pid] += 1
+	print("[SERVER] for: ", pid, " i: ", i, "randf: ", randf_values[i])
+	
+	# no enviarse al server!
+	if pid != -1:
+		packet.send(Online.client_peers[pid])
+	
+	return rand_val
 	
 func manage_game_request(pid: int, request: OnlineMatchRequest) -> void:
 	# Por ahora esto va bien

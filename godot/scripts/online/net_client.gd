@@ -2,6 +2,7 @@ extends Node
 
 signal handle_local_id_assignment(local_id: int)
 signal server_turn_response(accepted: bool)
+signal server_randf_response(val: float)
 
 var id: int = -1
 
@@ -18,11 +19,12 @@ func on_client_packet(data: PackedByteArray) -> void:
 			manage_ping(PingPacket.create_from_data(data))
 		NetPacket.PACKET_TYPE.SET_GAME_LOBBY:
 			enter_online_game(GameLobby.create_from_data(data))
-			
 		NetPacket.PACKET_TYPE.TURN_ACTION:
 			GameManager.get_turn_manager().replay_turn(TurnAction.create_from_data(data))
 		NetPacket.PACKET_TYPE.TURN_RESULT:
 			manage_turn_result(TurnNetResult.create_from_data(data))
+		NetPacket.PACKET_TYPE.RANDF:
+			server_randf_response.emit(NetRandF.create_from_data(data).randf_val)
 		_:
 			push_error("Packet type with index ", data[0], " unhandled!")
 
@@ -45,6 +47,19 @@ func request_online_game() -> void:
 	packet.send(Online.server_peer)
 	
 	print("requested ", NetClient.id)
+	
+	
+func request_randf_server() -> float:
+	if GameManager.is_server:
+		return NetServer.manage_randf(-1, NetRandF.create(0))
+	if Online.server_peer:
+		var packet:= NetRandF.create(0)
+		packet.send(Online.server_peer)
+		var res :float = await server_randf_response
+		print("[" + str(NetClient.id) + "]", "randf server: ", res)
+		return res
+	else:
+		return randf()
 	
 	
 	
