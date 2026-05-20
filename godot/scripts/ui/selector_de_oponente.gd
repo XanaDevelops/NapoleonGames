@@ -43,8 +43,8 @@ func cargar_lista_de_oponentes() -> void:
 	for correo_electronico in UserManager.usuarios:
 		var jugador_evaluado: UserRes = UserManager.usuarios[correo_electronico]
 		
-		if jugador_evaluado == UserManager.usuario_actual:
-			continue 
+		if UserManager.usuario_actual != null and jugador_evaluado.email == UserManager.usuario_actual.email:
+			continue
 			
 		var boton_jugador = Button.new()
 		var nombre := jugador_evaluado.name
@@ -128,7 +128,7 @@ func cargar_mazos_de_oponente(oponente: UserRes) -> void:
 		var etiqueta := Label.new()
 		etiqueta.text = "Este oponente no tiene ejércitos disponibles"
 		contenedor_cartas.add_child(etiqueta)
-	return
+		return
 		
 	for mazo in mazos:
 		var boton_pestana = Button.new()
