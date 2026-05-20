@@ -11,9 +11,10 @@ static func _static_init() -> void:
 		return TurnDeploy.create_from_data(data)
 	)
 
-static func create(player : UserGame, dpos: Vector2i, card_res: CardRes, n: int) -> TurnDeploy:
+static func create(player : UserGame, dpos: Vector2i, card_res: CardRes, n: int, game_pid: int) -> TurnDeploy:
 	var turn := TurnDeploy.new()
 	turn.action = ACTION.DEPLOYMENT
+	turn.game_pid = game_pid
 	turn.player_uid = player.get_user_res().uid
 	turn.unit_uid = card_res.uid
 	turn.deploy_pos = dpos

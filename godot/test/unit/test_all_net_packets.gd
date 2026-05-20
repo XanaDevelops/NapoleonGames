@@ -54,7 +54,7 @@ func test_all_net_packets_round_trip() -> void:
 	card_res.mana = 5
 	card_res.habilities = []
 	var unit := UnitGame.new(card_res, user_game)
-	var turn_packet := TurnMove.create(unit, Vector2i(1, 2), Vector2i(3, 4))
+	var turn_packet := TurnMove.create(unit, Vector2i(1, 2), Vector2i(3, 4), 100)
 	turn_packet.packet_type = NetPacket.PACKET_TYPE.TURN_ACTION
 	turn_packet.flag = ENetPacketPeer.FLAG_RELIABLE
 	turn_packet.action_order = 3

@@ -6,9 +6,10 @@ static func _static_init() -> void:
 		return TurnPass.create_from_data(data)
 	)
 
-static func create(user: UserGame) -> TurnPass:
+static func create(user: UserGame, game_pid: int) -> TurnPass:
 	var turn := TurnPass.new()
 	turn.action = ACTION.PASS_TURN
+	turn.game_pid = game_pid
 	turn.player_uid = user.get_user_res().uid
 	turn.unit_uid = 0
 	return turn

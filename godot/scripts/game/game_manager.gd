@@ -38,7 +38,7 @@ func _configure_server() -> void:
 		return
 
 	print_rich("[color=yellow]SOMOS servidor[/color]")
-	UiManager.cambiar_a_escena("server")
+	UiManager.cambiar_a_escena.call_deferred("server")
 	
 func _configure_client() -> void:
 	if not Online.start_client():

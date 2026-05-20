@@ -11,9 +11,10 @@ static func _static_init() -> void:
 		return TurnMove.create_from_data(data)
 	)
 
-static func create(unit: UnitGame, start: Vector2i, end: Vector2i) -> TurnMove:
+static func create(unit: UnitGame, start: Vector2i, end: Vector2i, game_pid: int) -> TurnMove:
 	var turn := TurnMove.new()
 	turn.action = ACTION.MOVEMENT
+	turn.game_pid = game_pid
 	turn.player_uid = unit._owner.get_user_res().uid
 	turn.unit_uid = unit._cardRes.uid
 	turn.start_pos = start

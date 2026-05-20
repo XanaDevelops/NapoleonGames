@@ -6,6 +6,8 @@ signal card_deployed(player: UserGame, remaining: int)
 ## Los UnitGame deben subscribirse a esto para avanzar el turno
 signal tick_turn
 signal game_end
+
+# Algunas señales tienen pinta de ser de ui->ui, revisar
 signal ui_setup_requested(turn_manager: TurnManager)
 signal deployment_phase_started
 signal battle_phase_started
@@ -19,6 +21,7 @@ signal deployment_preview_cleared
 signal unit_removed(pos: Vector2i, tile: TileGame)
 signal movement_enabled
 signal unit_info_cleared
+
 @export var turns: Array[TurnAction] = []
 var turn_order: Array[UserGame] = []
 var turn_number: int = 0
@@ -27,10 +30,14 @@ var is_deployment_phase: bool = false
 var game_config: GameConfig
 var map_game: MapGame
 
+## true si se esta reproduciendo un turno.
+## por lo que no hay que enviarlo al server de nuevo, ni esperar confirmación
+var replaying_turn = false
+
 func advance_turn() -> void:
 	var user := get_current_user()
 	if not is_deployment_phase:
-		register_turn(TurnPass.create(user))
+		register_turn(TurnPass.create(user, _get_game_pid()))
 	turn_number += 1
 	var next_user : UserGame = turn_order[turn_number % turn_order.size()]
 	print("Turno de ", next_user.get_user_res().username)
@@ -64,6 +71,9 @@ func set_map(new_map: MapGame) -> void:
 func get_game_config() -> GameConfig:
 	return game_config
 
+func _get_game_pid() -> int:
+	return game_config.game_pid if game_config else -1
+
 func get_game_resources() -> GameResources:
 	return GameManager.game_res
 
@@ -87,6 +97,14 @@ func get_army_b() -> ArmyRes:
 	
 	
 func register_turn(turn: TurnAction) -> bool:
+	if game_config.game_pid != -1 and not GameManager.is_server and not replaying_turn:
+		turn.send(Online.server_peer)
+		var res : bool = await NetClient.server_turn_response
+		if not res:
+			print("TURNO INVALIDADO POR SERVER")
+			return false
+		
+			
 	print("registered " + var_to_str(turn.action))
 	turn.action_order = global_action_count
 	global_action_count += 1
@@ -94,21 +112,23 @@ func register_turn(turn: TurnAction) -> bool:
 	return true
 
 func replay_turn(turn: TurnAction) -> bool:
+	replaying_turn = true
 	match turn.action:
 		TurnAction.ACTION.DEPLOYMENT:
-			return _replay_deployment(turn)
+			return await _replay_deployment(turn)
 		TurnAction.ACTION.MOVEMENT:
-			return _replay_movement(turn)
+			return await _replay_movement(turn)
 		TurnAction.ACTION.ACTIVE, TurnAction.ACTION.PASSIVE:
-			return _replay_hability(turn)
+			return await _replay_hability(turn)
 		TurnAction.ACTION.PASS_TURN:
 			# quizas comprobar esto sea correcto?
 			advance_turn()
 		_:
 			push_error("[TurnManager] Accion no implementada ", turn.action)
+			replaying_turn = false
 			return false
 			
-			
+	replaying_turn = false
 	return true
 
 func _get_UserGame_(uid: int) -> UserGame:
@@ -128,12 +148,12 @@ func _replay_deployment(turn: TurnDeploy) -> bool:
 		return x.cardType.uid == turn.unit_uid and x.n == turn.n)
 	var card_army := user_game.deployment_data[card_army_i]
 	
-	return _on_deploy_group(user_game, card_army, turn.deploy_pos)
+	return await _on_deploy_group(user_game, card_army, turn.deploy_pos)
 
 func _replay_movement(turn: TurnMove) -> bool:
 	
 	# TODO: realizar más comprobaciones?
-	return _on_unit_movement_requested(turn.start_pos, turn.end_pos)
+	return await _on_unit_movement_requested(turn.start_pos, turn.end_pos)
 	
 func _replay_hability(turn: TurnHability) -> bool:
 	# TODO: más comprobaciones?
@@ -141,7 +161,7 @@ func _replay_hability(turn: TurnHability) -> bool:
 	# FIXME: las pasivas se autolanzan, por ende repetir la pasiva fallará (seguramente)
 	if hab.isPassive:
 		return true
-	return _on_unit_hability_use(turn.pos, turn.dest, hab)
+	return await _on_unit_hability_use(turn.pos, turn.dest, hab)
 
 func _init() -> void:
 	GameManager.register_turn_manager(self)
@@ -189,13 +209,16 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 		return false
 		
 	if unit._owner == get_current_user():
-	
+		var action := TurnMove.create(unit, start, end, _get_game_pid())
+		if not await register_turn(action):
+			print("Acción denegada al registrar")
+			return false
+		
 		map_logic.move_unit(start, end)
 		unit.has_moved_this_turn = true
 		unit_moved.emit(start, end)
 		
-		var action := TurnMove.create(unit, start, end)
-		register_turn(action)
+		
 	else:
 		print("Acción denegada: No es el turno del dueño de esta unidad")
 		return false
@@ -225,14 +248,17 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 		func (x: Vector2i): _dest.append(map.get_tile_at(x).get_unit())
 	)
 
+	var action := TurnHability.create(unit_source, tile, hability, objectives, _get_game_pid())
+	if await register_turn(action):
+		print("Habilidad denegada por server")
+		return false
 	
 	var res := unit_source.use_hability(hability, _dest)
 	if not res:
 		print("No se cumple las condiciones para usar esta habilidad!")
 		return false
 		
-	var action := TurnHability.create(unit_source, tile, hability, objectives)
-	register_turn(action)
+	
 		
 	return true
 
@@ -263,6 +289,11 @@ func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vect
 	if not result["is_valid"]:
 		return false
 
+	var action := TurnDeploy.create(user_game, click_pos, group.cardType, group.n, _get_game_pid())
+	if await register_turn(action):
+		print("Despliegue denegado por server")
+		return false
+
 	user_game.add_living_units(group.n)
 
 	for pos in result["tiles"]:
@@ -274,8 +305,7 @@ func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vect
 
 		new_unit.died.connect(_on_unit_died)
 		
-	var action := TurnDeploy.create(user_game, click_pos, group.cardType, group.n)
-	register_turn(action)
+	
 
 	deployment_preview_cleared.emit()
 

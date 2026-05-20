@@ -162,7 +162,7 @@ func _try_deploy(coords: Vector2i) -> void:
 		return
 
 	var current_user := turn_manager.get_current_user()
-	if turn_manager._on_deploy_group(current_user, _pending_deployment_group, coords):
+	if await turn_manager._on_deploy_group(current_user, _pending_deployment_group, coords):
 		_pending_deployment_group = null
 
 

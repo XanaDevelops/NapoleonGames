@@ -1,6 +1,7 @@
 extends Node
 
 signal handle_local_id_assignment(local_id: int)
+signal server_turn_response(accepted: bool)
 
 var id: int = -1
 
@@ -19,7 +20,9 @@ func on_client_packet(data: PackedByteArray) -> void:
 			enter_online_game(GameLobby.create_from_data(data))
 			
 		NetPacket.PACKET_TYPE.TURN_ACTION:
-			pass
+			GameManager.get_turn_manager().replay_turn(TurnAction.create_from_data(data))
+		NetPacket.PACKET_TYPE.TURN_RESULT:
+			manage_turn_result(TurnNetResult.create_from_data(data))
 		_:
 			push_error("Packet type with index ", data[0], " unhandled!")
 
@@ -32,6 +35,7 @@ func manage_ids(id_assignment: IDAssignment) -> void:
 	prints("my id", id)
 	
 ## TODO: preguntar por mapa, config, etc
+## Pide iniciar una partida online
 func request_online_game() -> void:
 	var user := UserManager.usuario_actual
 	
@@ -39,6 +43,8 @@ func request_online_game() -> void:
 	var map := GameManager.get_game_resources().maps[2]
 	var packet := OnlineMatchRequest.create(user.uid, user.obtener_ejercito_activo().uid, map.uid)
 	packet.send(Online.server_peer)
+	
+	print("requested")
 	
 	
 	
@@ -54,6 +60,9 @@ func enter_online_game(lobby: GameLobby) -> void:
 		lobby.game_pid
 	)
 
+
+func manage_turn_result(turn: TurnNetResult) -> void:
+	server_turn_response.emit(turn.is_valid)
 
 func manage_ping(ping : PingPacket) -> void:
 	print("["+str(id)+"] "+"PING: ", ping.message)

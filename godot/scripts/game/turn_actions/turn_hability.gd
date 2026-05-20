@@ -18,9 +18,10 @@ static func _static_init() -> void:
 	)
 
 
-static func create(unit: UnitGame, pos: Vector2i, hab: HabilityRes, dest: Array[Vector2i]) -> TurnHability:
+static func create(unit: UnitGame, pos: Vector2i, hab: HabilityRes, dest: Array[Vector2i], game_pid: int) -> TurnHability:
 	var turn := TurnHability.new()
 	turn.action = ACTION.PASSIVE if hab.isPassive else ACTION.ACTIVE
+	turn.game_pid = game_pid
 	turn.player_uid = unit._owner.get_user_res().uid
 	turn.unit_uid = unit._cardRes.uid
 	turn.pos = pos
