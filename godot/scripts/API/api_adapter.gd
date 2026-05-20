@@ -87,6 +87,10 @@ func _parse_response(
 	var response = json.data
 
 	print("JSON RESPONSE: ", response)
+	
+	if response_code == 200 and typeof(response) == TYPE_DICTIONARY and response.has("token") and response.has("user"):
+		UserManager.registrar_usuario_autenticado(response)
+		UiManager.cambiar_a_escena("inicio")
 
 	http.queue_free()
 
