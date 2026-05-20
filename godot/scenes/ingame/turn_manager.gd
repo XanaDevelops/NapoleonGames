@@ -3,7 +3,7 @@ extends Node
 
 
 signal card_deployed(player: UserGame, remaining: int)
-## Los UnitGame deben subscribirse a esto para avanzar el turno
+
 signal tick_turn
 signal game_end
 @onready var cards_panel = $IngameMap/VBoxContainer/CardsPanel

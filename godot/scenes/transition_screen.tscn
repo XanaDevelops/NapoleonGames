@@ -1,3 +1,185 @@
 [gd_scene format=3 uid="uid://c4us6q3xfd775"]
 
+[ext_resource type="Script" uid="uid://buyoh1saxyi6a" path="res://scenes/transition_screen.gd" id="1_8adi8"]
+[ext_resource type="Texture2D" uid="uid://cvc2838mfbk7r" path="res://icon.svg" id="2_vfryg"]
+[ext_resource type="Texture2D" uid="uid://cb3bm1ly45on0" path="res://assets/sprites/ui/animaciones/carta.png" id="3_hpb5t"]
+[ext_resource type="Texture2D" uid="uid://c8yjtjah2y046" path="res://assets/sprites/ui/animaciones/espada.png" id="4_53usr"]
+[ext_resource type="FontFile" uid="uid://cmiuntu71oyl3" path="res://addons/gut/fonts/LobsterTwo-Bold.ttf" id="5_tunkw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gmv5u"]
+corner_radius_top_left = 200
+corner_radius_top_right = 200
+corner_radius_bottom_right = 200
+corner_radius_bottom_left = 200
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_atr83"]
+bg_color = Color(1, 1, 1, 0)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.9372549, 0.72156864, 0.0627451, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+corner_detail = 20
+
 [node name="Node2D" type="CanvasLayer" unique_id=1532744456]
+script = ExtResource("1_8adi8")
+
+[node name="MainConteiner" type="Control" parent="." unique_id=1892941031]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="MainConteiner" unique_id=1841719043]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.039215688, 0.05882353, 0.10980392, 0.5019608)
+
+[node name="CoinIcon" type="Panel" parent="MainConteiner" unique_id=798896474]
+unique_name_in_owner = true
+clip_children = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(100, 100)
+theme_override_styles/panel = SubResource("StyleBoxFlat_gmv5u")
+
+[node name="CoinImatge" type="TextureRect" parent="MainConteiner/CoinIcon" unique_id=861131872]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_vfryg")
+expand_mode = 1
+
+[node name="CoinBorder" type="Panel" parent="MainConteiner/CoinIcon/CoinImatge" unique_id=1561343120]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_atr83")
+
+[node name="CardLeft" type="TextureRect" parent="MainConteiner" unique_id=1330795066]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -190.0
+offset_right = 100.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(100, 300)
+texture = ExtResource("3_hpb5t")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CardRight" type="TextureRect" parent="MainConteiner" unique_id=25288665]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -190.0
+offset_right = 100.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(100, 300)
+texture = ExtResource("3_hpb5t")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SwordLeft" type="TextureRect" parent="MainConteiner" unique_id=771217813]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -190.0
+offset_right = 130.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 150)
+texture = ExtResource("4_53usr")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SwordRight" type="TextureRect" parent="MainConteiner" unique_id=1939250915]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -190.0
+offset_right = 170.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5707964
+pivot_offset = Vector2(150, 150)
+texture = ExtResource("4_53usr")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MessageLabel" type="Label" parent="MainConteiner" unique_id=1191055480]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.5
+offset_top = 140.5
+offset_right = 274.5
+offset_bottom = 253.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.9019608, 0.7607843, 0.47843137, 1)
+theme_override_fonts/font = ExtResource("5_tunkw")
+theme_override_font_sizes/font_size = 90
+text = "Elige tu Destino"
+horizontal_alignment = 1
+vertical_alignment = 1
