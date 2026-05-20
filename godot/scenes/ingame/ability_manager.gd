@@ -37,7 +37,7 @@ func request(hab: HabilityRes, coords: Vector2i, tile: TileGame) -> bool:
 		print("Acción denegada: No es el turno de esta unidad.")
 		return false
 		
-	var targets = GameManager.get_map().get_units_range(coords, hab.radius, hab.objective)
+	var targets = GameManager.get_turn_manager().get_map().get_units_range(coords, hab.radius, hab.objective)
 	if targets.is_empty():
 		push_warning("No hay objetivos válidos para '%s'" % hab.name)
 		return false
