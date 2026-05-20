@@ -26,7 +26,7 @@ var phase
 #
 func set_phase_battle() -> void:
 	phase_label.text= "COMBATE"
-	self.btn_end_turn.visible= false
+	self.btn_end_turn.visible= true
 	self.btn_end_turn.pressed.connect(pass_turn)
 	self.turnManager.tick_turn.connect(update_turn_info)
 	#p1_num_cards.visible= false

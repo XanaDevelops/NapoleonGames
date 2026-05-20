@@ -10,4 +10,5 @@ value = 3.0
 stat = ExtResource("2_eyxbh")
 type = ExtResource("3_arctm")
 duration = 3
+uid = 2
 metadata/_custom_type_script = "uid://c6ylgfoqmjeis"

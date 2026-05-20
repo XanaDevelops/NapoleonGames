@@ -11,16 +11,45 @@ enum APP_STATE {
 	IN_GAME,
 }
 
+## Indica si es servidor
+var is_server := false
 
 func _init() -> void:
+	print(OS.get_cmdline_args())
+	var cmd_args := OS.get_cmdline_args()
+	if "--server" in cmd_args:
+		is_server = true
+		
 	game_res = GameResources.load_from()
 	#temporal
 	#self.turn_manager= TurnManager.new()
 	app_state = APP_STATE.MENU_HUB
 	#phase_changed.emit(app_state)
 	set_users()
+	
+func _ready() -> void:
+	if is_server:
+		_configure_server()
+	else:
+		_configure_client()
 
+func _configure_server() -> void:
+	if not Online.start_server():
+		return
 
+	print_rich("[color=yellow]SOMOS servidor[/color]")
+	UiManager.cambiar_a_escena("server")
+	
+func _configure_client() -> void:
+	if not Online.start_client():
+		return
+	print_rich("[color=yellow]SOMOS cliente[/color]")
+	NetClient.handle_local_id_assignment.connect(func (pid: int):
+		var ping_n := randi()
+		print("Mi randi ", ping_n)
+		PingPacket.create(pid, "Hola que tal? soy:" + str(pid) + "num: "+str(ping_n)).send(Online.server_peer)	
+	)
+	
 
 func set_users() -> void:
 	var gr := GameResources.load_from()

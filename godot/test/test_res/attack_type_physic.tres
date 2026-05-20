@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_inbh6")
 name = &"physic"
+uid = 2
 metadata/_custom_type_script = "uid://bycnnamk3t4f0"
