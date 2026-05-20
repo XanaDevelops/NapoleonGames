@@ -40,7 +40,7 @@ func advance_turn() -> void:
 		register_turn(TurnPass.create(user, _get_game_pid()))
 	turn_number += 1
 	var next_user : UserGame = turn_order[turn_number % turn_order.size()]
-	print("Turno de ", next_user.get_user_res().username)
+	print("[" + str(NetClient.id) + "]", "Turno de ", next_user.get_user_res().username)
 	tick_turn.emit()
 	
 	
@@ -98,15 +98,15 @@ func get_army_b() -> ArmyRes:
 	
 func register_turn(turn: TurnAction) -> bool:
 	if game_config.game_pid != -1 and not GameManager.is_server and not replaying_turn:
-		print("comprobación en server")
+		print("[" + str(NetClient.id) + "]", "comprobación en server")
 		turn.send(Online.server_peer)
 		var res : bool = await NetClient.server_turn_response
 		if not res:
-			print("TURNO INVALIDADO POR SERVER")
+			print("[" + str(NetClient.id) + "]", "TURNO INVALIDADO POR SERVER")
 			return false
 		
 			
-	print("registered " + var_to_str(turn.action))
+	print("[" + str(NetClient.id) + "]", "registered " + var_to_str(turn.action))
 	turn.action_order = global_action_count
 	global_action_count += 1
 	turns.append(turn)
@@ -114,23 +114,26 @@ func register_turn(turn: TurnAction) -> bool:
 
 func replay_turn(turn: TurnAction) -> bool:
 	replaying_turn = true
+	var ok := false
 	match turn.action:
 		TurnAction.ACTION.DEPLOYMENT:
-			return await _replay_deployment(turn)
+			ok = await _replay_deployment(turn)
 		TurnAction.ACTION.MOVEMENT:
-			return await _replay_movement(turn)
+			ok = await _replay_movement(turn)
 		TurnAction.ACTION.ACTIVE, TurnAction.ACTION.PASSIVE:
-			return await _replay_hability(turn)
+			ok = await _replay_hability(turn)
 		TurnAction.ACTION.PASS_TURN:
 			# quizas comprobar esto sea correcto?
 			advance_turn()
+			## FIXME:
+			ok = true
+			
 		_:
 			push_error("[TurnManager] Accion no implementada ", turn.action)
-			replaying_turn = false
-			return false
+			ok =  false
 			
 	replaying_turn = false
-	return true
+	return ok
 
 func _get_UserGame_(uid: int) -> UserGame:
 	if get_user_a().uid == uid:
@@ -144,7 +147,7 @@ func _get_UserGame_(uid: int) -> UserGame:
 func _replay_deployment(turn: TurnDeploy) -> bool:
 	var user_game := _get_UserGame_(turn.player_uid)
 	if not user_game:
-		print("UserName null")
+		print("[" + str(NetClient.id) + "]", "UserName null")
 		return false
 	var card_army_i := user_game.deployment_data.find_custom(func (x: CardArmyGroup):
 		return x.cardType.uid == turn.unit_uid and x.n == turn.n)
@@ -208,13 +211,13 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 	var map_logic = get_map()
 	var unit = map_logic.get_tile_at(start).get_unit()
 	if unit.has_moved_this_turn:
-		print("La unidad ya se ha movido")
+		print("[" + str(NetClient.id) + "]", "La unidad ya se ha movido")
 		return false
 		
 	if unit._owner == get_current_user():
 		var action := TurnMove.create(unit, start, end, _get_game_pid())
 		if not await register_turn(action):
-			print("Movimiento denegada al registrar")
+			print("[" + str(NetClient.id) + "]", "Movimiento denegada al registrar")
 			return false
 		
 		map_logic.move_unit(start, end)
@@ -223,7 +226,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 		
 		
 	else:
-		print("Acción denegada: No es el turno del dueño de esta unidad")
+		print("[" + str(NetClient.id) + "]", "Acción denegada: No es el turno del dueño de esta unidad")
 		return false
 		
 	return true
@@ -232,11 +235,11 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 	var map : MapGame = get_map()
 	var unit_source := map.get_tile_at(tile).get_unit()
 	if unit_source.has_used_hability_this_turn:
-		print("La unidad ya ha usado una habilidad activa!")
+		print("[" + str(NetClient.id) + "]", "La unidad ya ha usado una habilidad activa!")
 		return false
 		
 	if unit_source._owner != get_current_user():
-		print("Acción denegada: No es el turno del dueño de esta unidad")
+		print("[" + str(NetClient.id) + "]", "Acción denegada: No es el turno del dueño de esta unidad")
 		return false
 		
 	var _dest : Array[UnitGame] = []
@@ -253,12 +256,12 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 
 	var action := TurnHability.create(unit_source, tile, hability, objectives, _get_game_pid())
 	if not await register_turn(action):
-		print("Habilidad denegada por server")
+		print("[" + str(NetClient.id) + "]", "Habilidad denegada por server")
 		return false
 	
 	var res := unit_source.use_hability(hability, _dest)
 	if not res:
-		print("No se cumple las condiciones para usar esta habilidad!")
+		print("[" + str(NetClient.id) + "]", "No se cumple las condiciones para usar esta habilidad!")
 		return false
 		
 	
@@ -280,26 +283,26 @@ func end_deployment_phase() -> void:
 
 func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vector2i) -> bool:
 	if not is_deployment_phase:
-		print("no es deploy")
+		print("[" + str(NetClient.id) + "]", "no es deploy")
 		return false
 	if user_game != get_current_user():
-		print("no es el usuario activo")
+		print("[" + str(NetClient.id) + "]", "no es el usuario activo")
 		return false
 	if group == null:
-		print("no hay grupo")
+		print("[" + str(NetClient.id) + "]", "no hay grupo")
 		return false
 	if not user_game.deployment_data.has(group):
-		print("el grpo no pertece al user")
+		print("[" + str(NetClient.id) + "]", "el grpo no pertece al user")
 		return false
 
 	var result: Dictionary = map_game.calculate_deployment(get_current_user_number(), group.n, click_pos)
 	if not result["is_valid"]:
-		print("zona despliegue no valida")
+		print("[" + str(NetClient.id) + "]", "zona despliegue no valida")
 		return false
 
 	var action := TurnDeploy.create(user_game, click_pos, group.cardType, group.n, _get_game_pid())
 	if not await register_turn(action):
-		print("Despliegue denegado por server")
+		print("[" + str(NetClient.id) + "]", "Despliegue denegado por server")
 		return false
 
 	user_game.add_living_units(group.n)
@@ -369,14 +372,14 @@ func _on_unit_died(unit: UnitGame, pos: Vector2i) -> void:
 	unit_info_cleared.emit()
 
 	unit._owner.dec_living_units(1)
-	print(unit._owner.get_user_res().name + " ha perdido una unidad. Le quedan: ", unit._owner.living_units)
+	print("[" + str(NetClient.id) + "]", unit._owner.get_user_res().name + " ha perdido una unidad. Le quedan: ", unit._owner.living_units)
 		
 		# Si llega a 0, la partida termina inmediatamente
 	if unit._owner.living_units <= 0:
 			
 		var ganador = turn_order[0] if unit._owner == turn_order[1] else turn_order[1]
 			
-		print("¡Partida terminada! El ganador es: ", ganador.get_user_res().name)
+		print("[" + str(NetClient.id) + "]", "¡Partida terminada! El ganador es: ", ganador.get_user_res().name)
 		finalizar_partida(ganador.get_user_res().name)
 
 func finalizar_partida(nombre_del_vencedor: String):

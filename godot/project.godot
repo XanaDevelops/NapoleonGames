@@ -31,8 +31,8 @@ NetServer="*uid://cww7dihskvgjl"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/window_width_override=720
-window/size/window_height_override=405
+window/size/window_width_override=920
+window/size/window_height_override=540
 window/stretch/mode="canvas_items"
 
 [editor]

@@ -89,6 +89,7 @@ func _proc_passives() -> void:
 func _proc_alter_states() -> void:
 	for alter in self._currentAlterStates:
 		if randf() > alter.hitP:
+			print("[" + str(NetClient.id) + "] ", "Evitado estado alterado ", alter.uid)
 			continue
 			
 		# Reutilizar esta funcion, un AlterState no deja de ser una minihabilidad
@@ -129,8 +130,11 @@ func advance_turn() -> void:
 ## Usa una habilidad
 ## Devuelve si se ha usado correctamente
 func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
-	if hab not in get_available_habilities():
-		printerr("Habilidad no disponible")
+	var _available := get_available_habilities()
+	## FIXME: Evitar uso 
+	if not _available.any(func (x:HabilityRes): return hab.compare(x)):
+		printerr("[" + str(NetClient.id) + "]", "Habilidad no disponible")
+		printerr("[" + str(NetClient.id) + "]", "hab: ", hab.uid, ":", hab.name, " not in ", _available.map(func (x: HabilityRes): return x.uid))
 		return false
 		
 	# Tecnicamente es codigo duplicado de get_avaliable_habilities
@@ -157,7 +161,7 @@ func _apply_hab(stat: StatData, atkType:AttackType, val:float, obj: UnitGame):
 	# aplicar el valor final
 	match stat.name:
 		StatData.ATTACK:
-			print("atacando por ", val)
+			print("[" + str(NetClient.id) + "]", "atacando por ", val)
 			#Ha muerto la unidad
 			if obj.recieve_attack(val, atkType):
 				obj.kill()
@@ -171,7 +175,7 @@ func _apply_hab(stat: StatData, atkType:AttackType, val:float, obj: UnitGame):
 			push_error("Esto no se puede modificar con una habilidad!!")
 			printerr("En el caso de MAX_HEALTH o MAX_MANA, hazlo con HP con isPercent=True, respectivamente")
 		_:
-			print("afectando por defecto ", stat.name, " por valor de ", val)
+			print("[" + str(NetClient.id) + "]", "afectando por defecto ", stat.name, " por valor de ", val)
 			obj.set(stat.name, obj.get(stat.name) + val)
 	
 ## funcion que calcula el daño recibido
@@ -181,7 +185,7 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	
 	# ojo que randf() es [0,1] no [0,1)
 	if randf() < self.dodge:
-		print("esquive!")
+		print("[" + str(NetClient.id) + "]", "esquive!")
 		return false
 	
 	
@@ -190,14 +194,14 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	if self._cardRes.resistances.has(type):
 		defense = self._cardRes.resistances.get(type)
 	else:
-		push_warning("No se ha configurado valor de defensa para " + type.name + ", se asume 0")
+		print_rich("[" + str(NetClient.id) + "]", "[color=yellow]No se ha configurado valor de defensa para " + type.name + ", se asume 0[/color]")
 		defense = 0
 	
 	defense = _update_val_alter_states(defense, StatData.DEFENSE, type)
 			
 	## PLACEHOLDER!
 	var inflict_damage := maxi(0, damage-defense)
-	print("inflicted_damage: " + str(inflict_damage))
+	print("[" + str(NetClient.id) + "]", "inflicted_damage: " + str(inflict_damage) + "with defense " + str(defense))
 	self.hp -= inflict_damage
 	
 
@@ -221,7 +225,7 @@ func kill() -> void:
 ## Cura una unidad
 func heal(value: int, type: StatData) -> void:
 	if value < 0:
-		print_rich("[color=yellow]Curando por un valor negativo[/color] ", value)
+		print_rich("[" + str(NetClient.id) + "]", "[color=yellow]Curando por un valor negativo[/color] ", value)
 		
 	value = _update_val_alter_states(value, StatData.HEALTH)
 	if type.isPercent:
@@ -298,14 +302,16 @@ func _update_val_alter_states(init_val : float, stat_name:StringName, type: Atta
 		if not HabilityRes.inflicts_self(alter.objective):
 			continue
 
-		# ojo que randf() es [0,1] no [0,1)
-		if randf() > alter.hitP:
-			continue
-			
 		if alter.stat.name != stat_name:
 			continue
 		if type and alter.type != type:
 			continue
+
+		# ojo que randf() es [0,1] no [0,1)
+		if randf() > alter.hitP:
+			continue
+			
+		
 			
 		if alter.stat.isPercent:
 			multipliers += alter.value

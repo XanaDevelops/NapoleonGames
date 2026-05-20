@@ -44,7 +44,7 @@ func request_online_game() -> void:
 	var packet := OnlineMatchRequest.create(user.uid, user.obtener_ejercito_activo().uid, map.uid)
 	packet.send(Online.server_peer)
 	
-	print("requested")
+	print("requested ", NetClient.id)
 	
 	
 	
