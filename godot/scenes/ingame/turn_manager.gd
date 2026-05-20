@@ -23,7 +23,7 @@ func advance_turn() -> void:
 	var user : UserGame = turn_order[turn_number % turn_order.size()]
 	print("Turno de ", user.get_user_res().username)
 	tick_turn.emit()
-	map_visualizer._clear_selection()
+
 	
 	
 func get_current_user() -> UserGame:
@@ -200,13 +200,13 @@ func start_deployment_phase() -> void:
 	_highlight_current_deployment_zone()
 
 func end_deployment_phase() -> void:
+	#esperar hasta que finalize la animación 
+	await _phase_transition.show_battle_phase(turn_order[0], turn_order[1])
 	is_deployment_phase = false
-	_phase_transition.show_battle_phase(turn_order[0], turn_order[1])
 	set_app_state(GameManager.APP_STATE.IN_GAME)
 	players_panel.set_phase_battle()
 	end_button.show_battle()
 	
-
 	cards_panel.set_deployment_phase(false)
 	map_visualizer.movement_requested.connect(_on_unit_movement_requested)
 	
@@ -252,7 +252,6 @@ func _consume_current_card(user_game: UserGame, group: CardArmyGroup) -> void:
 	if user_game.consume_deployment_group(group):
 		deployment_box.remove_card_visual(group)
 		card_deployed.emit(user_game, user_game.get_deployment_count())
-
 	_handle_next_deployment_step()
 
 func _handle_next_deployment_step() -> void:
@@ -261,7 +260,7 @@ func _handle_next_deployment_step() -> void:
 	
 	var current_user := get_current_user()
 	var opponent_user := turn_order[opponent_idx]
-	
+
 	if _has_cards_to_deploy(opponent_user):
 		advance_turn()
 		_refresh_ui_for_current_player()

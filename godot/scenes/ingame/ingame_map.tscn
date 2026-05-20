@@ -85,7 +85,7 @@ handle_input_locally = false
 size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
-[node name="mapVisualizer" type="Node2D" parent="SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment", "tile_map_layer_hover", "tile_map_layer_owner_p1", "tile_map_layer_owner_p2", "camera")]
+[node name="mapVisualizer" type="Node2D" parent="SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment", "tile_map_layer_hover", "tile_map_layer_owner_p1", "tile_map_layer_owner_p2", "tile_map_layer_exhausted", "camera")]
 script = ExtResource("1_7udv5")
 tile_map_layer_texture = NodePath("TileMapLayer_texture")
 tile_map_layer_units = NodePath("TileMapLayer_units")
@@ -95,6 +95,7 @@ tile_map_layer_deployment = NodePath("TileMapLayer_deployment")
 tile_map_layer_hover = NodePath("TileMapLayer_hover")
 tile_map_layer_owner_p1 = NodePath("TileMapLayer_owner_p1")
 tile_map_layer_owner_p2 = NodePath("TileMapLayer_owner_p2")
+tile_map_layer_exhausted = NodePath("TileMapLayer_exhausted")
 camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
 
@@ -116,6 +117,8 @@ tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAU
 [node name="TileMapLayer_selection" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1342848487]
 
 [node name="TileMapLayer_highlights" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=739722248]
+
+[node name="TileMapLayer_exhausted" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=802081824]
 
 [node name="PlayersPanel" type="Control" parent="." unique_id=69587996 node_paths=PackedStringArray("p1_avatar", "p1_name", "p1_card", "p1_num_cards", "p2_avatar", "p2_name", "p2_card", "p2_num_cards", "phase_label", "TurnLabel")]
 custom_minimum_size = Vector2(0, 60)

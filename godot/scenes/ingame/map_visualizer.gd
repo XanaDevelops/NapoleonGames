@@ -17,6 +17,7 @@ var current_accesible_moves: Array[Vector2i] = []
 @export var tile_map_layer_hover:TileMapLayer
 @export var tile_map_layer_owner_p1:TileMapLayer
 @export var tile_map_layer_owner_p2:TileMapLayer
+@export var tile_map_layer_exhausted: TileMapLayer
 var _owner_id:int = -1
 signal tile_clicked(coords: Vector2i, tile: TileGame)
 signal tile_hovered(coords: Vector2i)
@@ -24,7 +25,6 @@ signal movement_requested(start_pos: Vector2i, end_pos: Vector2i)
 
 var tileset: TileSet
 var texture_to_source_id: Dictionary = {}
-
 
 const TILE_SIZE_HEIGHT = 64 * 1.5
 const TILE_SIZE_WIDTH = 55 * 1.5 # TILE_SIZE_HEIGHT/2 * root(3)
@@ -60,12 +60,15 @@ func _setup_highlight_tiles() -> void:
 	
 	tile_map_layer_owner_p1.self_modulate = COLOR_OWNER_P1
 	tile_map_layer_owner_p2.self_modulate = COLOR_OWNER_P2
-	
+	#tile_map_layer_exhausted.self_modulate = Color(0.4, 0.4, 0.4, 0.6) 
+	tile_map_layer_exhausted.self_modulate = Color.BLACK
+
 func _ready() -> void:
 	tileset = _setup_tileset()
 	for tml in [tile_map_layer_texture, tile_map_layer_units,
 				tile_map_layer_selection, tile_map_layer_highlight, 
-				tile_map_layer_deployment, tile_map_layer_hover, tile_map_layer_owner_p1, tile_map_layer_owner_p2]:
+				tile_map_layer_deployment, tile_map_layer_hover, tile_map_layer_owner_p1, 
+				tile_map_layer_owner_p2, tile_map_layer_exhausted]:
 		tml.tile_set = tileset
 	_setup_highlight_tiles()
 	if GameManager.turn_manager!=null:
@@ -142,6 +145,7 @@ func refresh_unit_died(coords: Vector2i):
 	_remove_unit_overlay(coords)
 
 func highlight_selected_cell(pos: Vector2i) -> void:
+	print("selected_cell; ", pos)
 	tile_map_layer_selection.clear()
 	clear_highlights()
 	tile_map_layer_selection.self_modulate = COLOR_SELECTED
@@ -269,6 +273,11 @@ func _handle_click(coords: Vector2i) -> void:
 	
 		
 	emit_signal("tile_clicked", coords, tile)
+	#en fase de despliegue no procesar seleccion
+	#solo se permite la colocación de tropas
+	var tm = GameManager.get_turn_manager()
+	if tm != null and tm.is_deployment_phase:
+		return
 	#deseleccionar 
 	if coords == selected_cell:
 		_clear_selection()
@@ -302,7 +311,6 @@ func _clear_selection() -> void:
 	current_accesible_moves = []
 	tile_map_layer_selection.clear()
 	tile_map_layer_highlight.clear()
-
 
 func _add_unit_overlay(coords: Vector2i, unit: UnitGame) -> void:
 	if _unit_overlays.has(coords):
@@ -369,10 +377,14 @@ func center_camera(viewport_size: Vector2) -> void:
 
 
 func _refresh_unit_states() -> void:
+	
 	for coords in _unit_overlays: #tiles con unidades activas
 		var tile = map.get_tile_at(coords)
 		if tile.has_unit():
 			var unit = tile.get_unit()
 			var exhausted= not unit.has_pending_actions()
-			#_unit_overlays[coords].set_exhausted(exhausted)
+			print("active cell: ", coords)
+			print("is_exhausted: ", exhausted)
+			tile_map_layer_exhausted.set_cell(coords, -1, Vector2i.ZERO)
+			_unit_overlays[coords].set_exhausted(exhausted)
 			
