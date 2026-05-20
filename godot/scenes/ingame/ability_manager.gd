@@ -24,9 +24,16 @@ func request(hab: HabilityRes, coords: Vector2i, tile: TileGame) -> bool:
 	if _pending_hab != null:
 		cancel()
 
-	var unit    := tile.get_unit()
+var tm := GameManager.get_turn_manager()
+	var map := tm.get_map()
 	
-	if unit == null or unit._owner != GameManager.get_turn_manager().get_current_user():
+	if map == null:
+		return false
+		
+	var unit := tile.get_unit()
+	
+
+	if unit == null or unit._owner != tm.get_current_user():
 		print("Acción denegada: No es el turno de esta unidad.")
 		return false
 		
@@ -54,7 +61,14 @@ func try_select_target(coords: Vector2i) -> bool:
 	if _phase != Phase.SELECTING_TARGET:
 		return false
 
-	var valid = GameManager.get_map().get_units_range(_caster_coords, _pending_hab.radius, _pending_hab.objective)
+var tm := GameManager.get_turn_manager()
+	var map := tm.get_map()
+	if map == null:
+		cancel()
+		return false
+	
+	
+	var valid: Array[Vector2i] = map.get_units_range(_caster_coords, _pending_hab.radius, _pending_hab.objective)
 	if coords not in valid:
 		cancel()
 		return false

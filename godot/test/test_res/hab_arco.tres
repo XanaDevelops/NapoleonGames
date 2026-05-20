@@ -12,4 +12,5 @@ value = 5.0
 stat = ExtResource("4_jqweu")
 attackType = ExtResource("2_rfqbo")
 radius = 3
+uid = 1
 metadata/_custom_type_script = "uid://eihee83yhkpg"

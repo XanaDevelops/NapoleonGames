@@ -14,4 +14,5 @@ stat = ExtResource("4_3sd1o")
 condition = 3
 condition_stat = ExtResource("2_lcjiu")
 condition_value = 0.5
+uid = 6
 metadata/_custom_type_script = "uid://eihee83yhkpg"

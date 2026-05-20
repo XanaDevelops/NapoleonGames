@@ -15,4 +15,5 @@ stat = ExtResource("5_t3emc")
 attackType = ExtResource("3_6suub")
 cooldown = 3
 alter_states = Array[ExtResource("1_pefan")]([ExtResource("2_scspe")])
+uid = 9
 metadata/_custom_type_script = "uid://eihee83yhkpg"

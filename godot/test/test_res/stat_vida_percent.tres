@@ -7,4 +7,5 @@ script = ExtResource("1_vjvf5")
 name = &"hp"
 desc = "vida maxima%"
 isPercent = true
+uid = 6
 metadata/_custom_type_script = "uid://bcsdfa1f5drbr"

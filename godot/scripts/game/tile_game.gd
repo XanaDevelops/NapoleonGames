@@ -50,8 +50,8 @@ func get_tile_cost() -> int:
 	return self._tileRes.type.cost
 
 func get_owner_name() -> String:
-	if self._unit._owner!=null:
-		return self._unit._owner.name
+	if self._unit and self._unit._owner:
+		return self._unit._owner.get_user_res().name
 	return " "
 func get_unit_weight() -> int:
 	return self._unit._cardRes.weight
