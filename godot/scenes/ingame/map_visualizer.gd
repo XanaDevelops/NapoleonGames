@@ -244,7 +244,7 @@ func _process_selection(coords: Vector2i, clicked_tile: TileGame) -> void:
 		var unit = clicked_tile.get_unit()
 		
 		if not unit.has_moved_this_turn:
-			current_accesible_moves = map.get_accesible_moves(coords)
+			current_accesible_moves = await map.get_accesible_moves(coords)
 			highlight_cells(current_accesible_moves) # Renders movement range
 		else:
 			current_accesible_moves = []

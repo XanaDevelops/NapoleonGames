@@ -231,6 +231,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 		
 	return true
 
+
 func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability: HabilityRes) -> bool:
 	var map : MapGame = get_map()
 	var unit_source := map.get_tile_at(tile).get_unit()
@@ -259,7 +260,7 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 		print("[" + str(NetClient.id) + "]", "Habilidad denegada por server")
 		return false
 	
-	var res := unit_source.use_hability(hability, _dest)
+	var res := await unit_source.use_hability(hability, _dest)
 	if not res:
 		print("[" + str(NetClient.id) + "]", "No se cumple las condiciones para usar esta habilidad!")
 		return false

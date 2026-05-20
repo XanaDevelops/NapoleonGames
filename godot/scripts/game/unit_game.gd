@@ -19,7 +19,7 @@ var max_hp : int :
 	set(x) : pass
 	
 var speed : int :
-	get : return get_speed()
+	get : return await get_speed()
 	set(x) : pass
 	
 var height : int :
@@ -27,7 +27,7 @@ var height : int :
 	set(x) : pass
 	
 var dodge : float :
-	get : return _update_val_alter_states(_cardRes.dodge, StatData.DODGE)
+	get : return await _update_val_alter_states(_cardRes.dodge, StatData.DODGE)
 
 ## Manà actual
 @export var mana: int:
@@ -88,7 +88,7 @@ func _proc_passives() -> void:
 ## Activa los estados alterados como los de daño o cura
 func _proc_alter_states() -> void:
 	for alter in self._currentAlterStates:
-		if randf() > alter.hitP:
+		if await NetClient.request_randf_server() > alter.hitP:
 			print("[" + str(NetClient.id) + "] ", "Evitado estado alterado ", alter.uid)
 			continue
 			
@@ -140,7 +140,7 @@ func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
 	# Tecnicamente es codigo duplicado de get_avaliable_habilities
 		
 	# calcular valor final
-	var valor_final := _update_val_alter_states(hab.value, hab.stat.name, hab.attackType)
+	var valor_final := await _update_val_alter_states(hab.value, hab.stat.name, hab.attackType)
 	# por cada objetivo
 	for obj: UnitGame in dest:
 		_apply_hab(hab.stat, hab.attackType, valor_final, obj)
@@ -163,7 +163,7 @@ func _apply_hab(stat: StatData, atkType:AttackType, val:float, obj: UnitGame):
 		StatData.ATTACK:
 			print("[" + str(NetClient.id) + "]", "atacando por ", val)
 			#Ha muerto la unidad
-			if obj.recieve_attack(val, atkType):
+			if await obj.recieve_attack(val, atkType):
 				obj.kill()
 		StatData.HEALTH:
 			obj.heal(val, stat)
@@ -184,8 +184,8 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	# Calcular esquive
 	
 	# ojo que randf() es [0,1] no [0,1)
-	if randf() < self.dodge:
-		print("[" + str(NetClient.id) + "]", "esquive!")
+	if await NetClient.request_randf_server() < self.dodge:
+		print("[" + str(NetClient.id) + "]", "esquive! ", self.dodge)
 		return false
 	
 	
@@ -197,11 +197,11 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 		print_rich("[" + str(NetClient.id) + "]", "[color=yellow]No se ha configurado valor de defensa para " + type.name + ", se asume 0[/color]")
 		defense = 0
 	
-	defense = _update_val_alter_states(defense, StatData.DEFENSE, type)
+	defense = await _update_val_alter_states(defense, StatData.DEFENSE, type)
 			
 	## PLACEHOLDER!
 	var inflict_damage := maxi(0, damage-defense)
-	print("[" + str(NetClient.id) + "]", "inflicted_damage: " + str(inflict_damage) + "with defense " + str(defense))
+	print("[" + str(NetClient.id) + "]", "inflicted_damage: " + str(inflict_damage) + " with defense " + str(defense))
 	self.hp -= inflict_damage
 	
 
@@ -227,7 +227,7 @@ func heal(value: int, type: StatData) -> void:
 	if value < 0:
 		print_rich("[" + str(NetClient.id) + "]", "[color=yellow]Curando por un valor negativo[/color] ", value)
 		
-	value = _update_val_alter_states(value, StatData.HEALTH)
+	value = await _update_val_alter_states(value, StatData.HEALTH)
 	if type.isPercent:
 		self.hp += self.max_hp * value
 	else:
@@ -283,7 +283,7 @@ func get_texture2D() -> Texture2D:
 func get_speed() -> int:
 	var base_speed := self._cardRes.speed
 	
-	return _update_val_alter_states(base_speed, StatData.SPEED)
+	return await _update_val_alter_states(base_speed, StatData.SPEED)
 	
 ## Obtiene de la referencia al _tile la posicion de este
 ## Util para llamar pasivas
@@ -308,7 +308,8 @@ func _update_val_alter_states(init_val : float, stat_name:StringName, type: Atta
 			continue
 
 		# ojo que randf() es [0,1] no [0,1)
-		if randf() > alter.hitP:
+		if await NetClient.request_randf_server() > alter.hitP:
+			print("[" + str(NetClient.id) + "]","Esquiva estado alterado al calcular stat ", stat_name)
 			continue
 			
 		

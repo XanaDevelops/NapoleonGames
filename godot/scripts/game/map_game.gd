@@ -78,7 +78,7 @@ func get_accesible_moves(pos: Vector2i) -> Array[Vector2i]:
 	var distances := _calculate_distances(pos, unit)
 	
 	for key in distances:
-		if distances[key] <= unit.get_speed() and key != pos:
+		if distances[key] <= await unit.get_speed() and key != pos:
 			if not get_tile_at(key).has_unit():
 				ret_pos.append(key)
 		
