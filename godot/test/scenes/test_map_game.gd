@@ -6,7 +6,10 @@ const map_scene: String = "res://scenes/ingame/ingame_map.tscn"
 
 func test_visualizer() -> void:
 	var map := create_test_map()
-	GameManager._gameMap = map
+	var tm := TurnManager.new()
+	GameManager.register_turn_manager(tm)
+	GameManager.game_config = GameConfig.new(null, null, map._mapRes, null, null)
+	tm.set_map(map)
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
 	var scene := preload(map_scene)
@@ -26,18 +29,23 @@ func test_visualizer() -> void:
 func test_hability_applies_to_bars() -> void:
 	var gr := GameResources.load_from()
 	var map := create_test_map()
-	GameManager._gameMap = map
-	GameManager._user_a = gr.users[0]
-	GameManager._user_b = gr.users[1]
-	GameManager._army_a = gr.users[0].obtener_ejercito_activo()
-	GameManager._army_b = gr.users[1].obtener_ejercito_activo()
+	GameManager.game_config = GameConfig.new(
+		gr.users[0],
+		gr.users[1],
+		map._mapRes,
+		gr.users[0].obtener_ejercito_activo(),
+		gr.users[1].obtener_ejercito_activo()
+	)
 
 	# Usar game_scene.tscn que incluye TurnManager
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
 	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate() as TurnManager
-	instance.turn_order = [gr.users[0], gr.users[1]]
+	var user_a_game := UserGame.new(gr.users[0])
+	var user_b_game := UserGame.new(gr.users[1])
+	instance.turn_order = [user_a_game, user_b_game]
 	instance.turn_number = 0
+	instance.set_map(map)
 	add_child_autoqfree(instance)
 
 	await wait_until(func(): return instance.is_inside_tree(), 5)
@@ -55,6 +63,8 @@ func test_hability_applies_to_bars() -> void:
 	card_attacker.mana = 50
 	card_attacker.speed = 3
 	card_attacker.dodge = 10.0
+	card_attacker.img = get_unit_texture("res://assets/tiles/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png")
+	card_attacker.portrait = get_unit_texture("res://assets/tiles/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png")
 	card_attacker.habilities = [_create_physical_attack()] as Array[HabilityRes]
 	card_attacker.resistances = {} as Dictionary[AttackType, int]
 
@@ -64,11 +74,13 @@ func test_hability_applies_to_bars() -> void:
 	card_target.mana = 40
 	card_target.speed = 2
 	card_target.dodge = 5.0
+	card_target.img = get_unit_texture("res://assets/tiles/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png")
+	card_target.portrait = get_unit_texture("res://assets/tiles/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png")
 	card_target.habilities = [] as Array[HabilityRes]
 	card_target.resistances = {} as Dictionary[AttackType, int]
 
-	var attacker = UnitGame.new(card_attacker, gr.users[0])
-	var target = UnitGame.new(card_target, gr.users[1])
+	var attacker = UnitGame.new(card_attacker, user_a_game)
+	var target = UnitGame.new(card_target, user_b_game)
 
 	# Colocar unidades en el mapa
 	var attacker_pos = Vector2i(5, 5)
@@ -195,7 +207,7 @@ func _create_poison() -> AlterStateRes:
 	state.value = -5.0
 	state.hitP = 1.0
 	state.duration = 3
-	state.objectiu = HabilityRes.SEL_ENEMY_FLAG
+	state.objective = HabilityRes.SEL_ENEMY_FLAG
 	return state
 
 func _create_shield_buff() -> AlterStateRes:
@@ -206,7 +218,7 @@ func _create_shield_buff() -> AlterStateRes:
 	state.value = 10.0
 	state.hitP = 1.0
 	state.duration = 2
-	state.objectiu = HabilityRes.SEL_SELF_FLAG
+	state.objective = HabilityRes.SEL_SELF_FLAG
 	return state
 
 func _create_speed_debuff() -> AlterStateRes:
@@ -217,7 +229,7 @@ func _create_speed_debuff() -> AlterStateRes:
 	state.value = -3.0
 	state.hitP = 0.75
 	state.duration = 2
-	state.objectiu = HabilityRes.SEL_ENEMY_FLAG
+	state.objective = HabilityRes.SEL_ENEMY_FLAG
 	return state
 
 
@@ -437,6 +449,8 @@ func test_bars_react_to_signals() -> void:
 	card.name = "Test Unit"
 	card.hp = 100
 	card.mana = 50
+	card.img = get_unit_texture("res://assets/tiles/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png")
+	card.portrait = get_unit_texture("res://assets/tiles/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png")
 	card.habilities = [] as Array[HabilityRes]
 	card.resistances = {} as Dictionary[AttackType, int]
 	
@@ -445,13 +459,16 @@ func test_bars_react_to_signals() -> void:
 	# Instanciar escena
 	var gr := GameResources.load_from()
 	var map := create_test_map()
-	GameManager._gameMap = map
+	GameManager.game_config = GameConfig.new(null, null, map._mapRes, null, null)
 	
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
 	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate()  as TurnManager
-	instance.turn_order = [gr.users[0], gr.users[1]]
+	var user_a_game := UserGame.new(gr.users[0])
+	var user_b_game := UserGame.new(gr.users[1])
+	instance.turn_order = [user_a_game, user_b_game]
 	instance.turn_number = 0
+	instance.set_map(map)
 	add_child_autoqfree(instance)
 	
 	await wait_until(func(): return instance.is_inside_tree(), 5)

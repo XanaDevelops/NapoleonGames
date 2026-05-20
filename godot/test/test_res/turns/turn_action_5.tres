@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TurnPass" format=3]
+
+[ext_resource type="Script" path="res://scripts/game/turn_actions/turn_pass.gd" id="1_ssr6m"]
+
+[resource]
+script = ExtResource("1_ssr6m")
+action_order = 5
+player_uid = 1
+action = 5

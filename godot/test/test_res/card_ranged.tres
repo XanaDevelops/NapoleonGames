@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://duyb5pv17toxt" path="res://test/test_res/hab_bomba_psiquica.tres" id="4_0nbpr"]
 [ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="4_b26a2"]
 [ext_resource type="Resource" uid="uid://drlxjkpuo8uo0" path="res://test/test_res/hab_cond_daño_altura.tres" id="5_0nbpr"]
+[ext_resource type="Texture2D" uid="uid://b0yy2cwl13n5o" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="6_iwaig"]
 
 [resource]
 script = ExtResource("3_gtena")
@@ -16,5 +17,8 @@ desc = "test ranged"
 hp = 10
 mana = 15
 speed = 7
+portrait = ExtResource("6_iwaig")
+img = ExtResource("6_iwaig")
 habilities = Array[ExtResource("1_pv25n")]([ExtResource("2_gtena"), ExtResource("3_b26a2"), ExtResource("4_0nbpr"), ExtResource("5_0nbpr")])
+uid = 2
 metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

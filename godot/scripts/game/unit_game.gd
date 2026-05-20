@@ -10,7 +10,7 @@ signal healed()
 
 @export var _cardRes: CardRes
 
-@export var _owner: UserRes
+@export var _owner: UserGame
 @export var _tile: TileGame
 ## Vida actual, si <=0 estas muerto
 @export var hp: int:
@@ -55,7 +55,7 @@ signal died(unit: UnitGame, pos: Vector2i)
 var has_moved_this_turn : bool = false
 var has_used_hability_this_turn := false
 
-func _init(cardRes: CardRes, owner: UserRes) -> void:
+func _init(cardRes: CardRes, owner: UserGame) -> void:
 	self._cardRes = cardRes
 	
 	self.hp = cardRes.hp
@@ -66,7 +66,6 @@ func _init(cardRes: CardRes, owner: UserRes) -> void:
 		
 	self._owner = owner
 	
-
 ## Avanza los contadores de habilidades y estados alterados
 func _tick() -> void:
 	for key in self._currentAlterStates.keys():
@@ -97,12 +96,14 @@ func _proc_alter_states() -> void:
 			continue
 			
 		# Reutilizar esta funcion, un AlterState no deja de ser una minihabilidad
+		var tm := GameManager.get_turn_manager()
+		var map := tm.get_map()
 		var dest : Array[UnitGame] = []
-		if HabilityRes.inflicts_strict_self(alter.objectiu):
+		if HabilityRes.inflicts_strict_self(alter.objective):
 			dest.append(self)
-		else:
-			dest.append_array(GameManager.get_map().get_units_range(_tile.get_position(), alter.radius, alter.objectiu) \
-					.map(func (x: Vector2i): return GameManager.get_map().get_tile_at(x).get_unit()) as Array[UnitGame])
+		elif map:
+			dest.append_array(map.get_units_range(_tile.get_position(), alter.radius, alter.objective) \
+					.map(func (x: Vector2i): return map.get_tile_at(x).get_unit()) as Array[UnitGame])
 		for obj in dest:
 			_apply_hab(alter.stat, alter.type, alter.value, obj)
 		
@@ -110,10 +111,13 @@ func _proc_alter_states() -> void:
 ## se debe llamar cada turno del jugador
 ## Se debe vincular con TurnManager
 func advance_turn() -> void:
-	if GameManager.get_turn_manager().get_current_user() != _owner:
+	var tm := GameManager.get_turn_manager()
+	if tm == null:
+		return
+	if tm.get_current_user() != _owner:
 		return
 	# Si es despliegue ignoramos esta llamadas
-	if GameManager._app_state != GameManager.APP_STATE.IN_GAME:
+	if tm.get_app_state() != GameManager.APP_STATE.IN_GAME:
 		return
 	_tick()
 	
@@ -250,7 +254,11 @@ func get_available_habilities() -> Array[HabilityRes]:
 		if cd > 0:
 			continue
 			
-		if GameManager.get_map().get_units_range(_tile.get_position(), key.radius, key.objective).size() == 0:
+		var tm := GameManager.get_turn_manager()
+		var map := tm.get_map()
+		if map == null:
+			continue
+		if map.get_units_range(_tile.get_position(), key.radius, key.objective).size() == 0:
 			continue
 		
 		if key.manaCost > self.mana:
@@ -295,7 +303,7 @@ func _update_val_alter_states(init_val : float, stat_name:StringName, type: Atta
 	var multipliers := 1.0
 	
 	for alter in self._currentAlterStates:
-		if not HabilityRes.inflicts_self(alter.objectiu):
+		if not HabilityRes.inflicts_self(alter.objective):
 			continue
 
 		# ojo que randf() es [0,1] no [0,1)

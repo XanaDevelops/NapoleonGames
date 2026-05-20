@@ -6,10 +6,11 @@
 
 [resource]
 script = ExtResource("1_yb8b5")
-objectiu = 15
+objective = 15
 value = 4.0
 stat = ExtResource("2_pdx3k")
 type = ExtResource("3_4fr1i")
 duration = 4
 radius = 999999999
+uid = 1
 metadata/_custom_type_script = "uid://c6ylgfoqmjeis"

@@ -11,3 +11,5 @@ func test_login():
 		"null"
 	)
 	ApiAdapter.login(username, "1234")
+	
+	pass_test("acabar con conexión UI")
