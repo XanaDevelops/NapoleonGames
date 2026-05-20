@@ -50,7 +50,8 @@ func request_online_game() -> void:
 	
 func enter_online_game(lobby: GameLobby) -> void:
 	var gr := GameManager.get_game_resources()
-	GameManager.start_game(
+	await get_tree().process_frame
+	GameManager.start_game.call_deferred(
 		gr.get_res_from_uid(lobby.user_a_uid, UserRes) as UserRes,
 		gr.get_res_from_uid(lobby.user_b_uid, UserRes) as UserRes,
 		gr.get_res_from_uid(lobby.map_res_uid, MapRes) as MapRes,
@@ -59,7 +60,6 @@ func enter_online_game(lobby: GameLobby) -> void:
 		true,
 		lobby.game_pid
 	)
-
 
 func manage_turn_result(turn: TurnNetResult) -> void:
 	server_turn_response.emit(turn.is_valid)

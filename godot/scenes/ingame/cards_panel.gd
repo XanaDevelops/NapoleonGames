@@ -24,7 +24,9 @@ func _ready() -> void:
 func _connect_turn_manager() -> void:
 	var turn_manager: TurnManager = GameManager.get_turn_manager()
 	if turn_manager == null:
+		print("[CardsPanel] TurnManager not ready")
 		return
+	print("[CardsPanel] TurnManager connected")
 
 	if not turn_manager.deployment_phase_started.is_connected(_on_deployment_phase_started):
 		turn_manager.deployment_phase_started.connect(_on_deployment_phase_started)
@@ -32,6 +34,9 @@ func _connect_turn_manager() -> void:
 		turn_manager.battle_phase_started.connect(_on_battle_phase_started)
 	if not turn_manager.unit_info_cleared.is_connected(_on_unit_info_cleared):
 		turn_manager.unit_info_cleared.connect(_on_unit_info_cleared)
+	if turn_manager.is_deployment_phase:
+		print("[CardsPanel] Forcing deployment phase UI")
+		_on_deployment_phase_started()
 
 
 func _on_deployment_phase_started() -> void:

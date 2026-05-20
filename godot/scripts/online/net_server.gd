@@ -66,12 +66,12 @@ func manage_game_request(pid: int, request: OnlineMatchRequest) -> void:
 		var army_a : ArmyRes = gr.get_res_from_uid(request.army_uid, ArmyRes)
 		var army_b : ArmyRes = gr.get_res_from_uid(other.army_uid, ArmyRes)
 		
-		var game_id := randi()
+		var game_id := randi_range(0, 0x7fffffff)
 		# Seguramente habrá que hacerlo de otra forma, pero por ahora va bien
 		GameManager.start_game(user_a, user_b, map, army_a, army_b, true, game_id)
 		var tm := GameManager.get_turn_manager()
 		
-		var lobby := GameLobby.create(game_id, user_a.uid, user_b.uid, map.uid, army_a.uid, army_b.uid)
+		var lobby := GameLobby.create(game_id, user_a.uid, user_b.uid, army_a.uid, army_b.uid, map.uid)
 		lobby.send(Online.client_peers[pid])
 		lobby.send(Online.client_peers[other_pid])
 		
@@ -87,6 +87,7 @@ func manage_turn(pid: int, turn: TurnAction) -> void:
 		
 	var other_pid := game.pid_a if pid != game.pid_a else game.pid_b
 	var r:= await game.tm.replay_turn(turn)
+	print("[SERVER] turn ", "ok" if r else "nope")
 	var res := TurnNetResult.create(r)
 	if r:
 		turn.send(Online.client_peers[other_pid])

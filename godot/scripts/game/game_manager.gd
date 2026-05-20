@@ -62,6 +62,16 @@ func set_users() -> void:
 func start_game(playerA: UserRes, playerB:UserRes, map:MapRes,
 	armyA: ArmyRes, armyB:ArmyRes, isOnline:= false, game_pid:= -1
 	) -> void:
+	print("[GameManager] start_game")
+	print("  isOnline=", isOnline, " game_pid=", game_pid)
+	print("  user_a=", playerA.username, " user_b=", playerB.username)
+	print("  map=", map.name, " size=", map.tamX, "x", map.tamY)
+	print("  army_a=", armyA.nom, " groups=", armyA.agrupations.size())
+	for group: CardArmyGroup in armyA.agrupations:
+		print("    [A] ", group.cardType.name, " x", group.n)
+	print("  army_b=", armyB.nom, " groups=", armyB.agrupations.size())
+	for group: CardArmyGroup in armyB.agrupations:
+		print("    [B] ", group.cardType.name, " x", group.n)
 	game_config = GameConfig.new(playerA, playerB, map, armyA, armyB)
 	if isOnline:
 		if UserManager.usuario_actual == playerA:
@@ -80,6 +90,7 @@ func start_game(playerA: UserRes, playerB:UserRes, map:MapRes,
 		UiManager.cambiar_a_escena("juego")
 	else:
 		turn_manager = TurnManager.new()
+		turn_manager._ready()
 
 # resetea la partida
 func restart_current_game() -> void:

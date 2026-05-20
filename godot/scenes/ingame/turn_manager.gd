@@ -98,6 +98,7 @@ func get_army_b() -> ArmyRes:
 	
 func register_turn(turn: TurnAction) -> bool:
 	if game_config.game_pid != -1 and not GameManager.is_server and not replaying_turn:
+		print("comprobación en server")
 		turn.send(Online.server_peer)
 		var res : bool = await NetClient.server_turn_response
 		if not res:
@@ -143,6 +144,7 @@ func _get_UserGame_(uid: int) -> UserGame:
 func _replay_deployment(turn: TurnDeploy) -> bool:
 	var user_game := _get_UserGame_(turn.player_uid)
 	if not user_game:
+		print("UserName null")
 		return false
 	var card_army_i := user_game.deployment_data.find_custom(func (x: CardArmyGroup):
 		return x.cardType.uid == turn.unit_uid and x.n == turn.n)
@@ -185,14 +187,15 @@ func _init() -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var defer:= func():
+	if is_inside_tree():
 		await get_tree().process_frame
-	
-		ui_setup_requested.emit(self)
-		start_deployment_phase()
-	defer.call_deferred()
+
+	ui_setup_requested.emit(self)
+	start_deployment_phase()
 	
 	#end_deployment_phase()
+
+	
 
 func _clone_army(army: ArmyRes) -> Array[CardArmyGroup]:
 	var copy: Array[CardArmyGroup] = []
@@ -211,7 +214,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 	if unit._owner == get_current_user():
 		var action := TurnMove.create(unit, start, end, _get_game_pid())
 		if not await register_turn(action):
-			print("Acción denegada al registrar")
+			print("Movimiento denegada al registrar")
 			return false
 		
 		map_logic.move_unit(start, end)
@@ -249,7 +252,7 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 	)
 
 	var action := TurnHability.create(unit_source, tile, hability, objectives, _get_game_pid())
-	if await register_turn(action):
+	if not await register_turn(action):
 		print("Habilidad denegada por server")
 		return false
 	
@@ -277,20 +280,25 @@ func end_deployment_phase() -> void:
 
 func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vector2i) -> bool:
 	if not is_deployment_phase:
+		print("no es deploy")
 		return false
 	if user_game != get_current_user():
+		print("no es el usuario activo")
 		return false
 	if group == null:
+		print("no hay grupo")
 		return false
 	if not user_game.deployment_data.has(group):
+		print("el grpo no pertece al user")
 		return false
 
 	var result: Dictionary = map_game.calculate_deployment(get_current_user_number(), group.n, click_pos)
 	if not result["is_valid"]:
+		print("zona despliegue no valida")
 		return false
 
 	var action := TurnDeploy.create(user_game, click_pos, group.cardType, group.n, _get_game_pid())
-	if await register_turn(action):
+	if not await register_turn(action):
 		print("Despliegue denegado por server")
 		return false
 

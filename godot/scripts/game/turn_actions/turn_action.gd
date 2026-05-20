@@ -61,4 +61,5 @@ func decode(data: PackedByteArray) -> void:
 	action_order = data.decode_u32(14)
 
 func _init() -> void:
-	pass
+	packet_type = PACKET_TYPE.TURN_ACTION
+	flag = ENetPacketPeer.FLAG_RELIABLE

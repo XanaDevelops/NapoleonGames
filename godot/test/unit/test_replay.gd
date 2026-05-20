@@ -39,7 +39,7 @@ func test_replay():
 	autoqfree(get_tree().current_scene)
 	await get_tree().process_frame
 	for t in turns:
-		assert_true(tm.replay_turn(t))
+		assert_true(await tm.replay_turn(t))
 		#await wait_seconds(0.5)
 		# Pause between turns until the GUT Continue button is pressed.
 		gut.start_pause_before_teardown.emit()

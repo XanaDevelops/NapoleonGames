@@ -14,12 +14,16 @@ func _ready() -> void:
 func _connect_turn_manager() -> void:
 	var turn_manager: TurnManager = GameManager.get_turn_manager()
 	if turn_manager == null:
+		print("[DeploymentBox] TurnManager not ready")
 		return
 
 	if not turn_manager.deployment_data_refreshed.is_connected(_on_deployment_data_refreshed):
 		turn_manager.deployment_data_refreshed.connect(_on_deployment_data_refreshed)
 	if not turn_manager.deployment_card_consumed.is_connected(_on_deployment_card_consumed):
 		turn_manager.deployment_card_consumed.connect(_on_deployment_card_consumed)
+	if turn_manager.is_deployment_phase:
+		print("[DeploymentBox] Forcing initial deployment data")
+		_on_deployment_data_refreshed(turn_manager.get_current_user().deployment_data)
 
 
 func _on_deployment_data_refreshed(groups: Array) -> void:
