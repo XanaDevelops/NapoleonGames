@@ -2,7 +2,7 @@ extends Panel
 
 const FILA_USUARIO_ESCENA = preload("res://scenes/fila_usuario_menu.tscn")
 
-@onready var contenedor_usuarios = $Panel/ScrollContainer/ContenedorUsuarios
+@onready var contenedor_usuarios = %ContenedorUsuarios
 
 func _ready():
 	cargar_lista_de_usuarios()

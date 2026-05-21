@@ -61,7 +61,7 @@ func _ready() -> void:
 	
 	panel_transferencia.visible = false
 	
-	UserManager.usuario_cambiado.connect(_al_cambiar_usuario)
+	UserManager.usuario_cambiado.connect(_al_cambiar_usuario.unbind(1))
 	
 	_cargar_datos_usuario()
 	

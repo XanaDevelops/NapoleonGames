@@ -1,6 +1,6 @@
 extends Node
 
-signal usuario_cambiado(email_activo)
+signal usuario_cambiado(email_activo,foto_de_perfil)
 
 @export var mapas_de_prueba: Array[MapRes] = []
 
@@ -44,7 +44,7 @@ func establecer_usuario_actual(email_usuario: String) -> void:
 	if usuarios.has(email_usuario):
 		usuario_actual = usuarios[email_usuario]
 		print("Usuario activo cambiado a: " + usuario_actual.name)
-		usuario_cambiado.emit(usuario_actual.email)
+		usuario_cambiado.emit(usuario_actual.email,usuario_actual.img)
 	else:
 		push_error("Error: Usuario no encontrado en el registro.")
 

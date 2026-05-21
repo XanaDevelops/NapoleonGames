@@ -18,8 +18,9 @@ enum HighlightMode {
 
 
 @onready var icono_carta = $ImageCard 
-@onready var label_nombre = $VBoxContainer/Name
-@onready var label_cantidad = $VBoxContainer/Quantity
+@onready var label_nombre = %Name
+@onready var label_cantidad = %Quantity
+@onready var peso=%Peso
 
 var carta_res: CardRes
 var en_mazo: bool = false 
@@ -34,6 +35,7 @@ func configurar(carta: CardRes, cantidad: int, es_mazo: bool) -> void:
 	carta_res = carta
 	en_mazo = es_mazo
 	label_nombre.text = carta.name
+	peso.text = "Peso: %s" % carta.weight
 	actualizar_cantidad(cantidad)
 	if carta.img != null:
 		icono_carta.texture = carta.img
@@ -52,6 +54,9 @@ func set_highlight(mode: HighlightMode) -> void:
 			theme = tema_seleccionado
 		HighlightMode.NONE, _:
 			theme = tema_por_defecto
+			
+			
+
 
 func _al_pulsar() -> void:
 	carta_seleccionada.emit(self)
