@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://j2i6u0vjnpsg"]
+
+[ext_resource type="Script" uid="uid://b05mvtuu6sm47" path="res://scenes/unit_overlay.gd" id="1_bhx8j"]
+[ext_resource type="PackedScene" uid="uid://ygwgcu7ruh4u" path="res://scenes/health_bar.tscn" id="2_vippa"]
+
+[node name="UnitOverlay" type="Control" unique_id=562993406]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_bhx8j")
+
+[node name="HealthBar" parent="." unique_id=1894103332 instance=ExtResource("2_vippa")]
+custom_minimum_size = Vector2(75, 15)
+layout_mode = 0
+offset_right = 30.0
+offset_bottom = 4.0
+mouse_filter = 2

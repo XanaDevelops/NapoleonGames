@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var sprite_overlay: Sprite2D = $SpriteOverlay
 @onready var generic_particles: GPUParticles2D = $ParticulasGenericas
+signal vfx_finished
 
 func setup_vfx(
 	unit_texture: Texture2D,
@@ -202,5 +203,6 @@ func setup_vfx(
 	)
 
 	main_tween.tween_interval(0.8)
-
-	main_tween.tween_callback(queue_free)
+	main_tween.tween_callback(func():
+		vfx_finished.emit()
+		queue_free())

@@ -2,7 +2,7 @@
 
 [ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="1_5nmfw"]
 [ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="2_dh7y1"]
-[ext_resource type="Script" uid="uid://bbtgok5blyof6" path="res://scenes/panel_info_cartas.gd" id="2_twtq5"]
+[ext_resource type="Script" path="res://scenes/panel_info_cartas.gd" id="2_twtq5"]
 [ext_resource type="Theme" uid="uid://d42d7i75rf1k" path="res://assets/themes/ui/pestaña_ejercito_activo.tres" id="4_jqwik"]
 [ext_resource type="Theme" uid="uid://cs2ycfq76kcvr" path="res://assets/themes/ui/estilo_botones_negacion_suave.tres" id="4_twtq5"]
 

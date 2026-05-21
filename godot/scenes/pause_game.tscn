@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://baijtxvsax33j"]
+
+[ext_resource type="Script" uid="uid://duw61hoob50fq" path="res://scenes/pause_game.gd" id="1_g7tir"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0f7wk"]
+bg_color = Color(0.6, 0.6, 0.6, 0.06666667)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rt2r8"]
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+shadow_color = Color(0.7279856, 0.7279857, 0.7279856, 0.6)
+shadow_size = 3
+
+[node name="PauseGame" type="Control" unique_id=1026640940 node_paths=PackedStringArray("reanudar", "salir", "menuPrincipal")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g7tir")
+reanudar = NodePath("PanelContainer/VBoxContainer/ReanudarButton")
+salir = NodePath("PanelContainer/VBoxContainer/SalirButton")
+menuPrincipal = NodePath("PanelContainer/VBoxContainer/MenuPrincipalButton")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1760460464]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.10980392, 0.15686275, 0.20784314, 0.6156863)
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1490596214]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.5
+offset_top = -75.0
+offset_right = 125.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0f7wk")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1841271532]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1787813558]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Juego pausado"
+horizontal_alignment = 1
+
+[node name="ReanudarButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=781728576]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_rt2r8")
+text = "Reanudar"
+
+[node name="SalirButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=258886718]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_rt2r8")
+text = "Salir"
+
+[node name="MenuPrincipalButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1419761575]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_rt2r8")
+text = "Pantalla inicial"

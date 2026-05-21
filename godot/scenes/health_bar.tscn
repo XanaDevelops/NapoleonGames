@@ -19,8 +19,10 @@ corner_detail = 5
 
 [node name="HealthBar" type="ProgressBar" unique_id=1894103332]
 z_index = 1
+custom_minimum_size = Vector2(30, 4)
 offset_right = 100.0
 offset_bottom = 20.0
+size_flags_vertical = 4
 theme_override_styles/background = SubResource("StyleBoxEmpty_y3kqx")
 theme_override_styles/fill = SubResource("StyleBoxFlat_6opq1")
 value = 60.0
@@ -29,6 +31,7 @@ script = ExtResource("1_1bvlm")
 
 [node name="DamageBar" type="ProgressBar" parent="." unique_id=1931751712]
 z_index = -1
+custom_minimum_size = Vector2(30, 4)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -25,7 +25,6 @@ func test_visualizer() -> void:
 	pass_test("ok, check UI")
 	gut.add_children_to = prev_add_target
 
-
 func test_hability_applies_to_bars() -> void:
 	var gr := GameResources.load_from()
 	var map := create_test_map()
@@ -37,7 +36,6 @@ func test_hability_applies_to_bars() -> void:
 		gr.users[1].obtener_ejercito_activo()
 	)
 
-	# Usar game_scene.tscn que incluye TurnManager
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
 	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate() as TurnManager
@@ -50,13 +48,14 @@ func test_hability_applies_to_bars() -> void:
 
 	await wait_until(func(): return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
+
 	var ingame_map = instance.get_node("IngameMap")
 	autoqfree(ingame_map._hab_manager)
 
-	var unit_info = instance.get_node("IngameMap/VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo")
+	var unit_info = instance.get_node("IngameMap/CardsPanel/HBoxContainer/UnitPanel")
 	assert_not_null(unit_info, "UnitInfo debe existir")
 
-	# Crear unidades de test con CardRes válido
+	# Crear unidades
 	var card_attacker = CardRes.new()
 	card_attacker.name = "Atacante"
 	card_attacker.hp = 100
@@ -82,59 +81,60 @@ func test_hability_applies_to_bars() -> void:
 	var attacker = UnitGame.new(card_attacker, user_a_game)
 	var target = UnitGame.new(card_target, user_b_game)
 
-	# Colocar unidades en el mapa
+	# Colocar y dibujar unidades para que se creen sus overlays
 	var attacker_pos = Vector2i(5, 5)
 	var target_pos = Vector2i(6, 5)
 	map.get_tile_at(attacker_pos).set_unit(attacker)
 	map.get_tile_at(target_pos).set_unit(target)
-
-	# ── Test A: Observar target y verificar HP inicial ──
-	unit_info.observe(target)
+	ingame_map.map_visualizer.draw_tile(attacker_pos.x, attacker_pos.y, map.get_tile_at(attacker_pos))
+	ingame_map.map_visualizer.draw_tile(target_pos.x, target_pos.y, map.get_tile_at(target_pos))
 	await wait_physics_frames(2)
 
-	var hp_bar: ProgressBar = unit_info.current_health
-	assert_eq(int(hp_bar.value), 80, "HP inicial debe ser 80")
+	# Obtener overlays
+	var overlay_target: UnitOverlay = ingame_map.map_visualizer._unit_overlays[target_pos]
+	var overlay_attacker: UnitOverlay = ingame_map.map_visualizer._unit_overlays[attacker_pos]
+	assert_not_null(overlay_target, "Overlay del target debe existir")
+	assert_not_null(overlay_attacker, "Overlay del attacker debe existir")
 
-	# ── Test B: Daño directo baja HP ──
+	var hp_bar_target = overlay_target.hp_bar
+	var hp_bar_attacker = overlay_attacker.hp_bar
+
+	#HP inicial del target 
+	assert_eq(int(hp_bar_target.value), 80, "HP inicial debe ser 80")
+
+	#Daño directo baja HP 
 	var hp_before = target.hp
 	target.hp -= 20
 	await wait_physics_frames(2)
-
 	assert_eq(target.hp, hp_before - 20, "HP debe bajar tras daño")
-	assert_eq(int(hp_bar.value), hp_before - 20, "Barra HP debe reflejar daño")
+	assert_eq(int(hp_bar_target.value), hp_before - 20, "Barra HP debe reflejar daño")
 
-	# ── Test C: Curación sube HP ──
+	# Curación sobre hp
 	var hp_after_damage = target.hp
 	target.hp += 10
 	await wait_physics_frames(2)
-
 	assert_eq(target.hp, hp_after_damage + 10, "HP debe subir tras curación")
-	assert_eq(int(hp_bar.value), hp_after_damage + 10, "Barra HP debe reflejar curación")
+	assert_eq(int(hp_bar_target.value), hp_after_damage + 10, "Barra HP debe reflejar curación")
 
-	# ── Test D: Observar atacante y verificar maná ──
+	#  Maná inicial del atacante 
 	unit_info.observe(attacker)
 	await wait_physics_frames(2)
-
 	var mana_bar: ProgressBar = unit_info.current_mana
 	assert_eq(int(mana_bar.value), 50, "Mana inicial debe ser 50")
 
-	# ── Test E: Consumo de maná ──
+	# Consumo de maná 
 	attacker.mana -= 25
 	await wait_physics_frames(2)
-
 	assert_eq(attacker.mana, 25, "Mana debe bajar")
 	assert_eq(int(mana_bar.value), 25, "Barra mana debe reflejar consumo")
 
-	# ── Test F: Cambiar observación a target muestra valores correctos ──
-	unit_info.observe(target)
-	await wait_physics_frames(2)
-
-	assert_eq(int(hp_bar.value), target.hp, "Barra debe mostrar HP del target")
+	# Cambiar observación a target muestra HP correcto 
+	assert_eq(int(hp_bar_target.value), target.hp, "Barra debe mostrar HP del target")
 
 	gut.pause_before_teardown()
 	pass_test("Hability application and bars update correctly")
 	gut.add_children_to = prev_add_target
-
+	
 func _create_physical_attack() -> HabilityRes:
 	var hab = HabilityRes.new()
 	hab.name = "Golpe de espada"
@@ -442,9 +442,7 @@ func get_random_tile_texture(folder_path: String) -> Texture2D:
 	var random_file = files[randi() % files.size()]
 	return load(random_file)
 
-
 func test_bars_react_to_signals() -> void:
-	# Crear una unidad simple
 	var card = CardRes.new()
 	card.name = "Test Unit"
 	card.hp = 100
@@ -453,68 +451,76 @@ func test_bars_react_to_signals() -> void:
 	card.portrait = get_unit_texture("res://assets/tiles/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png")
 	card.habilities = [] as Array[HabilityRes]
 	card.resistances = {} as Dictionary[AttackType, int]
-	
-	var unit = UnitGame.new(card, null)
-	
-	# Instanciar escena
+
 	var gr := GameResources.load_from()
 	var map := create_test_map()
 	GameManager.game_config = GameConfig.new(null, null, map._mapRes, null, null)
-	
+
 	var prev_add_target = gut.add_children_to
 	gut.add_children_to = get_tree().get_root()
-	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate()  as TurnManager
+	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate() as TurnManager
 	var user_a_game := UserGame.new(gr.users[0])
 	var user_b_game := UserGame.new(gr.users[1])
 	instance.turn_order = [user_a_game, user_b_game]
 	instance.turn_number = 0
 	instance.set_map(map)
 	add_child_autoqfree(instance)
-	
+
 	await wait_until(func(): return instance.is_inside_tree(), 5)
 	await wait_seconds(gut.paint_after)
+
 	var ingame_map = instance.get_node("IngameMap")
 	autoqfree(ingame_map._hab_manager)
-	
-	var unit_info = instance.get_node("IngameMap/VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo")
-	var hp_bar: ProgressBar = unit_info.current_health
-	var mana_bar: ProgressBar = unit_info.current_mana
-	
-	# Conectar la barra a la unidad
-	unit_info.observe(unit)
+
+	# Colocar unidad en el mapa y dibujarla para que se cree su UnitOverlay
+	var unit = UnitGame.new(card, user_a_game)
+	var unit_pos = Vector2i(3, 3)
+	map.get_tile_at(unit_pos).set_unit(unit)
+	ingame_map.map_visualizer.draw_tile(unit_pos.x, unit_pos.y, map.get_tile_at(unit_pos))
 	await wait_physics_frames(2)
-	
-	#  Verificar valores iniciales 
+
+	# Obtener el overlay de la unidad
+	var overlay: UnitOverlay = ingame_map.map_visualizer._unit_overlays[unit_pos]
+	assert_not_null(overlay, "El overlay de la unidad debe existir")
+
+	var hp_bar = overlay.hp_bar
+
+	# Verificar HP inicial
 	assert_eq(int(hp_bar.value), 100, "HP inicial debe ser 100")
-	assert_eq(int(mana_bar.value), 50, "Mana inicial debe ser 50")
-	
-	#  Bajar HP directamente 
+
+	# Bajar HP
 	unit.hp -= 30
 	await wait_physics_frames(2)
 	assert_eq(int(hp_bar.value), 70, "Barra HP debe mostrar 70")
-	
-	#  Bajar mana directamente 
-	unit.mana -= 20
-	await wait_physics_frames(2)
-	assert_eq(int(mana_bar.value), 30, "Barra mana debe mostrar 30")
-	
-	# Subir HP 
+
+	# Subir HP
 	unit.hp += 10
 	await wait_physics_frames(2)
 	assert_eq(int(hp_bar.value), 80, "Barra HP debe mostrar 80")
-	
-	#  HP no baja de 0 
+
+	# HP no baja de 0
 	unit.hp = -999
 	await wait_physics_frames(2)
 	assert_eq(unit.hp, 0, "HP no debe ser negativo")
 	assert_eq(int(hp_bar.value), 0, "Barra HP debe mostrar 0")
-	
-	# Mana no baja de 0 
+
+	# Mana — sigue en unit_info
+	var unit_info = instance.get_node("IngameMap/CardsPanel/HBoxContainer/UnitPanel")
+	unit_info.observe(unit)
+	await wait_physics_frames(2)
+
+	var mana_bar: ProgressBar = unit_info.current_mana
+	assert_eq(int(mana_bar.value), 50, "Mana inicial debe ser 50")
+
+	unit.mana -= 20
+	await wait_physics_frames(2)
+	assert_eq(int(mana_bar.value), 30, "Barra mana debe mostrar 30")
+
 	unit.mana = -50
 	await wait_physics_frames(2)
 	assert_eq(unit.mana, 0, "Mana no debe ser negativo")
 	assert_eq(int(mana_bar.value), 0, "Barra mana debe mostrar 0")
-	
+
 	gut.pause_before_teardown()
 	pass_test("Bars react correctly to signal changes")
 	gut.add_children_to = prev_add_target

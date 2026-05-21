@@ -155,6 +155,8 @@ func calculate_deployment(player_id: int, size: int, start_tile: Vector2i) -> Di
 
 	while ideal_shape.size() < size and not queue.is_empty():
 		var current: Vector2i = queue.pop_front()
+		if not _is_in_map_bounds(current):  
+			continue
 		ideal_shape.append(current)
 		
 		for neighbor in _get_clockwise_neighbors(current):
@@ -222,4 +224,29 @@ func place_unit(unit: UnitGame, pos: Vector2i) -> bool:
 	if tm != null and not tm.tick_turn.is_connected(unit.advance_turn):
 		tm.tick_turn.connect(unit.advance_turn)
 	
+	var map_visualizer= GameManager.get_turn_manager().map_visualizer
+
 	return true
+
+	# Implementa BFS para encontrar el camino más corto
+func _find_path(src: Vector2i, target: Vector2i) -> Array[Vector2i]:
+	var came_from: Dictionary = {src: null}
+	var queue: Array[Vector2i] = [src]
+	
+	while not queue.is_empty():
+		var current = queue.pop_front()
+		if current == target:
+			break
+		for neighbor in get_neightbours(current):
+			if not came_from.has(neighbor) and not get_tile_at(neighbor).has_unit():
+				came_from[neighbor] = current
+				queue.append(neighbor)
+	
+	# Reconstruir camino
+	var path: Array[Vector2i] = []
+	var current = target
+	while current != null:
+		path.push_front(current)
+		current = came_from.get(current, null)
+	return path
+	

@@ -9,10 +9,11 @@ signal turn_changed_visual(current_icon: Texture2D, next_name: String, next_icon
 
 signal tick_turn
 signal game_end
-@onready var cards_panel = $IngameMap/VBoxContainer/CardsPanel
-@onready var deployment_box = $IngameMap/VBoxContainer/CardsPanel/MarginContainer/DeploymentBox
-@onready var map_visualizer = $IngameMap/VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer
-@onready var players_panel : PlayersPanel = $IngameMap/VBoxContainer/PlayersPanel
+@export var cards_panel :Control
+@export var deployment_box:HBoxContainer 
+@export var map_visualizer:mapVisualizer
+@export var players_panel : Control 
+@export var end_button:Control
 @export var turns: Array[TurnAction] = []
 var turn_order: Array[UserGame] = []
 var turn_number: int = 0
@@ -20,6 +21,7 @@ var global_action_count: int = 0
 var is_deployment_phase: bool = false
 var game_config: GameConfig
 var map_game: MapGame
+signal ready_completed
 
 func advance_turn(skip_visual: bool = false) -> void:
 	var user := get_current_user()
@@ -29,6 +31,8 @@ func advance_turn(skip_visual: bool = false) -> void:
 	var next_user : UserGame = turn_order[turn_number % turn_order.size()]
 	print("Turno de ", next_user.get_user_res().username)
 	tick_turn.emit()
+	map_visualizer._refresh_unit_states()
+
 	
 	if not skip_visual:
 		var prev_res = user.get_user_res()
@@ -98,7 +102,7 @@ func replay_turn(turn: TurnAction) -> bool:
 		TurnAction.ACTION.DEPLOYMENT:
 			_replay_deployment(turn)
 		TurnAction.ACTION.MOVEMENT:
-			_replay_movement(turn)
+			await _replay_movement(turn)
 		TurnAction.ACTION.ACTIVE, TurnAction.ACTION.PASSIVE:
 			_replay_hability(turn)
 		TurnAction.ACTION.PASS_TURN:
@@ -133,7 +137,7 @@ func _replay_deployment(turn: TurnDeploy) -> bool:
 func _replay_movement(turn: TurnMove) -> bool:
 	
 	# TODO: realizar más comprobaciones?
-	return _on_unit_movement_requested(turn.start_pos, turn.end_pos)
+	return await _on_unit_movement_requested(turn.start_pos, turn.end_pos)
 	
 func _replay_hability(turn: TurnHability) -> bool:
 	# TODO: más comprobaciones?
@@ -163,11 +167,11 @@ func _ready() -> void:
 
 	for usuario in turn_order:
 		usuario.living_units = 0
+
 	players_panel.setup(self)
-	
+
 	start_deployment_phase()
 	
-	#end_deployment_phase()
 
 func _clone_army(army: ArmyRes) -> Array[CardArmyGroup]:
 	var copy: Array[CardArmyGroup] = []
@@ -185,9 +189,10 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 		
 	if unit._owner == get_current_user():
 	
-		map_logic.move_unit(start, end)
 		unit.has_moved_this_turn = true
-		map_visualizer.plot_unit_moved(start, end)
+		await map_visualizer.plot_unit_moved(start, end)
+		map_logic.move_unit(start, end)
+		map_visualizer._refresh_unit_states()
 		
 		var action := TurnMove.create(unit, start, end)
 		register_turn(action)
@@ -225,7 +230,8 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 	if not res:
 		print("No se cumple las condiciones para usar esta habilidad!")
 		return false
-		
+
+	map_visualizer._refresh_unit_states()
 	var action := TurnHability.create(unit_source, tile, hability, objectives)
 	register_turn(action)
 		
@@ -244,7 +250,8 @@ func start_deployment_phase() -> void:
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
 	players_panel.set_phase_battle()
-
+	end_button.show_battle()
+	
 	cards_panel.set_deployment_phase(false)
 	map_visualizer.movement_requested.connect(_on_unit_movement_requested)
 	
@@ -293,7 +300,6 @@ func _consume_current_card(user_game: UserGame, group: CardArmyGroup) -> void:
 	if user_game.consume_deployment_group(group):
 		deployment_box.remove_card_visual(group)
 		card_deployed.emit(user_game, user_game.get_deployment_count())
-
 	_handle_next_deployment_step()
 
 func _handle_next_deployment_step() -> void:
@@ -302,7 +308,7 @@ func _handle_next_deployment_step() -> void:
 	
 	var current_user := get_current_user()
 	var opponent_user := turn_order[opponent_idx]
-	
+
 	if _has_cards_to_deploy(opponent_user):
 		advance_turn()
 		_refresh_ui_for_current_player()
@@ -331,6 +337,7 @@ func _highlight_current_deployment_zone() -> void:
 #esta función se ejecuta caundo una unidad emite que ha muerto
 func _on_unit_died(unit: UnitGame, pos: Vector2i) -> void:
 	map_visualizer.remove_unit(pos, map_game.get_tile_at(pos))
+	map_visualizer.refresh_unit_died(pos)
 
 	if tick_turn.is_connected(unit.advance_turn):
 			tick_turn.disconnect(unit.advance_turn)
