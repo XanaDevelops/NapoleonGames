@@ -1,55 +1,52 @@
-extends Control
+extends PanelContainer
 
 
-@onready var unit_label: Label = $VBoxContainer/VBoxContainer/UnitLabel
-@onready var unit_texture: TextureRect = $VBoxContainer/VBoxContainer/UnitTextureRect
-@onready var description_label: Label = $VBoxContainer/PanelContainer/HBoxContainer/DescriptionLabel
-@onready var description_text: Label = $VBoxContainer/PanelContainer/HBoxContainer/ScrollContainer/DescriptionText
-@onready var owner_label: Label = $VBoxContainer/VBoxContainer2/OwnerLabel
-@onready  var speed_label: Label = $VBoxContainer/VBoxContainer2/SpeedLabel
-@onready var dodge_label: Label = $VBoxContainer/VBoxContainer2/DodgeLabel
-@onready var weight_label : Label = $VBoxContainer/VBoxContainer2/WeightLabel
-@onready var resistances_container: PanelContainer = $VBoxContainer/ResistancesContainer
-@onready var habilities_container: PanelContainer = $VBoxContainer/HabilitiesContainer
-@onready var currrentAlterStates_container: PanelContainer = $VBoxContainer/CurrenAlterStatesContainer
-@onready var habilities_grid: GridContainer= $VBoxContainer/HabilitiesContainer/VBoxContainer/ScrollContainer/GridContainer
-@onready var grid_scroll: ScrollContainer = $VBoxContainer/HabilitiesContainer/VBoxContainer/ScrollContainer
-@onready var resistances_grid : GridContainer= $VBoxContainer/ResistancesContainer/VBoxContainer/ResistancesScrollContainer/ResistancesGridContainer
-@onready var alter_states_grid: GridContainer = $VBoxContainer/CurrenAlterStatesContainer/VBoxContainer/ScrollContainer/AlterStatesGridContainer
-@onready var current_health: ProgressBar = $VBoxContainer/Bars/HealthBar
-@onready var current_mana: ProgressBar = $VBoxContainer/Bars/ManaBar
+
+@export var unit_label: Label 
+@export var unit_texture: TextureRect
+
+@export var owner_label: Label
+@export  var speed_label: Label 
+@export var dodge_label: Label 
+@export var habilities_grid: GridContainer 
+@export var current_mana: ProgressBar 
+@export var descriptionButton:Button
+
+@export var unit_info: PanelContainer
+var _desc_handler: DescriptionButtonHandler
+
+
+@export var resistances_container: PanelContainer 
+@export var currrentAlterStates_container: PanelContainer 
+@export var resistances_grid : GridContainer
+@export var alter_states_grid: GridContainer 
 
 const HEADERS_RESISTANCES= ["Tipo de ataque", "Resistencia"]
-const ALTER_HEADERS = ["Estado", "Turnos Faltantes", "Efecto"]
 signal hability_use_requested(hab: HabilityRes)
 # UnitInfo
 var _observed_unit: UnitGame = null
 func _ready() -> void:
 	await get_tree().process_frame
-	
-	await get_tree().process_frame
-	
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-	
 
 func paint(tile: TileGame) -> void:
-	self.unit_label.text =tile.get_tile_name() 
-	self.description_text.text= tile.get_tile_desc()
-	self.owner_label.text = "Owner: %s" %tile.get_owner_name()
-	self.weight_label.text=  "Altura: %d" % tile.get_unit_weight()
+	
+	self.unit_label.text =tile.get_unit_name()
+	self.owner_label.text = str(tile.get_owner_name())
 	self.unit_texture.texture= tile.get_unit_portrait()
-	self.speed_label.text = "Speed : %d" % tile.get_speed()
-	self.dodge_label.text = "Dodge : %d" % tile.get_dodge()
+	self.speed_label.text = str(tile.get_speed())
+	self.dodge_label.text = str(tile.get_dodge())
+	_desc_handler = DescriptionButtonHandler.new()
+	_desc_handler.setup(
+		descriptionButton,
+		unit_info,
+		func(): return tile.get_unit_desc()
+	)
 
-
-	paint_resistances(tile.get_resistances())
 	paint_habilities(tile.get_habilities(),tile.get_availableHabilities())
 	paint_AlterStates(tile.get_AlterStates())
+	#paint_resistances(tile.get_resistances())
 
 func paint_habilities(habilities: Array[HabilityRes], available_habilities: Dictionary[HabilityRes, int]) -> void:
 	if habilities== null:
@@ -60,30 +57,41 @@ func paint_habilities(habilities: Array[HabilityRes], available_habilities: Dict
 	for hab in habilities:
 		_add_row(hab, available_habilities.get(hab, 0)==0)
 
-func _on_hability_info_requested(hab: HabilityRes) -> void:
-	var dialog = AcceptDialog.new()
-	dialog.title = str(hab.name)
-	dialog.dialog_text = """
-		Descripción: %s
-		Objetivo: %s
-		Maná: %d
-		Rango: %d
-		Cooldown: %dt
-		Pasiva: %s
-	""" % [
-		hab.desc,
-		hab._objective_text(),
-		hab.manaCost,
-		hab.radius,
-		hab.cooldown,
-		"Sí" if hab.isPassive else "No"
-	]
-	add_child(dialog)
-	dialog.popup_centered()
-	dialog.confirmed.connect(func(): dialog.queue_free())
-	dialog.canceled.connect(func(): dialog.queue_free())
 
- 
+func _on_hability_info_requested(hab: HabilityRes) -> void:
+	var root = get_tree().root
+	var existing = root.get_node_or_null("HabilityPanel")
+	
+	# Si está abierto cerrarlo y salir
+	if existing:
+		existing.queue_free()
+		return
+	
+	var hability_scene = preload("res://scenes/hability.tscn").instantiate()
+	hability_scene.name = "HabilityPanel"
+	root.add_child(hability_scene)
+	hability_scene.paint(hab)
+	
+	await get_tree().process_frame
+	await get_tree().process_frame
+	
+	var anchor_global = habilities_grid.global_position
+	var anchor_size = habilities_grid.size
+	var scene_size = hability_scene.size
+	var vp_size = get_viewport_rect().size
+	
+	# Posición base: a la derecha del grid de habilidades
+	var pos = Vector2(anchor_global.x + anchor_size.x + 5, anchor_global.y)
+	
+	# Ajustar si se sale por la derecha
+	if pos.x + scene_size.x > vp_size.x:
+		pos.x = anchor_global.x - scene_size.x - 5
+	
+	# Ajustar si se sale por abajo
+	if pos.y + scene_size.y > vp_size.y:
+		pos.y = vp_size.y - scene_size.y
+	
+	hability_scene.global_position = pos
 func _create_cell(text: String, color: Color, is_header: bool = false) -> PanelContainer:
 	var panel = PanelContainer.new()
 	
@@ -112,46 +120,27 @@ func _create_cell(text: String, color: Color, is_header: bool = false) -> PanelC
 
 func _add_row(hab: HabilityRes, available: bool) -> void:
 	var row = HBoxContainer.new()
-	
-	var name_label = Label.new()
-	name_label.text = str(hab.name)
-	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	name_label.add_theme_color_override("font_color", Color.WHITE if available else Color.GRAY)
-	row.add_child(name_label)
-	
-	var btn_info = Button.new()
-	btn_info.text = "i"
-
-	btn_info.pressed.connect(func(): _show_hability_info(hab))
-	row.add_child(btn_info)
-	
 	var btn_use = Button.new()
-	btn_use.text = "Usar"
+	btn_use.text = hab.name
 	btn_use.disabled = not available
 	btn_use.pressed.connect(func():
 		emit_signal("hability_use_requested", hab, ))
 	row.add_child(btn_use)
 	
+
+	var btn_info = Button.new()
+	btn_info.text = "i"
+
+	btn_info.pressed.connect(func(): _on_hability_info_requested(hab))
+	row.add_child(btn_info)
+	
+	
 	habilities_grid.columns = 1
 	habilities_grid.add_child(row)
 
-func _show_hability_info(hab: HabilityRes) -> void:
-	var dialog = AcceptDialog.new()
-	dialog.title = str(hab.name)
-	dialog.dialog_text = "Descripción: %s\nObjetivo: %s\nManá: %d\nRango: %d\nCD: %dt\nPasiva: %s" % [
-		hab.desc,
-		hab._objective_text(),
-		hab.manaCost,
-		hab.radius,
-		hab.cooldown,
-		"Sí" if hab.isPassive else "No"
-	]
-	add_child(dialog)
-	dialog.popup_centered()
-	dialog.confirmed.connect(func(): dialog.queue_free())
-	dialog.canceled.connect(func(): dialog.queue_free())
 
-  
+
+
 
 func _add_row_resistance(attack: AttackType, resistance: int) -> void:
 	var values = [
@@ -177,26 +166,6 @@ func paint_resistances(resistances: Dictionary[AttackType, int]) -> void:
 
 
 
-func paint_AlterStates(states: Dictionary[AlterStateRes, int]) -> void:
-	if states==null:
-		return 
-	for child in alter_states_grid.get_children():
-		child.queue_free()
-	
-
-	alter_states_grid.columns = ALTER_HEADERS.size()
-	
-
-	for header in ALTER_HEADERS:
-		alter_states_grid.add_child(_create_cell(header, Color.YELLOW, true))
-	
-	for state in states.keys():
-		var turns_remaining: int = states[state]
-		alter_states_grid.add_child(_create_cell(state.stat.name, Color.WHITE))
-		alter_states_grid.add_child(_create_cell("%d" % turns_remaining, Color.WHITE))
-		alter_states_grid.add_child(_create_cell(_get_effect_text(state), Color.WHITE))
-
-
 func _get_effect_text(state: AlterStateRes) -> String:
 	if state.stat == null:
 		return "-"
@@ -207,34 +176,71 @@ func _get_effect_text(state: AlterStateRes) -> String:
 	if state.stat.isPercent:
 		value_text = "%s%.0f%%" % [sign, state.value * 100]
 	else:
-		value_text = "%s%.0f " % [sign, state.value]
+		value_text = "%s%.0f" % [sign, state.value]
 	
+	var prob_text = ""
 	if state.hitP < 1.0:
-		return "%s (%.0f%%)" % [value_text, state.hitP * 100]
-	else:
-		return value_text
+		prob_text = " (%.0f%%)" % (state.hitP * 100)
+	
+	return value_text + prob_text
+
+func _get_stat_icon(stat_name: StringName) -> String:
+	match stat_name:
+		StatData.DEFENSE:   return "🛡"
+		StatData.SPEED:     return "⚡"
+		StatData.HEALTH:    return "❤"
+		StatData.ATTACK:    return "⚔"
+		StatData.MANA:      return "💧"
+		_:                  return "◆"
+
+func paint_AlterStates(states: Dictionary[AlterStateRes, int]) -> void:
+	if states == null:
+		return
+	for child in alter_states_grid.get_children():
+		child.queue_free()
+	
+	if states.is_empty():
+		alter_states_grid.add_child(_create_cell("Sin estados activos", Color.GRAY))
+		return
+	
+	alter_states_grid.columns = 3
+	
+	# Headers
+	for header in ["Efecto", "Valor", "Turnos"]:
+		alter_states_grid.add_child(_create_cell(header, Color.YELLOW, true))
+	
+	for state in states.keys():
+		var turns_remaining: int = states[state]
+		var icon = _get_stat_icon(state.stat.name if state.stat else &"")
+		
+		alter_states_grid.add_child(_create_cell(
+			"%s %s" % [icon, state.stat.name if state.stat else "?"],
+			Color.WHITE if state.value >= 0 else Color.TOMATO
+		))
+		alter_states_grid.add_child(_create_cell(
+			_get_effect_text(state),
+			Color.LIGHT_GREEN if state.value >= 0 else Color.TOMATO
+		))
+		alter_states_grid.add_child(_create_cell(
+			"%dt" % turns_remaining,
+			Color.YELLOW if turns_remaining <= 1 else Color.WHITE
+		))
 
 
 
 func observe(unit: UnitGame) -> void:
 	if _observed_unit != null:
-		if _observed_unit.health_changed.is_connected(_on_health_changed):
-				_observed_unit.health_changed.disconnect(_on_health_changed)
 		if _observed_unit.mana_changed.is_connected(_on_mana_changed):
 			_observed_unit.mana_changed.disconnect(_on_mana_changed)
 
 	_observed_unit = unit
-	current_health.init(unit.max_hp)
 	current_mana.init(unit._cardRes.mana)
-	current_health.update(unit.hp)
 	current_mana.update(unit.mana)
+	print("current mana ", unit.mana)
 
-	unit.health_changed.connect(_on_health_changed)
 	unit.mana_changed.connect(_on_mana_changed)
 	
 
-func _on_health_changed(current: int) -> void:
-	current_health.update(current)
 
 func _on_mana_changed(current: int) -> void:
 

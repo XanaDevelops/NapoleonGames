@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://dlxn8vt6itfoa"]
 
 [ext_resource type="Texture2D" uid="uid://dwcsqv5dddx4o" path="res://assets/sprites/ui/fondos_de_pantalla/fondoPantallaUsuario.png" id="1_b6b30"]
-[ext_resource type="Script" uid="uid://b6bxw53o0lbeb" path="res://scripts/ui/registro.gd" id="1_txt08"]
+[ext_resource type="Script" path="res://scripts/ui/registro.gd" id="1_txt08"]
 [ext_resource type="Texture2D" uid="uid://dkf875vt31etn" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario+.png" id="2_ecbkc"]
+[ext_resource type="Shader" uid="uid://chsexujh65mmi" path="res://scenes/redondear_shader.gdshader" id="3_bcww2"]
 [ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://assets/themes/ui/InputsUserMenu.tres" id="3_w8jpj"]
 [ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://assets/themes/ui/estilo_botones.tres" id="4_fb0ny"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="5_xgrx4"]
 [ext_resource type="Theme" uid="uid://bxefl0wcs215u" path="res://assets/themes/ui/estilo_botones_circulares_carrusel.tres" id="6_v0exq"]
+[ext_resource type="PackedScene" uid="uid://tj5nudd1tqq0" path="res://scenes/selector_avatares.tscn" id="9_sucvu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feuqc"]
 bg_color = Color(0.0627451, 0.078431375, 0.11372549, 0.74509805)
@@ -21,44 +23,61 @@ corner_radius_bottom_left = 50
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6imr"]
 bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
 border_color = Color(0.54901963, 0.42745098, 0.24313726, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
+expand_margin_left = 7.0
+expand_margin_top = 7.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
 anti_aliasing_size = 1.5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2885"]
 bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
 border_color = Color(0.72156864, 0.5254902, 0.043137256, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hnhxw"]
 bg_color = Color(0.99215686, 0.9647059, 0.8901961, 1)
-border_width_left = 7
-border_width_top = 7
-border_width_right = 7
-border_width_bottom = 7
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
 border_color = Color(1, 0.84313726, 0, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
 shadow_color = Color(0, 0, 0, 0.5019608)
 shadow_size = 12
 shadow_offset = Vector2(4, 4)
 anti_aliasing_size = 1.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_emd55"]
+shader = ExtResource("3_bcww2")
+shader_parameter/radius = 0.50000002375
+shader_parameter/smoothing = 0.01
 
 [node name="SceneCrearCuentaMenu" type="Control" unique_id=1059517667]
 layout_mode = 3
@@ -105,7 +124,8 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 60
 text = "Crear Cuenta"
 
-[node name="MenuUsuario" type="Button" parent="Panel" unique_id=462425525]
+[node name="BotonCambiarFoto" type="Button" parent="Panel" unique_id=462425525]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -119,24 +139,20 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_k6imr")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_o2885")
 theme_override_styles/hover = SubResource("StyleBoxFlat_hnhxw")
 
-[node name="IconoUsuario" type="TextureRect" parent="Panel/MenuUsuario" unique_id=572494925]
+[node name="IconoUsuario" type="TextureRect" parent="Panel/BotonCambiarFoto" unique_id=572494925]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_emd55")
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -30.0
-offset_right = 30.0
-offset_bottom = 30.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_ecbkc")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="Panel/MenuUsuario" unique_id=569157510]
+[node name="Label" type="Label" parent="Panel/BotonCambiarFoto" unique_id=569157510]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -275,3 +291,18 @@ text = "<"
 script = ExtResource("5_xgrx4")
 id_escena = "inicio"
 metadata/_custom_type_script = "uid://ct2doijn7j323"
+
+[node name="SelectorAvatares" parent="." unique_id=840043805 instance=ExtResource("9_sucvu")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2

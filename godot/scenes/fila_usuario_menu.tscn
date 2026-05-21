@@ -1,9 +1,16 @@
 [gd_scene format=3 uid="uid://c6dc3tohy2alq"]
 
-[ext_resource type="Script" path="res://scripts/ui/fila_usuario_menu.gd" id="1_iheyx"]
+[ext_resource type="Script" uid="uid://b44umiu8donrp" path="res://scripts/ui/fila_usuario_menu.gd" id="1_iheyx"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="1_xig1y"]
+[ext_resource type="Theme" uid="uid://d42d7i75rf1k" path="res://assets/themes/ui/pestaña_ejercito_activo.tres" id="2_13wpx"]
 [ext_resource type="Texture2D" uid="uid://57cwexqf6uhy" path="res://assets/sprites/ui/iconos_de_botones/editar.png" id="2_pa8j6"]
+[ext_resource type="Theme" uid="uid://dm0p6ixmo660q" path="res://assets/themes/ui/pestaña_ejercito.tres" id="3_6dmmc"]
 [ext_resource type="Texture2D" uid="uid://de87s578gbsn2" path="res://assets/sprites/ui/iconos_de_botones/cerrar.png" id="3_41abd"]
+[ext_resource type="Theme" uid="uid://cuaadii4ueb8" path="res://assets/themes/ui/estilo_botones_confirmacion_suave.tres" id="5_lknm3"]
+[ext_resource type="Theme" uid="uid://cs2ycfq76kcvr" path="res://assets/themes/ui/estilo_botones_negacion_suave.tres" id="7_x4xs3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lknm3"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tayi"]
 corner_radius_top_left = 1024
@@ -13,44 +20,69 @@ corner_radius_bottom_left = 1024
 
 [sub_resource type="Theme" id="Theme_emr80"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13wpx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.54901963, 0.42745098, 0.24313726, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+corner_detail = 20
+
 [node name="Button" type="Button" unique_id=552312672]
-custom_minimum_size = Vector2(220, 40)
+custom_minimum_size = Vector2(230, 60)
 offset_right = 220.0
 offset_bottom = 40.0
 script = ExtResource("1_iheyx")
+tema_seleccionado = ExtResource("2_13wpx")
+tema_normal = ExtResource("3_6dmmc")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1924094861]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=421560221]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -103.0
-offset_top = -10.0
-offset_right = 33.0
-offset_bottom = 10.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 8
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
 
-[node name="Panel" type="Panel" parent="HBoxContainer" unique_id=639498591]
-custom_minimum_size = Vector2(30, 30)
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=1914583080]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lknm3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel" unique_id=1924094861]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 5.0
+offset_top = -20.0
+offset_right = 143.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Panel" type="Panel" parent="MarginContainer/Panel/HBoxContainer" unique_id=639498591]
+clip_children = 2
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_5tayi")
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Panel" unique_id=833643463]
-custom_minimum_size = Vector2(20, 20)
+[node name="Icono" type="TextureRect" parent="MarginContainer/Panel/HBoxContainer/Panel" unique_id=833643463]
+unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -10.0
-offset_top = -10.0
-offset_right = 10.0
-offset_bottom = 10.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_emr80")
@@ -58,37 +90,53 @@ texture = ExtResource("1_xig1y")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="HBoxContainer" unique_id=1553917488]
+[node name="Panel" type="Panel" parent="MarginContainer/Panel/HBoxContainer/Panel/Icono" unique_id=63942626]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_13wpx")
+
+[node name="NombreUsuario" type="Label" parent="MarginContainer/Panel/HBoxContainer" unique_id=1553917488]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 18
 text = "Jugador local 1"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1973298465]
+[node name="ContenedorDeBotones" type="HBoxContainer" parent="MarginContainer/Panel" unique_id=1973298465]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -20.0
-offset_bottom = 20.0
+offset_left = -84.0
+offset_top = -15.0
+offset_bottom = 15.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="EditarPerfil" type="Button" parent="HBoxContainer2" unique_id=1826329471]
-custom_minimum_size = Vector2(16, 16)
+[node name="EditarPerfil" type="Button" parent="MarginContainer/Panel/ContenedorDeBotones" unique_id=1826329471]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("5_lknm3")
 icon = ExtResource("2_pa8j6")
+icon_alignment = 1
 expand_icon = true
 
-[node name="QuitarCuenta" type="Button" parent="HBoxContainer2" unique_id=127449448]
-custom_minimum_size = Vector2(16, 16)
+[node name="QuitarCuenta" type="Button" parent="MarginContainer/Panel/ContenedorDeBotones" unique_id=127449448]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("7_x4xs3")
 icon = ExtResource("3_41abd")
+icon_alignment = 1
 expand_icon = true

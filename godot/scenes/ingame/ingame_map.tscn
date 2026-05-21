@@ -2,14 +2,43 @@
 
 [ext_resource type="Script" uid="uid://cpqdhsyw0vgg1" path="res://scenes/ingame/map_visualizer.gd" id="1_7udv5"]
 [ext_resource type="Script" uid="uid://dp3vm4x2rx3uf" path="res://scenes/ingame/ingame_map.gd" id="1_td6e5"]
+[ext_resource type="Texture2D" uid="uid://br3nihpuci7q" path="res://assets/images/grunge-smokey-background-beige.jpg" id="2_8i5nb"]
 [ext_resource type="Script" uid="uid://dilrauf05i3je" path="res://scenes/ingame/players_panel.gd" id="2_s3xon"]
 [ext_resource type="Shader" uid="uid://cemlqbvowjq1m" path="res://scenes/ingame/ingame_map.gdshader" id="3_g5sqw"]
 [ext_resource type="Script" uid="uid://bm6sp4ow1l2qv" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
+[ext_resource type="PackedScene" uid="uid://b14kq4rlyq2kk" path="res://scenes/vfx_conteiner.tscn" id="4_7rshr"]
+[ext_resource type="StyleBox" uid="uid://b0p3mdn4roxd6" path="res://assets/themes/ui/menu_styleboxflat.tres" id="4_m7qbv"]
 [ext_resource type="Shader" uid="uid://157jkj0n28hu" path="res://resources/shaders/hexagonal_shader.gdshader" id="5_3rx8c"]
+[ext_resource type="Script" uid="uid://c7mxpxq37rib7" path="res://scenes/ingame/top_menu.gd" id="5_f4drf"]
 [ext_resource type="Script" uid="uid://boaagd3hgel75" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
+[ext_resource type="Texture2D" uid="uid://d0oowyo84ttju" path="res://assets/images/hamburger.png" id="6_l3gkr"]
 [ext_resource type="Script" uid="uid://b8ttj2gcfkh47" path="res://scenes/ingame/unit_info.gd" id="6_smdvi"]
-[ext_resource type="PackedScene" uid="uid://ygwgcu7ruh4u" path="res://scenes/health_bar.tscn" id="7_6nuks"]
+[ext_resource type="FontFile" uid="uid://bh17wqfhcf5sr" path="res://assets/themes/ui/fonts/Urbanist/static/Urbanist-Black.ttf" id="7_k2m3r"]
 [ext_resource type="Script" uid="uid://b220xr4adcigk" path="res://scenes/ingame/deployment_box.gd" id="8_rtl0i"]
+[ext_resource type="PackedScene" uid="uid://bjoqt2vxcerlr" path="res://scenes/end_turn_button.tscn" id="15_pwbjq"]
+[ext_resource type="PackedScene" uid="uid://c0k4getxqisq6" path="res://scenes/tile_info.tscn" id="16_nd88s"]
+[ext_resource type="PackedScene" uid="uid://cuor3ubmahmea" path="res://scenes/unit_info.tscn" id="17_87c6t"]
+[ext_resource type="PackedScene" uid="uid://2xspgv3scuc1" path="res://scenes/Container_scene.tscn" id="18_87c6t"]
+[ext_resource type="PackedScene" uid="uid://fjy32u56yj4m" path="res://scenes/deployment.tscn" id="18_k55sq"]
+[ext_resource type="PackedScene" uid="uid://dau808hhekv0d" path="res://scenes/mana.tscn" id="19_k55sq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k55sq"]
+shader = ExtResource("5_3rx8c")
+shader_parameter/pointy_top = true
+shader_parameter/mask_size = 0.5
+shader_parameter/mask_scale_x = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3gkr"]
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.6121091, 0.3808231, 0.38360342, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3rx8c"]
 shader = ExtResource("3_g5sqw")
@@ -21,46 +50,202 @@ shader = ExtResource("3_g5sqw")
 shader_parameter/border_color = Color(0, 0, 0, 1)
 shader_parameter/border_width = 0.03
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g5sqw"]
-bg_color = Color(0.0042888485, 0.012468488, 0.074443825, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k55sq"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m7qbv"]
-shader = ExtResource("5_3rx8c")
-shader_parameter/pointy_top = true
-shader_parameter/mask_size = 0.5
-shader_parameter/mask_scale_x = 1.0
-
-[node name="IngameMap" type="Control" unique_id=1560040291]
+[node name="IngameMap" type="Control" unique_id=1560040291 node_paths=PackedStringArray("map_container", "cards_panel", "sub_viewport", "map_visualizer", "unit_info", "deployment_box")]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_td6e5")
+map_container = NodePath("SubViewportContainer")
+cards_panel = NodePath("CardsPanel")
+sub_viewport = NodePath("SubViewportContainer/SubViewport")
+map_visualizer = NodePath("SubViewportContainer/SubViewport/mapVisualizer")
+unit_info = NodePath("CardsPanel/HBoxContainer/UnitPanel")
+deployment_box = NodePath("CardsPanel/Deplyoment/MarginContainer/VBoxContainer/Panel/DeploymentBox")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1521827406]
-layout_mode = 1
-offset_right = 1919.0
-offset_bottom = 1073.0
-
-[node name="PlayersPanel" type="Control" parent="VBoxContainer" unique_id=69587996]
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("2_s3xon")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PlayersPanel" unique_id=1918173195]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1501154111]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_8i5nb")
+stretch_mode = 6
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=959567450]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1514874787]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="mapVisualizer" type="Node2D" parent="SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment", "tile_map_layer_hover", "tile_map_layer_owner_p1", "tile_map_layer_owner_p2", "tile_map_layer_exhausted", "camera")]
+script = ExtResource("1_7udv5")
+tile_map_layer_texture = NodePath("TileMapLayer_texture")
+tile_map_layer_units = NodePath("TileMapLayer_units")
+tile_map_layer_selection = NodePath("TileMapLayer_selection")
+tile_map_layer_highlight = NodePath("TileMapLayer_highlights")
+tile_map_layer_deployment = NodePath("TileMapLayer_deployment")
+tile_map_layer_hover = NodePath("TileMapLayer_hover")
+tile_map_layer_owner_p1 = NodePath("TileMapLayer_owner_p1")
+tile_map_layer_owner_p2 = NodePath("TileMapLayer_owner_p2")
+tile_map_layer_exhausted = NodePath("TileMapLayer_exhausted")
+vfx_scene = ExtResource("4_7rshr")
+camera = NodePath("Camera2D")
+metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
+
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=51855087]
+
+[node name="TileMapLayer_texture" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=479184065]
+tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAUAAAAAAAIAAAAAAAUAAAAAAAAAAAABAAcAAAAAAP//AAAAAAcAAAABAP//AAABAAcAAAD/////AAAAAAcAAAD//wAAAAAAAAgAAAD+/wAAAAAGAAIAAAD9////AAAGAAIAAAD+////AAAGAAIAAAD8/wAAAAAAAAUAAAADAP//AAAAAAgAAAAEAP//AAAGAAIAAAA=")
+
+[node name="TileMapLayer_deployment" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1706908201]
+
+[node name="TileMapLayer_units" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1642646471]
+material = SubResource("ShaderMaterial_k55sq")
+
+[node name="TileMapLayer_owner_p1" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=72154031]
+
+[node name="TileMapLayer_owner_p2" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1430528210]
+
+[node name="TileMapLayer_hover" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=993284346]
+
+[node name="TileMapLayer_selection" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1342848487]
+
+[node name="TileMapLayer_highlights" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=739722248]
+
+[node name="TileMapLayer_exhausted" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=802081824]
+
+[node name="PlayersPanel" type="Control" parent="." unique_id=69587996 node_paths=PackedStringArray("p1_avatar", "p1_name", "p1_card", "p1_num_cards", "p2_avatar", "p2_name", "p2_card", "p2_num_cards", "phase_label", "TurnLabel")]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+size_flags_vertical = 3
+script = ExtResource("2_s3xon")
+p1_avatar = NodePath("VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP1/AvatarP1")
+p1_name = NodePath("VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP1/NameP1")
+p1_card = NodePath("VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP1")
+p1_num_cards = NodePath("VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP1/NumCardsP1")
+p2_avatar = NodePath("VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP2/AvatarP2")
+p2_name = NodePath("VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP2/NameP2")
+p2_card = NodePath("VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP2")
+p2_num_cards = NodePath("VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP2/NumCardsP2")
+phase_label = NodePath("VBoxContainer/PanelContainer/HBoxContainer/PhaseLabel")
+TurnLabel = NodePath("VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer/TurnLabel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayersPanel" unique_id=1996873598]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="PlayersPanel/VBoxContainer" unique_id=536211482 node_paths=PackedStringArray("TimeLabel", "TurnLabel", "OptionsButton", "PhaseLabel")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("4_m7qbv")
+script = ExtResource("5_f4drf")
+TimeLabel = NodePath("HBoxContainer/HBoxContainer/TimeLabel")
+TurnLabel = NodePath("HBoxContainer/HBoxContainer/TurnLabel")
+OptionsButton = NodePath("HBoxContainer/HBoxContainer/OptionsButton")
+PhaseLabel = NodePath("HBoxContainer/PhaseLabel")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayersPanel/VBoxContainer/PanelContainer" unique_id=548928309]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+
+[node name="PanelContainer" type="HBoxContainer" parent="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer" unique_id=33144588]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_constants/separation = 6
+
+[node name="LogoLabel" type="Label" parent="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer/PanelContainer" unique_id=709653114]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_k2m3r")
+theme_override_font_sizes/font_size = 19
+text = "NAPOLEON GAMES"
+
+[node name="PhaseLabel" type="Label" parent="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer" unique_id=1240611308]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 2.0
+theme_override_fonts/font = ExtResource("7_k2m3r")
+theme_override_font_sizes/font_size = 19
+text = "FASE DE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer" unique_id=377986894]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="TurnLabel" type="Label" parent="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer" unique_id=745982406]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("7_k2m3r")
+theme_override_font_sizes/font_size = 19
+text = "TURNO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer" unique_id=1969016601]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("7_k2m3r")
+theme_override_font_sizes/font_size = 19
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionsButton" type="Button" parent="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer" unique_id=219747959]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+icon = ExtResource("6_l3gkr")
+icon_alignment = 1
+expand_icon = true
+
+[node name="PanelContainer2" type="PanelContainer" parent="PlayersPanel/VBoxContainer" unique_id=1475917229]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_l3gkr")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PlayersPanel/VBoxContainer/PanelContainer2" unique_id=1918173195]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 15
 
-[node name="PlayerCardP1" type="HBoxContainer" parent="VBoxContainer/PlayersPanel/HBoxContainer" unique_id=362556757]
+[node name="PlayerCardP1" type="HBoxContainer" parent="PlayersPanel/VBoxContainer/PanelContainer2/HBoxContainer2" unique_id=362556757]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 theme_override_constants/separation = 15
 
-[node name="AvatarP1" type="TextureRect" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP1" unique_id=1033620551]
+[node name="AvatarP1" type="TextureRect" parent="PlayersPanel/VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP1" unique_id=1033620551]
 material = SubResource("ShaderMaterial_3rx8c")
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
@@ -69,41 +254,42 @@ size_flags_vertical = 4
 expand_mode = 1
 stretch_mode = 6
 
-[node name="NameP1" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP1" unique_id=693470659]
+[node name="NameP1" type="Label" parent="PlayersPanel/VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP1" unique_id=693470659]
 layout_mode = 2
 
-[node name="NumCardsP1" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP1" unique_id=517385690]
+[node name="NumCardsP1" type="Label" parent="PlayersPanel/VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP1" unique_id=517385690]
 layout_mode = 2
 
-[node name="CenterInfo" type="VBoxContainer" parent="VBoxContainer/PlayersPanel/HBoxContainer" unique_id=2036423434]
+[node name="CenterInfo" type="VBoxContainer" parent="PlayersPanel/VBoxContainer/PanelContainer2/HBoxContainer2" unique_id=2036423434]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 theme_override_constants/separation = 6
 
-[node name="Phase" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/CenterInfo" unique_id=1628022305]
+[node name="Phase" type="Label" parent="PlayersPanel/VBoxContainer/PanelContainer2/HBoxContainer2/CenterInfo" unique_id=1628022305]
 layout_mode = 2
 uppercase = true
 
-[node name="EndTurn" type="Button" parent="VBoxContainer/PlayersPanel/HBoxContainer/CenterInfo" unique_id=126975506]
+[node name="EndTurn" type="Button" parent="PlayersPanel/VBoxContainer/PanelContainer2/HBoxContainer2/CenterInfo" unique_id=126975506]
 layout_mode = 2
 text = "End Turn
 "
 
-[node name="PlayerCardP2" type="HBoxContainer" parent="VBoxContainer/PlayersPanel/HBoxContainer" unique_id=1103161440]
+[node name="PlayerCardP2" type="HBoxContainer" parent="PlayersPanel/VBoxContainer/PanelContainer2/HBoxContainer2" unique_id=1103161440]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 theme_override_constants/separation = 15
 
-[node name="NumCardsP2" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP2" unique_id=1537170703]
+[node name="NumCardsP2" type="Label" parent="PlayersPanel/VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP2" unique_id=1537170703]
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="NameP2" type="Label" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP2" unique_id=968602773]
+[node name="NameP2" type="Label" parent="PlayersPanel/VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP2" unique_id=968602773]
 layout_mode = 2
 
-[node name="AvatarP2" type="TextureRect" parent="VBoxContainer/PlayersPanel/HBoxContainer/PlayerCardP2" unique_id=1482547048]
+[node name="AvatarP2" type="TextureRect" parent="PlayersPanel/VBoxContainer/PanelContainer2/HBoxContainer2/PlayerCardP2" unique_id=1482547048]
 material = SubResource("ShaderMaterial_g5sqw")
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
@@ -112,318 +298,161 @@ size_flags_vertical = 4
 expand_mode = 1
 stretch_mode = 6
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1473323759]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_g5sqw")
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/PanelContainer" unique_id=959567450]
-layout_mode = 2
-
-[node name="SubViewport" type="SubViewport" parent="VBoxContainer/PanelContainer/SubViewportContainer" unique_id=1514874787]
-handle_input_locally = false
-size = Vector2i(1919, 747)
-render_target_update_mode = 4
-
-[node name="mapVisualizer" type="Node2D" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport" unique_id=19580803 node_paths=PackedStringArray("tile_map_layer_texture", "tile_map_layer_units", "tile_map_layer_selection", "tile_map_layer_highlight", "tile_map_layer_deployment")]
-script = ExtResource("1_7udv5")
-tile_map_layer_texture = NodePath("TileMapLayer_texture")
-tile_map_layer_units = NodePath("TileMapLayer_units")
-tile_map_layer_selection = NodePath("TileMapLayer_selection")
-tile_map_layer_highlight = NodePath("TileMapLayer_highlights")
-tile_map_layer_deployment = NodePath("TileMapLayer_deployment")
-metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
-
-[node name="TileMapLayer_texture" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=479184065]
-tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAUAAAAAAAIAAAAAAAUAAAAAAAAAAAABAAcAAAAAAP//AAAAAAcAAAABAP//AAABAAcAAAD/////AAAAAAcAAAD//wAAAAAAAAgAAAD+/wAAAAAGAAIAAAD9////AAAGAAIAAAD+////AAAGAAIAAAD8/wAAAAAAAAUAAAADAP//AAAAAAgAAAAEAP//AAAGAAIAAAA=")
-
-[node name="TileMapLayer_deployment" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1706908201]
-
-[node name="TileMapLayer_units" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1642646471]
-material = SubResource("ShaderMaterial_m7qbv")
-
-[node name="TileMapLayer_selection" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1342848487]
-
-[node name="TileMapLayer_highlights" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=739722248]
-
-[node name="CardsPanel" type="Control" parent="VBoxContainer" unique_id=1431020749]
-layout_mode = 2
+[node name="CardsPanel" type="Control" parent="." unique_id=1431020749 node_paths=PackedStringArray("deployment_box", "tile_info", "deployment_panel", "UnitPanel")]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.2
 script = ExtResource("4_0htj4")
+deployment_box = NodePath("Deplyoment/MarginContainer/VBoxContainer/Panel/DeploymentBox")
+tile_info = NodePath("HBoxContainer/TileInfo")
+deployment_panel = NodePath("Deplyoment")
+UnitPanel = NodePath("HBoxContainer/UnitPanel")
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/CardsPanel" unique_id=1467012460]
+[node name="HBoxContainer" type="HBoxContainer" parent="CardsPanel" unique_id=1941141629]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = 2
+anchor_top = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
+offset_top = -218.0
+offset_right = 1178.0
+grow_vertical = 0
+theme_override_constants/separation = 200
 
-[node name="TabContainer" type="TabContainer" parent="VBoxContainer/CardsPanel/MarginContainer" unique_id=1102639422]
+[node name="TileInfo" parent="CardsPanel/HBoxContainer" unique_id=1453422024 node_paths=PackedStringArray("name_label", "texture_rect", "height_label", "cost_label", "position_label", "description_button", "tile_info") instance=ExtResource("16_nd88s")]
 layout_mode = 2
-current_tab = 0
-tab_0/title = "Información del terreno"
-
-[node name="TileInfo" type="Control" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer" unique_id=12227352]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 2
+size_flags_vertical = 4
 script = ExtResource("5_x30bk")
-metadata/_tab_index = 0
-metadata/_tab_name = "Información del terreno"
+name_label = NodePath("PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/NameLabel")
+texture_rect = NodePath("PanelContainer/MarginContainer/PanelContainer/VBoxContainer/TextureRect")
+height_label = NodePath("PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer/HeightLabel")
+cost_label = NodePath("PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer/CostLabel")
+position_label = NodePath("PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel/HBoxContainer/PositionLabel")
+description_button = NodePath("PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/DescriptionButton")
+tile_info = NodePath(".")
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo" unique_id=1894420896]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 2
+[node name="NameLabel" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 1280806302) index="1" unique_id=1820895288]
+vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer" unique_id=1104634476]
-layout_mode = 2
-theme_override_constants/separation = 15
+[node name="TextureRect" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 824499824) index="0" unique_id=1579744261]
+custom_minimum_size = Vector2(45, 45)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=1608742071]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 10
-
-[node name="NameLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1804881697]
-layout_mode = 2
-size_flags_vertical = 1
-horizontal_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/VBoxContainer" unique_id=966611291]
-layout_mode = 2
-stretch_mode = 5
-
-[node name="DescriptionContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=545130055]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-
-[node name="DescriptionContainer" type="VBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer" unique_id=1291994257]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="DescriptionLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer/DescriptionContainer" unique_id=817314821]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/paragraph_spacing = 2
-text = "Description
-"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer/DescriptionContainer" unique_id=1667812190]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 9.04
-horizontal_scroll_mode = 0
-
-[node name="DescriptionText" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/DescriptionContainer/DescriptionContainer/ScrollContainer" unique_id=1717102641]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+[node name="Label2" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 824499824) index="2" unique_id=929438714]
 theme_override_font_sizes/font_size = 17
-autowrap_mode = 2
-justification_flags = 131
-text_direction = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer" unique_id=312636863]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 15
+[node name="TextureRect" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 1278424454) index="0" unique_id=1574008606]
+custom_minimum_size = Vector2(45, 45)
 
-[node name="HeightLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer" unique_id=1457569625]
-layout_mode = 2
-size_flags_vertical = 1
+[node name="Label2" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 1278424454) index="2" unique_id=279225562]
+theme_override_font_sizes/font_size = 17
 
-[node name="CostLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/TileInfo/MarginContainer/HBoxContainer/HBoxContainer" unique_id=2129641801]
-layout_mode = 2
-size_flags_vertical = 1
+[node name="TextureRect" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 2104983326) index="0" unique_id=443016597]
+custom_minimum_size = Vector2(45, 45)
 
-[node name="UnitInfo" type="Control" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer" unique_id=551573519]
-visible = false
+[node name="Label2" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 2104983326) index="2" unique_id=1799215338]
+theme_override_font_sizes/font_size = 17
+
+[node name="UnitPanel" type="PanelContainer" parent="CardsPanel/HBoxContainer" unique_id=200674911 node_paths=PackedStringArray("unit_label", "unit_texture", "owner_label", "speed_label", "dodge_label", "habilities_grid", "current_mana", "descriptionButton", "unit_info", "currrentAlterStates_container", "alter_states_grid")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_k55sq")
 script = ExtResource("6_smdvi")
-metadata/_tab_index = 1
+unit_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VBoxContainer/UnitHBoxContainer/NameLabel")
+unit_texture = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VBoxContainer/UnitHBoxContainer/UnitTextureRect")
+owner_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/HBoxContainer/OwnerLabel")
+speed_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/SpeedHBoxContainer/SpeedLabel")
+dodge_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/DodgeHBoxContainer2/DodgeLabel")
+habilities_grid = NodePath("HBoxContainer/VBoxContainer/Habilities/MarginContainer/VBoxContainer/ScrollContainer/GridContainer")
+current_mana = NodePath("HBoxContainer/VBoxContainer/Mana/PanelContainer/VBoxContainer/HealthBar")
+descriptionButton = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/HBoxContainer/DescriptionButton")
+unit_info = NodePath("HBoxContainer/UnitInfo")
+currrentAlterStates_container = NodePath("HBoxContainer/AlterStates")
+alter_states_grid = NodePath("HBoxContainer/AlterStates/MarginContainer/VBoxContainer/ScrollContainer/GridContainer")
 
-[node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo" unique_id=598713077]
-layout_mode = 1
-offset_right = 1920.0
-offset_bottom = 520.0
+[node name="HBoxContainer" type="HBoxContainer" parent="CardsPanel/HBoxContainer/UnitPanel" unique_id=1650413846]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="UnitInfo" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" unique_id=722150641 instance=ExtResource("17_87c6t")]
+custom_minimum_size = Vector2(300, 180)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" unique_id=1059528940]
+layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1368475035]
+[node name="Mana" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer" unique_id=1760166787 instance=ExtResource("19_k55sq")]
+custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 10
+size_flags_horizontal = 6
+size_flags_vertical = 8
 
-[node name="UnitLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1696254877]
-layout_mode = 2
-
-[node name="UnitTextureRect" type="TextureRect" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer" unique_id=1491441126]
-custom_minimum_size = Vector2(48, 48)
+[node name="Habilities" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer" unique_id=399533923 instance=ExtResource("18_87c6t")]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
-expand_mode = 3
-stretch_mode = 5
+size_flags_vertical = 8
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1419014336]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
+[node name="Label" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer/Habilities/MarginContainer/VBoxContainer" parent_id_path=PackedInt32Array(399533923, 1453783832) index="0" unique_id=1490463472]
+text = "⟡ Habilidades"
 
-[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer" unique_id=1919011323]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="DescriptionLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer" unique_id=11764065]
-layout_mode = 2
-size_flags_vertical = 1
-text = "Description
-"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer" unique_id=222068245]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="DescriptionText" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/PanelContainer/HBoxContainer/ScrollContainer" unique_id=822122252]
-clip_contents = true
-custom_minimum_size = Vector2(200, 300)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-autowrap_mode = 2
-justification_flags = 131
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=413082808]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-
-[node name="OwnerLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1458816575]
+[node name="AlterStates" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" unique_id=173891347 instance=ExtResource("18_87c6t")]
+custom_minimum_size = Vector2(300, 130)
 layout_mode = 2
 
-[node name="SpeedLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1357048857]
-layout_mode = 2
+[node name="Label" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/AlterStates/MarginContainer/VBoxContainer" parent_id_path=PackedInt32Array(173891347, 1453783832) index="0" unique_id=1490463472]
+text = "⟡ ESTADOS ACTIVOS"
 
-[node name="DodgeLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=504645439]
-layout_mode = 2
+[node name="Deplyoment" parent="CardsPanel" unique_id=120072488 instance=ExtResource("18_k55sq")]
+custom_minimum_size = Vector2(600, 210)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+grow_horizontal = 2
+grow_vertical = 0
 
-[node name="WeightLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/VBoxContainer2" unique_id=1058537696]
-layout_mode = 2
-
-[node name="Bars" type="VBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=610434549]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.0
-theme_override_constants/separation = 20
-
-[node name="healthLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=251841302]
-layout_mode = 2
-text = "Health"
-
-[node name="HealthBar" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=1894103332 instance=ExtResource("7_6nuks")]
-custom_minimum_size = Vector2(100, 20)
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="ManaLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=269184968]
-layout_mode = 2
-text = "Mana"
-
-[node name="ManaBar" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/Bars" unique_id=51318480 instance=ExtResource("7_6nuks")]
-custom_minimum_size = Vector2(100, 20)
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="HabilitiesContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=966613889]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 1.5
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer" unique_id=610288405]
-layout_mode = 2
-
-[node name="HabilitiesLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer" unique_id=168499739]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.08235294, 1, 1, 1)
-text = "Habilidades"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer" unique_id=1387866945]
-clip_contents = false
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/HabilitiesContainer/VBoxContainer/ScrollContainer" unique_id=528124033]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ResistancesContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=1173079697]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer" unique_id=823655304]
-layout_mode = 2
-theme_override_constants/separation = 2
-
-[node name="ResistancesLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer/VBoxContainer" unique_id=108796497]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.08235294, 1, 1, 1)
-text = "Resistencias
-"
-
-[node name="ResistancesScrollContainer" type="ScrollContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer/VBoxContainer" unique_id=1192865377]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="ResistancesGridContainer" type="GridContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/ResistancesContainer/VBoxContainer/ResistancesScrollContainer" unique_id=1730249443]
-layout_mode = 2
-
-[node name="CurrenAlterStatesContainer" type="PanelContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer" unique_id=875609769]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer" unique_id=64560316]
-layout_mode = 2
-
-[node name="AlterStatesLabel" type="Label" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer/VBoxContainer" unique_id=1766997239]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.08235294, 1, 1, 1)
-text = "Alter States
-"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer/VBoxContainer" unique_id=1975082226]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="AlterStatesGridContainer" type="GridContainer" parent="VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo/VBoxContainer/CurrenAlterStatesContainer/VBoxContainer/ScrollContainer" unique_id=883636518]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="DeploymentBox" type="HBoxContainer" parent="VBoxContainer/CardsPanel/MarginContainer" unique_id=484191042]
-layout_mode = 2
+[node name="DeploymentBox" type="HBoxContainer" parent="CardsPanel/Deplyoment/MarginContainer/VBoxContainer/Panel" parent_id_path=PackedInt32Array(120072488, 750361709) index="0" unique_id=484191042]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("8_rtl0i")
+
+[node name="EndTurnButton" parent="." unique_id=1726048997 instance=ExtResource("15_pwbjq")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1415.0
+offset_top = -114.0
+offset_right = 1520.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[connection signal="pressed" from="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer/OptionsButton" to="PlayersPanel/VBoxContainer/PanelContainer" method="_on_options_button_pressed"]
+
+[editable path="CardsPanel/HBoxContainer/TileInfo"]
+[editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/UnitInfo"]
+[editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer/Mana"]
+[editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer/Habilities"]
+[editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/AlterStates"]
+[editable path="CardsPanel/Deplyoment"]

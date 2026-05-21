@@ -1,16 +1,11 @@
 extends Control
 
-@onready var tile_info: Control  = $MarginContainer/TabContainer/TileInfo
-@onready var unit_info: Control  = $MarginContainer/TabContainer/UnitInfo
-@onready var tabs: TabContainer  = $MarginContainer/TabContainer
-@onready var deployment_box: HBoxContainer = $MarginContainer/DeploymentBox
-
+@export var deployment_box: HBoxContainer
+@export var tile_info: Control      
+@export var deployment_panel: Panel
+@export var UnitPanel: PanelContainer
 var _confirm_dialog: AcceptDialog = null
-
-
-var is_deployment_active: bool =false
-
-
+var is_deployment_active: bool = false
 
 signal confirmed
 signal cancelled
@@ -38,6 +33,10 @@ func _connect_turn_manager() -> void:
 		print("[CardsPanel] Forcing deployment phase UI")
 		_on_deployment_phase_started()
 
+	if tile_info:
+		tile_info.visible = false
+	if UnitPanel:
+		UnitPanel.visible= false
 
 func _on_deployment_phase_started() -> void:
 	set_deployment_phase(true)
@@ -65,36 +64,42 @@ func _setup_pages() -> void:
 	#deployment_box.visible= true
 	#
 func paint_tile_info(tile: TileGame) -> void:
-	
-	if is_deployment_active: 
-		return 
-	
-	
-	tabs.visible = true
-	tile_info.paint(tile)
-	tabs.set_tab_hidden(1, true)
-	tabs.current_tab = 0
+	if is_deployment_active:
+		return
+	if tile_info:
+		tile_info.visible = true
+		tile_info.paint(tile)
 
 func paint_unit_info(tile: TileGame) -> void:
-	
-	if is_deployment_active: 
-		return 
-	
-	
-	tabs.visible = true
-	unit_info.paint(tile)
-	tabs.set_tab_hidden(1, false)
-	tabs.current_tab = 0
-
+	if is_deployment_active:
+		return
+	if UnitPanel:
+		UnitPanel.visible = true
+		UnitPanel.paint(tile)
+		
+		
 func clear_unit_info() -> void:
-	tabs.set_tab_hidden(1, true)
+	if UnitPanel:
+		UnitPanel.visible = false
+		pass
 
 func clear() -> void:
-	tabs.visible = false
+	if tile_info:
+		tile_info.visible = false
+	if UnitPanel:
+		UnitPanel.visible = false
+
+func set_deployment_phase(is_active: bool) -> void:
+	is_deployment_active = is_active
+	if deployment_box:
+		#deployment_box.visible = is_active
+		deployment_panel.visible= is_active
+	if is_active:
+		clear()
 
 func show_confirm_dialog(hab: HabilityRes, targets: Array[Vector2i], _unit: UnitGame) -> void:
 	_confirm_dialog = AcceptDialog.new()
-	_confirm_dialog.title       = hab.name
+	_confirm_dialog.title = hab.name
 	_confirm_dialog.dialog_text = "Descripción: %s\nObjetivo: %s\nManá: %d\nRango: %d\nCD: %dt\nPasiva: %s" % [
 		hab.desc,
 		hab._objective_text(),
@@ -104,10 +109,8 @@ func show_confirm_dialog(hab: HabilityRes, targets: Array[Vector2i], _unit: Unit
 		"Sí" if hab.isPassive else "No",
 	]
 	_confirm_dialog.add_cancel_button("Cancelar")
-
 	add_child(_confirm_dialog)
 	_confirm_dialog.popup_centered()
-
 	_confirm_dialog.confirmed.connect(_on_dialog_confirmed)
 	_confirm_dialog.canceled.connect(_on_dialog_cancelled)
 
@@ -120,20 +123,7 @@ func hide_confirm_dialog() -> void:
 func _on_dialog_confirmed() -> void:
 	hide_confirm_dialog()
 	emit_signal("confirmed")
-	
+
 func _on_dialog_cancelled() -> void:
 	hide_confirm_dialog()
 	emit_signal("cancelled")
-	
-func set_deployment_phase(is_active: bool) -> void:
-	is_deployment_active = is_active
-	tabs.visible = !is_active
-	if deployment_box:
-		deployment_box.visible = is_active
-
-
-#func populate_deployment(army_groups: Array) -> void:
-	#deployment_box.populate(army_groups)
-#
-#func remove_deployment_card(group: CardArmyGroup) -> void:
-	#deployment_box.remove_card_visual(group)

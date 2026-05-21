@@ -64,6 +64,11 @@ func get_speed() -> int:
 func get_dodge() -> int:
 	return self._unit._cardRes.dodge
 
+func get_unit_name() -> String:
+	return self._unit._cardRes.name
+
+func get_unit_desc() -> String:
+	return self._unit._cardRes.desc
 func get_currentHealth() -> int:
 	return self._unit.hp
 

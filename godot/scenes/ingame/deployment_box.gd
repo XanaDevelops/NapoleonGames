@@ -44,6 +44,7 @@ func populate(army_groups: Array) -> void:
 		card.pressed.connect(_on_card_pressed.bind(card, group))
 
 func _on_card_pressed(card_node: Button, group: CardArmyGroup) -> void:
+	print("card pressed")
 	if is_instance_valid(selected_card):
 		selected_card.set_selected_visual(false)
 		

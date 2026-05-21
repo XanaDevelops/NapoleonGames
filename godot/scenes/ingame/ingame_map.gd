@@ -1,15 +1,13 @@
 class_name GameScene
 extends Control
 
-@onready var vbox:          VBoxContainer        = $VBoxContainer
-@onready var players_panel: Control              = $VBoxContainer/PlayersPanel
-@onready var map_container: SubViewportContainer = $VBoxContainer/PanelContainer/SubViewportContainer
+@export var map_container: SubViewportContainer 
 
-@onready var cards_panel:   Control              = $VBoxContainer/CardsPanel
-@onready var sub_viewport:  SubViewport          = $VBoxContainer/PanelContainer/SubViewportContainer/SubViewport
-@onready var map_visualizer: mapVisualizer       = $VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer
-@onready var unit_info:     Control              = $VBoxContainer/CardsPanel/MarginContainer/TabContainer/UnitInfo
-@onready var deployment_box: HBoxContainer       = $VBoxContainer/CardsPanel/MarginContainer/DeploymentBox
+@export var cards_panel:   Control              
+@export var sub_viewport:  SubViewport          
+@export var map_visualizer: mapVisualizer      
+@export var unit_info:     PanelContainer              
+@export var deployment_box: HBoxContainer       
 
 @onready var turn_manager: TurnManager = get_parent() as TurnManager
 
@@ -58,8 +56,12 @@ func _ready() -> void:
 		if turn_manager:
 			turn_manager.set_map(map)
 	map_visualizer._setup_map(map)
-
+	await get_tree().process_frame
+	await get_tree().process_frame
+	map_visualizer.center_camera(Vector2(sub_viewport.size))
+	
 	_hab_manager = HabilityManager.new()
+	add_child(_hab_manager)
 	_connect_hab_manager()
 
 	await get_tree().process_frame
@@ -76,29 +78,12 @@ func _ready() -> void:
 	deployment_box.unit_selected_for_deployment.connect(_on_card_selected_in_ui)
 
 
-#func _enter_battle()-> void:
-	#unit_info.hability_use_requested.connect(_on_hability_use_requested)
-	#cards_panel.confirmed.connect(_hab_manager.confirm)
-	#cards_panel.cancelled.connect(_hab_manager.cancel)
-	#cards_panel.set_phase_battle()
-	#players_panel.set_phase_battle()
-#
-#func _enter_deployment() -> void:
-	#players_panel.set_phase_deployment()
-	#cards_panel.set_phase_deployment()
-	#
-	#
-#func _on_phase_change(is_deployment_phase: bool) -> void:
-	#if is_deployment_phase:
-		#_enter_deployment()
-	#else:
-		#_enter_battle()
 func clear() -> void:
 	cards_panel.clear()
 
 func _setup_viewport() -> void:
-	var container_size = map_container.size
-	sub_viewport.size = Vector2i(container_size)
+	#var container_size = map_container.size
+	#sub_viewport.size = Vector2i(container_size)
 
 	sub_viewport.transparent_bg = true
 	

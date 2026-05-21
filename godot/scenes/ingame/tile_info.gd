@@ -1,28 +1,32 @@
-extends Control 
+extends PanelContainer 
 
-@onready var name_label: Label =$MarginContainer/HBoxContainer/VBoxContainer/NameLabel
-@onready var texture_rect: TextureRect= $MarginContainer/HBoxContainer/VBoxContainer/TextureRect
-@onready var description_label : Label = $MarginContainer/HBoxContainer/DescriptionContainer/DescriptionContainer/DescriptionLabel
-@onready var description_text: Label = $MarginContainer/HBoxContainer/DescriptionContainer/DescriptionContainer/ScrollContainer/DescriptionText
-@onready var height_label: Label = $MarginContainer/HBoxContainer/HBoxContainer/HeightLabel
-@onready var cost_label: Label = $MarginContainer/HBoxContainer/HBoxContainer/CostLabel
 
+@export var name_label:Label 
+@export var texture_rect: TextureRect 
+@export var height_label: Label
+@export var cost_label: Label 
+@export var position_label: Label
+@export var description_button: Button 
+@export var tile_info: PanelContainer
+
+var _current_tile: TileGame = null
+var _desc_handler: DescriptionButtonHandler
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	await get_tree().process_frame
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-func paint(selected_tile:TileGame) -> void:
+func paint(selected_tile: TileGame) -> void:
+	_current_tile = selected_tile
 	self.name_label.text = selected_tile.get_tile_name()
-	self.description_text.text= selected_tile.get_tile_desc()
-	self.height_label.text=  "Altura: %d" % selected_tile.get_height()
-	self.cost_label.text= "Coste: %d" % selected_tile.get_tile_cost()
-	self.texture_rect.texture= selected_tile.get_texture2D()
-
-func _paint_mods(mods: Array[TileModRes]) -> void:
-	pass
+	self.height_label.text =  str(selected_tile.get_height())
+	self.cost_label.text =  str(selected_tile.get_tile_cost())
+	self.texture_rect.texture = selected_tile.get_texture2D()
+	self.position_label.text = "(%d,%d)" % [selected_tile._position.x, selected_tile._position.y]
+	_desc_handler = DescriptionButtonHandler.new()
+	_desc_handler.setup(
+		description_button,
+		tile_info,
+		func(): return _current_tile.get_tile_desc() if _current_tile else ""
+	)
