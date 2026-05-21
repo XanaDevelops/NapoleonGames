@@ -2,8 +2,11 @@
 
 [ext_resource type="Script" uid="uid://ci0qry8pts1xv" path="res://scenes/ingame/turn_manager.gd" id="1_4n5kr"]
 [ext_resource type="PackedScene" uid="uid://7np40cgmy80w" path="res://scenes/ingame/ingame_map.tscn" id="2_rqqua"]
+[ext_resource type="Script" uid="uid://ci0qry8pts1xv" path="res://scenes/ingame/turn_manager.gd" id="1_4n5kr"]
+[ext_resource type="PackedScene" uid="uid://7np40cgmy80w" path="res://scenes/ingame/ingame_map.tscn" id="2_rqqua"]
 [ext_resource type="Script" uid="uid://coqlqo81l8ahe" path="res://scripts/resources/vfx_effect_data.gd" id="3_rn5k7"]
 [ext_resource type="PackedScene" uid="uid://b14kq4rlyq2kk" path="res://scenes/vfx_conteiner.tscn" id="3_sxwm6"]
+[ext_resource type="PackedScene" uid="uid://c4us6q3xfd775" path="res://scenes/transition_screen.tscn" id="10_trans"]
 [ext_resource type="Resource" uid="uid://dsf2qbwjhlypl" path="res://resources/animaciones/physic_animation.tres" id="4_jc8l4"]
 [ext_resource type="Resource" uid="uid://6gy5d5epbtce" path="res://resources/animaciones/fire_animation.tres" id="5_tuavw"]
 [ext_resource type="Resource" uid="uid://bamxdvs01bi8p" path="res://resources/animaciones/electric_animation.tres" id="6_gh0xm"]
@@ -15,6 +18,7 @@
 script = ExtResource("1_4n5kr")
 
 [node name="IngameMap" parent="." unique_id=594307947 instance=ExtResource("2_rqqua")]
+transition_screen_scene = ExtResource("10_trans")
 
 [node name="SubViewportContainer" parent="IngameMap/VBoxContainer/PanelContainer" parent_id_path=PackedInt32Array(594307947, 1473323759) index="0" unique_id=959567450]
 size_flags_horizontal = 4

@@ -23,6 +23,11 @@ var current_playlist: Array = []
 var current_track_index: int = 0
 var shuffle_enabled: bool = true
 
+const VOLUMEN_SFX: float = -4.0
+const MAX_SFX_PLAYERS: int = 5
+var sfx_players: Array[AudioStreamPlayer] = []
+var loaded_sfx: Dictionary = {} 
+
 func _ready() -> void:
 	hover_player = AudioStreamPlayer.new()
 	hover_player.stream = preload("res://assets/sonidos/button_hover.wav")
@@ -48,7 +53,21 @@ func _ready() -> void:
 	
 	get_tree().node_added.connect(_al_añadir_nodo)
 	_conectar_nodos_existentes(get_tree().root)
-
+	
+	for i in range(MAX_SFX_PLAYERS):
+		var sfx_p = AudioStreamPlayer.new()
+		sfx_p.volume_db = VOLUMEN_SFX
+		add_child(sfx_p)
+		sfx_players.append(sfx_p)
+		
+	
+	for sfx_key in EscenasConfig.SFX_PATHS:
+		var ruta = EscenasConfig.SFX_PATHS[sfx_key]
+		if ResourceLoader.exists(ruta):
+			loaded_sfx[sfx_key] = load(ruta)
+		else:
+			push_warning("[AudioManager] Archivo SFX no encontrado: " + ruta)
+			
 	await get_tree().process_frame
 	_detectar_y_reproducir_escena_inicial()
 
@@ -217,3 +236,25 @@ func stop_music_with_fade() -> void:
 		if player.playing:
 			fade_tween.tween_property(player, "volume_db", VOLUMEN_MINIMO, crossfade_duration).set_trans(Tween.TRANS_SINE)
 			fade_tween.chain().tween_callback(player.stop)
+			
+
+func play_sfx(sfx_name: String) -> void:
+	if not loaded_sfx.has(sfx_name):
+		push_warning("[AudioManager] Intento de reproducir SFX desconocido: " + sfx_name)
+		return
+		
+	
+	var player_disponible: AudioStreamPlayer = null
+	for p in sfx_players:
+		if not p.playing:
+			player_disponible = p
+			break
+			
+	
+	if player_disponible == null:
+		player_disponible = sfx_players[0]
+		
+	
+	player_disponible.stream = loaded_sfx[sfx_name]
+	player_disponible.pitch_scale = randf_range(0.9, 1.1)
+	player_disponible.play()

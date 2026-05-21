@@ -3,7 +3,10 @@ extends Node
 
 
 signal card_deployed(player: UserGame, remaining: int)
-## Los UnitGame deben subscribirse a esto para avanzar el turno
+signal deployment_phase_started(first_player_name: String)
+signal combat_phase_started(first_player_name: String)
+signal turn_changed_visual(current_icon: Texture2D, next_name: String, next_icon: Texture2D)
+
 signal tick_turn
 signal game_end
 
@@ -34,7 +37,7 @@ var map_game: MapGame
 ## por lo que no hay que enviarlo al server de nuevo, ni esperar confirmación
 var replaying_turn = false
 
-func advance_turn() -> void:
+func advance_turn(skip_visual: bool = false) -> void:
 	var user := get_current_user()
 	if not is_deployment_phase:
 		register_turn(TurnPass.create(user, _get_game_pid()))
@@ -42,6 +45,12 @@ func advance_turn() -> void:
 	var next_user : UserGame = turn_order[turn_number % turn_order.size()]
 	print("[" + str(NetClient.id) + "]", "Turno de ", next_user.get_user_res().username)
 	tick_turn.emit()
+	
+	if not skip_visual:
+		var prev_res = user.get_user_res()
+		var next_res = next_user.get_user_res()
+		turn_changed_visual.emit(prev_res.img, next_res.name, next_res.img)
+	
 	
 	
 func get_current_user() -> UserGame:
@@ -274,14 +283,20 @@ func start_deployment_phase() -> void:
 	deployment_phase_started.emit()
 	_refresh_ui_for_current_player()
 	_highlight_current_deployment_zone()
-
+	var current_user = get_current_user()
+	
+	deployment_phase_started.emit(current_user.get_user_res().name)
+	
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
 	battle_phase_started.emit()
 	movement_enabled.emit()
 	deployment_zone_cleared.emit()
 	deployment_preview_cleared.emit()
-
+		
+	var current_user = get_current_user()
+	combat_phase_started.emit(current_user.get_user_res().username) # FIXME: señal duplicada con battle_phase_started.emit()
+	
 func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vector2i) -> bool:
 	if not is_deployment_phase:
 		print("[" + str(NetClient.id) + "]", "no es deploy")
@@ -345,7 +360,7 @@ func _handle_next_deployment_step() -> void:
 	elif _has_cards_to_deploy(current_user):
 		pass # Opponent is out of cards, current user continues
 	else:
-		advance_turn()
+		advance_turn(true)
 		end_deployment_phase()
 		
 
