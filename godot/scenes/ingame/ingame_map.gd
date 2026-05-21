@@ -13,6 +13,9 @@ extends Control
 
 @onready var turn_manager: TurnManager = get_parent() as TurnManager
 
+@export var transition_screen_scene: PackedScene
+var transition_screen: Node
+
 var _pending_deployment_group: CardArmyGroup = null
 
 enum UnitState {
@@ -28,9 +31,26 @@ var _selected_tile:   TileGame     = null
 var _selected_coords: Vector2i     = Vector2i(-1, -1)
 
 func _ready() -> void:
-	await get_tree().process_frame
+	
 	if turn_manager == null:
-		turn_manager = GameManager.get_turn_manager()
+		turn_manager = get_parent() as TurnManager
+		if turn_manager == null:
+			turn_manager = GameManager.get_turn_manager()
+			
+	
+	if transition_screen_scene != null:
+		transition_screen = transition_screen_scene.instantiate()
+		add_child(transition_screen)
+		
+		turn_manager.deployment_phase_started.connect(transition_screen.play_deployment_transition)
+		turn_manager.combat_phase_started.connect(transition_screen.play_combat_transition)
+		turn_manager.turn_changed_visual.connect(transition_screen.play_turn_transition_fast)
+	else:
+		push_warning("GameScene: No se ha asignado la escena de transición en el inspector.")
+
+
+	await get_tree().process_frame
+	
 	map = turn_manager.get_map()
 	if map == null:
 		push_error("GameScene: no tiene mapa — usando mapa de test")
@@ -46,10 +66,9 @@ func _ready() -> void:
 	await get_tree().process_frame
 	_setup_viewport()
 	clear()
+	
 	map_visualizer.tile_clicked.connect(_on_tile_clicked)
 	map_visualizer.tile_hovered.connect(_on_map_tile_hovered)
-	#GameManager.phase_changed.connect(_on_phase_change)
-	#_on_phase_change(GameManager._app_state)
 	unit_info.hability_use_requested.connect(_on_hability_use_requested)
 
 	cards_panel.confirmed.connect(_hab_manager.confirm)
@@ -113,9 +132,13 @@ func _on_hab_applied(_hab: HabilityRes, _targets: Array[Vector2i]) -> void:
 	_state = UnitState.UNIT_SELECTED
 	map_visualizer.clear_highlights()
 	cards_panel.hide_confirm_dialog()
+	
+			
 	#if _selected_tile != null and _selected_tile.has_unit():
 		#cards_panel.paint_unit_info(_selected_tile)
 		#unit_info.observe(_selected_tile.get_unit())
+	
+
 
 
 

@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="VFXEffectData" format=3 uid="uid://bamxdvs01bi8p"]
+
+[ext_resource type="Script" uid="uid://coqlqo81l8ahe" path="res://scripts/resources/vfx_effect_data.gd" id="1_ibfs4"]
+[ext_resource type="Texture2D" uid="uid://b80cn812u7msb" path="res://assets/particles/electric_particles.png" id="1_swe0k"]
+[ext_resource type="Shader" uid="uid://b17p2f440ey53" path="res://resources/shaders/shader_eletrico.gdshader" id="3_reioi"]
+[ext_resource type="AudioStream" uid="uid://dg8yfdmp7qont" path="res://assets/sonidos/electric.mp3" id="4_18q5e"]
+
+[sub_resource type="Gradient" id="Gradient_0fnat"]
+colors = PackedColorArray(0, 0.8, 1, 1, 0, 0.2, 1, 0)
+
+[resource]
+script = ExtResource("1_ibfs4")
+shader = ExtResource("3_reioi")
+core_color = Color(0.8, 0.9490196, 1, 1)
+mid_color = Color(0, 0.8, 1, 1)
+edge_color = Color(0, 0.2, 1, 1)
+wave_speed = 15.0
+wave_amplitude = 0.04
+wave_frequency = 20.0
+particle_texture = ExtResource("1_swe0k")
+color_ramp = SubResource("Gradient_0fnat")
+initial_velocity_min = 100.0
+initial_velocity_max = 150.0
+movement_spread = 180.0
+use_turbulence = true
+turbulence_strength = 2.5
+duration = 3.0
+sound_effect = ExtResource("4_18q5e")
+sound_pitch_randomness = 0.15
+metadata/_custom_type_script = "uid://coqlqo81l8ahe"

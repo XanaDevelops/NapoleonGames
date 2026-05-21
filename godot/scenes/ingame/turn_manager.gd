@@ -3,7 +3,10 @@ extends Node
 
 
 signal card_deployed(player: UserGame, remaining: int)
-## Los UnitGame deben subscribirse a esto para avanzar el turno
+signal deployment_phase_started(first_player_name: String)
+signal combat_phase_started(first_player_name: String)
+signal turn_changed_visual(current_icon: Texture2D, next_name: String, next_icon: Texture2D)
+
 signal tick_turn
 signal game_end
 @onready var cards_panel = $IngameMap/VBoxContainer/CardsPanel
@@ -18,7 +21,7 @@ var is_deployment_phase: bool = false
 var game_config: GameConfig
 var map_game: MapGame
 
-func advance_turn() -> void:
+func advance_turn(skip_visual: bool = false) -> void:
 	var user := get_current_user()
 	if not is_deployment_phase:
 		register_turn(TurnPass.create(user))
@@ -26,6 +29,12 @@ func advance_turn() -> void:
 	var next_user : UserGame = turn_order[turn_number % turn_order.size()]
 	print("Turno de ", next_user.get_user_res().username)
 	tick_turn.emit()
+	
+	if not skip_visual:
+		var prev_res = user.get_user_res()
+		var next_res = next_user.get_user_res()
+		turn_changed_visual.emit(prev_res.img, next_res.name, next_res.img)
+	
 	
 	
 func get_current_user() -> UserGame:
@@ -155,6 +164,7 @@ func _ready() -> void:
 	for usuario in turn_order:
 		usuario.living_units = 0
 	players_panel.setup(self)
+	
 	start_deployment_phase()
 	
 	#end_deployment_phase()
@@ -227,7 +237,10 @@ func start_deployment_phase() -> void:
 	cards_panel.set_deployment_phase(true)
 	_refresh_ui_for_current_player()
 	_highlight_current_deployment_zone()
-
+	var current_user = get_current_user()
+	
+	deployment_phase_started.emit(current_user.get_user_res().name)
+	
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
 	players_panel.set_phase_battle()
@@ -238,7 +251,10 @@ func end_deployment_phase() -> void:
 	if map_visualizer:
 		map_visualizer.clear_deployment_zone()
 		map_visualizer.clear_deployment_preview()
-
+		
+	var current_user = get_current_user()
+	combat_phase_started.emit(current_user.get_user_res().username)
+	
 func _on_deploy_group(user_game: UserGame, group: CardArmyGroup, click_pos: Vector2i) -> bool:
 	if not is_deployment_phase:
 		return false
@@ -294,7 +310,7 @@ func _handle_next_deployment_step() -> void:
 	elif _has_cards_to_deploy(current_user):
 		pass # Opponent is out of cards, current user continues
 	else:
-		advance_turn()
+		advance_turn(true)
 		end_deployment_phase()
 		
 
