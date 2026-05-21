@@ -12,7 +12,7 @@ theme_override_styles/panel = ExtResource("1_xoo5n")
 script = ExtResource("2_qiyj6")
 tema_normal = ExtResource("3_y7gym")
 tema_seleccionado = ExtResource("4_xoo5n")
-ruta_carpeta_avatares = "C:/Users/User/Documents/NapoleonGames/godot/assets/avatares"
+ruta_carpeta_avatares = "res://assets/avatares"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=2127621341]
 layout_mode = 1

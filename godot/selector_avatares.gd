@@ -5,7 +5,7 @@ signal avatar_seleccionado(textura: Texture2D)
 @export var tema_normal: Theme
 @export var tema_seleccionado: Theme
 
-@export_global_dir var ruta_carpeta_avatares: String = "res://"
+@export_dir var ruta_carpeta_avatares: String = "res://"
 
 var avatares_disponibles: Array[Texture2D] = []
 @onready var grid_avatares = %GridAvatares
