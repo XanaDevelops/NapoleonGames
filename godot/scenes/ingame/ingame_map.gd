@@ -44,7 +44,7 @@ func _ready() -> void:
 		
 		turn_manager.deployment_phase_started.connect(transition_screen.play_deployment_transition)
 		turn_manager.combat_phase_started.connect(transition_screen.play_combat_transition)
-		turn_manager.turn_changed_visual.connect(transition_screen.play_turn_transition)
+		turn_manager.turn_changed_visual.connect(transition_screen.play_turn_transition_fast)
 	else:
 		push_warning("GameScene: No se ha asignado la escena de transición en el inspector.")
 
