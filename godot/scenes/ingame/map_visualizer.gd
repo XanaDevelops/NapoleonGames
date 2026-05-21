@@ -227,9 +227,9 @@ func clear_deployment_preview() -> void:
 	tile_map_layer_highlight.clear()
 	_last_hovered_tile = Vector2i(-999, -999)
 
-func _process(delta: float) -> void:
-	pass
-
+#func _process(delta: float) -> void:
+	#pass
+#
 
 
 func _unhandled_input(event: InputEvent) -> void:

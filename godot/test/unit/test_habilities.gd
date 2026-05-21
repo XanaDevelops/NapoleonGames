@@ -7,7 +7,6 @@ extends GutTest
 @onready var map_test : MapRes = preload("res://test/test_res/map_test.tres")
 @onready var user_ally : UserRes = preload("res://test/test_res/user_ally.tres")
 @onready var user_enemy : UserRes = preload("res://test/test_res/user_enemy.tres")
-
 static var tiles : Dictionary[int, TileTypeRes] = {
 	0: preload("res://test/test_res/tile_type_pasto.tres"),
 	1: preload("res://test/test_res/tile_type_montaña.tres")
@@ -212,19 +211,14 @@ func before_all():
 	self.map_test = gen_test_map()
 	
 
-func before_each():
+func before_each()-> void:
 	map_game = MapGame.new(map_test)
 	
 	ally_units.clear()
 	enemy_units.clear()
 	user_ally_game = UserGame.new(user_ally)
 	user_enemy_game = UserGame.new(user_enemy)
-	
-	# Crear unidades
-	var unit: UnitGame
-	var tm : TurnManager = autofree(TurnManager.new())
-	tm.turn_order = [user_ally_game, user_enemy_game]
-	GameManager.register_turn_manager(tm)
+
 	GameManager.game_config = GameConfig.new(
 		user_ally,
 		user_enemy,
@@ -232,36 +226,47 @@ func before_each():
 		null,
 		null
 	)
-	tm.set_map(map_game)
-	tm.set_app_state(GameManager.APP_STATE.IN_GAME)
-	
+
+	var prev_add_target = gut.add_children_to
+	gut.add_children_to = get_tree().get_root()
+	var instance := preload("res://scenes/ingame/game_scene.tscn").instantiate() as TurnManager
+	instance.turn_order = [user_ally_game, user_enemy_game]
+	instance.turn_number = 0
+	instance.set_map(map_game)
+	add_child_autoqfree(instance)
+	await wait_until(func(): return instance.is_inside_tree(), 5)
+	await wait_seconds(gut.paint_after)
+
+	var ingame_map = instance.get_node("IngameMap")
+	autoqfree(ingame_map._hab_manager)
+
+	GameManager.register_turn_manager(instance)
+	instance.set_app_state(GameManager.APP_STATE.IN_GAME)
+	gut.add_children_to = prev_add_target
+
+	var unit: UnitGame
 	unit = UnitGame.new(card_melee, user_ally_game)
 	map_game.place_unit(unit, Vector2i(0,0))
-	#tm.tick_turn.connect(unit.advance_turn)
 	ally_units.append(unit)
 	
 	unit = UnitGame.new(card_ranged, user_ally_game)
 	map_game.place_unit(unit, Vector2i(0,1))
-	#tm.tick_turn.connect(unit.advance_turn)
-
 	ally_units.append(unit)
 	
 	unit = UnitGame.new(card_melee, user_enemy_game)
 	map_game.place_unit(unit, Vector2i(1,0))
-	#tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
+	
 	unit = UnitGame.new(card_melee, user_enemy_game)
 	map_game.place_unit(unit, Vector2i(2,0))
-	#tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
+	
 	unit = UnitGame.new(card_melee, user_enemy_game)
 	map_game.place_unit(unit, Vector2i(3,0))
-	#tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
+	
 	unit = UnitGame.new(card_melee, user_enemy_game)
 	map_game.place_unit(unit, Vector2i(4,4))
-	#tm.tick_turn.connect(unit.advance_turn)
 	enemy_units.append(unit)
-	
-	
+
 	seed(666)

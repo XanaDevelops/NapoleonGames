@@ -25,9 +25,12 @@ var _selected_tile:   TileGame     = null
 var _selected_coords: Vector2i     = Vector2i(-1, -1)
 
 func _ready() -> void:
+
+
 	await get_tree().process_frame
 	if turn_manager == null:
 		turn_manager = GameManager.get_turn_manager()
+	print("turn_manager resuelto: ", turn_manager)
 	map = turn_manager.get_map()
 	if map == null:
 		push_error("GameScene: no tiene mapa — usando mapa de test")
@@ -50,23 +53,20 @@ func _ready() -> void:
 
 	map_visualizer.tile_clicked.connect(_on_tile_clicked)
 	map_visualizer.tile_hovered.connect(_on_map_tile_hovered)
-	#GameManager.phase_changed.connect(_on_phase_change)
-	#_on_phase_change(GameManager._app_state)
+
 	unit_info.hability_use_requested.connect(_on_hability_use_requested)
 
 	cards_panel.confirmed.connect(_hab_manager.confirm)
 	cards_panel.cancelled.connect(_hab_manager.cancel)
 	deployment_box.unit_selected_for_deployment.connect(_on_card_selected_in_ui)
-	
-
 
 
 func clear() -> void:
 	cards_panel.clear()
 
 func _setup_viewport() -> void:
-	var container_size = map_container.size
-	sub_viewport.size = Vector2i(container_size)
+	#var container_size = map_container.size
+	#sub_viewport.size = Vector2i(container_size)
 
 	sub_viewport.transparent_bg = true
 	

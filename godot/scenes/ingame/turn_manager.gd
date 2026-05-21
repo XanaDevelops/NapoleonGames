@@ -18,6 +18,8 @@ var global_action_count: int = 0
 var is_deployment_phase: bool = false
 var game_config: GameConfig
 var map_game: MapGame
+signal ready_completed
+
 func advance_turn() -> void:
 	var user := get_current_user()
 	if not is_deployment_phase:
@@ -219,7 +221,8 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 	if not res:
 		print("No se cumple las condiciones para usar esta habilidad!")
 		return false
-	map_visualizer._refresh_unit_states()	
+
+	map_visualizer._refresh_unit_states()
 	var action := TurnHability.create(unit_source, tile, hability, objectives)
 	register_turn(action)
 		

@@ -9,7 +9,8 @@ var _elapsed_time: float = 0.0
 var _options_panel: Control = null
 
 func _ready() -> void:
-	OptionsButton.pressed.connect(_on_options_button_pressed)
+	#OptionsButton.pressed.connect(_on_options_button_pressed)
+	pass
 
 func _process(delta: float) -> void:
 	_elapsed_time += delta
