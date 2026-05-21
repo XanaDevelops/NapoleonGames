@@ -3,8 +3,12 @@ extends Node
 signal handle_local_id_assignment(local_id: int)
 signal server_turn_response(accepted: bool)
 signal server_randf_response(val: float)
+signal randf_available()
 
 var id: int = -1
+
+var mutex:= Mutex.new()
+var _randf_in_flight: bool = false
 
 func _ready() -> void:
 	Online.on_client_packet.connect(on_client_packet)
@@ -24,7 +28,7 @@ func on_client_packet(data: PackedByteArray) -> void:
 		NetPacket.PACKET_TYPE.TURN_RESULT:
 			manage_turn_result(TurnNetResult.create_from_data(data))
 		NetPacket.PACKET_TYPE.RANDF:
-			server_randf_response.emit(NetRandF.create_from_data(data).randf_val)
+			manage_randf(NetRandF.create_from_data(data))
 		_:
 			push_error("Packet type with index ", data[0], " unhandled!")
 
@@ -53,14 +57,33 @@ func request_randf_server() -> float:
 	if GameManager.is_server:
 		return NetServer.manage_randf(-1, NetRandF.create(0))
 	if Online.server_peer:
+		# Serializar solicitudes para evitar que múltiples llamadas simultáneas
+		# reutilicen la misma respuesta por proximidad en tiempo.
+		while true:
+			mutex.lock()
+			if not _randf_in_flight:
+				_randf_in_flight = true
+				mutex.unlock()
+				break
+			mutex.unlock()
+			await randf_available
+
 		var packet:= NetRandF.create(0)
 		packet.send(Online.server_peer)
 		var res :float = await server_randf_response
 		print("[" + str(NetClient.id) + "]", "randf server: ", res)
+
+		mutex.lock()
+		_randf_in_flight = false
+		mutex.unlock()
+		randf_available.emit()
 		return res
 	else:
 		return randf()
 	
+func manage_randf(packet: NetRandF) -> void:
+	# Emitir directamente la respuesta recibida desde el servidor.
+	server_randf_response.emit(packet.randf_val)
 	
 	
 func enter_online_game(lobby: GameLobby) -> void:

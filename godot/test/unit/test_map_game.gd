@@ -79,7 +79,7 @@ func test_dijkstra() -> void:
 		assert_true(p in expected_odd)
 
 	# Dijkstra/movimiento: invariantes simples (sin tamaños mágicos)
-	var available := mapGame.get_accesible_moves(pos_even)
+	var available := await mapGame.get_accesible_moves(pos_even)
 	assert_false(pos_even in available)
 	var seen := {}
 	for p in available:

@@ -37,9 +37,10 @@ func on_peer_connected(peer_id: int) -> void:
 	
 	## Tema random, clientes nuevos continuan por donde estan el resto
 	if not peer_id in randf_indexes:
-		var max_val : int = randf_indexes.keys().reduce(func(k: int, ret:int): 
-			return maxi(k, ret), 0)
-		randf_indexes.set(peer_id, max_val)
+		# Inicializar el índice del peer en el punto actual de generación
+		# para que los clientes nuevos no reciban valores aleatorios ya usados
+		var start_idx: int = randf_values.size()
+		randf_indexes.set(peer_id, start_idx)
 		
 	print("[SERVER] ranf_indx: ", randf_indexes)
 
