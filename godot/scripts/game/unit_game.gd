@@ -4,6 +4,10 @@ extends RuntimeResource
 ## Maná por turno
 const PASSIVE_MANA := 5
 
+signal hit_received(type: AttackType)
+signal dodged() 
+signal healed()
+
 @export var _cardRes: CardRes
 
 @export var _owner: UserGame
@@ -186,6 +190,7 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	# ojo que randf() es [0,1] no [0,1)
 	if await NetClient.request_randf_server() < self.dodge:
 		print("[" + str(NetClient.id) + "]", "esquive! ", self.dodge)
+		dodged.emit()
 		return false
 	
 	
@@ -204,6 +209,7 @@ func recieve_attack(damage: int, type: AttackType) -> bool:
 	print("[" + str(NetClient.id) + "]", "inflicted_damage: " + str(inflict_damage) + " with defense " + str(defense))
 	self.hp -= inflict_damage
 	
+	hit_received.emit(type)
 
 		
 	return self.hp <= 0
@@ -232,6 +238,8 @@ func heal(value: int, type: StatData) -> void:
 		self.hp += self.max_hp * value
 	else:
 		self.hp += value
+	
+	healed.emit()
 
 
 func add_alter_state(alter: AlterStateRes) -> void:

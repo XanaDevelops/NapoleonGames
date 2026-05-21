@@ -1,15 +1,19 @@
 extends Node
 
 signal usuario_cambiado(email_activo)
+signal usuarios_actualizados
 
 @export var mapas_de_prueba: Array[MapRes] = []
 
 var usuarios: Dictionary = {}
 var usuario_actual: UserRes
 
+const AUTH_USERS_PATH := "user://usuarios_auth.json"
+
 func _ready() -> void:
-	
 	cargar_usuarios_de_prueba()
+	cargar_usuarios_autenticados()
+	usuarios_actualizados.emit()
 
 func cargar_usuarios_de_prueba() -> void:
 	var gr := GameResources.load_from() 
@@ -95,3 +99,86 @@ func eliminar_ejercito(nombre_ejercito: String) -> void:
 		if ejercitos[i].nom == nombre_ejercito:
 			ejercitos.remove_at(i)
 			break
+
+func crear_user_res_desde_auth_response(auth_response: Dictionary) -> UserRes:
+	if not auth_response.has("user"):
+		push_error("Auth response sin user")
+		return null
+
+	var user_data: Dictionary = auth_response["user"]
+
+	var user := UserRes.new()
+	user.name = str(user_data.get("displayName", user_data.get("username", "")))
+	user.username = StringName(str(user_data.get("username", "")))
+	user.email = str(user_data.get("email", ""))
+	user.token = str(auth_response.get("token", ""))
+
+	return user
+
+
+func registrar_usuario_autenticado(auth_response: Dictionary) -> void:
+	var user := crear_user_res_desde_auth_response(auth_response)
+
+	if user == null:
+		return
+
+	if user.email == "":
+		push_error("Usuario autenticado sin email")
+		return
+
+	if usuarios.has(user.email):
+		usuarios[user.email] = user
+	else:
+		usuarios[user.email] = user
+
+	usuario_actual = user
+
+	print("Usuario autenticado activo: " + user.name)
+
+	usuarios_actualizados.emit()
+	usuario_cambiado.emit(user.email)
+	guardar_usuarios_autenticados()
+	
+
+func guardar_usuarios_autenticados() -> void:
+	var datos := []
+
+	for email in usuarios:
+		var usuario: UserRes = usuarios[email]
+
+		if usuario.token == "":
+			continue
+
+		datos.append({
+			"name": usuario.name,
+			"username": str(usuario.username),
+			"email": usuario.email,
+			"token": usuario.token
+		})
+
+	var file := FileAccess.open(AUTH_USERS_PATH, FileAccess.WRITE)
+	file.store_string(JSON.stringify(datos))
+	file.close()
+
+
+func cargar_usuarios_autenticados() -> void:
+	if not FileAccess.file_exists(AUTH_USERS_PATH):
+		return
+
+	var file := FileAccess.open(AUTH_USERS_PATH, FileAccess.READ)
+	var content := file.get_as_text()
+	file.close()
+
+	var datos = JSON.parse_string(content)
+
+	if typeof(datos) != TYPE_ARRAY:
+		return
+
+	for item in datos:
+		var usuario := UserRes.new()
+		usuario.name = item.get("name", "")
+		usuario.username = StringName(item.get("username", ""))
+		usuario.email = item.get("email", "")
+		usuario.token = item.get("token", "")
+
+		usuarios[usuario.email] = usuario
