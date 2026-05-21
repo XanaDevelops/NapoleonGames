@@ -27,8 +27,14 @@ var tileset: TileSet
 var texture_to_source_id: Dictionary = {}
 
 const TILE_SIZE_HEIGHT = 64 * 1.5
-const TILE_SIZE_WIDTH = 55 * 1.5 # TILE_SIZE_HEIGHT/2 * root(3)
+const TILE_SIZE_WIDTH = 55 * 1.5 
 
+var current_mask_size: float
+var current_mask_scale_x: float
+
+@export var vfx_database: Dictionary[StringName, VFXEffectData] = {}
+
+@export var vfx_scene: PackedScene
 const UNIT_OVERLAY_SCENE= preload("res://scenes/unit_overlay.tscn")
 var _unit_overlays:Dictionary = {}
 
@@ -60,10 +66,14 @@ func _setup_highlight_tiles() -> void:
 	
 	tile_map_layer_owner_p1.self_modulate = COLOR_OWNER_P1
 	tile_map_layer_owner_p2.self_modulate = COLOR_OWNER_P2
-	#tile_map_layer_exhausted.self_modulate = Color(0.4, 0.4, 0.4, 0.6) 
 	tile_map_layer_exhausted.self_modulate =  Color.BLACK
 
 func _ready() -> void:
+	
+	current_mask_scale_x = float(TILE_SIZE_HEIGHT) / float(TILE_SIZE_WIDTH)
+	current_mask_scale_x *= 0.95
+	current_mask_size = 0.5 * 0.98
+	
 	tileset = _setup_tileset()
 	for tml in [tile_map_layer_texture, tile_map_layer_units,
 				tile_map_layer_selection, tile_map_layer_highlight, 
@@ -73,8 +83,13 @@ func _ready() -> void:
 	_setup_highlight_tiles()
 	if GameManager.turn_manager!=null:
 		GameManager.turn_manager.tick_turn.connect(_clear_selection)
-		#GameManager.turn_manager.tick_turn.connect(_refresh_unit_states)
+	
+	var units_mat = tile_map_layer_units.material as ShaderMaterial
+	if units_mat != null:
+		units_mat.set_shader_parameter("mask_size", current_mask_size)
+		units_mat.set_shader_parameter("mask_scale_x", current_mask_scale_x)
 
+	
 func _setup_tileset() -> TileSet:
 	var tileset = TileSet.new()
 	tileset.tile_shape = TileSet.TILE_SHAPE_HEXAGON
@@ -103,10 +118,33 @@ func draw_tile(i: int, y: int, tile: TileGame) -> void:
 	tile_map_layer_texture.set_cell(coords, tile_source_id, Vector2i.ZERO)
 	_set_owner_highlight(Vector2i(i,y), tile._unit)
 	if tile.has_unit():
+		var unit = tile.get_unit()
 		var unit_source_id = add_texture_to_tileset(tile.get_unit().get_texture2D())
 		tile_map_layer_units.set_cell(coords, unit_source_id, Vector2i.ZERO)
 		_add_unit_overlay(coords, tile.get_unit())
+				
+		if not unit.hit_received.is_connected(_on_unit_hit):
+			unit.hit_received.connect(_on_unit_hit.bind(unit))
+			
 		
+		if not unit.dodged.is_connected(_on_unit_dodged):
+			unit.dodged.connect(_on_unit_dodged.bind(unit))
+			
+		if not unit.healed.is_connected(_on_unit_healed):
+			unit.healed.connect(_on_unit_healed.bind(unit))
+
+func _on_unit_hit(attack_type: AttackType, unit: UnitGame) -> void:
+	
+	await play_attack_vfx(unit.get_current_position(), attack_type)
+
+func _on_unit_dodged(unit: UnitGame) -> void:
+	
+	await play_vfx(unit.get_current_position(), &"protect")
+
+func _on_unit_healed(unit: UnitGame) -> void:
+	
+	await play_vfx(unit.get_current_position(), &"heal")
+				
 func add_texture_to_tileset(texture: Texture2D) -> int:
 	for tex_id in texture_to_source_id.keys():
 		if texture_to_source_id[tex_id] == texture:
@@ -227,10 +265,9 @@ func clear_deployment_preview() -> void:
 	tile_map_layer_highlight.clear()
 	_last_hovered_tile = Vector2i(-999, -999)
 
-#func _process(delta: float) -> void:
-	#pass
-#
 
+func _process(delta: float) -> void:
+	pass
 
 func _unhandled_input(event: InputEvent) -> void:
 	# ZOOM using wheel
@@ -345,7 +382,54 @@ func _clear_selection() -> void:
 	current_accesible_moves = []
 	tile_map_layer_selection.clear()
 	tile_map_layer_highlight.clear()
+	
 
+func play_attack_vfx(target_coords: Vector2i, attack_type: AttackType) -> void:
+	if not attack_type:
+		return
+	play_vfx(target_coords, attack_type.name)
+
+
+func play_vfx(target_coords: Vector2i, effect_name: StringName) -> void:
+	if not vfx_scene or effect_name == &"":
+		return
+
+	var current_vfx: VFXEffectData = null
+	
+	if vfx_database.has(effect_name):
+		current_vfx = vfx_database[effect_name] as VFXEffectData
+		
+	if current_vfx == null:
+		print("Atención: No hay animación en el diccionario para el efecto: ", effect_name)
+		return
+	var overlay = _unit_overlays.get(target_coords)
+	
+	if overlay and is_instance_valid(overlay):
+		overlay.visible = false
+		print("setting univert_overlay to false", target_coords)
+	var unit_texture_resized: Texture2D
+	var source_id = tile_map_layer_units.get_cell_source_id(target_coords)
+	
+	if source_id != -1 and texture_to_source_id.has(source_id):
+		unit_texture_resized = texture_to_source_id[source_id]
+	else:
+		var fallback_tex = PlaceholderTexture2D.new()
+		fallback_tex.size = Vector2(TILE_SIZE_WIDTH, TILE_SIZE_HEIGHT)
+		unit_texture_resized = fallback_tex
+		
+	var vfx_instance = vfx_scene.instantiate()
+	add_child(vfx_instance)
+	vfx_instance.z_index = 100 
+	
+	var local_pos = tile_map_layer_units.map_to_local(target_coords)
+	vfx_instance.position = local_pos
+	
+	vfx_instance.setup_vfx(unit_texture_resized, current_vfx, current_mask_size, current_mask_scale_x)
+	await vfx_instance.vfx_finished
+	if overlay and is_instance_valid(overlay):
+		overlay.visible = true
+		print("setting univert_overlay to true", target_coords)
+		
 func _add_unit_overlay(coords: Vector2i, unit: UnitGame) -> void:
 	if _unit_overlays.has(coords):
 		_unit_overlays[coords].cleanup()
