@@ -5,7 +5,8 @@
 [ext_resource type="Script" uid="uid://dilrauf05i3je" path="res://scenes/ingame/players_panel.gd" id="2_s3xon"]
 [ext_resource type="Shader" uid="uid://cemlqbvowjq1m" path="res://scenes/ingame/ingame_map.gdshader" id="3_g5sqw"]
 [ext_resource type="Script" uid="uid://bm6sp4ow1l2qv" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
-[ext_resource type="Script" uid="uid://boaagd3hgel75" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
+[ext_resource type="Shader" uid="uid://157jkj0n28hu" path="res://resources/shaders/hexagonal_shader.gdshader" id="5_3rx8c"]
+[ext_resource type="Script" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
 [ext_resource type="Script" uid="uid://b8ttj2gcfkh47" path="res://scenes/ingame/unit_info.gd" id="6_smdvi"]
 [ext_resource type="PackedScene" uid="uid://ygwgcu7ruh4u" path="res://scenes/health_bar.tscn" id="7_6nuks"]
 [ext_resource type="Script" uid="uid://b220xr4adcigk" path="res://scenes/ingame/deployment_box.gd" id="8_rtl0i"]
@@ -22,6 +23,12 @@ shader_parameter/border_width = 0.03
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g5sqw"]
 bg_color = Color(0.0042888485, 0.012468488, 0.074443825, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m7qbv"]
+shader = ExtResource("5_3rx8c")
+shader_parameter/pointy_top = true
+shader_parameter/mask_size = 0.5
+shader_parameter/mask_scale_x = 1.0
 
 [node name="IngameMap" type="Control" unique_id=1560040291]
 layout_mode = 3
@@ -133,6 +140,7 @@ tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAU
 [node name="TileMapLayer_deployment" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1706908201]
 
 [node name="TileMapLayer_units" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1642646471]
+material = SubResource("ShaderMaterial_m7qbv")
 
 [node name="TileMapLayer_selection" type="TileMapLayer" parent="VBoxContainer/PanelContainer/SubViewportContainer/SubViewport/mapVisualizer" unique_id=1342848487]
 

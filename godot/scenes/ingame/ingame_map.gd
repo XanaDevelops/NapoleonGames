@@ -113,9 +113,13 @@ func _on_hab_applied(_hab: HabilityRes, _targets: Array[Vector2i]) -> void:
 	_state = UnitState.UNIT_SELECTED
 	map_visualizer.clear_highlights()
 	cards_panel.hide_confirm_dialog()
+	
+			
 	#if _selected_tile != null and _selected_tile.has_unit():
 		#cards_panel.paint_unit_info(_selected_tile)
 		#unit_info.observe(_selected_tile.get_unit())
+	
+
 
 
 
