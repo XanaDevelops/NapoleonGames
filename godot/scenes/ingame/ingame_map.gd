@@ -10,6 +10,10 @@ extends Control
 @export var deployment_box: HBoxContainer       
 
 @onready var turn_manager: TurnManager = get_parent() as TurnManager
+
+@export var transition_screen_scene: PackedScene
+var transition_screen: Node
+
 var _pending_deployment_group: CardArmyGroup = null
 
 enum UnitState {
@@ -25,12 +29,26 @@ var _selected_tile:   TileGame     = null
 var _selected_coords: Vector2i     = Vector2i(-1, -1)
 
 func _ready() -> void:
+	
+	if turn_manager == null:
+		turn_manager = get_parent() as TurnManager
+		if turn_manager == null:
+			turn_manager = GameManager.get_turn_manager()
+			
+	
+	if transition_screen_scene != null:
+		transition_screen = transition_screen_scene.instantiate()
+		add_child(transition_screen)
+		
+		turn_manager.deployment_phase_started.connect(transition_screen.play_deployment_transition)
+		turn_manager.combat_phase_started.connect(transition_screen.play_combat_transition)
+		turn_manager.turn_changed_visual.connect(transition_screen.play_turn_transition_fast)
+	else:
+		push_warning("GameScene: No se ha asignado la escena de transición en el inspector.")
 
 
 	await get_tree().process_frame
-	if turn_manager == null:
-		turn_manager = GameManager.get_turn_manager()
-	print("turn_manager resuelto: ", turn_manager)
+	
 	map = turn_manager.get_map()
 	if map == null:
 		push_error("GameScene: no tiene mapa — usando mapa de test")
@@ -50,10 +68,9 @@ func _ready() -> void:
 	await get_tree().process_frame
 	_setup_viewport()
 	clear()
-
+	
 	map_visualizer.tile_clicked.connect(_on_tile_clicked)
 	map_visualizer.tile_hovered.connect(_on_map_tile_hovered)
-
 	unit_info.hability_use_requested.connect(_on_hability_use_requested)
 
 	cards_panel.confirmed.connect(_hab_manager.confirm)
