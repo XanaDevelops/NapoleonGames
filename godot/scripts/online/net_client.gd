@@ -10,6 +10,10 @@ var id: int = -1
 var mutex:= Mutex.new()
 var _randf_in_flight: bool = false
 
+## Variable para saber si el cliente esta actualmente conectado
+## FIXME: manejar casos de desconexión
+var connected := false
+
 func _ready() -> void:
 	Online.on_client_packet.connect(on_client_packet)
 
@@ -37,7 +41,8 @@ func manage_ids(id_assignment: IDAssignment) -> void:
 	if id == -1: # When id == -1, the id sent by the server is for us
 		id = id_assignment.id
 		handle_local_id_assignment.emit(id_assignment.id)
-
+	#tenemos id, estamos online
+	self.connected = true
 	prints("my id", id)
 	
 ## TODO: preguntar por mapa, config, etc
@@ -56,7 +61,7 @@ func request_online_game() -> void:
 func request_randf_server() -> float:
 	if GameManager.is_server:
 		return NetServer.manage_randf(-1, NetRandF.create(0))
-	if Online.server_peer:
+	if NetClient.connected:
 		# Serializar solicitudes para evitar que múltiples llamadas simultáneas
 		# reutilicen la misma respuesta por proximidad en tiempo.
 		while true:

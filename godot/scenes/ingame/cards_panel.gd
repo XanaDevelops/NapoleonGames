@@ -12,7 +12,6 @@ signal cancelled
 
 func _ready() -> void:
 	await get_tree().process_frame
-	_setup_pages()
 	_connect_turn_manager()
 
 
@@ -31,14 +30,14 @@ func _connect_turn_manager() -> void:
 		turn_manager.unit_info_cleared.connect(_on_unit_info_cleared)
 	if turn_manager.is_deployment_phase:
 		print("[CardsPanel] Forcing deployment phase UI")
-		_on_deployment_phase_started()
+		_on_deployment_phase_started("")
 
 	if tile_info:
 		tile_info.visible = false
 	if UnitPanel:
 		UnitPanel.visible= false
 
-func _on_deployment_phase_started() -> void:
+func _on_deployment_phase_started(_playerName: String) -> void:
 	set_deployment_phase(true)
 
 
@@ -50,19 +49,6 @@ func _on_unit_info_cleared() -> void:
 	clear_unit_info()
 	
 
-func _setup_pages() -> void:
-	
-	tile_info.custom_minimum_size = Vector2(size.x, size.y)
-	unit_info.custom_minimum_size = Vector2(size.x, size.y)
-
-#func set_phase_battle() -> void:
-	#clear()
-	#deployment_box.visible= false
-	
-#func set_phase_deployment() -> void:
-	#tabs.visible= false
-	#deployment_box.visible= true
-	#
 func paint_tile_info(tile: TileGame) -> void:
 	if is_deployment_active:
 		return

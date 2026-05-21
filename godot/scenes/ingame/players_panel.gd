@@ -58,7 +58,7 @@ func _on_ui_setup_requested(tm: TurnManager) -> void:
 	setup(tm)
 
 
-func _on_deployment_phase_started() -> void:
+func _on_deployment_phase_started(_playerName: String) -> void:
 	set_phase_deployment()
 
 

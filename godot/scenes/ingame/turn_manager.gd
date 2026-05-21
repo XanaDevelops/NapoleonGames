@@ -12,7 +12,6 @@ signal game_end
 
 # Algunas señales tienen pinta de ser de ui->ui, revisar
 signal ui_setup_requested(turn_manager: TurnManager)
-signal deployment_phase_started
 signal battle_phase_started
 signal deployment_data_refreshed(groups: Array)
 signal deployment_card_consumed(group: CardArmyGroup)
@@ -46,8 +45,8 @@ func advance_turn(skip_visual: bool = false) -> void:
 	var next_user : UserGame = turn_order[turn_number % turn_order.size()]
 	print("[" + str(NetClient.id) + "]", "Turno de ", next_user.get_user_res().username)
 	tick_turn.emit()
-	map_visualizer._refresh_unit_states()
-
+	#map_visualizer._refresh_unit_states()
+	unit_refresh.emit()
 	
 	if not skip_visual:
 		var prev_res = user.get_user_res()
@@ -284,7 +283,6 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 
 func start_deployment_phase() -> void:
 	is_deployment_phase = true
-	deployment_phase_started.emit()
 	_refresh_ui_for_current_player()
 	_highlight_current_deployment_zone()
 	var current_user = get_current_user()

@@ -111,6 +111,9 @@ func _connect_turn_manager() -> void:
 		turn_manager.unit_removed.connect(_on_unit_removed)
 	if not turn_manager.movement_enabled.is_connected(_on_movement_enabled):
 		turn_manager.movement_enabled.connect(_on_movement_enabled)
+		
+	if not turn_manager.unit_refresh.is_connected(_refresh_unit_states):
+		turn_manager.unit_refresh.connect(_refresh_unit_states)
 
 
 func _on_unit_moved(start: Vector2i, end: Vector2i) -> void:
