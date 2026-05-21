@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://w3t2rg68mjj5"]
+
+[ext_resource type="Script" uid="uid://cplvwosyshf8d" path="res://scenes/vfx_conteiner.gd" id="1_r7nyc"]
+[ext_resource type="Shader" uid="uid://v0bn4b6eo0xc" path="res://resources/shaders/defense_shader.gdshader" id="2_41grv"]
+[ext_resource type="Texture2D" uid="uid://cfhl3bp06jbqv" path="res://assets/sprites/imagenes_de_cartas/elfo.jpg" id="3_uk6d3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uk6d3"]
+shader = ExtResource("2_41grv")
+shader_parameter/color_core = Color(1, 1, 1, 1)
+shader_parameter/color_mid = Color(0, 0.8, 1, 1)
+shader_parameter/color_edge = Color(0, 0.2, 0.8, 1)
+shader_parameter/wave_speed = 0.8
+shader_parameter/wave_amplitude = 0.0
+shader_parameter/wave_frequency = 1.0
+shader_parameter/flame_squash_factor = 1.0
+shader_parameter/effect_intensity = 1.0
+shader_parameter/pointy_top = true
+shader_parameter/mask_size = 0.5
+shader_parameter/mask_scale_x = 1.0
+
+[node name="vfx_conteiner" type="Node2D" unique_id=2036930382]
+script = ExtResource("1_r7nyc")
+
+[node name="SpriteOverlay" type="Sprite2D" parent="." unique_id=976610237]
+material = SubResource("ShaderMaterial_uk6d3")
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_uk6d3")
+
+[node name="ParticulasGenericas" type="GPUParticles2D" parent="." unique_id=288216301]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2008880241]

@@ -5,6 +5,7 @@ const FILA_USUARIO_ESCENA = preload("res://scenes/fila_usuario_menu.tscn")
 @onready var contenedor_usuarios = $Panel/ScrollContainer/ContenedorUsuarios
 
 func _ready():
+	UserManager.usuarios_actualizados.connect(cargar_lista_de_usuarios)
 	cargar_lista_de_usuarios()
 
 func cargar_lista_de_usuarios() -> void:

@@ -13,4 +13,16 @@ transition_screen_scene = ExtResource("3_sxwm6")
 [node name="SubViewportContainer" parent="IngameMap/VBoxContainer/PanelContainer" parent_id_path=PackedInt32Array(594307947, 1473323759) index="0" unique_id=959567450]
 size_flags_horizontal = 4
 
+[node name="mapVisualizer" parent="IngameMap/VBoxContainer/PanelContainer/SubViewportContainer/SubViewport" parent_id_path=PackedInt32Array(594307947, 1514874787) index="0" unique_id=19580803]
+vfx_database = Dictionary[StringName, ExtResource("3_rn5k7")]({
+&"fire": ExtResource("5_tuavw"),
+&"heal": ExtResource("9_fpyi0"),
+&"lighting": ExtResource("6_gh0xm"),
+&"magic": ExtResource("5_tuavw"),
+&"physic": ExtResource("4_jc8l4"),
+&"poison": ExtResource("7_fpyi0"),
+&"protect": ExtResource("8_gh0xm")
+})
+vfx_scene = ExtResource("3_sxwm6")
+
 [editable path="IngameMap"]
