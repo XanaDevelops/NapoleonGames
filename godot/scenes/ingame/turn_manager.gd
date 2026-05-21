@@ -93,7 +93,7 @@ func replay_turn(turn: TurnAction) -> bool:
 		TurnAction.ACTION.DEPLOYMENT:
 			_replay_deployment(turn)
 		TurnAction.ACTION.MOVEMENT:
-			_replay_movement(turn)
+			await _replay_movement(turn)
 		TurnAction.ACTION.ACTIVE, TurnAction.ACTION.PASSIVE:
 			_replay_hability(turn)
 		TurnAction.ACTION.PASS_TURN:
