@@ -6,11 +6,11 @@ signal card_deployed(player: UserGame, remaining: int)
 ## Los UnitGame deben subscribirse a esto para avanzar el turno
 signal tick_turn
 signal game_end
-@onready var cards_panel = $IngameMap/CardsPanel
+@export var cards_panel :Control
 @export var deployment_box:HBoxContainer 
-@onready var map_visualizer = $IngameMap/SubViewportContainer/SubViewport/mapVisualizer
-@onready var players_panel : PlayersPanel = $IngameMap/PlayersPanel
-@onready var end_button= $IngameMap/EndTurnButton
+@export var map_visualizer:mapVisualizer
+@export var players_panel : Control 
+@export var end_button:Control
 @export var turns: Array[TurnAction] = []
 var turn_order: Array[UserGame] = []
 var turn_number: int = 0
@@ -126,7 +126,7 @@ func _replay_deployment(turn: TurnDeploy) -> bool:
 func _replay_movement(turn: TurnMove) -> bool:
 	
 	# TODO: realizar más comprobaciones?
-	return _on_unit_movement_requested(turn.start_pos, turn.end_pos)
+	return await _on_unit_movement_requested(turn.start_pos, turn.end_pos)
 	
 func _replay_hability(turn: TurnHability) -> bool:
 	# TODO: más comprobaciones?

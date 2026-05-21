@@ -40,6 +40,7 @@ func _ready() -> void:
 	map_visualizer.center_camera(Vector2(sub_viewport.size))
 	
 	_hab_manager = HabilityManager.new()
+	add_child(_hab_manager)
 	_connect_hab_manager()
 
 	await get_tree().process_frame
