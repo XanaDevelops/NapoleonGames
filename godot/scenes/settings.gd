@@ -3,6 +3,9 @@ extends Control
 
 @export var mode_button:OptionButton
 @export var resolution_button:OptionButton
+@export var volumGeneral:HSlider
+@export var volumMusic:HSlider
+@export var volumEffects:HSlider
 const WINDOW_MODE_ARRAY: Array[String]= [
 	"Pantalla completa",
 	"Modo ventana",
@@ -23,6 +26,11 @@ func _ready():
 	add_resolution_items()
 	mode_button.item_selected.connect(_on_window_mode_selected)
 	resolution_button.item_selected.connect(on_resolution_selected)
+	volumGeneral.value_changed.connect(_on_value_changed.bind(0))
+	volumMusic.value_changed.connect(_on_value_changed.bind(1))
+	volumEffects.value_changed.connect(_on_value_changed.bind(2))
+	
+	
 
 func add_window_mode_items() -> void:
 	for window_mode in WINDOW_MODE_ARRAY:
@@ -50,3 +58,18 @@ func _on_window_mode_selected(idx:int) -> void:
 
 func on_resolution_selected(idx:int )->void:
 	DisplayServer.window_set_size(RESOLUTION_ARRAY[idx])
+
+
+func _on_volume_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(0, value)
+
+
+func _on_value_changed(value:float,bus_index:int) -> void:
+	AudioServer.set_bus_volume_db(
+		bus_index, 
+		linear_to_db(value)
+	)
+
+
+func _on_fps_slider_value_changed(value: float) -> void:
+	Engine.max_fps= value
