@@ -97,19 +97,19 @@ func _centrar_camara() -> void:
 		min_p.x = min(min_p.x, p.x); min_p.y = min(min_p.y, p.y)
 		max_p.x = max(max_p.x, p.x); max_p.y = max(max_p.y, p.y)
 	
-	# Centrar la cámara en medio del tablero
+	
 	camara.position = (min_p + max_p) / 2.0
 	
-	# Calcular el tamaño físico real ajustado para hexágonos (compensando solapamiento)
+	
 	var tam_mapa = (max_p - min_p) + Vector2(TILE_SIZE_WIDTH * 0.85, TILE_SIZE_HEIGHT * 0.95)
 	
-	# Obtener el tamaño del SubViewport (que ahora sí tendrá su tamaño real definitivo)
+	
 	var tamano_viewport = Vector2(viewport_padre.size)
 	
-	# Plan de respaldo: Si por algún motivo sigue siendo 0, usamos tus exports
+	
 	var ancho_disponible = tamano_viewport.x if tamano_viewport.x > 0 else max_zoom_width
 	var alto_disponible = tamano_viewport.y if tamano_viewport.y > 0 else max_zoom_height
 	
-	# Calcular el zoom dinámico apurando los bordes para aprovechar el panel al 98%
+	
 	var zoom_f = min(ancho_disponible / tam_mapa.x, alto_disponible / tam_mapa.y) * 0.98
 	camara.zoom = Vector2(zoom_f, zoom_f)
