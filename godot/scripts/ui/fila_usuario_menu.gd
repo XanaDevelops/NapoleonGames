@@ -1,20 +1,23 @@
 extends Button
 
-@onready var label_nombre = $HBoxContainer/Label
-@onready var contenedor_botones_online = $HBoxContainer2
-@onready var boton_editar = $HBoxContainer2/EditarPerfil
-@onready var boton_cerrar = $HBoxContainer2/QuitarCuenta
+@onready var label_nombre = $%NombreUsuario
+@onready var contenedor_botones_online = %ContenedorDeBotones
+@onready var boton_editar = %EditarPerfil
+@onready var boton_cerrar = %QuitarCuenta
+@onready var icono =%Icono
+@export var tema_seleccionado: Theme
+@export var tema_normal: Theme
 
-var color_seleccionado = Color(0.6, 1.0, 0.6)
-var color_normal = Color(1.0, 1.0, 1.0)
 
 var email_usuario: String
 
 func _ready():
 	pressed.connect(_on_fila_presionada)
 	UserManager.usuario_cambiado.connect(_on_usuario_cambiado_globalmente)
+	boton_editar.pressed.connect(_on_boton_editar_presionado)
 
 func inicializar(usuario: UserRes) -> void:
+	icono.texture=usuario.img
 	email_usuario = usuario.email
 	label_nombre.text = usuario.name
 	
@@ -31,11 +34,19 @@ func inicializar(usuario: UserRes) -> void:
 func _on_fila_presionada() -> void:
 	UserManager.establecer_usuario_actual(email_usuario)
 
-func _on_usuario_cambiado_globalmente(email_nuevo_activo: String) -> void:
+func _on_usuario_cambiado_globalmente(email_nuevo_activo: String,foto_usuario: Texture2D) -> void:
 	resaltar_fila(email_nuevo_activo == email_usuario)
 
 func resaltar_fila(es_seleccionado: bool) -> void:
+	
 	if es_seleccionado:
-		modulate = color_seleccionado
+		theme = tema_seleccionado
 	else:
-		modulate = color_normal
+		theme = tema_normal
+
+func _on_boton_editar_presionado() -> void:
+	
+		var usuario_seleccionado = UserManager.usuarios[email_usuario]
+		UiManager.cambiar_a_escena("perfil", {
+			"usuario_a_editar": usuario_seleccionado
+		})
