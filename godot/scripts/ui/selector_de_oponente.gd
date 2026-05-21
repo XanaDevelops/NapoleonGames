@@ -26,7 +26,10 @@ func _ready() -> void:
 	if boton_jugar:
 		boton_jugar.disabled = true
 		boton_jugar.pressed.connect(ir_a_siguiente)
-	
+
+	if UserManager.has_signal("usuarios_actualizados"):
+		UserManager.usuarios_actualizados.connect(cargar_lista_de_oponentes)
+
 	cargar_lista_de_oponentes()
 
 func cargar_lista_de_oponentes() -> void:
@@ -40,12 +43,18 @@ func cargar_lista_de_oponentes() -> void:
 	for correo_electronico in UserManager.usuarios:
 		var jugador_evaluado: UserRes = UserManager.usuarios[correo_electronico]
 		
-		if jugador_evaluado == UserManager.usuario_actual:
-			continue 
+		if UserManager.usuario_actual != null and jugador_evaluado.email == UserManager.usuario_actual.email:
+			continue
 			
 		var boton_jugador = Button.new()
-		boton_jugador.text = jugador_evaluado.name
+		var nombre := jugador_evaluado.name
 		
+		if nombre == "":
+			nombre = str(jugador_evaluado.username)
+
+		boton_jugador.text = nombre + "\n" + jugador_evaluado.email
+		boton_jugador.custom_minimum_size = Vector2(260, 55)	
+			
 		if tema_jugador_no_seleccionado:
 			boton_jugador.theme = tema_jugador_no_seleccionado
 		
@@ -111,7 +120,14 @@ func cargar_mazos_de_oponente(oponente: UserRes) -> void:
 	ejercito_oponente_seleccionado = null
 	
 	var mazos = oponente.userArmys
+	
 	if mazos.is_empty():
+		if boton_jugar:
+			boton_jugar.disabled = true
+	
+		var etiqueta := Label.new()
+		etiqueta.text = "Este oponente no tiene ejércitos disponibles"
+		contenedor_cartas.add_child(etiqueta)
 		return
 		
 	for mazo in mazos:
@@ -159,7 +175,14 @@ func mostrar_cartas_del_mazo(mazo: ArmyRes) -> void:
 			carta_instancia.configurar(agrupacion.cardType, agrupacion.n, true)
 
 func ir_a_siguiente() -> void:
-	
+	if oponente_seleccionado == null:
+		push_warning("No hay oponente seleccionado")
+		return
+
+	if ejercito_oponente_seleccionado == null:
+		push_warning("El oponente no tiene ejército seleccionado")
+		return
+
 	UiManager.cambiar_a_escena("resumen", {
 		"mapa_seleccionado": mapa_seleccionado,
 		"oponente_seleccionado": oponente_seleccionado,
