@@ -5,22 +5,26 @@ extends Node
 signal card_deployed(player: UserGame, remaining: int)
 ## Los UnitGame deben subscribirse a esto para avanzar el turno
 signal tick_turn
-
+signal game_end
 @onready var cards_panel = $IngameMap/CardsPanel
 @export var deployment_box:HBoxContainer 
 @onready var map_visualizer = $IngameMap/SubViewportContainer/SubViewport/mapVisualizer
-@onready var players_panel= $IngameMap/PlayersPanel
+@onready var players_panel : PlayersPanel = $IngameMap/PlayersPanel
 @onready var end_button= $IngameMap/EndTurnButton
 @export var turns: Array[TurnAction] = []
 var turn_order: Array[UserGame] = []
 var turn_number: int = 0
+var global_action_count: int = 0
 var is_deployment_phase: bool = false
 var game_config: GameConfig
 var map_game: MapGame
 func advance_turn() -> void:
+	var user := get_current_user()
+	if not is_deployment_phase:
+		register_turn(TurnPass.create(user))
 	turn_number += 1
-	var user : UserGame = turn_order[turn_number % turn_order.size()]
-	print("Turno de ", user.get_user_res().username)
+	var next_user : UserGame = turn_order[turn_number % turn_order.size()]
+	print("Turno de ", next_user.get_user_res().username)
 	tick_turn.emit()
 	map_visualizer._refresh_unit_states()
 
@@ -76,7 +80,9 @@ func get_army_b() -> ArmyRes:
 	
 	
 func register_turn(turn: TurnAction) -> bool:
-	
+	print("registered " + var_to_str(turn.action))
+	turn.action_order = global_action_count
+	global_action_count += 1
 	turns.append(turn)
 	return true
 
@@ -85,24 +91,50 @@ func replay_turn(turn: TurnAction) -> bool:
 		TurnAction.ACTION.DEPLOYMENT:
 			_replay_deployment(turn)
 		TurnAction.ACTION.MOVEMENT:
-			pass
+			_replay_movement(turn)
 		TurnAction.ACTION.ACTIVE, TurnAction.ACTION.PASSIVE:
-			pass
+			_replay_hability(turn)
+		TurnAction.ACTION.PASS_TURN:
+			# quizas comprobar esto sea correcto?
+			advance_turn()
 		_:
 			push_error("[TurnManager] Accion no implementada ", turn.action)
 			return false
 			
 			
 	return true
-		
+
+func _get_UserGame_(uid: int) -> UserGame:
+	if get_user_a().uid == uid:
+		return turn_order[0]
+	elif get_user_b().uid == uid:
+		return turn_order[1]
+	return null
+	
+
+## Reproduce un Deploy, principalmente del server, por lo deberia correcto
 func _replay_deployment(turn: TurnDeploy) -> bool:
-	return true
+	var user_game := _get_UserGame_(turn.player_uid)
+	if not user_game:
+		return false
+	var card_army_i := user_game.deployment_data.find_custom(func (x: CardArmyGroup):
+		return x.cardType.uid == turn.unit_uid and x.n == turn.n)
+	var card_army := user_game.deployment_data[card_army_i]
+	
+	return _on_deploy_group(user_game, card_army, turn.deploy_pos)
 
 func _replay_movement(turn: TurnMove) -> bool:
-	return true
+	
+	# TODO: realizar más comprobaciones?
+	return _on_unit_movement_requested(turn.start_pos, turn.end_pos)
 	
 func _replay_hability(turn: TurnHability) -> bool:
-	return true
+	# TODO: más comprobaciones?
+	var hab : HabilityRes = GameManager.get_game_resources().get_res_from_uid(turn.hability_uid, HabilityRes)
+	# FIXME: las pasivas se autolanzan, por ende repetir la pasiva fallará (seguramente)
+	if hab.isPassive:
+		return true
+	return _on_unit_hability_use(turn.pos, turn.dest, hab)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -137,12 +169,12 @@ func _clone_army(army: ArmyRes) -> Array[CardArmyGroup]:
 			copy.append(group.duplicate())
 	return copy
 
-func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
+func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 	var map_logic = get_map()
 	var unit = map_logic.get_tile_at(start).get_unit()
 	if unit.has_moved_this_turn:
 		print("La unidad ya se ha movido")
-		return
+		return false
 		
 	if unit._owner == get_current_user():
 	
@@ -155,18 +187,20 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> void:
 		register_turn(action)
 	else:
 		print("Acción denegada: No es el turno del dueño de esta unidad")
+		return false
+		
+	return true
 
-
-func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability: HabilityRes) -> void:
+func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability: HabilityRes) -> bool:
 	var map : MapGame = get_map()
 	var unit_source := map.get_tile_at(tile).get_unit()
 	if unit_source.has_used_hability_this_turn:
 		print("La unidad ya ha usado una habilidad activa!")
-		return
+		return false
 		
 	if unit_source._owner != get_current_user():
 		print("Acción denegada: No es el turno del dueño de esta unidad")
-		return
+		return false
 		
 	var _dest : Array[UnitGame] = []
 	
@@ -184,11 +218,12 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 	var res := unit_source.use_hability(hability, _dest)
 	if not res:
 		print("No se cumple las condiciones para usar esta habilidad!")
-		return
+		return false
 	map_visualizer._refresh_unit_states()	
 	var action := TurnHability.create(unit_source, tile, hability, objectives)
 	register_turn(action)
 		
+	return true
 
 func start_deployment_phase() -> void:
 	is_deployment_phase = true
@@ -199,7 +234,6 @@ func start_deployment_phase() -> void:
 
 func end_deployment_phase() -> void:
 	is_deployment_phase = false
-	set_app_state(GameManager.APP_STATE.IN_GAME)
 	players_panel.set_phase_battle()
 	end_button.show_battle()
 	
@@ -264,8 +298,9 @@ func _handle_next_deployment_step() -> void:
 	elif _has_cards_to_deploy(current_user):
 		pass # Opponent is out of cards, current user continues
 	else:
-		end_deployment_phase()
 		advance_turn()
+		end_deployment_phase()
+		
 
 
 
@@ -307,4 +342,6 @@ func finalizar_partida(nombre_del_vencedor: String):
 	var parametros_victoria = {
 		"nombre_ganador": nombre_del_vencedor
 	}
+	
+	game_end.emit()
 	UiManager.cambiar_a_escena("finalizacion", parametros_victoria)

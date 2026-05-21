@@ -21,4 +21,5 @@ speed = 4
 portrait = ExtResource("7_f6foa")
 img = ExtResource("7_f6foa")
 habilities = Array[ExtResource("1_ct0dh")]([ExtResource("2_5je53"), ExtResource("3_ll81n"), ExtResource("4_yy4e5"), ExtResource("5_yy4e5"), ExtResource("6_1bhc3")])
+uid = 1
 metadata/_custom_type_script = "uid://bf6xxxd2rqod0"

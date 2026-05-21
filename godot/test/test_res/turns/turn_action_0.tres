@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TurnDeploy" format=3]
+
+[ext_resource type="Script" path="res://scripts/game/turn_actions/turn_deploy.gd" id="1_yve0e"]
+
+[resource]
+script = ExtResource("1_yve0e")
+deploy_pos = Vector2i(2, 4)
+n = 1
+player_uid = 1
+action = 4
+unit_uid = 1
