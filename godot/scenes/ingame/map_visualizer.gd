@@ -66,7 +66,6 @@ func _setup_highlight_tiles() -> void:
 	
 	tile_map_layer_owner_p1.self_modulate = COLOR_OWNER_P1
 	tile_map_layer_owner_p2.self_modulate = COLOR_OWNER_P2
-	#tile_map_layer_exhausted.self_modulate = Color(0.4, 0.4, 0.4, 0.6) 
 	tile_map_layer_exhausted.self_modulate =  Color.BLACK
 
 func _ready() -> void:
@@ -84,7 +83,6 @@ func _ready() -> void:
 	_setup_highlight_tiles()
 	if GameManager.turn_manager!=null:
 		GameManager.turn_manager.tick_turn.connect(_clear_selection)
-		#GameManager.turn_manager.tick_turn.connect(_refresh_unit_states)
 	
 	var units_mat = tile_map_layer_units.material as ShaderMaterial
 	if units_mat != null:
@@ -137,15 +135,15 @@ func draw_tile(i: int, y: int, tile: TileGame) -> void:
 
 func _on_unit_hit(attack_type: AttackType, unit: UnitGame) -> void:
 	
-	play_attack_vfx(unit.get_current_position(), attack_type)
+	await play_attack_vfx(unit.get_current_position(), attack_type)
 
 func _on_unit_dodged(unit: UnitGame) -> void:
 	
-	play_vfx(unit.get_current_position(), &"protect")
+	await play_vfx(unit.get_current_position(), &"protect")
 
 func _on_unit_healed(unit: UnitGame) -> void:
 	
-	play_vfx(unit.get_current_position(), &"heal")
+	await play_vfx(unit.get_current_position(), &"heal")
 				
 func add_texture_to_tileset(texture: Texture2D) -> int:
 	for tex_id in texture_to_source_id.keys():
@@ -404,7 +402,11 @@ func play_vfx(target_coords: Vector2i, effect_name: StringName) -> void:
 	if current_vfx == null:
 		print("Atención: No hay animación en el diccionario para el efecto: ", effect_name)
 		return
-
+	var overlay = _unit_overlays.get(target_coords)
+	
+	if overlay and is_instance_valid(overlay):
+		overlay.visible = false
+		print("setting univert_overlay to false", target_coords)
 	var unit_texture_resized: Texture2D
 	var source_id = tile_map_layer_units.get_cell_source_id(target_coords)
 	
@@ -423,7 +425,11 @@ func play_vfx(target_coords: Vector2i, effect_name: StringName) -> void:
 	vfx_instance.position = local_pos
 	
 	vfx_instance.setup_vfx(unit_texture_resized, current_vfx, current_mask_size, current_mask_scale_x)
-
+	await vfx_instance.vfx_finished
+	if overlay and is_instance_valid(overlay):
+		overlay.visible = true
+		print("setting univert_overlay to true", target_coords)
+		
 func _add_unit_overlay(coords: Vector2i, unit: UnitGame) -> void:
 	if _unit_overlays.has(coords):
 		_unit_overlays[coords].cleanup()

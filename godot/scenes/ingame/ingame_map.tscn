@@ -6,10 +6,11 @@
 [ext_resource type="Script" uid="uid://dilrauf05i3je" path="res://scenes/ingame/players_panel.gd" id="2_s3xon"]
 [ext_resource type="Shader" uid="uid://cemlqbvowjq1m" path="res://scenes/ingame/ingame_map.gdshader" id="3_g5sqw"]
 [ext_resource type="Script" uid="uid://bm6sp4ow1l2qv" path="res://scenes/ingame/cards_panel.gd" id="4_0htj4"]
-[ext_resource type="Shader" uid="uid://157jkj0n28hu" path="res://resources/shaders/hexagonal_shader.gdshader" id="5_3rx8c"]
+[ext_resource type="PackedScene" uid="uid://b14kq4rlyq2kk" path="res://scenes/vfx_conteiner.tscn" id="4_7rshr"]
 [ext_resource type="StyleBox" uid="uid://b0p3mdn4roxd6" path="res://assets/themes/ui/menu_styleboxflat.tres" id="4_m7qbv"]
+[ext_resource type="Shader" uid="uid://157jkj0n28hu" path="res://resources/shaders/hexagonal_shader.gdshader" id="5_3rx8c"]
 [ext_resource type="Script" uid="uid://c7mxpxq37rib7" path="res://scenes/ingame/top_menu.gd" id="5_f4drf"]
-[ext_resource type="Script" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
+[ext_resource type="Script" uid="uid://boaagd3hgel75" path="res://scenes/ingame/tile_info.gd" id="5_x30bk"]
 [ext_resource type="Texture2D" uid="uid://d0oowyo84ttju" path="res://assets/images/hamburger.png" id="6_l3gkr"]
 [ext_resource type="Script" uid="uid://b8ttj2gcfkh47" path="res://scenes/ingame/unit_info.gd" id="6_smdvi"]
 [ext_resource type="FontFile" uid="uid://bh17wqfhcf5sr" path="res://assets/themes/ui/fonts/Urbanist/static/Urbanist-Black.ttf" id="7_k2m3r"]
@@ -20,6 +21,12 @@
 [ext_resource type="PackedScene" uid="uid://2xspgv3scuc1" path="res://scenes/Container_scene.tscn" id="18_87c6t"]
 [ext_resource type="PackedScene" uid="uid://fjy32u56yj4m" path="res://scenes/deployment.tscn" id="18_k55sq"]
 [ext_resource type="PackedScene" uid="uid://dau808hhekv0d" path="res://scenes/mana.tscn" id="19_k55sq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k55sq"]
+shader = ExtResource("5_3rx8c")
+shader_parameter/pointy_top = true
+shader_parameter/mask_size = 0.5
+shader_parameter/mask_scale_x = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3gkr"]
 bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
@@ -45,12 +52,6 @@ shader_parameter/border_width = 0.03
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k55sq"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m7qbv"]
-shader = ExtResource("5_3rx8c")
-shader_parameter/pointy_top = true
-shader_parameter/mask_size = 0.5
-shader_parameter/mask_scale_x = 1.0
 
 [node name="IngameMap" type="Control" unique_id=1560040291 node_paths=PackedStringArray("map_container", "cards_panel", "sub_viewport", "map_visualizer", "unit_info", "deployment_box")]
 layout_mode = 3
@@ -103,6 +104,7 @@ tile_map_layer_hover = NodePath("TileMapLayer_hover")
 tile_map_layer_owner_p1 = NodePath("TileMapLayer_owner_p1")
 tile_map_layer_owner_p2 = NodePath("TileMapLayer_owner_p2")
 tile_map_layer_exhausted = NodePath("TileMapLayer_exhausted")
+vfx_scene = ExtResource("4_7rshr")
 camera = NodePath("Camera2D")
 metadata/_custom_type_script = "uid://cpqdhsyw0vgg1"
 
@@ -114,6 +116,7 @@ tile_map_data = PackedByteArray("AAABAAAAAAABAAgAAAAAAAEAAAABAAgAAAABAAEAAAABAAU
 [node name="TileMapLayer_deployment" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1706908201]
 
 [node name="TileMapLayer_units" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=1642646471]
+material = SubResource("ShaderMaterial_k55sq")
 
 [node name="TileMapLayer_owner_p1" type="TileMapLayer" parent="SubViewportContainer/SubViewport/mapVisualizer" unique_id=72154031]
 
