@@ -32,6 +32,32 @@ public class ArmyEntity {
     protected ArmyEntity() {
     }
 
+    public ArmyEntity(
+            Long userId,
+            Integer slotNumber,
+            String name,
+            Boolean isActive,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
+    ) {
+        this.userId = userId;
+        this.slotNumber = slotNumber;
+        this.name = name;
+        this.isActive = isActive;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public void update(
+            String name,
+            Boolean isActive,
+            LocalDateTime updatedAt
+    ) {
+        this.name = name;
+        this.isActive = isActive;
+        this.updatedAt = updatedAt;
+    }
+
     public Long getId() {
         return id;
     }

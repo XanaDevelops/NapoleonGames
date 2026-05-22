@@ -22,6 +22,8 @@ const MAX_SIZE := 20
 @export var isActive:= false
 ## Agrupaciones de cartas y cantidad (Dictionary[[CardRes], int])
 @export var agrupations: Array[CardArmyGroup] = []
+## id backend
+@export var backend_id := 0
 
 func get_weight() -> int:
 	return agrupations.map(func(elem: CardArmyGroup): return elem.get_weight()) \
@@ -31,6 +33,7 @@ func clonar() -> ArmyRes:
 	var copia = ArmyRes.new()
 	copia.nom = self.nom
 	copia.isActive = self.isActive
+	copia.backend_id = self.backend_id
 	
 	for grupo in self.agrupations:
 		var nuevo_grupo = CardArmyGroup.new()
