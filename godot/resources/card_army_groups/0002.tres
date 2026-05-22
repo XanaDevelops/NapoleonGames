@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardArmyGroup" format=3 uid="uid://c742admoyxfg1"]
+
+[ext_resource type="Resource" uid="uid://4xnwpm8cq6kc" path="res://resources/cards/0002.tres" id="1_m7e6c"]
+[ext_resource type="Script" uid="uid://chjdn7qg0thht" path="res://scripts/resources/card_army_group.gd" id="9_sisxm"]
+
+[resource]
+script = ExtResource("9_sisxm")
+cardType = ExtResource("1_m7e6c")
+n = 3
+uid = 2

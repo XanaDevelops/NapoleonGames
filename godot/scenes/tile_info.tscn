@@ -1,0 +1,220 @@
+[gd_scene format=3 uid="uid://c0k4getxqisq6"]
+
+[ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="1_ccb5p"]
+[ext_resource type="Texture2D" uid="uid://dh1y3p0beadlo" path="res://assets/tiles/EverHex-Forest Lite/Forest/1.png" id="2_64khd"]
+[ext_resource type="Texture2D" uid="uid://cqr2aauodvpl2" path="res://assets/images/information.png" id="3_64khd"]
+[ext_resource type="Texture2D" uid="uid://cchoaf4y1ugwt" path="res://assets/images/location.png" id="4_j1sq1"]
+[ext_resource type="Texture2D" uid="uid://30a5jvvikwic" path="res://assets/images/altitude.png" id="5_a8a6l"]
+[ext_resource type="Texture2D" uid="uid://hqesp8umos15" path="res://assets/images/mana.png" id="6_0l31k"]
+
+[sub_resource type="Theme" id="Theme_ccb5p"]
+default_font_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8a6l"]
+bg_color = Color(0.6, 0.6, 0.20392157, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccb5p"]
+bg_color = Color(0.1764706, 0.24313726, 0.30980393, 0.019607844)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j1sq1"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+shadow_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64khd"]
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ccb5p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l31k"]
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0wvp"]
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="TileInfo" type="PanelContainer" unique_id=253659827]
+custom_minimum_size = Vector2(350, 100)
+offset_right = 327.0
+offset_bottom = 213.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_ccb5p")
+theme_override_styles/panel = ExtResource("1_ccb5p")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1965329182]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a8a6l")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1953918324]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/MarginContainer" unique_id=2028739112]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ccb5p")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer" unique_id=1260199554]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer" unique_id=1149690751]
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+texture = ExtResource("2_64khd")
+expand_mode = 5
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer" unique_id=139820394]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer" unique_id=1280806302]
+layout_mode = 2
+size_flags_vertical = 2
+theme_override_constants/separation = 5
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1311346624]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 18
+text = "Terreno ⟡"
+vertical_alignment = 1
+
+[node name="NameLabel" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1820895288]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 18
+
+[node name="DescriptionButton" type="Button" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1996510714]
+custom_minimum_size = Vector2(25, 30)
+layout_mode = 2
+size_flags_horizontal = 10
+tooltip_text = "Information"
+theme_override_styles/normal = SubResource("StyleBoxFlat_j1sq1")
+icon = ExtResource("3_64khd")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer" unique_id=170370509]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 1
+
+[node name="Panel" type="PanelContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer" unique_id=1661753480]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_64khd")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel" unique_id=824499824]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel/HBoxContainer" unique_id=1579744261]
+material = SubResource("ShaderMaterial_ccb5p")
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("4_j1sq1")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="PositionLabel" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel/HBoxContainer" unique_id=613073172]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel/HBoxContainer" unique_id=929438714]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+theme_override_font_sizes/font_size = 18
+text = "position "
+
+[node name="Panel2" type="PanelContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer" unique_id=243351354]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_0l31k")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2" unique_id=1278424454]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer" unique_id=1574008606]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("5_a8a6l")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="HeightLabel" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer" unique_id=70541285]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer" unique_id=279225562]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+theme_override_font_sizes/font_size = 18
+text = "height "
+
+[node name="Panel3" type="PanelContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer" unique_id=206055398]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_y0wvp")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3" unique_id=2104983326]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer" unique_id=443016597]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("6_0l31k")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="CostLabel" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer" unique_id=1401388647]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer" unique_id=1799215338]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_colors/font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+theme_override_font_sizes/font_size = 18
+text = "cost "

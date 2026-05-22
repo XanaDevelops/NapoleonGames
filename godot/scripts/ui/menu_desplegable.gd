@@ -4,7 +4,7 @@ extends Button
 enum Lado { DERECHA, IZQUIERDA, ARRIBA, ABAJO }
 
 @export var posicion_menu: Lado = Lado.DERECHA 
-@export var separacion: float = 5.0           
+@export var separacion: float = 0.0           
 
 var menu_interno: Panel = null
 
@@ -31,19 +31,23 @@ func _on_self_pressed():
 		actualizar_posicion()
 		menu_interno.visible = !menu_interno.visible
 
-# Esta es la lógica que mueve el menú según tu elección
+
 func actualizar_posicion():
 	if not menu_interno: return
 	
+	
+	var centro_x = (size.x - menu_interno.size.x) / 2.0
+	var centro_y = (size.y - menu_interno.size.y) / 2.0
+	
 	match posicion_menu:
 		Lado.DERECHA:
-			menu_interno.position = Vector2(size.x + separacion, 0)
+			menu_interno.position = Vector2(size.x + separacion, centro_y)
 		Lado.IZQUIERDA:
-			menu_interno.position = Vector2(-menu_interno.size.x - separacion, 0)
+			menu_interno.position = Vector2(-menu_interno.size.x - separacion, centro_y)
 		Lado.ARRIBA:
-			menu_interno.position = Vector2(0, -menu_interno.size.y - separacion)
+			menu_interno.position = Vector2(centro_x, -menu_interno.size.y - separacion)
 		Lado.ABAJO:
-			menu_interno.position = Vector2(0, size.y + separacion)
+			menu_interno.position = Vector2(centro_x, size.y + separacion)
 
 func cerrar_menu():
 	if menu_interno:

@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://d0drecd7qx703"]
+
+[ext_resource type="Script" uid="uid://d2idv8qpv156u" path="res://test/scenes/options_ingame.gd" id="2_voqiv"]
+
+[sub_resource type="Theme" id="Theme_avjjy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sotc5"]
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vwmgn"]
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+shadow_color = Color(0.7279856, 0.7279857, 0.7279856, 0.6)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8xwie"]
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+shadow_color = Color(0.7279856, 0.7279857, 0.7279856, 0.6)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uegsc"]
+bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+shadow_color = Color(0.7279856, 0.7279857, 0.7279856, 0.6)
+shadow_size = 3
+
+[node name="OptionsIngame" type="Panel" unique_id=287288470 node_paths=PackedStringArray("pause", "exit", "settings")]
+custom_minimum_size = Vector2(150, 100)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = SubResource("Theme_avjjy")
+theme_override_styles/panel = SubResource("StyleBoxFlat_sotc5")
+script = ExtResource("2_voqiv")
+pause = NodePath("MarginContainer/VBoxContainer/PauseButton")
+exit = NodePath("MarginContainer/VBoxContainer/ExitButton")
+settings = NodePath("MarginContainer/VBoxContainer/SettingsButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=107856380]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1658194474]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="PauseButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=585366067]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_vwmgn")
+text = "Pausar"
+
+[node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1375230451]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_8xwie")
+text = "Salir"
+
+[node name="SettingsButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1055355845]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_uegsc")
+text = "Opciones"

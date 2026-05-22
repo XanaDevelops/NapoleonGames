@@ -11,13 +11,21 @@ config_version=5
 [application]
 
 config/name="NapoleonGames"
-run/main_scene="uid://ckdof4q0k3o7x"
+run/main_scene="uid://cllpyrjg508jg"
+run/enable_alt_space_menu=true
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
+Online="*uid://cuqrld13oc1aj"
+GameManager="*uid://crfipueiwb0h0"
 UiManager="*uid://c7x52jkqmybks"
+UserManager="*uid://dugu0fxresru"
+ApiAdapter="*uid://dfb2v02pw1ss2"
+AudioManager="*uid://cfgeh4loe71nm"
+NetClient="*uid://bk67pttir1ghd"
+NetServer="*uid://cww7dihskvgjl"
 
 [display]
 
@@ -33,10 +41,6 @@ version_control/autoload_on_startup=true
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gut/plugin.cfg")
-
-[global_group]
-
-botones_navegacion=""
 
 [physics]
 

@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="CardRes" format=3 uid="uid://4xnwpm8cq6kc"]
+
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="1_5u1va"]
+[ext_resource type="Resource" uid="uid://by5emaaoed1gu" path="res://resources/habilities/0002.tres" id="2_5tldn"]
+[ext_resource type="Resource" uid="uid://dtojoydeodwx3" path="res://resources/habilities/0003.tres" id="3_5tldn"]
+[ext_resource type="Texture2D" uid="uid://b0yy2cwl13n5o" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="3_xdvve"]
+[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="4_21faa"]
+[ext_resource type="Resource" uid="uid://8ywuxsyqh4bg" path="res://resources/attack_types/0001.tres" id="5_s2s4f"]
+[ext_resource type="Resource" uid="uid://dnbyq4cqriq" path="res://resources/attack_types/0002.tres" id="6_c5dnp"]
+[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="7_slsko"]
+[ext_resource type="Script" uid="uid://1txoxg5iohxc" path="res://scripts/resources/card_type_res.gd" id="8_nakli"]
+[ext_resource type="Resource" uid="uid://dawa18llg0c5p" path="res://resources/card_types/0002.tres" id="9_5u1va"]
+
+[resource]
+script = ExtResource("7_slsko")
+name = &"Ranged Unit"
+desc = "Una unidad de hostigamiento excepcionalmente ágil, entrenada para diezmar a las líneas enemigas desde la distancia antes de que el combate cuerpo a cuerpo comience. Aunque su constitución es frágil y no soporta el daño directo, lo compensa con unos reflejos prodigiosos que le permiten esquivar ataques mortales con facilidad. Además de su maestría sin igual con el arco, ha sido instruida en las artes arcanas, canalizando su reserva de maná para conjurar devastadoras bolas de fuego que reducen a cenizas a cualquier oponente que intente acorralarla."
+hp = 10
+mana = 10
+speed = 6
+dodge = 0.1
+portrait = ExtResource("3_xdvve")
+img = ExtResource("3_xdvve")
+resistances = Dictionary[ExtResource("4_21faa"), int]({
+ExtResource("5_s2s4f"): 5,
+ExtResource("6_c5dnp"): 5
+})
+habilities = Array[ExtResource("1_5u1va")]([ExtResource("2_5tldn"), ExtResource("3_5tldn")])
+types = Array[ExtResource("8_nakli")]([ExtResource("9_5u1va")])
+uid = 2

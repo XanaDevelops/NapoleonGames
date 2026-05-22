@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="VFXEffectData" format=3 uid="uid://bvfhciovp85ey"]
+
+[ext_resource type="Texture2D" uid="uid://binhgwyvoh76o" path="res://assets/particles/textura_espira.png" id="1_1vjof"]
+[ext_resource type="Script" uid="uid://coqlqo81l8ahe" path="res://scripts/resources/vfx_effect_data.gd" id="1_q4w64"]
+[ext_resource type="Shader" uid="uid://c3k8hm3eocly5" path="res://resources/shaders/poison_shader.gdshader" id="3_8x747"]
+[ext_resource type="AudioStream" uid="uid://csis5iv5vu0ps" path="res://assets/sonidos/the-hiss-of-a-poisonous-black-cobra.mp3" id="4_0fahi"]
+
+[sub_resource type="Gradient" id="Gradient_54x6b"]
+colors = PackedColorArray(0.8, 1, 0, 1, 0, 0.34901962, 0, 0)
+
+[resource]
+script = ExtResource("1_q4w64")
+shader = ExtResource("3_8x747")
+core_color = Color(0.8, 1, 0, 1)
+mid_color = Color(0.2, 0.8, 0, 1)
+edge_color = Color(0, 0.34901962, 0, 1)
+wave_speed = 1.5
+wave_amplitude = 0.03
+wave_frequency = 6.0
+particle_texture = ExtResource("1_1vjof")
+color_ramp = SubResource("Gradient_54x6b")
+particle_base_size = 6.0
+gravity = Vector3(0, -140, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 90.0
+movement_spread = 90.0
+use_turbulence = true
+turbulence_strength = 5.0
+emission_position = 0
+movement_direction = 0
+duration = 2.0
+sound_effect = ExtResource("4_0fahi")
+sound_pitch_randomness = 0.15
+metadata/_custom_type_script = "uid://coqlqo81l8ahe"

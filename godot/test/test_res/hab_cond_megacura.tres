@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://be8g0osouqn7r"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_lcjiu"]
+[ext_resource type="Resource" uid="uid://njmnq515v0sv" path="res://test/test_res/stat_vida_max_percent.tres" id="2_lcjiu"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="3_qek1i"]
+[ext_resource type="Resource" uid="uid://42lug3qxj05x" path="res://test/test_res/stat_vida_percent.tres" id="4_3sd1o"]
+
+[resource]
+script = ExtResource("3_qek1i")
+name = &"megacura"
+objective = 1
+value = 1.0
+stat = ExtResource("4_3sd1o")
+condition = 3
+condition_stat = ExtResource("2_lcjiu")
+condition_value = 0.5
+uid = 6
+metadata/_custom_type_script = "uid://eihee83yhkpg"

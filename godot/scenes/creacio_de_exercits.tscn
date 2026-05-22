@@ -1,0 +1,534 @@
+[gd_scene format=3 uid="uid://cw4m7083vlm3w"]
+
+[ext_resource type="Script" uid="uid://djt5ks2sqpqrb" path="res://scripts/ui/creacio_exercits.gd" id="1_8d45a"]
+[ext_resource type="PackedScene" uid="uid://did61qto33dha" path="res://scenes/card_ui.tscn" id="2_jn5g6"]
+[ext_resource type="Texture2D" uid="uid://cmwpg7ag1lk2x" path="res://assets/sprites/ui/fondos_de_pantalla/fondoExercit.png" id="3_iylt2"]
+[ext_resource type="Theme" uid="uid://bwe7vhacuypkx" path="res://assets/themes/ui/aviso_error.tres" id="4_8d45a"]
+[ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="5_h0cem"]
+[ext_resource type="Theme" uid="uid://dm0p6ixmo660q" path="res://assets/themes/ui/pestaña_ejercito.tres" id="5_u02qa"]
+[ext_resource type="Theme" uid="uid://d42d7i75rf1k" path="res://assets/themes/ui/pestaña_ejercito_activo.tres" id="6_0vh1m"]
+[ext_resource type="Theme" uid="uid://go1hktgu7mpp" path="res://assets/themes/ui/estilo_botones_negacion.tres" id="6_iylt2"]
+[ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://assets/themes/ui/InputsUserMenu.tres" id="6_qyvee"]
+[ext_resource type="Theme" uid="uid://dtmi252ajk7g4" path="res://assets/themes/ui/aviso_normal.tres" id="7_dklfn"]
+[ext_resource type="Theme" uid="uid://cs2ycfq76kcvr" path="res://assets/themes/ui/estilo_botones_negacion_suave.tres" id="7_h0cem"]
+[ext_resource type="Theme" uid="uid://c2s8d3cs8pjiw" path="res://assets/themes/ui/estilo_botones_confirmacion.tres" id="7_htsch"]
+[ext_resource type="Theme" uid="uid://cuaadii4ueb8" path="res://assets/themes/ui/estilo_botones_confirmacion_suave.tres" id="8_htsch"]
+[ext_resource type="FontFile" uid="uid://cmiuntu71oyl3" path="res://addons/gut/fonts/LobsterTwo-Bold.ttf" id="9_0vh1m"]
+[ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="9_henkl"]
+[ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="9_htsch"]
+[ext_resource type="Theme" uid="uid://cbgigo7o740wp" path="res://assets/themes/ui/spinner.tres" id="14_e0t57"]
+[ext_resource type="PackedScene" uid="uid://dqym8wo6t62js" path="res://scenes/panel_info_cartas.tscn" id="17_d64nq"]
+[ext_resource type="Texture2D" uid="uid://d0vn3b0q2ipv3" path="res://assets/sprites/ui/iconos_de_botones/izquierda (1).png" id="18_henkl"]
+[ext_resource type="Theme" uid="uid://cttb3ckvy5c8d" path="res://assets/themes/ui/estilo_atras.tres" id="18_qvlf4"]
+[ext_resource type="Script" uid="uid://cichlbtfwhh2b" path="res://scenes/menu_usuario.gd" id="21_f3wxj"]
+[ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="22_f3wxj"]
+[ext_resource type="Shader" uid="uid://chsexujh65mmi" path="res://scenes/redondear_shader.gdshader" id="22_kvhuw"]
+[ext_resource type="PackedScene" uid="uid://cdbdwv8lb0o74" path="res://scenes/panel_usuario.tscn" id="23_kvhuw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b2256"]
+bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.54901963, 0.42745098, 0.24313726, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+corner_detail = 20
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+anti_aliasing_size = 1.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mlx08"]
+bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.72156864, 0.5254902, 0.043137256, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+corner_detail = 20
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lxlin"]
+bg_color = Color(0.99215686, 0.9647059, 0.8901961, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(1, 0.84313726, 0, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+corner_detail = 20
+expand_margin_left = 7.0
+expand_margin_top = 7.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
+shadow_color = Color(0, 0, 0, 0.5019608)
+shadow_size = 12
+shadow_offset = Vector2(4, 4)
+anti_aliasing_size = 1.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ti2l4"]
+shader = ExtResource("22_kvhuw")
+shader_parameter/radius = 0.50000002375
+shader_parameter/smoothing = 0.01
+
+[node name="Control" type="Control" unique_id=456382028]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_8d45a")
+carta_interfaz = ExtResource("2_jn5g6")
+aviso_normal = ExtResource("7_dklfn")
+aviso_error = ExtResource("4_8d45a")
+"tema_pestaña_normal" = ExtResource("5_u02qa")
+"tema_pestaña_activa" = ExtResource("6_0vh1m")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=537773588]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("3_iylt2")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="PanelFondoMazo" type="Panel" parent="." unique_id=1776995862]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 153.0
+offset_right = 810.0
+offset_bottom = 973.0
+theme_override_styles/panel = ExtResource("5_h0cem")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelFondoMazo" unique_id=951885934]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -374.5
+offset_top = -393.5
+offset_right = 374.5
+offset_bottom = 393.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="TituloPanel" type="Label" parent="PanelFondoMazo/VBoxContainer" unique_id=2144603480]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.7607843, 0.47843137, 1)
+theme_override_fonts/font = ExtResource("9_0vh1m")
+theme_override_font_sizes/font_size = 36
+text = "Compañías"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelDeMenuSuperior" type="Panel" parent="PanelFondoMazo/VBoxContainer" unique_id=1502189272]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("9_htsch")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelFondoMazo/VBoxContainer/PanelDeMenuSuperior" unique_id=997478002]
+custom_minimum_size = Vector2(720, 31)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -25.0
+offset_right = 360.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelFondoMazo/VBoxContainer/PanelDeMenuSuperior/HBoxContainer2" unique_id=1394461174]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="FilaBotonesMazos" type="HBoxContainer" parent="PanelFondoMazo/VBoxContainer/PanelDeMenuSuperior/HBoxContainer2/ScrollContainer" unique_id=447232201]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BotonEliminar" type="Button" parent="PanelFondoMazo/VBoxContainer/PanelDeMenuSuperior/HBoxContainer2" unique_id=1425205857]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("7_h0cem")
+text = "Eliminar ejercitó -"
+
+[node name="BotonNuevo" type="Button" parent="PanelFondoMazo/VBoxContainer/PanelDeMenuSuperior/HBoxContainer2" unique_id=1219739918]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("8_htsch")
+text = "Añadir ejercitó +"
+
+[node name="PanelEjercito" type="Panel" parent="PanelFondoMazo/VBoxContainer" unique_id=725706832]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("9_htsch")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelFondoMazo/VBoxContainer/PanelEjercito" unique_id=941286745]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -225.0
+offset_right = 350.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelFondoMazo/VBoxContainer/PanelEjercito/ScrollContainer" unique_id=519996752]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ContenedorMazo" type="GridContainer" parent="PanelFondoMazo/VBoxContainer/PanelEjercito/ScrollContainer/MarginContainer" unique_id=987638071]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 20
+columns = 4
+
+[node name="Panel" type="Panel" parent="PanelFondoMazo/VBoxContainer" unique_id=1081368879]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("9_htsch")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelFondoMazo/VBoxContainer/Panel" unique_id=1214911362]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -366.0
+offset_top = -16.5
+offset_right = 366.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PanelFondoMazo/VBoxContainer/Panel/HBoxContainer" unique_id=496567745]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+text = "Nombre ejercitó:"
+
+[node name="LineEditNombreEjercito" type="LineEdit" parent="PanelFondoMazo/VBoxContainer/Panel/HBoxContainer" unique_id=1105367728]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(580, 10)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme = ExtResource("6_qyvee")
+theme_override_font_sizes/font_size = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelFondoMazo/VBoxContainer" unique_id=1363246046]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BotonRevertir" type="Button" parent="PanelFondoMazo/VBoxContainer/HBoxContainer" unique_id=258870322]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("7_h0cem")
+text = "Revertir cambios"
+
+[node name="BotonGuardarEjercito" type="Button" parent="PanelFondoMazo/VBoxContainer/HBoxContainer" unique_id=2083470715]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("8_htsch")
+text = "Guardar cambios"
+
+[node name="LabelPeso" type="Label" parent="." unique_id=338270818]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 820.0
+offset_top = 187.0
+offset_right = 887.0
+offset_bottom = 229.0
+theme_override_font_sizes/font_size = 30
+text = "0/20"
+
+[node name="PanelTransferencia" type="Panel" parent="." unique_id=302439315]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -290.0
+offset_right = 140.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("5_h0cem")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelTransferencia" unique_id=957016535]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.0
+offset_top = -89.5
+offset_right = 106.0
+offset_bottom = 89.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 7
+
+[node name="TituloPanel" type="Label" parent="PanelTransferencia/VBoxContainer" unique_id=823196191]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 24
+text = "Transferir Unidades"
+horizontal_alignment = 1
+
+[node name="LabelAviso" type="Label" parent="PanelTransferencia/VBoxContainer" unique_id=275976364]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("7_dklfn")
+text = "Fallo"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PanelSpinner" type="Panel" parent="PanelTransferencia/VBoxContainer" unique_id=1223659543]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("9_htsch")
+
+[node name="ContenedorSpinner" type="HBoxContainer" parent="PanelTransferencia/VBoxContainer/PanelSpinner" unique_id=985803962]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -25.0
+offset_right = 47.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("14_e0t57")
+
+[node name="BotonMenos" type="Button" parent="PanelTransferencia/VBoxContainer/PanelSpinner/ContenedorSpinner" unique_id=721691793]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-"
+
+[node name="LabelCantidad" type="Label" parent="PanelTransferencia/VBoxContainer/PanelSpinner/ContenedorSpinner" unique_id=524720098]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/line_spacing = 0
+text = "0"
+
+[node name="BotonMas" type="Button" parent="PanelTransferencia/VBoxContainer/PanelSpinner/ContenedorSpinner" unique_id=897168893]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelTransferencia/VBoxContainer" unique_id=1178822692]
+layout_mode = 2
+
+[node name="Cancelar" type="Button" parent="PanelTransferencia/VBoxContainer/HBoxContainer" unique_id=1070128883]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("6_iylt2")
+text = "Cancelar
+"
+
+[node name="Confirmar" type="Button" parent="PanelTransferencia/VBoxContainer/HBoxContainer" unique_id=842287591]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+theme = ExtResource("7_htsch")
+text = "Confirmar
+
+"
+
+[node name="PanelFondoDisponibles" type="Panel" parent="." unique_id=1167901994]
+layout_mode = 0
+offset_left = 1123.0
+offset_top = 153.0
+offset_right = 1900.0
+offset_bottom = 633.0
+theme_override_styles/panel = ExtResource("5_h0cem")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelFondoDisponibles" unique_id=2142286539]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -220.0
+offset_right = 375.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="TituloPanel" type="Label" parent="PanelFondoDisponibles/VBoxContainer" unique_id=1474234362]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.7607843, 0.47843137, 1)
+theme_override_fonts/font = ExtResource("9_0vh1m")
+theme_override_font_sizes/font_size = 36
+text = "Reservas"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelCartasJugador" type="Panel" parent="PanelFondoDisponibles/VBoxContainer" unique_id=689764068]
+custom_minimum_size = Vector2(750, 391)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("9_htsch")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelFondoDisponibles/VBoxContainer/PanelCartasJugador" unique_id=815149764]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -349.5
+offset_top = -173.5
+offset_right = 349.5
+offset_bottom = 173.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelFondoDisponibles/VBoxContainer/PanelCartasJugador/ScrollContainer" unique_id=1833986219]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ContenedorCartasDisponibles" type="GridContainer" parent="PanelFondoDisponibles/VBoxContainer/PanelCartasJugador/ScrollContainer/MarginContainer" unique_id=1947909446]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 20
+columns = 4
+
+[node name="PanelInfoCartas" parent="." unique_id=1276667902 instance=ExtResource("17_d64nq")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 1123.0
+offset_top = 643.0
+offset_right = 1900.0
+offset_bottom = 963.0
+
+[node name="Inicio" type="Button" parent="." unique_id=561654328]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 20.0
+offset_right = 180.0
+offset_bottom = 100.0
+theme = ExtResource("18_qvlf4")
+theme_override_font_sizes/font_size = 40
+text = "
+"
+icon = ExtResource("18_henkl")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("9_henkl")
+id_escena = "inicio"
+metadata/_custom_type_script = "uid://ct2doijn7j323"
+
+[node name="MenuUsuario" type="Button" parent="." unique_id=1093788014]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -270.0
+offset_top = 20.0
+offset_right = -170.0
+offset_bottom = 120.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_b2256")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mlx08")
+theme_override_styles/hover = SubResource("StyleBoxFlat_lxlin")
+script = ExtResource("21_f3wxj")
+posicion_menu = 3
+
+[node name="IconoUsuario" type="TextureRect" parent="MenuUsuario" unique_id=551550008]
+unique_name_in_owner = true
+z_as_relative = false
+texture_filter = 1
+texture_repeat = 1
+material = SubResource("ShaderMaterial_ti2l4")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("22_f3wxj")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="PanelUsuario" parent="MenuUsuario" unique_id=1116297954 instance=ExtResource("23_kvhuw")]
+layout_mode = 0

@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://cbyjpsd5w2n8u"]
+
+[ext_resource type="Script" uid="uid://ci0qry8pts1xv" path="res://scenes/ingame/turn_manager.gd" id="1_4n5kr"]
+[ext_resource type="PackedScene" uid="uid://7np40cgmy80w" path="res://scenes/ingame/ingame_map.tscn" id="2_rqqua"]
+[ext_resource type="Script" uid="uid://ci0qry8pts1xv" path="res://scenes/ingame/turn_manager.gd" id="1_4n5kr"]
+[ext_resource type="PackedScene" uid="uid://7np40cgmy80w" path="res://scenes/ingame/ingame_map.tscn" id="2_rqqua"]
+[ext_resource type="Script" uid="uid://coqlqo81l8ahe" path="res://scripts/resources/vfx_effect_data.gd" id="3_rn5k7"]
+[ext_resource type="PackedScene" uid="uid://b14kq4rlyq2kk" path="res://scenes/vfx_conteiner.tscn" id="3_sxwm6"]
+[ext_resource type="PackedScene" uid="uid://c4us6q3xfd775" path="res://scenes/transition_screen.tscn" id="10_trans"]
+[ext_resource type="Resource" uid="uid://dsf2qbwjhlypl" path="res://resources/animaciones/physic_animation.tres" id="4_jc8l4"]
+[ext_resource type="Resource" uid="uid://6gy5d5epbtce" path="res://resources/animaciones/fire_animation.tres" id="5_tuavw"]
+[ext_resource type="Resource" uid="uid://bamxdvs01bi8p" path="res://resources/animaciones/electric_animation.tres" id="6_gh0xm"]
+[ext_resource type="Resource" uid="uid://bvfhciovp85ey" path="res://resources/animaciones/poison_animation.tres" id="7_fpyi0"]
+[ext_resource type="Resource" uid="uid://b5uvlyw0sdmxf" path="res://resources/animaciones/protection_animation.tres" id="8_gh0xm"]
+[ext_resource type="Resource" uid="uid://ofuibb4gefj2" path="res://resources/animaciones/to_heal_animation.tres" id="9_fpyi0"]
+
+[node name="GameScene" type="Node" unique_id=1075307019 node_paths=PackedStringArray("cards_panel", "deployment_box", "map_visualizer", "players_panel", "end_button")]
+script = ExtResource("1_4n5kr")
+cards_panel = NodePath("IngameMap/CardsPanel")
+deployment_box = NodePath("IngameMap/CardsPanel/Deplyoment/MarginContainer/VBoxContainer/Panel/DeploymentBox")
+map_visualizer = NodePath("IngameMap/SubViewportContainer/SubViewport/mapVisualizer")
+players_panel = NodePath("IngameMap/PlayersPanel")
+end_button = NodePath("IngameMap/EndTurnButton")
+
+[node name="IngameMap" parent="." unique_id=594307947 instance=ExtResource("2_rqqua")]
+transition_screen_scene = ExtResource("10_trans")
+
+[node name="mapVisualizer" parent="IngameMap/SubViewportContainer/SubViewport" parent_id_path=PackedInt32Array(594307947, 1514874787) index="0" unique_id=19580803]
+vfx_database = Dictionary[StringName, ExtResource("3_rn5k7")]({
+&"fire": ExtResource("5_tuavw"),
+&"heal": ExtResource("9_fpyi0"),
+&"lighting": ExtResource("6_gh0xm"),
+&"magic": ExtResource("5_tuavw"),
+&"physic": ExtResource("4_jc8l4"),
+&"poison": ExtResource("7_fpyi0"),
+&"protect": ExtResource("8_gh0xm")
+})
+
+[node name="PlayersPanel" parent="IngameMap" index="2" unique_id=69587996]
+offset_bottom = 0.0
+
+[node name="Deplyoment" parent="IngameMap/CardsPanel" parent_id_path=PackedInt32Array(594307947, 1431020749) index="1" unique_id=120072488]
+offset_left = -250.0
+offset_top = -200.0
+offset_right = 250.0
+
+[node name="DeploymentBox" parent="IngameMap/CardsPanel/Deplyoment/MarginContainer/VBoxContainer/Panel" parent_id_path=PackedInt32Array(594307947, 120072488, 750361709) index="0" unique_id=484191042]
+offset_bottom = 38.0
+mouse_filter = 0
+
+[node name="EndTurnButton" parent="IngameMap" index="4" unique_id=1726048997]
+offset_left = -105.0
+offset_right = 0.0
+
+[editable path="IngameMap"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/TileInfo"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/UnitInfo"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer/Mana"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer/Habilities"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/AlterStates"]
+[editable path="IngameMap/CardsPanel/Deplyoment"]
+[editable path="IngameMap/EndTurnButton"]

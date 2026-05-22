@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="UserRes" format=3 uid="uid://631tcdisvbt8"]
+
+[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="1_8dbxi"]
+[ext_resource type="Resource" uid="uid://du6inmrphwip6" path="res://resources/cards/0001.tres" id="2_x851j"]
+[ext_resource type="Resource" uid="uid://4xnwpm8cq6kc" path="res://resources/cards/0002.tres" id="3_aidkp"]
+[ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="4_0dh4l"]
+[ext_resource type="Resource" uid="uid://bmiygjij3qrnp" path="res://resources/maps/0001.tres" id="5_65nb2"]
+[ext_resource type="Script" uid="uid://ce5uvgu640fxr" path="res://scripts/resources/user_res.gd" id="6_tjrxg"]
+[ext_resource type="Texture2D" uid="uid://ddyaj556iitvq" path="res://assets/icons/profile_user2.jpg" id="7_bp2cv"]
+[ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="8_gej1n"]
+[ext_resource type="Resource" uid="uid://cysh13lk4exi5" path="res://resources/armies/0002.tres" id="9_cwwtm"]
+
+[resource]
+script = ExtResource("6_tjrxg")
+name = "sussybaka"
+username = &"sussybaka"
+email = "amon@gus.lol"
+img = ExtResource("7_bp2cv")
+token = "777"
+availableCards = Dictionary[ExtResource("1_8dbxi"), int]({
+ExtResource("2_x851j"): 3,
+ExtResource("3_aidkp"): 2
+})
+availableMaps = Array[ExtResource("4_0dh4l")]([ExtResource("5_65nb2")])
+userArmys = Array[ExtResource("8_gej1n")]([ExtResource("9_cwwtm")])
+uid = 2

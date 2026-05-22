@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://tj5nudd1tqq0"]
+
+[ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="1_xoo5n"]
+[ext_resource type="Script" uid="uid://c8sfgy6urp83l" path="res://selector_avatares.gd" id="2_qiyj6"]
+[ext_resource type="Theme" uid="uid://cx52welxfekgu" path="res://assets/themes/ui/carta_normal.tres" id="3_y7gym"]
+[ext_resource type="Theme" uid="uid://dmnaanofnyo81" path="res://assets/themes/ui/carta_destino_selected.tres" id="4_xoo5n"]
+
+[node name="SelectorAvatares" type="Panel" unique_id=840043805]
+offset_right = 600.0
+offset_bottom = 400.0
+theme_override_styles/panel = ExtResource("1_xoo5n")
+script = ExtResource("2_qiyj6")
+tema_normal = ExtResource("3_y7gym")
+tema_seleccionado = ExtResource("4_xoo5n")
+ruta_carpeta_avatares = "res://assets/avatares"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=2127621341]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer" unique_id=585847971]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="GridAvatares" type="GridContainer" parent="ScrollContainer/MarginContainer" unique_id=1689049313]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 5
