@@ -230,9 +230,9 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 			print("[" + str(NetClient.id) + "]", "Movimiento denegada al registrar")
 			return false
 		
-		map_logic.move_unit(start, end)
 		unit.has_moved_this_turn = true
 		unit_moved.emit(start, end)
+		map_logic.move_unit(start, end)
 		#map_visualizer._refresh_unit_states()
 		unit_refresh.emit()
 		
