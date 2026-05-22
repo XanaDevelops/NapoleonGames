@@ -4,11 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="147e4084-ca6e-4a1f-9cdb-0d72ba1a47ed" name="Changes" comment="Afegim JWT amb token real, no mockejat.">
-      <change beforePath="$PROJECT_DIR$/godot/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/godot/project.godot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/godot/scenes/login.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scenes/login.tscn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/godot/scenes/registro.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scenes/registro.tscn" afterDir="false" />
+    <list default="true" id="147e4084-ca6e-4a1f-9cdb-0d72ba1a47ed" name="Changes" comment="Selector de oponentes actualizado con resto de jugadores sin el actual">
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/controller/ArmyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/dto/ArmyResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/dto/SaveArmyCardRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/dto/SaveArmyRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/entity/ArmyCardEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/repository/ArmyCardRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/service/ArmyService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/service/impl/ArmyServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/entity/ArmyEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/entity/ArmyEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/repository/ArmyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/napoleon/user/repository/ArmyRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/godot/scripts/API/api_adapter.gd" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scripts/API/api_adapter.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/godot/scripts/managers/user_manager.gd" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scripts/managers/user_manager.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/godot/scripts/resources/army_res.gd" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scripts/resources/army_res.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/godot/scripts/ui/creacio_exercits.gd" beforeDir="false" afterPath="$PROJECT_DIR$/godot/scripts/ui/creacio_exercits.gd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +38,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="dev" />
+        <entry key="$PROJECT_DIR$" value="feature/persistencia-signin" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,7 +80,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHELLCHECK.PATH&quot;: &quot;I do mind&quot;,
     &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/conexio-login-signin-front&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/persistencia-exercit&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/josel/Desktop/NapoleonGames&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
@@ -369,7 +380,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777822547276</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Selector de oponentes actualizado con resto de jugadores sin el actual">
+      <option name="closed" value="true" />
+      <created>1779437340317</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1779437340317</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -393,6 +412,7 @@
     <MESSAGE value="Endpoint de actaulización de usuarios." />
     <MESSAGE value="Merge pull request #40 from XanaDevelops/feature/implementacion-navegacion-ui&#10;&#10;Feature/implementacion navegacion UI" />
     <MESSAGE value="Afegim JWT amb token real, no mockejat." />
-    <option name="LAST_COMMIT_MESSAGE" value="Afegim JWT amb token real, no mockejat." />
+    <MESSAGE value="Selector de oponentes actualizado con resto de jugadores sin el actual" />
+    <option name="LAST_COMMIT_MESSAGE" value="Selector de oponentes actualizado con resto de jugadores sin el actual" />
   </component>
 </project>
