@@ -61,6 +61,21 @@ func get_current_user() -> UserGame:
 func get_current_user_number() -> int:
 	return turn_number % turn_order.size()
 
+## Devuelve el jugador local
+func get_local_user() -> UserGame:
+	match game_config.user_online:
+		## Nótese que está girado
+		GameConfig.ONLINE_USER.USER_A:
+			return _get_UserGame_(get_user_a().uid)
+		GameConfig.ONLINE_USER.USER_B:
+			return _get_UserGame_(get_user_b().uid)
+		_:
+			return null
+
+## Devuelve si el jugador actual es el local
+func is_current_user_local() -> bool:
+	return get_current_user() == get_local_user()
+
 func get_current_phase() -> String:
 	if is_deployment_phase:
 		return "Despliegue"
@@ -198,6 +213,8 @@ func _init() -> void:
 
 	for usuario in turn_order:
 		usuario.living_units = 0
+		
+	print("[", NetClient.id, "] tOrder ", turn_order.map(func (x:UserGame): return x._user_res.uid))
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

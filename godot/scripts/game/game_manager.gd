@@ -58,11 +58,16 @@ func set_users() -> void:
 	game_config.user_a = gr.users[0]
 	game_config.user_b = gr.users[1]
 	
-## Placeholder
+## Inicia una partida
+## Configura GameConfig acorde a lo que se le pasa, 
+## En el caso online, por ejemplo, se establece el usuario remoto
 func start_game(playerA: UserRes, playerB:UserRes, map:MapRes,
 	armyA: ArmyRes, armyB:ArmyRes, isOnline:= false, game_pid:= -1
 	) -> void:
 	print("[GameManager] start_game")
+	if playerA == playerB:
+		printerr("No puedes jugar contra ti mismo")
+		return
 	print("  isOnline=", isOnline, " game_pid=", game_pid)
 	print("  user_a=", playerA.username, " user_b=", playerB.username)
 	print("  map=", map.name, " size=", map.tamX, "x", map.tamY)

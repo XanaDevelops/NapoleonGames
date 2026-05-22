@@ -328,6 +328,9 @@ func _process(delta: float) -> void:
 	pass
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not map:
+		
+		return
 	# ZOOM using wheel
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
@@ -411,8 +414,10 @@ func _handle_click(coords: Vector2i) -> void:
 	if coords == selected_cell:
 		_clear_selection()
 		return
+		
 	if selected_cell != Vector2i(-1, -1) and coords in current_accesible_moves:
-		movement_requested.emit(selected_cell, coords)
+		if tm.is_current_user_local():
+			movement_requested.emit(selected_cell, coords)
 		_clear_selection()
 		return
 	_process_selection(coords, tile)
@@ -426,7 +431,7 @@ func _process_selection(coords: Vector2i, clicked_tile: TileGame) -> void:
 		
 		if not unit.has_moved_this_turn:
 			current_accesible_moves = await map.get_accesible_moves(coords)
-			var is_owner = GameManager.turn_manager.get_current_user()==clicked_tile._unit._owner
+			var is_owner = GameManager.turn_manager.get_local_user()==clicked_tile._unit._owner
 			highlight_cells_owner(current_accesible_moves, is_owner) # Renders movement range
 		else:
 			current_accesible_moves = []
