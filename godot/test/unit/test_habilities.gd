@@ -208,8 +208,8 @@ static func gen_test_map() -> MapRes:
 	
 func before_all():
 	# Crea y guarda el mapa de prueba
-	self.map_test = gen_test_map()
-	
+	#self.map_test = gen_test_map()
+	self.map_test = load("res://test/test_res/map_test.tres")
 
 func before_each()-> void:
 	map_game = MapGame.new(map_test)

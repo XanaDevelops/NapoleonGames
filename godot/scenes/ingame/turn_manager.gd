@@ -214,8 +214,6 @@ func _init() -> void:
 	for usuario in turn_order:
 		usuario.living_units = 0
 		
-	print("[", NetClient.id, "] tOrder ", turn_order.map(func (x:UserGame): return x._user_res.uid))
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if is_inside_tree():
