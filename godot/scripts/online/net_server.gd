@@ -41,7 +41,6 @@ func _ready() -> void:
 	Online.on_server_packet.connect(on_server_packet)
 	
 
-
 func on_peer_connected(peer_id: int) -> void:
 	peer_ids.append(peer_id)
 
@@ -102,8 +101,22 @@ func manage_randf(pid: int, packet: NetRandF) -> float:
 func manage_game_request(pid: int, request: OnlineMatchRequest) -> void:
 	# Por ahora esto va bien
 	var gr := GameManager.get_game_resources()
+	
+	# Comprobar que no esté en partida
+	if current_games.keys().any(
+			func(x: int): 
+			var _info := current_games[x]
+			return _info.pid_a == pid or _info.pid_b == pid or \
+				_info.user_a_uid == request.user_uid or _info.user_b_uid == request.user_uid):
+		print("[SERVER]", " jugador ya en partida")
+		return
+		
+	if pid in waiting.keys():
+		prints("[SERVER]","Cliente ya en espera!")
+		return
+	
 	if waiting.size() >= 1:
-		var other_pid : int = waiting.keys()[0]
+		var other_pid : int = waiting.keys().pick_random()
 		var other : OnlineMatchRequest = waiting[other_pid]
 		waiting.erase(other_pid)
 		var user_a : UserRes = gr.get_res_from_uid(request.user_uid, UserRes)
@@ -116,6 +129,8 @@ func manage_game_request(pid: int, request: OnlineMatchRequest) -> void:
 		# Seguramente habrá que hacerlo de otra forma, pero por ahora va bien
 		GameManager.start_game(user_a, user_b, map, army_a, army_b, true, game_id)
 		var tm := GameManager.get_turn_manager()
+		
+		
 		
 		var lobby := GameLobby.create(game_id, user_a.uid, user_b.uid, army_a.uid, army_b.uid, map.uid)
 		lobby.send(Online.client_peers[pid])
@@ -147,5 +162,10 @@ func manage_turn(pid: int, turn: TurnAction) -> void:
 	res.send(Online.client_peers[pid])
 	
 	
+	
+func manage_end_game(game_pid: int) -> void:
+	if current_games.erase(game_pid):
+		print("[SERVER] partida ", game_pid, " finalizada")
+		
 func _broadcast(packet : NetPacket) -> void:
 	Online.connection.broadcast(0, packet.encode(), packet.flag)

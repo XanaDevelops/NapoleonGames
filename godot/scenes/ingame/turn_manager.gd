@@ -8,7 +8,7 @@ signal combat_phase_started(first_player_name: String)
 signal turn_changed_visual(current_icon: Texture2D, next_name: String, next_icon: Texture2D)
 
 signal tick_turn
-signal game_end
+signal game_end(game_id: int)
 
 # Algunas señales tienen pinta de ser de ui->ui, revisar
 signal ui_setup_requested(turn_manager: TurnManager)
@@ -421,5 +421,6 @@ func finalizar_partida(nombre_del_vencedor: String):
 		"nombre_ganador": nombre_del_vencedor
 	}
 	
-	game_end.emit()
-	UiManager.cambiar_a_escena("finalizacion", parametros_victoria)
+	game_end.emit(_get_game_pid())
+	if not GameManager.is_server:
+		UiManager.cambiar_a_escena("finalizacion", parametros_victoria)

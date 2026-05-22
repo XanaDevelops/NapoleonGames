@@ -96,10 +96,10 @@ func start_game(playerA: UserRes, playerB:UserRes, map:MapRes,
 	if !is_server:
 		UiManager.cambiar_a_escena("juego")
 	else:
-		UiManager.cambiar_a_escena("juego")
-
-#		turn_manager = TurnManager.new()
-#		turn_manager._ready()
+		#UiManager.cambiar_a_escena("juego")
+#
+		turn_manager = TurnManager.new()
+		turn_manager._ready()
 
 # resetea la partida
 func restart_current_game() -> void:
