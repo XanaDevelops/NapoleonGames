@@ -70,7 +70,7 @@ func get_local_user() -> UserGame:
 		GameConfig.ONLINE_USER.USER_B:
 			return _get_UserGame_(get_user_b().uid)
 		_:
-			return null
+			return get_current_user()
 
 ## Devuelve si el jugador actual es el local
 func is_current_user_local() -> bool:

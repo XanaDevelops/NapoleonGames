@@ -12,7 +12,7 @@ func before_each():
 	)
 	await get_tree().process_frame
 
-func _test_create_turns():
+func test_create_turns():
 	gut.pause_before_teardown()
 	
 	var turns:= GameManager.get_turn_manager().turns
