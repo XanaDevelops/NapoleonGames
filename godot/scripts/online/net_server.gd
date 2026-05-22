@@ -1,5 +1,9 @@
 extends Node
 
+
+signal net_start_game(info: GameConfig)
+signal net_end_game(game_pid: int)
+
 class _InnerGameInfo:
 	var tm : TurnManager
 	var pid_a : int
@@ -130,13 +134,14 @@ func manage_game_request(pid: int, request: OnlineMatchRequest) -> void:
 		GameManager.start_game(user_a, user_b, map, army_a, army_b, true, game_id)
 		var tm := GameManager.get_turn_manager()
 		
-		
+		tm.game_end.connect(manage_end_game, CONNECT_ONE_SHOT)
 		
 		var lobby := GameLobby.create(game_id, user_a.uid, user_b.uid, army_a.uid, army_b.uid, map.uid)
 		lobby.send(Online.client_peers[pid])
 		lobby.send(Online.client_peers[other_pid])
 		
 		current_games.set(game_id, _InnerGameInfo.new(tm, pid, user_a.uid, other_pid, user_b.uid))
+		net_start_game.emit(tm.get_game_config())
 	else:
 		waiting.set(pid, request)
 	
@@ -165,6 +170,7 @@ func manage_turn(pid: int, turn: TurnAction) -> void:
 	
 func manage_end_game(game_pid: int) -> void:
 	if current_games.erase(game_pid):
+		net_end_game.emit(game_pid)
 		print("[SERVER] partida ", game_pid, " finalizada")
 		
 func _broadcast(packet : NetPacket) -> void:

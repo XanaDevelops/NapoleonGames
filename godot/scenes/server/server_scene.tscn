@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c282mlrol5uqx"]
 
 [ext_resource type="Script" uid="uid://h2e7wx3ndx82" path="res://scenes/server/connected_peers.gd" id="1_ufrji"]
+[ext_resource type="Script" uid="uid://bairfkrkwhb66" path="res://scenes/server/current_games.gd" id="2_hd4pm"]
 
 [node name="ServerScene" type="Node" unique_id=2145880764]
 
@@ -22,3 +23,7 @@ text = "Server Debug Info"
 [node name="ConnectedPeers" type="VBoxContainer" parent="ServerUI/VBoxContainer" unique_id=347506432]
 layout_mode = 2
 script = ExtResource("1_ufrji")
+
+[node name="CurrentGames" type="VBoxContainer" parent="ServerUI/VBoxContainer" unique_id=394061064]
+layout_mode = 2
+script = ExtResource("2_hd4pm")
