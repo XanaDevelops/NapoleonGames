@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="5_xg841"]
 [ext_resource type="Script" uid="uid://oip1dp0jjnjk" path="res://scenes/enemigo_aleatorio.gd" id="6_bxgl6"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="6_ru1hr"]
-[ext_resource type="Script" path="res://scenes/boton_online.gd" id="6_y25s7"]
+[ext_resource type="Script" uid="uid://csehrnosd11m8" path="res://scenes/boton_online.gd" id="6_y25s7"]
 [ext_resource type="Shader" uid="uid://chsexujh65mmi" path="res://resources/shaders/redondear_shader.gdshader" id="7_rfvtk"]
 [ext_resource type="PackedScene" uid="uid://cdbdwv8lb0o74" path="res://scenes/panel_usuario.tscn" id="8_bxgl6"]
 
@@ -226,6 +226,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_v0kd0")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_3re45")
 theme_override_styles/hover = SubResource("StyleBoxFlat_l67cq")
 script = ExtResource("6_bxgl6")
+posicion_menu = 3
 
 [node name="IconoUsuario" type="TextureRect" parent="MenuUsuario" unique_id=1285921050]
 unique_name_in_owner = true
