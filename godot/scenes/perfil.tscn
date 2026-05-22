@@ -3,11 +3,12 @@
 [ext_resource type="Texture2D" uid="uid://dwcsqv5dddx4o" path="res://assets/sprites/ui/fondos_de_pantalla/fondoPantallaUsuario.png" id="1_e0t1c"]
 [ext_resource type="Script" uid="uid://bj52woxon6xwk" path="res://scenes/perfil.gd" id="1_qjmg8"]
 [ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="2_4v1p0"]
-[ext_resource type="Shader" uid="uid://chsexujh65mmi" path="res://scenes/redondear_shader.gdshader" id="2_cqi24"]
+[ext_resource type="Shader" uid="uid://chsexujh65mmi" path="res://resources/shaders/redondear_shader.gdshader" id="2_cqi24"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="2_e0t1c"]
 [ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://assets/themes/ui/InputsUserMenu.tres" id="3_m7uid"]
-[ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://assets/themes/ui/estilo_botones.tres" id="5_m7uid"]
+[ext_resource type="Theme" uid="uid://cttb3ckvy5c8d" path="res://assets/themes/ui/estilo_atras.tres" id="7_btoj5"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="8_cqi24"]
+[ext_resource type="Texture2D" uid="uid://d0vn3b0q2ipv3" path="res://assets/sprites/ui/iconos_de_botones/izquierda (1).png" id="8_hyisl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6imr"]
 bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
@@ -199,21 +200,19 @@ layout_mode = 2
 theme = ExtResource("3_m7uid")
 editable = false
 
-[node name="Button" type="Button" parent="Panel" unique_id=929064294]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -71.0
-offset_top = -60.0
-offset_right = 71.0
-offset_bottom = -19.0
-grow_horizontal = 2
-grow_vertical = 0
-theme = ExtResource("5_m7uid")
-text = "Volver al menu"
+[node name="Atras" type="Button" parent="." unique_id=685946487]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 130.0
+offset_bottom = 130.0
+theme = ExtResource("7_btoj5")
+theme_override_font_sizes/font_size = 40
+text = "
+"
+icon = ExtResource("8_hyisl")
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("8_cqi24")
 id_escena = "inicio"
 metadata/_custom_type_script = "uid://ct2doijn7j323"

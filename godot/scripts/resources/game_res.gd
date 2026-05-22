@@ -261,7 +261,10 @@ static func get_script_from_json_text(text: String) -> Script:
 	return null
 	
 func compare(res: GameResource) -> bool:
-	return self.get_script() == res.get_script() and self.uid == res.uid
+	if res == null:
+		return false
+	return self.get_script() == res.get_script() \
+	and self.uid == res.uid
 
 # Copia los valores de res en self
 func update_vals(res: GameResource) -> void:
