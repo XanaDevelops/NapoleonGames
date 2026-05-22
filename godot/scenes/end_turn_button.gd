@@ -8,7 +8,9 @@ func _ready() -> void:
 	visible = false
 	boton.pressed.connect(_end_turn)
 
-func show_battle() -> void:
+	GameManager.get_turn_manager().combat_phase_started.connect(show_battle)
+
+func show_battle(_ignore: String) -> void:
 	visible = true
 
 

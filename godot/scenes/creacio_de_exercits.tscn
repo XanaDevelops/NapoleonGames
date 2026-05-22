@@ -22,7 +22,7 @@
 [ext_resource type="Theme" uid="uid://cttb3ckvy5c8d" path="res://assets/themes/ui/estilo_atras.tres" id="18_qvlf4"]
 [ext_resource type="Script" uid="uid://cichlbtfwhh2b" path="res://scenes/menu_usuario.gd" id="21_f3wxj"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="22_f3wxj"]
-[ext_resource type="Shader" uid="uid://chsexujh65mmi" path="res://scenes/redondear_shader.gdshader" id="22_kvhuw"]
+[ext_resource type="Shader" uid="uid://chsexujh65mmi" path="res://resources/shaders/redondear_shader.gdshader" id="22_kvhuw"]
 [ext_resource type="PackedScene" uid="uid://cdbdwv8lb0o74" path="res://scenes/panel_usuario.tscn" id="23_kvhuw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b2256"]
@@ -481,7 +481,7 @@ offset_top = 643.0
 offset_right = 1900.0
 offset_bottom = 963.0
 
-[node name="Inicio" type="Button" parent="." unique_id=561654328]
+[node name="Atras" type="Button" parent="." unique_id=561654328]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 20.0

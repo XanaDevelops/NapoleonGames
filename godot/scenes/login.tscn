@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://dbvfn3475ma44"]
 
 [ext_resource type="Texture2D" uid="uid://dwcsqv5dddx4o" path="res://assets/sprites/ui/fondos_de_pantalla/fondoPantallaUsuario.png" id="1_b6b30"]
-[ext_resource type="Script" path="res://scripts/ui/login.gd" id="1_r3fp8"]
+[ext_resource type="Script" uid="uid://dx3cpfkgi482v" path="res://scripts/ui/login.gd" id="1_r3fp8"]
 [ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://assets/themes/ui/estilo_botones.tres" id="3_feuqc"]
 [ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://assets/themes/ui/InputsUserMenu.tres" id="3_w8jpj"]
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="4_cs5o2"]
-[ext_resource type="Theme" uid="uid://bxefl0wcs215u" path="res://assets/themes/ui/estilo_botones_circulares_carrusel.tres" id="5_47b6t"]
+[ext_resource type="Theme" uid="uid://cttb3ckvy5c8d" path="res://assets/themes/ui/estilo_atras.tres" id="6_bw5rt"]
+[ext_resource type="Texture2D" uid="uid://d0vn3b0q2ipv3" path="res://assets/sprites/ui/iconos_de_botones/izquierda (1).png" id="7_31byv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_feuqc"]
 bg_color = Color(0.0627451, 0.078431375, 0.11372549, 0.74509805)
@@ -139,15 +140,19 @@ script = ExtResource("4_cs5o2")
 id_escena = "registro"
 metadata/_custom_type_script = "uid://ct2doijn7j323"
 
-[node name="Inicio" type="Button" parent="." unique_id=1527366156]
+[node name="Atras" type="Button" parent="." unique_id=655015691]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 50.0
-offset_right = 120.0
-offset_bottom = 120.0
-theme = ExtResource("5_47b6t")
+offset_right = 130.0
+offset_bottom = 130.0
+theme = ExtResource("6_bw5rt")
 theme_override_font_sizes/font_size = 40
-text = "<"
+text = "
+"
+icon = ExtResource("7_31byv")
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("4_cs5o2")
 id_escena = "inicio"
 metadata/_custom_type_script = "uid://ct2doijn7j323"

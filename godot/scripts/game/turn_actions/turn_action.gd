@@ -12,10 +12,25 @@ enum ACTION {
 	PASS_TURN
 }
 
-const BASE_ENCODE_SIZE := 14
+const BASE_ENCODE_SIZE := 18
+
+static var _registry: Dictionary[ACTION, Callable] = {}
+
+static func register(action_type: ACTION, ctor: Callable) -> void:
+	_registry[action_type] = ctor
+
+static func create_from_data(data: PackedByteArray) -> TurnAction:
+	var action_value := data.decode_u8(1)
+
+	if not _registry.has(action_value):
+		push_error("Unhandled TurnAction action: %s" % str(action_value))
+		return null
+	return _registry[action_value].call(data)
 
 # orden de acción
 @export var action_order: int
+# pid de la partida
+@export var game_pid: int = -1
 # uid del usuario
 @export var player_uid: int
 # tipo de accion
@@ -29,9 +44,10 @@ func encode() -> PackedByteArray:
 	var data := super.encode()
 	data.resize(BASE_ENCODE_SIZE)
 	data.encode_u8(1, action)
-	data.encode_s32(2, player_uid)
-	data.encode_s32(6, unit_uid)
-	data.encode_s32(10, action_order)
+	data.encode_s32(2, game_pid)
+	data.encode_u32(6, player_uid)
+	data.encode_u32(10, unit_uid)
+	data.encode_u32(14, action_order)
 	return data
 
 
@@ -39,9 +55,11 @@ func encode() -> PackedByteArray:
 func decode(data: PackedByteArray) -> void:
 	super.decode(data)
 	action = data.decode_u8(1)
-	player_uid = data.decode_s32(2)
-	unit_uid = data.decode_s32(6)
-	action_order = data.decode_s32(10)
+	game_pid = data.decode_s32(2)
+	player_uid = data.decode_u32(6)
+	unit_uid = data.decode_u32(10)
+	action_order = data.decode_u32(14)
 
 func _init() -> void:
-	pass
+	packet_type = PACKET_TYPE.TURN_ACTION
+	flag = ENetPacketPeer.FLAG_RELIABLE
