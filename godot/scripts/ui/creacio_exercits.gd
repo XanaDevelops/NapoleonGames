@@ -564,6 +564,7 @@ func _pulsar_eliminar() -> void:
 		_seleccionar_ejercito(0)
 
 func _pulsar_guardar() -> void:
+	print(">>>ENTRANDO EN PULSAR _GUARDAR")
 	var nuevo_nombre = input_nombre_ejercito.text.strip_edges() 
 	
 	var nombre_invalido = nuevo_nombre.is_empty() or (nuevo_nombre != nombre_original_ejercito and UserManager.existe_ejercito(nuevo_nombre))
@@ -574,8 +575,12 @@ func _pulsar_guardar() -> void:
 		
 	ejercito_actual.nom = nuevo_nombre
 	ejercito_actual.isActive = true
-	UserManager.guardar_ejercito(ejercito_actual, nombre_original_ejercito)
+	var ejercito_guardado := UserManager.guardar_ejercito(ejercito_actual, nombre_original_ejercito)
 	UserManager.establecer_ejercito_activo(nuevo_nombre)
+
+	if ejercito_guardado != null:
+		ApiAdapter.save_army(UserManager.usuario_actual, ejercito_guardado)
+	
 	nombre_original_ejercito = nuevo_nombre 
 	_actualizar_botones_mazos()
 	_exito_guardado()

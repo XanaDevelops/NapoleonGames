@@ -79,28 +79,50 @@ func existe_ejercito(nombre_a_comprobar: String) -> bool:
 
 func establecer_ejercito_activo(nombre_ejercito_a_activar: String) -> void:
 	var ejercitos = obtener_ejercitos()
+
 	for ejercito in ejercitos:
 		ejercito.isActive = (ejercito.nom == nombre_ejercito_a_activar)
 
-func guardar_ejercito(ejercito_a_guardar: ArmyRes, nombre_anterior: String) -> void:
-	if usuario_actual == null: return
+	guardar_usuarios_autenticados()
+
+func guardar_ejercito(ejercito_a_guardar: ArmyRes, nombre_anterior: String) -> ArmyRes:
+	if usuario_actual == null:
+		return null
+
 	var ejercitos = usuario_actual.userArmys
+	var ejercito_guardado: ArmyRes = ejercito_a_guardar.clonar()
 	var encontrado = false
+
 	for i in range(ejercitos.size()):
 		if ejercitos[i].nom == nombre_anterior:
-			ejercitos[i] = ejercito_a_guardar.clonar()
+			ejercitos[i] = ejercito_guardado
 			encontrado = true
 			break
+
 	if not encontrado:
-		ejercitos.append(ejercito_a_guardar.clonar())
+		ejercitos.append(ejercito_guardado)
+
+	print("Ejército guardado localmente: " + str(ejercito_guardado.nom))
+	print("Total ejércitos usuario actual: " + str(usuario_actual.userArmys.size()))
+
+	guardar_usuarios_autenticados()
+	usuarios_actualizados.emit()
+
+	return ejercito_guardado
 
 func eliminar_ejercito(nombre_ejercito: String) -> void:
-	if usuario_actual == null: return
+	if usuario_actual == null:
+		return
+
 	var ejercitos = usuario_actual.userArmys
+
 	for i in range(ejercitos.size() - 1, -1, -1):
 		if ejercitos[i].nom == nombre_ejercito:
 			ejercitos.remove_at(i)
 			break
+
+	guardar_usuarios_autenticados()
+	usuarios_actualizados.emit()
 
 func crear_user_res_desde_auth_response(auth_response: Dictionary) -> UserRes:
 	if not auth_response.has("user"):
@@ -110,10 +132,13 @@ func crear_user_res_desde_auth_response(auth_response: Dictionary) -> UserRes:
 	var user_data: Dictionary = auth_response["user"]
 
 	var user := UserRes.new()
+	user.uid = int(user_data.get("id", 0))
 	user.name = str(user_data.get("displayName", user_data.get("username", "")))
 	user.username = StringName(str(user_data.get("username", "")))
 	user.email = str(user_data.get("email", ""))
 	user.token = str(auth_response.get("token", ""))
+
+	aplicar_cartas_demo(user)
 
 	return user
 
@@ -129,18 +154,21 @@ func registrar_usuario_autenticado(auth_response: Dictionary) -> void:
 		return
 
 	if usuarios.has(user.email):
-		usuarios[user.email] = user
-	else:
-		usuarios[user.email] = user
+		var usuario_existente: UserRes = usuarios[user.email]
 
+		user.userArmys = usuario_existente.userArmys
+		user.availableCards = usuario_existente.availableCards
+		user.availableMaps = usuario_existente.availableMaps
+
+	usuarios[user.email] = user
 	usuario_actual = user
 
 	print("Usuario autenticado activo: " + user.name)
+	print("Ejércitos del usuario activo: " + str(user.userArmys.size()))
 
 	usuarios_actualizados.emit()
-	usuario_cambiado.emit(user.email)
+	usuario_cambiado.emit(user.email, user.img)
 	guardar_usuarios_autenticados()
-	
 
 func guardar_usuarios_autenticados() -> void:
 	var datos := []
@@ -151,17 +179,39 @@ func guardar_usuarios_autenticados() -> void:
 		if usuario.token == "":
 			continue
 
+		var armies := []
+
+		for army in usuario.userArmys:
+			var cards := []
+
+			for group in army.agrupations:
+				cards.append({
+					"cardId": group.cardType.uid,
+					"quantity": group.n
+				})
+
+			armies.append({
+				"backendId": army.backend_id,
+				"name": str(army.nom),
+				"isActive": army.isActive,
+				"cards": cards
+			})
+
 		datos.append({
+			"id": usuario.uid,
 			"name": usuario.name,
 			"username": str(usuario.username),
 			"email": usuario.email,
-			"token": usuario.token
+			"token": usuario.token,
+			"armies": armies
 		})
+
+	print("JSON GUARDADO EN: ", ProjectSettings.globalize_path(AUTH_USERS_PATH))
+	print("JSON CONTENT: ", JSON.stringify(datos))
 
 	var file := FileAccess.open(AUTH_USERS_PATH, FileAccess.WRITE)
 	file.store_string(JSON.stringify(datos))
 	file.close()
-
 
 func cargar_usuarios_autenticados() -> void:
 	if not FileAccess.file_exists(AUTH_USERS_PATH):
@@ -178,9 +228,73 @@ func cargar_usuarios_autenticados() -> void:
 
 	for item in datos:
 		var usuario := UserRes.new()
+		usuario.uid = int(item.get("id", 0))
 		usuario.name = item.get("name", "")
 		usuario.username = StringName(item.get("username", ""))
 		usuario.email = item.get("email", "")
 		usuario.token = item.get("token", "")
 
+		aplicar_cartas_demo(usuario)
+
+		var armies_data = item.get("armies", [])
+
+		if typeof(armies_data) == TYPE_ARRAY:
+			for army_data in armies_data:
+				var army := ArmyRes.new()
+				army.backend_id = int(army_data.get("backendId", 0))
+				army.nom = StringName(army_data.get("name", ""))
+				army.isActive = bool(army_data.get("isActive", false))
+
+				var cards_data = army_data.get("cards", [])
+
+				if typeof(cards_data) == TYPE_ARRAY:
+					for card_data in cards_data:
+						var card_id := int(card_data.get("cardId", 0))
+						var quantity := int(card_data.get("quantity", 0))
+
+						var card_res := _buscar_carta_por_uid(card_id)
+
+						if card_res != null and quantity > 0:
+							var group := CardArmyGroup.new()
+							group.cardType = card_res
+							group.n = quantity
+							army.agrupations.append(group)
+
+				usuario.userArmys.append(army)
+				print("Army cargado desde JSON: " + str(army.nom))
+				print("Cartas del army: " + str(army.agrupations.size()))
+				
+		print("Usuario auth cargado: " + usuario.email)
+		print("Ejércitos cargados para usuario: " + str(usuario.userArmys.size()))
 		usuarios[usuario.email] = usuario
+		
+func aplicar_cartas_demo(usuario: UserRes) -> void:
+	
+	var gr := GameResources.load_from()
+
+	if gr == null:
+		push_warning("No se pudo cargar GameResources para copiar cartas demo")
+		return
+
+	for demo_user in gr.users:
+		if demo_user != null and not demo_user.availableCards.is_empty():
+			usuario.availableCards = demo_user.availableCards.duplicate(true)
+			usuario.availableMaps = demo_user.availableMaps.duplicate(true)
+			print("Cartas demo copiadas a: " + usuario.name)
+			print("Cantidad cartas: " + str(usuario.availableCards.size()))
+			return
+
+	push_warning("No hay ningún usuario demo con cartas disponibles")
+
+func _buscar_carta_por_uid(card_id: int) -> CardRes:
+	var gr := GameResources.load_from()
+
+	if gr == null:
+		return null
+
+	for card in gr.cards:
+		if card != null and card.uid == card_id:
+			return card
+
+	push_warning("No se encontró CardRes con uid: " + str(card_id))
+	return null
