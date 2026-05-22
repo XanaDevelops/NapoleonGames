@@ -43,8 +43,7 @@ func _on_self_pressed():
 		
 		actualizar_posicion()
 		menu_interno.visible = !menu_interno.visible
-	#no va???		
-	NetClient.request_online_game()
+
 
 
 func actualizar_posicion():
