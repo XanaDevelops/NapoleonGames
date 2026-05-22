@@ -7,7 +7,9 @@
 [ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="5_xg841"]
 [ext_resource type="Script" uid="uid://cichlbtfwhh2b" path="res://scenes/menu_usuario.gd" id="6_bxgl6"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="6_ru1hr"]
+[ext_resource type="Script" uid="uid://c4vkq2nflgjio" path="res://scenes/opciones.gd" id="6_y25s7"]
 [ext_resource type="Shader" uid="uid://chsexujh65mmi" path="res://scenes/redondear_shader.gdshader" id="7_rfvtk"]
+[ext_resource type="PackedScene" uid="uid://e7aclggeurn0" path="res://scenes/settings.tscn" id="7_ru1hr"]
 [ext_resource type="PackedScene" uid="uid://cdbdwv8lb0o74" path="res://scenes/panel_usuario.tscn" id="8_bxgl6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0kd0"]
@@ -92,6 +94,7 @@ expand_mode = 1
 stretch_mode = 6
 
 [node name="Panel" type="Panel" parent="." unique_id=2135376305]
+custom_minimum_size = Vector2(800, 600)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -204,11 +207,30 @@ script = ExtResource("5_xg841")
 id_escena = "ejercitos"
 metadata/_custom_type_script = "uid://ct2doijn7j323"
 
-[node name="Opciones" type="Button" parent="Panel/ContenedorDeMenu" unique_id=410175949]
+[node name="Opciones" type="Button" parent="Panel/ContenedorDeMenu" unique_id=410175949 node_paths=PackedStringArray("contenerDeMenu", "panel_settings")]
 layout_mode = 2
 theme = ExtResource("3_bxgl6")
 theme_override_font_sizes/font_size = 60
 text = "Opciones"
+script = ExtResource("6_y25s7")
+contenerDeMenu = NodePath("..")
+panel_settings = NodePath("../../Panel")
+
+[node name="Panel" type="Panel" parent="Panel" unique_id=1886099164]
+z_index = 3
+custom_minimum_size = Vector2(800, 600)
+layout_mode = 0
+offset_right = 800.0
+offset_bottom = 600.0
+theme_override_styles/panel = ExtResource("2_bxgl6")
+
+[node name="Settings" parent="Panel/Panel" unique_id=1755555467 instance=ExtResource("7_ru1hr")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 
 [node name="MenuUsuario" type="Button" parent="." unique_id=1337531751]
 layout_mode = 1
@@ -244,3 +266,5 @@ stretch_mode = 6
 
 [node name="PanelUsuario" parent="MenuUsuario" unique_id=1116297954 instance=ExtResource("8_bxgl6")]
 layout_mode = 0
+
+[connection signal="pressed" from="Panel/ContenedorDeMenu/Opciones" to="Panel/ContenedorDeMenu/Opciones" method="_on_pressed"]

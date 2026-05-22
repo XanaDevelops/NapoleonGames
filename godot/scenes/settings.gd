@@ -1,11 +1,11 @@
 extends Control
 
+@export var mode_button: OptionButton
+@export var resolution_button: OptionButton
+@export var volumGeneral: HSlider
+@export var volumMusic: HSlider
+@export var volumEffects: HSlider
 
-@export var mode_button:OptionButton
-@export var resolution_button:OptionButton
-@export var volumGeneral:HSlider
-@export var volumMusic:HSlider
-@export var volumEffects:HSlider
 const WINDOW_MODE_ARRAY: Array[String]= [
 	"Pantalla completa",
 	"Modo ventana",
@@ -24,13 +24,15 @@ const RESOLUTION_ARRAY:Array[Vector2i]= [
 func _ready():
 	add_window_mode_items()
 	add_resolution_items()
+	# Carga los valores guardados en los controles UI
+	_load_ui_from_settings()
+	
+	# Conectar las señales
 	mode_button.item_selected.connect(_on_window_mode_selected)
-	resolution_button.item_selected.connect(on_resolution_selected)
-	volumGeneral.value_changed.connect(_on_value_changed.bind(0))
-	volumMusic.value_changed.connect(_on_value_changed.bind(1))
-	volumEffects.value_changed.connect(_on_value_changed.bind(2))
-	
-	
+	resolution_button.item_selected.connect(_on_resolution_selected)
+	volumGeneral.value_changed.connect(_on_value_changed.bind(0, "volume_general"))
+	volumMusic.value_changed.connect(_on_value_changed.bind(1, "volume_music"))
+	volumEffects.value_changed.connect(_on_value_changed.bind(2, "volume_effects"))
 
 func add_window_mode_items() -> void:
 	for window_mode in WINDOW_MODE_ARRAY:
@@ -39,37 +41,32 @@ func add_window_mode_items() -> void:
 func add_resolution_items()->void:
 	for res in RESOLUTION_ARRAY:
 		resolution_button.add_item("%dx%d" % [res.x, res.y])
-func _on_window_mode_selected(idx:int) -> void:
-	match idx:
-		0:#fullscreen
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-		1:#fullscreen
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-		2:#fullscreen
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
-		3:#fullscreen
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
-			
-			
-
-func on_resolution_selected(idx:int )->void:
-	DisplayServer.window_set_size(RESOLUTION_ARRAY[idx])
 
 
-func _on_volume_value_changed(value: float) -> void:
-	AudioServer.set_bus_volume_db(0, value)
+func _load_ui_from_settings():
+	var s = SettingsManager.settings
+	mode_button.select(s["window_mode"])
+	resolution_button.select(s["resolution"])
+	volumGeneral.value = s["volume_general"]
+	volumMusic.value = s["volume_music"]
+	volumEffects.value = s["volume_effects"]
 
+func _on_window_mode_selected(idx: int):
+	SettingsManager.settings["window_mode"] = idx
+	SettingsManager.apply_settings()
+	SettingsManager.save_settings()
 
-func _on_value_changed(value:float,bus_index:int) -> void:
-	AudioServer.set_bus_volume_db(
-		bus_index, 
-		linear_to_db(value)
-	)
+func _on_resolution_selected(idx: int):
+	SettingsManager.settings["resolution"] = idx
+	SettingsManager.apply_settings()
+	SettingsManager.save_settings()
 
+func _on_value_changed(value: float, bus_index: int, key: String):
+	SettingsManager.settings[key] = value
+	AudioServer.set_bus_volume_db(bus_index, linear_to_db(value))
+	SettingsManager.save_settings()
 
-func _on_fps_slider_value_changed(value: float) -> void:
-	Engine.max_fps= value
+func _on_fps_slider_value_changed(value: float):
+	SettingsManager.settings["fps"] = value
+	Engine.max_fps = value
+	SettingsManager.save_settings()
