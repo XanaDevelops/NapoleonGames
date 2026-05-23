@@ -168,6 +168,7 @@ func remove_unit(pos:Vector2i, tile:TileGame)-> void:
 	var tile_source_id = add_texture_to_tileset(tile.get_texture2D())
 	tile_map_layer_units.set_cell(pos, tile_source_id, Vector2i.ZERO)
 	_remove_unit_overlay(pos)
+	refresh_unit_died(pos)
 
 func draw_tile(i: int, y: int, tile: TileGame) -> void:
 	var coords = Vector2i(i, y)
