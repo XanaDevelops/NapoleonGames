@@ -117,7 +117,8 @@ func test_hability_applies_to_bars() -> void:
 	assert_eq(int(hp_bar_target.value), hp_after_damage + 10, "Barra HP debe reflejar curación")
 
 	#  Maná inicial del atacante 
-	unit_info.observe(attacker)
+	unit_info.paint(map.get_tile_at(attacker_pos))
+
 	await wait_physics_frames(2)
 	var mana_bar: ProgressBar = unit_info.current_mana
 	assert_eq(int(mana_bar.value), 50, "Mana inicial debe ser 50")
@@ -506,7 +507,8 @@ func test_bars_react_to_signals() -> void:
 
 	# Mana — sigue en unit_info
 	var unit_info = instance.get_node("IngameMap/CardsPanel/HBoxContainer/UnitPanel")
-	unit_info.observe(unit)
+	unit_info.paint(map.get_tile_at(unit_pos))
+
 	await wait_physics_frames(2)
 
 	var mana_bar: ProgressBar = unit_info.current_mana
