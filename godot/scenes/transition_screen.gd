@@ -17,8 +17,12 @@ var orig_card_left_pos: Vector2
 var orig_card_right_pos: Vector2
 var orig_sword_left_pos: Vector2
 var orig_sword_right_pos: Vector2
+var orig_label_pos: Vector2
+
+signal end_game_transition_finished 
 
 func _ready() -> void:
+	orig_label_pos=message_label.position
 	orig_card_left_pos = card_left.position
 	orig_card_right_pos = card_right.position
 	orig_sword_left_pos = sword_left.position
@@ -177,3 +181,21 @@ func _reset_elements() -> void:
 	
 	sword_left.position = orig_sword_left_pos - Vector2(120, 0)
 	sword_right.position = orig_sword_right_pos + Vector2(120, 0)
+	
+
+
+func play_end_game_transition(winner_name: String) -> void:
+	_reset_elements()
+	
+	message_label.text = "¡Fin de la Partida!\nGanador: " + winner_name
+	var screen_size = get_viewport().get_visible_rect().size
+	message_label.position = (screen_size - message_label.size) / 2.0
+	
+	show()
+	
+	var tween = create_tween()
+	
+	tween.tween_callback(func(): AudioManager.play_sfx("victory_sound"))
+	tween.tween_property(main_container, "modulate:a", 1.0, 0.5)
+	tween.tween_interval(3.5) 
+	tween.tween_callback(end_game_transition_finished.emit)
