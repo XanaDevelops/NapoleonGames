@@ -11,13 +11,8 @@
 [ext_resource type="Resource" uid="uid://ofuibb4gefj2" path="res://resources/animaciones/to_heal_animation.tres" id="9_fpyi0"]
 [ext_resource type="PackedScene" uid="uid://c4us6q3xfd775" path="res://scenes/transition_screen.tscn" id="10_trans"]
 
-[node name="GameScene" type="Node" unique_id=1075307019 node_paths=PackedStringArray("cards_panel", "deployment_box", "map_visualizer", "players_panel", "end_button")]
+[node name="GameScene" type="Node" unique_id=1075307019]
 script = ExtResource("1_4n5kr")
-cards_panel = NodePath("IngameMap/CardsPanel")
-deployment_box = NodePath("IngameMap/CardsPanel/Deplyoment/MarginContainer/VBoxContainer/Panel/DeploymentBox")
-map_visualizer = NodePath("IngameMap/SubViewportContainer/SubViewport/mapVisualizer")
-players_panel = NodePath("IngameMap/PlayersPanel")
-end_button = NodePath("IngameMap/EndTurnButton")
 
 [node name="IngameMap" parent="." unique_id=594307947 instance=ExtResource("2_rqqua")]
 transition_screen_scene = ExtResource("10_trans")

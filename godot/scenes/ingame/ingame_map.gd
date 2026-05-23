@@ -105,6 +105,9 @@ func _on_hability_use_requested(hab: HabilityRes) -> void:
 
 	if _selected_tile == null or not _selected_tile.has_unit():
 		return
+	
+	if not turn_manager.is_current_user_local():
+		return
 
 	_hab_manager.request(hab, _selected_coords, _selected_tile)
 	_state = UnitState.HABILITY_ACTIVE 
@@ -145,6 +148,9 @@ func _on_map_tile_hovered(coords: Vector2i) -> void:
 		if map_visualizer:
 			map_visualizer.clear_deployment_preview()
 		return
+	
+	if not turn_manager.is_current_user_local():
+		return
 
 	var result: Dictionary = map.calculate_deployment(
 		turn_manager.get_current_user_number(),
@@ -158,9 +164,12 @@ func _try_deploy(coords: Vector2i) -> void:
 		return
 	if not turn_manager:
 		return
+		
+	if not turn_manager.is_current_user_local():
+		return
 
 	var current_user := turn_manager.get_current_user()
-	if turn_manager._on_deploy_group(current_user, _pending_deployment_group, coords):
+	if await turn_manager._on_deploy_group(current_user, _pending_deployment_group, coords):
 		_pending_deployment_group = null
 
 

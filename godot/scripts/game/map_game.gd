@@ -78,7 +78,7 @@ func get_accesible_moves(pos: Vector2i) -> Array[Vector2i]:
 	var distances := _calculate_distances(pos, unit)
 	
 	for key in distances:
-		if distances[key] <= unit.get_speed() and key != pos:
+		if distances[key] <= await unit.get_speed() and key != pos:
 			if not get_tile_at(key).has_unit():
 				ret_pos.append(key)
 		
@@ -224,7 +224,7 @@ func place_unit(unit: UnitGame, pos: Vector2i) -> bool:
 	if tm != null and not tm.tick_turn.is_connected(unit.advance_turn):
 		tm.tick_turn.connect(unit.advance_turn)
 	
-	var map_visualizer= GameManager.get_turn_manager().map_visualizer
+	#var map_visualizer= GameManager.get_turn_manager().map_visualizer
 
 	return true
 

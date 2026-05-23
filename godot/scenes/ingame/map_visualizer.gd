@@ -89,6 +89,64 @@ func _ready() -> void:
 		units_mat.set_shader_parameter("mask_size", current_mask_size)
 		units_mat.set_shader_parameter("mask_scale_x", current_mask_scale_x)
 
+	_connect_turn_manager()
+
+
+func _connect_turn_manager() -> void:
+	var turn_manager: TurnManager = GameManager.get_turn_manager()
+	if turn_manager == null:
+		return
+
+	if not turn_manager.unit_moved.is_connected(_on_unit_moved):
+		turn_manager.unit_moved.connect(_on_unit_moved)
+	if not turn_manager.tile_draw_requested.is_connected(_on_tile_draw_requested):
+		turn_manager.tile_draw_requested.connect(_on_tile_draw_requested)
+	if not turn_manager.deployment_zone_updated.is_connected(_on_deployment_zone_updated):
+		turn_manager.deployment_zone_updated.connect(_on_deployment_zone_updated)
+	if not turn_manager.deployment_zone_cleared.is_connected(_on_deployment_zone_cleared):
+		turn_manager.deployment_zone_cleared.connect(_on_deployment_zone_cleared)
+	if not turn_manager.deployment_preview_cleared.is_connected(_on_deployment_preview_cleared):
+		turn_manager.deployment_preview_cleared.connect(_on_deployment_preview_cleared)
+	if not turn_manager.unit_removed.is_connected(_on_unit_removed):
+		turn_manager.unit_removed.connect(_on_unit_removed)
+	if not turn_manager.movement_enabled.is_connected(_on_movement_enabled):
+		turn_manager.movement_enabled.connect(_on_movement_enabled)
+		
+	if not turn_manager.unit_refresh.is_connected(_refresh_unit_states):
+		turn_manager.unit_refresh.connect(_refresh_unit_states)
+
+
+func _on_unit_moved(start: Vector2i, end: Vector2i) -> void:
+	plot_unit_moved(start, end)
+
+
+func _on_tile_draw_requested(pos: Vector2i, tile: TileGame) -> void:
+	draw_tile(pos.x, pos.y, tile)
+
+
+func _on_deployment_zone_updated(tiles: Array[Vector2i]) -> void:
+	show_deployment_zone(tiles)
+
+
+func _on_deployment_zone_cleared() -> void:
+	clear_deployment_zone()
+
+
+func _on_deployment_preview_cleared() -> void:
+	clear_deployment_preview()
+
+
+func _on_unit_removed(pos: Vector2i, tile: TileGame) -> void:
+	remove_unit(pos, tile)
+
+
+func _on_movement_enabled() -> void:
+	var turn_manager: TurnManager = GameManager.get_turn_manager()
+	if turn_manager == null:
+		return
+	if not movement_requested.is_connected(turn_manager._on_unit_movement_requested):
+		movement_requested.connect(turn_manager._on_unit_movement_requested)
+	
 	
 func _setup_tileset() -> TileSet:
 	var tileset = TileSet.new()
@@ -270,6 +328,9 @@ func _process(delta: float) -> void:
 	pass
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not map:
+		
+		return
 	# ZOOM using wheel
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
@@ -353,8 +414,10 @@ func _handle_click(coords: Vector2i) -> void:
 	if coords == selected_cell:
 		_clear_selection()
 		return
+		
 	if selected_cell != Vector2i(-1, -1) and coords in current_accesible_moves:
-		movement_requested.emit(selected_cell, coords)
+		if tm.is_current_user_local():
+			movement_requested.emit(selected_cell, coords)
 		_clear_selection()
 		return
 	_process_selection(coords, tile)
@@ -367,8 +430,8 @@ func _process_selection(coords: Vector2i, clicked_tile: TileGame) -> void:
 		var unit = clicked_tile.get_unit()
 		
 		if not unit.has_moved_this_turn:
-			current_accesible_moves = map.get_accesible_moves(coords)
-			var is_owner = GameManager.turn_manager.get_current_user()==clicked_tile._unit._owner
+			current_accesible_moves = await map.get_accesible_moves(coords)
+			var is_owner = GameManager.turn_manager.get_local_user()==clicked_tile._unit._owner
 			highlight_cells_owner(current_accesible_moves, is_owner) # Renders movement range
 		else:
 			current_accesible_moves = []

@@ -40,7 +40,7 @@ func _configure_server() -> void:
 		return
 
 	print_rich("[color=yellow]SOMOS servidor[/color]")
-	UiManager.cambiar_a_escena("server")
+	UiManager.cambiar_a_escena.call_deferred("server")
 	
 func _configure_client() -> void:
 	if not Online.start_client():
@@ -60,13 +60,48 @@ func set_users() -> void:
 	game_config.user_a = gr.users[0]
 	game_config.user_b = gr.users[1]
 	
-## Placeholder
-func start_game(playerA: UserRes, playerB:UserRes, map:MapRes, armyA: ArmyRes, armyB:ArmyRes) -> void:
+## Inicia una partida
+## Configura GameConfig acorde a lo que se le pasa, 
+## En el caso online, por ejemplo, se establece el usuario remoto
+func start_game(playerA: UserRes, playerB:UserRes, map:MapRes,
+	armyA: ArmyRes, armyB:ArmyRes, isOnline:= false, game_pid:= -1
+	) -> void:
+	print("[GameManager] start_game")
+	if playerA == playerB:
+		printerr("No puedes jugar contra ti mismo")
+		return
+	print("  isOnline=", isOnline, " game_pid=", game_pid)
+	print("  user_a=", playerA.username, " user_b=", playerB.username)
+	print("  map=", map.name, " size=", map.tamX, "x", map.tamY)
+	print("  army_a=", armyA.nom, " groups=", armyA.agrupations.size())
+	for group: CardArmyGroup in armyA.agrupations:
+		print("    [A] ", group.cardType.name, " x", group.n)
+	print("  army_b=", armyB.nom, " groups=", armyB.agrupations.size())
+	for group: CardArmyGroup in armyB.agrupations:
+		print("    [B] ", group.cardType.name, " x", group.n)
 	game_config = GameConfig.new(playerA, playerB, map, armyA, armyB)
+	if isOnline:
+		if UserManager.usuario_actual == playerA:
+			game_config.user_online = GameConfig.ONLINE_USER.USER_A
+		elif UserManager.usuario_actual == playerB:
+			game_config.user_online = GameConfig.ONLINE_USER.USER_B
+		elif is_server:
+			game_config.user_online = GameConfig.ONLINE_USER.SERVER
+		else:
+			push_error("Intentado iniciar una partida online sin el usuario actual!")
+			return
+	game_config.game_pid = game_pid
 	app_state = APP_STATE.IN_GAME
+	if game_pid != -1:
+		seed(game_pid)
 
-	UiManager.cambiar_a_escena("juego")
-	
+	if !is_server:
+		UiManager.cambiar_a_escena("juego")
+	else:
+		#UiManager.cambiar_a_escena("juego")
+#
+		turn_manager = TurnManager.new()
+		turn_manager._ready()
 
 # resetea la partida
 func restart_current_game() -> void:
