@@ -35,10 +35,13 @@ offset_bottom = 0.0
 offset_top = -222.0
 offset_bottom = -4.0
 
+[node name="UnitPanel" parent="IngameMap/CardsPanel/HBoxContainer" index="1" unique_id=200674911 node_paths=PackedStringArray("current_mana")]
+current_mana = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/Mana/PanelContainer/VBoxContainer/HealthBar")
+
 [node name="Label" parent="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Habilities/MarginContainer/VBoxContainer" parent_id_path=PackedInt32Array(594307947, 399533923, 1453783832) index="0" unique_id=1490463472]
 text = "Habilidades"
 
-[node name="AlterStates" parent="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" parent_id_path=PackedInt32Array(594307947, 1650413846) index="3" unique_id=173891347]
+[node name="AlterStates" parent="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" parent_id_path=PackedInt32Array(594307947, 1650413846) index="2" unique_id=173891347]
 size_flags_vertical = 8
 
 [node name="Label" parent="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/AlterStates/MarginContainer/VBoxContainer" parent_id_path=PackedInt32Array(594307947, 173891347, 1453783832) index="0" unique_id=1490463472]
@@ -60,7 +63,7 @@ offset_right = 0.0
 [editable path="IngameMap"]
 [editable path="IngameMap/CardsPanel/HBoxContainer/TileInfo"]
 [editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/UnitInfo"]
-[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Mana"]
+[editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/Mana"]
 [editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Habilities"]
 [editable path="IngameMap/CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/AlterStates"]
 [editable path="IngameMap/CardsPanel/Deplyoment"]

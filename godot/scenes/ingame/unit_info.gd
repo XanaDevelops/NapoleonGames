@@ -2,26 +2,22 @@ extends PanelContainer
 
 
 
-@export var unit_label: Label 
+@export var unit_label: Label
 @export var unit_texture: TextureRect
 
 @export var owner_label: Label
-@export  var speed_label: Label 
-@export var dodge_label: Label 
-@export var habilities_grid: GridContainer 
-@export var current_mana: ProgressBar 
+@export  var speed_label: Label
+@export var dodge_label: Label
+@export var habilities_grid: GridContainer
+@export var current_mana: ProgressBar
 @export var descriptionButton:Button
 
 @export var unit_info: PanelContainer
 var _desc_handler: DescriptionButtonHandler
 
+@export var currrentAlterStates_container: PanelContainer
+@export var alter_states_grid: GridContainer
 
-@export var resistances_container: PanelContainer 
-@export var currrentAlterStates_container: PanelContainer 
-@export var resistances_grid : GridContainer
-@export var alter_states_grid: GridContainer 
-
-const HEADERS_RESISTANCES= ["Tipo de ataque", "Resistencia"]
 signal hability_use_requested(hab: HabilityRes)
 # UnitInfo
 var _observed_unit: UnitGame = null
@@ -31,7 +27,9 @@ func _ready() -> void:
 
 
 func paint(tile: TileGame) -> void:
-	
+	if _observed_unit != null:
+		if _observed_unit.mana_changed.is_connected(_on_mana_changed):
+			_observed_unit.mana_changed.disconnect(_on_mana_changed)
 	self.unit_label.text =tile.get_unit_name()
 	self.owner_label.text = str(tile.get_owner_name())
 	self.unit_texture.texture= tile.get_unit_portrait()
@@ -46,8 +44,13 @@ func paint(tile: TileGame) -> void:
 
 	paint_habilities(tile.get_habilities(),tile.get_availableHabilities())
 	paint_AlterStates(tile.get_AlterStates())
-	#paint_resistances(tile.get_resistances())
-
+	var unit := tile.get_unit()
+	if unit != null:
+			_observed_unit = unit
+			current_mana.init(unit._cardRes.mana)
+			current_mana.set_value_silent(unit.mana)
+			unit.mana_changed.connect(_on_mana_changed)
+			
 func paint_habilities(habilities: Array[HabilityRes], available_habilities: Dictionary[HabilityRes, int]) -> void:
 	if habilities== null:
 		return
@@ -141,29 +144,6 @@ func _add_row(hab: HabilityRes, available: bool) -> void:
 	habilities_grid.add_theme_constant_override("v_separation", 6)
 	habilities_grid.add_child(row)
 
-func _add_row_resistance(attack: AttackType, resistance: int) -> void:
-	var values = [
-		str(attack.name),
-		str(resistance)
-	]
-	for val in values: 
-		resistances_grid.add_child(_create_cell(val, Color.ANTIQUE_WHITE))
-		
-func paint_resistances(resistances: Dictionary[AttackType, int]) -> void:
-	if resistances== null:
-		return
-	for child in resistances_grid.get_children():
-		child.queue_free()
-	
-	resistances_grid.columns = HEADERS_RESISTANCES.size()
-	
-	for header in HEADERS_RESISTANCES:
-		resistances_grid.add_child(_create_cell(header, Color.YELLOW, true))
-	
-	for key in resistances.keys():
-		_add_row_resistance(key, resistances[key] )
-
-
 
 func _get_effect_text(state: AlterStateRes) -> String:
 	if state.stat == null:
@@ -226,19 +206,18 @@ func paint_AlterStates(states: Dictionary[AlterStateRes, int]) -> void:
 		))
 
 
-
-func observe(unit: UnitGame) -> void:
-	if _observed_unit != null:
-		if _observed_unit.mana_changed.is_connected(_on_mana_changed):
-			_observed_unit.mana_changed.disconnect(_on_mana_changed)
-
-	_observed_unit = unit
-	current_mana.init(unit._cardRes.mana)
-	current_mana.update(unit.mana)
-	print("current mana ", unit.mana)
-
-	unit.mana_changed.connect(_on_mana_changed)
-	
+#
+#func observe(unit: UnitGame) -> void:
+	#if _observed_unit != null:
+		#if _observed_unit.mana_changed.is_connected(_on_mana_changed):
+			#_observed_unit.mana_changed.disconnect(_on_mana_changed)
+#
+	#_observed_unit = unit
+	#current_mana.init(unit._cardRes.mana)
+	#current_mana.update(unit.mana)
+#
+	#unit.mana_changed.connect(_on_mana_changed)
+	#
 
 
 func _on_mana_changed(current: int) -> void:

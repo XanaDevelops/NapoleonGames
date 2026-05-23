@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cqrofwn6gbo0m" path="res://assets/images/speed.png" id="3_1l5eg"]
 [ext_resource type="Material" uid="uid://b688udwg5jd6i" path="res://assets/themes/ui/unit_shader.tres" id="4_nayp3"]
 [ext_resource type="Texture2D" uid="uid://4ll3e20q0r3b" path="res://assets/images/dodge.png" id="5_igeos"]
+[ext_resource type="PackedScene" uid="uid://dau808hhekv0d" path="res://scenes/mana.tscn" id="7_1l5eg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ocp8"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -13,7 +14,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [node name="UnitInfo" type="PanelContainer" unique_id=722150641]
 custom_minimum_size = Vector2(300, 188)
 offset_right = 300.0
-offset_bottom = 144.0
+offset_bottom = 198.0
 theme = ExtResource("1_nayp3")
 theme_override_styles/panel = ExtResource("2_1l5eg")
 
@@ -24,6 +25,8 @@ theme_override_constants/margin_right = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=909963396]
 layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=407962681]
 layout_mode = 2
@@ -101,3 +104,7 @@ stretch_mode = 6
 [node name="DodgeLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/DodgeHBoxContainer2" unique_id=1954809688]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Mana" parent="MarginContainer/VBoxContainer" unique_id=1760166787 instance=ExtResource("7_1l5eg")]
+custom_minimum_size = Vector2(250, 30)
+layout_mode = 2

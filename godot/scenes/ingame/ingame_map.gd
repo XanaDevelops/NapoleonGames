@@ -183,7 +183,7 @@ func _select_tile(coords: Vector2i, tile: TileGame) -> void:
 	if tile.has_unit():
 		_state = UnitState.UNIT_SELECTED
 		cards_panel.paint_unit_info(tile)
-		unit_info.observe(tile.get_unit())
+		#unit_info.observe(tile.get_unit())
 	else:
 		_state = UnitState.IDLE
 		cards_panel.clear_unit_info()
