@@ -33,16 +33,19 @@ func _ready() -> void:
 	hover_player = AudioStreamPlayer.new()
 	hover_player.stream = preload("res://assets/sonidos/button_hover.wav")
 	hover_player.volume_db = VOLUMEN_HOVER
+	hover_player.bus= "SFX"
 	add_child(hover_player)
 	
 	click_player = AudioStreamPlayer.new()
 	click_player.stream = preload("res://assets/sonidos/button_pressed.mp3")
 	click_player.volume_db = VOLUMEN_CLICK
+	click_player.bus= "SFX"
 	add_child(click_player)
 	
 	error_player = AudioStreamPlayer.new()
 	error_player.stream = preload("res://assets/sonidos/ui_error.wav")
 	error_player.volume_db = VOLUMEN_ERROR
+	error_player.bus= "SFX"
 	add_child(error_player)
 
 	for i in range(2):
@@ -58,6 +61,7 @@ func _ready() -> void:
 	for i in range(MAX_SFX_PLAYERS):
 		var sfx_p = AudioStreamPlayer.new()
 		sfx_p.volume_db = VOLUMEN_SFX
+		sfx_p.bus = "SFX"
 		add_child(sfx_p)
 		sfx_players.append(sfx_p)
 		
