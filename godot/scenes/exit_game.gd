@@ -5,6 +5,8 @@ extends PanelContainer
 @export var yes_button: Button
 @export var no_button: Button
 
+signal exit_confirmed
+signal exit_cancelled
 func _ready() -> void:
 	cancel_button.pressed.connect(_on_cancel)
 	yes_button.pressed.connect(_on_yes)

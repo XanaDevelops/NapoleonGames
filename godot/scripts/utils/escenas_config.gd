@@ -13,7 +13,8 @@ const MAPA_ESCENAS: Dictionary[String, String] = {
 	"resumen":"res://scenes/pantalla_resumen.tscn",
 	"juego":"res://scenes/ingame/game_scene.tscn",
 	"finalizacion":"res://scenes/pantalla_finalitzacio.tscn",
-	"server": "res://scenes/server/server_scene.tscn"
+	"server": "res://scenes/server/server_scene.tscn",
+	"exit_game":"res://scenes/exit_game.tscn"
 }
 
 
