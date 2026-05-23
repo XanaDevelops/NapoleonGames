@@ -8,7 +8,7 @@ signal combat_phase_started(first_player_name: String)
 signal turn_changed_visual(current_icon: Texture2D, next_name: String, next_icon: Texture2D)
 
 signal tick_turn
-signal game_end
+signal game_end(game_id: int)
 
 # Algunas señales tienen pinta de ser de ui->ui, revisar
 signal ui_setup_requested(turn_manager: TurnManager)
@@ -60,6 +60,21 @@ func get_current_user() -> UserGame:
 	
 func get_current_user_number() -> int:
 	return turn_number % turn_order.size()
+
+## Devuelve el jugador local
+func get_local_user() -> UserGame:
+	match game_config.user_online:
+		## Nótese que está girado
+		GameConfig.ONLINE_USER.USER_A:
+			return _get_UserGame_(get_user_a().uid)
+		GameConfig.ONLINE_USER.USER_B:
+			return _get_UserGame_(get_user_b().uid)
+		_:
+			return get_current_user()
+
+## Devuelve si el jugador actual es el local
+func is_current_user_local() -> bool:
+	return get_current_user() == get_local_user()
 
 func get_current_phase() -> String:
 	if is_deployment_phase:
@@ -198,7 +213,7 @@ func _init() -> void:
 
 	for usuario in turn_order:
 		usuario.living_units = 0
-
+		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if is_inside_tree():
@@ -406,5 +421,6 @@ func finalizar_partida(nombre_del_vencedor: String):
 		"nombre_ganador": nombre_del_vencedor
 	}
 	
-	game_end.emit()
-	UiManager.cambiar_a_escena("finalizacion", parametros_victoria)
+	game_end.emit(_get_game_pid())
+	if not GameManager.is_server:
+		UiManager.cambiar_a_escena("finalizacion", parametros_victoria)

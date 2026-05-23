@@ -34,6 +34,10 @@ func _on_deployment_card_consumed(group: CardArmyGroup) -> void:
 	remove_card_visual(group)
 
 func populate(army_groups: Array) -> void:
+	# Capaz se puede mantener las cartas del usuario
+	if not GameManager.get_turn_manager().is_current_user_local():
+		return
+		
 	_clear_all()
 	for group: CardArmyGroup in army_groups:
 		var card := DEPLOYMENT_CARD_SCENE.instantiate() as Button
