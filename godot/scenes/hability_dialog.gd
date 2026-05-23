@@ -28,7 +28,7 @@ func paint(hability:HabilityRes, unit:UnitGame, targets:Array[Vector2i])-> void:
 	self.cooldown_value.text= str(hability.cooldown)
 	self.rang.text= str(hability.radius)
 	self.cost_mana.text= str(hability.manaCost)
-	card1.paint(unit)
+	card1.paint(unit, "atacante")
 	var map_game= GameManager.get_turn_manager().get_map()
 	_paint_generic_effects(hability)
 	for target in targets:
@@ -37,7 +37,7 @@ func paint(hability:HabilityRes, unit:UnitGame, targets:Array[Vector2i])-> void:
 			continue
 		var card = preload("res://scenes/card_container.tscn").instantiate()
 		target_cards_container.add_child(card)
-		card.paint(unit_target)
+		card.paint(unit_target, "objetivo")
 		
 	
 	
