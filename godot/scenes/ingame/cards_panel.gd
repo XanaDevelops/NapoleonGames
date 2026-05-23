@@ -4,7 +4,7 @@ extends Control
 @export var tile_info: Control      
 @export var deployment_panel: Panel
 @export var UnitPanel: PanelContainer
-var _confirm_dialog: AcceptDialog = null
+var confirm_dialog: Control
 var is_deployment_active: bool = false
 
 signal confirmed
