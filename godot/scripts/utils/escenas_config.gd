@@ -42,5 +42,6 @@ const SFX_PATHS: Dictionary[String, String] = {
 	"card_deal": "res://assets/sonidos/despligue_cartas.wav", 
 	"sword_swing": "res://assets/sonidos/viento.wav",
 	"sword_clash": "res://assets/sonidos/golpe_espada.wav",
-	"coin_flip": "res://assets/sonidos/moneda.wav"
+	"coin_flip": "res://assets/sonidos/moneda.wav",
+	"victory_sound": "res://assets/sonidos/victory_sound.mp3"
 }
