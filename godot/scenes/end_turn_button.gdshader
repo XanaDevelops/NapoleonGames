@@ -10,9 +10,9 @@ void fragment() {
     float inner = step(dist, 0.38);
     
     float ring = outer - inner;
-    
-    vec4 outer_color = vec4(0.545, 0.0, 0.0, 1.0) ;   
-    vec4 inner_color = vec4(0.831, 0.686, 0.216, 1.0) ;  
+   
+    vec4 outer_color = vec4(0.02, 0.423, 0.117, 0.0) ;   
+    vec4 inner_color = vec4(0.290, 0.184, 0.114, 1.0) ;  
     
     COLOR = mix(vec4(0.0), inner_color, inner) + mix(vec4(0.0), outer_color, ring);
     COLOR.a = outer;

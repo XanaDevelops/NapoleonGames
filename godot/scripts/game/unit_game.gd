@@ -135,7 +135,8 @@ func use_hability(hab: HabilityRes, dest: Array[UnitGame]) -> bool:
 	if hab not in get_available_habilities():
 		printerr("Habilidad no disponible")
 		return false
-		
+	
+	self.mana-=hab.manaCost
 	# Tecnicamente es codigo duplicado de get_avaliable_habilities
 		
 	# calcular valor final

@@ -1,31 +1,26 @@
 [gd_scene format=3 uid="uid://cuf4b80g1meii"]
 
-[ext_resource type="Theme" uid="uid://cl4k0d1mh51p" path="res://assets/themes/ui/text_font.tres" id="1_v4w3n"]
 [ext_resource type="Script" uid="uid://kgfk6ji3tbyg" path="res://scenes/exit_game.gd" id="2_tyqcr"]
-[ext_resource type="Texture2D" uid="uid://caljt621cxolb" path="res://assets/themes/ui/ui border/pipo_ui_artdeco_pack2/UIartdeco_Dark_blue.png" id="3_tyqcr"]
 [ext_resource type="Texture2D" uid="uid://08npi8efy1yv" path="res://assets/images/reject.png" id="3_v4w3n"]
+[ext_resource type="Theme" uid="uid://c2s8d3cs8pjiw" path="res://assets/themes/ui/estilo_botones_confirmacion.tres" id="4_prurs"]
+[ext_resource type="Theme" uid="uid://go1hktgu7mpp" path="res://assets/themes/ui/estilo_botones_negacion.tres" id="5_2fxb1"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chjap"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prurs"]
+bg_color = Color(0.2901961, 0.18431373, 0.11372549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyqcr"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttyqg"]
-bg_color = Color(0.6, 0.6, 0.6, 0.03529412)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2fxb1"]
-bg_color = Color(0.11372549, 0.16470589, 0.21568628, 0.050980393)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4w3n"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyqcr"]
-bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
-shadow_color = Color(0.7279856, 0.7279857, 0.7279856, 0.6)
-shadow_size = 3
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prurs"]
-bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
-shadow_color = Color(0.7279856, 0.7279857, 0.7279856, 0.6)
-shadow_size = 3
 
 [node name="ExitGame" type="PanelContainer" unique_id=692478301 node_paths=PackedStringArray("cancel_button", "yes_button", "no_button")]
 anchors_preset = 8
@@ -33,41 +28,30 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -256.0
-offset_top = -128.0
-offset_right = 269.0
-offset_bottom = 107.0
+offset_left = -202.0
+offset_top = -77.0
+offset_right = 202.0
+offset_bottom = 77.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("1_v4w3n")
-theme_override_styles/panel = SubResource("StyleBoxFlat_chjap")
+theme_override_styles/panel = SubResource("StyleBoxFlat_prurs")
 script = ExtResource("2_tyqcr")
 cancel_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/CancelButton")
 yes_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/YesButton")
 no_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/NoButton")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1940650628]
-z_index = 1
-layout_mode = 2
-texture = ExtResource("3_tyqcr")
-region_rect = Rect2(19, 417, 190, 81)
-
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1362065379]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ttyqg")
+theme_override_styles/panel = SubResource("StyleBoxFlat_tyqcr")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1908187392]
 layout_mode = 2
-theme_override_constants/margin_left = 34
-theme_override_constants/margin_top = 38
-theme_override_constants/margin_right = 35
-theme_override_constants/margin_bottom = 38
-
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/MarginContainer" unique_id=1587350634]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_2fxb1")
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1297854223]
 layout_mode = 2
@@ -105,16 +89,16 @@ theme_override_constants/margin_right = 30
 z_index = 1
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("4_prurs")
 theme_override_constants/separation = 70
 
 [node name="NoButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1942201631]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_tyqcr")
+theme = ExtResource("5_2fxb1")
 text = "NO"
 
 [node name="YesButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1319368151]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_prurs")
 text = "SÍ"

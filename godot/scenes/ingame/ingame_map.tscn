@@ -28,13 +28,16 @@ shader_parameter/pointy_top = true
 shader_parameter/mask_size = 0.5
 shader_parameter/mask_scale_x = 1.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7rshr"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l3gkr"]
-bg_color = Color(0.11372549, 0.16470589, 0.21568628, 1)
+bg_color = Color(0.2901961, 0.18431373, 0.11372549, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
-border_color = Color(0.6121091, 0.3808231, 0.38360342, 1)
+border_color = Color(0.9625272, 0.908764, 0.9077709, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -225,6 +228,7 @@ vertical_alignment = 1
 [node name="OptionsButton" type="Button" parent="PlayersPanel/VBoxContainer/PanelContainer/HBoxContainer/HBoxContainer" unique_id=219747959]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_7rshr")
 icon = ExtResource("6_l3gkr")
 icon_alignment = 1
 expand_icon = true
@@ -320,15 +324,14 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -218.0
-offset_right = 1178.0
+offset_top = -225.0
+offset_right = 1600.0
+offset_bottom = -7.0
 grow_vertical = 0
-theme_override_constants/separation = 200
+theme_override_constants/separation = 50
 
 [node name="TileInfo" parent="CardsPanel/HBoxContainer" unique_id=1453422024 node_paths=PackedStringArray("name_label", "texture_rect", "height_label", "cost_label", "position_label", "description_button", "tile_info") instance=ExtResource("16_nd88s")]
 layout_mode = 2
-size_flags_horizontal = 2
-size_flags_vertical = 4
 script = ExtResource("5_x30bk")
 name_label = NodePath("PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer/NameLabel")
 texture_rect = NodePath("PanelContainer/MarginContainer/PanelContainer/VBoxContainer/TextureRect")
@@ -341,20 +344,11 @@ tile_info = NodePath(".")
 [node name="NameLabel" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 1280806302) index="1" unique_id=1820895288]
 vertical_alignment = 1
 
-[node name="TextureRect" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 824499824) index="0" unique_id=1579744261]
-custom_minimum_size = Vector2(45, 45)
-
 [node name="Label2" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 824499824) index="2" unique_id=929438714]
 theme_override_font_sizes/font_size = 17
 
-[node name="TextureRect" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 1278424454) index="0" unique_id=1574008606]
-custom_minimum_size = Vector2(45, 45)
-
 [node name="Label2" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel2/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 1278424454) index="2" unique_id=279225562]
 theme_override_font_sizes/font_size = 17
-
-[node name="TextureRect" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 2104983326) index="0" unique_id=443016597]
-custom_minimum_size = Vector2(45, 45)
 
 [node name="Label2" parent="CardsPanel/HBoxContainer/TileInfo/PanelContainer/MarginContainer/PanelContainer/VBoxContainer/VBoxContainer/VBoxContainer/Panel3/HBoxContainer" parent_id_path=PackedInt32Array(1453422024, 2104983326) index="2" unique_id=1799215338]
 theme_override_font_sizes/font_size = 17
@@ -362,7 +356,7 @@ theme_override_font_sizes/font_size = 17
 [node name="UnitPanel" type="PanelContainer" parent="CardsPanel/HBoxContainer" unique_id=200674911 node_paths=PackedStringArray("unit_label", "unit_texture", "owner_label", "speed_label", "dodge_label", "habilities_grid", "current_mana", "descriptionButton", "unit_info", "currrentAlterStates_container", "alter_states_grid")]
 layout_mode = 2
 size_flags_horizontal = 0
-size_flags_vertical = 4
+size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_k55sq")
 script = ExtResource("6_smdvi")
 unit_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VBoxContainer/UnitHBoxContainer/NameLabel")
@@ -370,8 +364,8 @@ unit_texture = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VB
 owner_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/HBoxContainer/OwnerLabel")
 speed_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/SpeedHBoxContainer/SpeedLabel")
 dodge_label = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/DodgeHBoxContainer2/DodgeLabel")
-habilities_grid = NodePath("HBoxContainer/VBoxContainer/Habilities/MarginContainer/VBoxContainer/ScrollContainer/GridContainer")
-current_mana = NodePath("HBoxContainer/VBoxContainer/Mana/PanelContainer/VBoxContainer/HealthBar")
+habilities_grid = NodePath("HBoxContainer/Habilities/MarginContainer/VBoxContainer/ScrollContainer/GridContainer")
+current_mana = NodePath("HBoxContainer/Mana/PanelContainer/VBoxContainer/HealthBar")
 descriptionButton = NodePath("HBoxContainer/UnitInfo/MarginContainer/VBoxContainer/HBoxContainer/DescriptionButton")
 unit_info = NodePath("HBoxContainer/UnitInfo")
 currrentAlterStates_container = NodePath("HBoxContainer/AlterStates")
@@ -379,30 +373,23 @@ alter_states_grid = NodePath("HBoxContainer/AlterStates/MarginContainer/VBoxCont
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CardsPanel/HBoxContainer/UnitPanel" unique_id=1650413846]
 layout_mode = 2
-theme_override_constants/separation = 100
+theme_override_constants/separation = 50
 
 [node name="UnitInfo" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" unique_id=722150641 instance=ExtResource("17_87c6t")]
-custom_minimum_size = Vector2(300, 180)
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Mana" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" unique_id=1760166787 instance=ExtResource("19_k55sq")]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" unique_id=1059528940]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="Mana" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer" unique_id=1760166787 instance=ExtResource("19_k55sq")]
-custom_minimum_size = Vector2(200, 70)
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 8
-
-[node name="Habilities" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer" unique_id=399533923 instance=ExtResource("18_87c6t")]
+[node name="Habilities" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" unique_id=399533923 instance=ExtResource("18_87c6t")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
-[node name="Label" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer/Habilities/MarginContainer/VBoxContainer" parent_id_path=PackedInt32Array(399533923, 1453783832) index="0" unique_id=1490463472]
+[node name="Label" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Habilities/MarginContainer/VBoxContainer" parent_id_path=PackedInt32Array(399533923, 1453783832) index="0" unique_id=1490463472]
 text = "⟡ Habilidades"
 
 [node name="AlterStates" parent="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer" unique_id=173891347 instance=ExtResource("18_87c6t")]
@@ -413,6 +400,7 @@ layout_mode = 2
 text = "⟡ ESTADOS ACTIVOS"
 
 [node name="Deplyoment" parent="CardsPanel" unique_id=120072488 instance=ExtResource("18_k55sq")]
+visible = false
 custom_minimum_size = Vector2(600, 210)
 layout_mode = 1
 anchors_preset = 7
@@ -452,7 +440,7 @@ grow_vertical = 0
 
 [editable path="CardsPanel/HBoxContainer/TileInfo"]
 [editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/UnitInfo"]
-[editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer/Mana"]
-[editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/VBoxContainer/Habilities"]
+[editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Mana"]
+[editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/Habilities"]
 [editable path="CardsPanel/HBoxContainer/UnitPanel/HBoxContainer/AlterStates"]
 [editable path="CardsPanel/Deplyoment"]

@@ -82,9 +82,6 @@ func clear() -> void:
 	cards_panel.clear()
 
 func _setup_viewport() -> void:
-	#var container_size = map_container.size
-	#sub_viewport.size = Vector2i(container_size)
-
 	sub_viewport.transparent_bg = true
 	
 #HABILITY RELATED FUNCTIONS----------------

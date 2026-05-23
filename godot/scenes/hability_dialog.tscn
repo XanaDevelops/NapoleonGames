@@ -11,15 +11,13 @@
 [ext_resource type="Theme" uid="uid://c2s8d3cs8pjiw" path="res://assets/themes/ui/estilo_botones_confirmacion.tres" id="8_pofbl"]
 [ext_resource type="Texture2D" uid="uid://d16uvpl8ocinj" path="res://assets/particles/health-normal.png" id="9_ha4j1"]
 [ext_resource type="Theme" uid="uid://go1hktgu7mpp" path="res://assets/themes/ui/estilo_botones_negacion.tres" id="9_qhac2"]
-[ext_resource type="Texture2D" uid="uid://cqrofwn6gbo0m" path="res://assets/images/speed.png" id="10_krerf"]
-[ext_resource type="Texture2D" uid="uid://4ll3e20q0r3b" path="res://assets/images/dodge.png" id="11_5qwxm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bsd1g"]
 shader = ExtResource("8_5naob")
 shader_parameter/threshold = 0.2
 shader_parameter/smoothness = 0.05
 
-[node name="HabilityDialog" type="Control" unique_id=144567511 node_paths=PackedStringArray("hability_name", "cooldown_value", "cost_mana", "rang", "card1", "target_cards_container", "title", "mana_effect_container", "mana_effect", "health_effect_container", "health_effect", "speed_effect_container", "speed_effect", "dodge_effect_container", "dodge_effect")]
+[node name="HabilityDialog" type="Control" unique_id=144567511 node_paths=PackedStringArray("hability_name", "cooldown_value", "cost_mana", "rang", "card1", "target_cards_container", "title", "mana_effect_container", "mana_effect", "health_effect_container", "health_effect")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,10 +36,6 @@ mana_effect_container = NodePath("PanelContainer/MarginContainer/PanelContainer4
 mana_effect = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/ManaEffectContainer/ManaEffect")
 health_effect_container = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/HealthEffectContainer")
 health_effect = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/HealthEffectContainer/HealthEffect")
-speed_effect_container = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/SpeedEffectContainer")
-speed_effect = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/SpeedEffectContainer/SpeedEffect")
-dodge_effect_container = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/DodgeEffectContainer")
-dodge_effect = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/DodgeEffectContainer/DodgeEffect")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=661289918]
 custom_minimum_size = Vector2(500, 500)
@@ -219,36 +213,6 @@ expand_mode = 3
 stretch_mode = 6
 
 [node name="HealthEffect" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/HealthEffectContainer" unique_id=665356592]
-layout_mode = 2
-size_flags_horizontal = 8
-
-[node name="SpeedEffectContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer" unique_id=694497524]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/SpeedEffectContainer" unique_id=9355775]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("10_krerf")
-expand_mode = 3
-stretch_mode = 6
-
-[node name="SpeedEffect" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/SpeedEffectContainer" unique_id=2098617213]
-layout_mode = 2
-size_flags_horizontal = 8
-
-[node name="DodgeEffectContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer" unique_id=2147422864]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/DodgeEffectContainer" unique_id=10197774]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("11_5qwxm")
-expand_mode = 3
-stretch_mode = 6
-
-[node name="DodgeEffect" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/DodgeEffectContainer" unique_id=579092561]
 layout_mode = 2
 size_flags_horizontal = 8
 

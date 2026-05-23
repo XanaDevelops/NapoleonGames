@@ -14,11 +14,7 @@ extends Control
 @export var health_effect_container: HBoxContainer
 @export var health_effect: Label
 
-@export var speed_effect_container: HBoxContainer
-@export var speed_effect: Label
 
-@export var dodge_effect_container: HBoxContainer
-@export var dodge_effect: Label
 
 @export var effect_states_label: Label
 
@@ -49,17 +45,12 @@ func _paint_generic_effects(hab: HabilityRes) -> void:
 	# Ocultar todos primero
 	mana_effect_container.visible = false
 	health_effect_container.visible = false
-	speed_effect_container.visible = false
-	dodge_effect_container.visible = false
 
-	# Coste de maná siempre que tenga coste
-	if hab.manaCost > 0:
-		mana_effect_container.visible = true
-		mana_effect.text = "-%d" % hab.manaCost
+
 
 	# Efecto principal según stat
 	if hab.stat != null:
-		var sign = "+" if hab.value >= 0 else ""
+		var sign = "+" if hab.stat.name==StatData.HEALTH else "-"
 		var value_text: String
 		if hab.stat.isPercent:
 			value_text = "%s%d%%" % [sign, int(hab.value * 100)]
@@ -73,12 +64,7 @@ func _paint_generic_effects(hab: HabilityRes) -> void:
 			StatData.HEALTH:
 				health_effect_container.visible = true
 				health_effect.text = value_text
-			StatData.SPEED:
-				speed_effect_container.visible = true
-				speed_effect.text = value_text
-			StatData.DODGE:
-				dodge_effect_container.visible = true
-				dodge_effect.text = value_text
+
 
 	
 

@@ -118,29 +118,28 @@ func _create_cell(text: String, color: Color, is_header: bool = false) -> PanelC
 
 
 
+
 func _add_row(hab: HabilityRes, available: bool) -> void:
 	var row = HBoxContainer.new()
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("separation", 8)
+
 	var btn_use = Button.new()
 	btn_use.text = hab.name
 	btn_use.disabled = not available
-	btn_use.pressed.connect(func():
-		emit_signal("hability_use_requested", hab, ))
+	btn_use.custom_minimum_size = Vector2(120, 0)
+	btn_use.pressed.connect(func(): emit_signal("hability_use_requested", hab))
 	row.add_child(btn_use)
-	
 
 	var btn_info = Button.new()
 	btn_info.text = "i"
-
+	btn_info.custom_minimum_size = Vector2(30, 0)
 	btn_info.pressed.connect(func(): _on_hability_info_requested(hab))
 	row.add_child(btn_info)
-	
-	
+
 	habilities_grid.columns = 1
+	habilities_grid.add_theme_constant_override("v_separation", 6)
 	habilities_grid.add_child(row)
-
-
-
-
 
 func _add_row_resistance(attack: AttackType, resistance: int) -> void:
 	var values = [

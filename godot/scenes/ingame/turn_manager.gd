@@ -185,6 +185,8 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 	var unit = map_logic.get_tile_at(start).get_unit()
 	if unit.has_moved_this_turn:
 		print("La unidad ya se ha movido")
+		GameManager.alert_system.show_message("La unidad ya se ha movido", AlertSystem.MessageType.ERROR)
+
 		return false
 		
 	if unit._owner == get_current_user():
@@ -198,6 +200,8 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 		register_turn(action)
 	else:
 		print("Acción denegada: No es el turno del dueño de esta unidad")
+		GameManager.alert_system.show_message("Acción denegada: No es el turno del dueño de esta unidad", AlertSystem.MessageType.ERROR)
+
 		return false
 		
 	return true
@@ -207,10 +211,13 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 	var unit_source := map.get_tile_at(tile).get_unit()
 	if unit_source.has_used_hability_this_turn:
 		print("La unidad ya ha usado una habilidad activa!")
+		GameManager.alert_system.show_message("La unidad ya ha usado una habilidad activa!", AlertSystem.MessageType.ERROR)
+
 		return false
 		
 	if unit_source._owner != get_current_user():
 		print("Acción denegada: No es el turno del dueño de esta unidad")
+		GameManager.alert_system.show_message("Acción denegada: No es el turno del dueño de esta unidad", AlertSystem.MessageType.ERROR)
 		return false
 		
 	var _dest : Array[UnitGame] = []
@@ -229,6 +236,7 @@ func _on_unit_hability_use(tile: Vector2i, objectives: Array[Vector2i], hability
 	var res := unit_source.use_hability(hability, _dest)
 	if not res:
 		print("No se cumple las condiciones para usar esta habilidad!")
+		GameManager.alert_system.show_message("No se cumple las condiciones para usar esta habilidad!", AlertSystem.MessageType.ERROR)
 		return false
 
 	map_visualizer._refresh_unit_states()
