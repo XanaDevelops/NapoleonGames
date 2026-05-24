@@ -336,7 +336,7 @@ func _update_val_alter_states(init_val : float, stat_name:StringName, type: Atta
 ## Una habilidad debe de tener objetivos validos para tenerlo en cuenta
 ## Mirar de comprobar si tiene movimientos disponibles
 func has_pending_actions() -> bool:
-	return (not has_moved_this_turn) or (get_available_habilities().any(func (x: HabilityRes): 
-			return not x.isPassive)) 
+	return (not has_moved_this_turn) or ((get_available_habilities().any(func (x: HabilityRes): 
+			return not x.isPassive)) and (not has_used_hability_this_turn)) 
 
 	

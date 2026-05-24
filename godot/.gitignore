@@ -5,3 +5,4 @@
 export/
 
 *.tscn*.tmp
+ *.so

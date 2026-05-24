@@ -70,7 +70,7 @@ func _setup_highlight_tiles() -> void:
 	exhausted_id= add_texture_to_tileset(exhausted_tex)
 	tile_map_layer_owner_p1.self_modulate = COLOR_OWNER_P1
 	tile_map_layer_owner_p2.self_modulate = COLOR_OWNER_P2
-	tile_map_layer_exhausted.self_modulate =  Color("#b8bcd6b3")
+	tile_map_layer_exhausted.self_modulate =  Color("393c55b3")
 
 func _ready() -> void:
 	
