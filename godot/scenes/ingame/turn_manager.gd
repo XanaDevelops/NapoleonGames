@@ -241,6 +241,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 
 		return false
 		
+	## usar get_local_user a secas rompe el online, no puede mover
 	if unit._owner == get_current_user():
 		var action := TurnMove.create(unit, start, end, _get_game_pid())
 		if not await register_turn(action):

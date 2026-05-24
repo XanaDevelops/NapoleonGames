@@ -114,14 +114,17 @@ func advance_turn() -> void:
 	var tm := GameManager.get_turn_manager()
 	if tm == null:
 		return
-	if tm.get_current_user() != _owner:
-		return
 	# Si es despliegue ignoramos esta llamadas
 	if tm.get_app_state() != GameManager.APP_STATE.IN_GAME:
 		return
+ 	# Por UI mover esto aquñi
+	has_moved_this_turn = false
+
+	if tm.get_current_user() != _owner:
+		return
+	
 	_tick()
 	
-	has_moved_this_turn = false
 	has_used_hability_this_turn = false	
 	
 	# maná pasivo

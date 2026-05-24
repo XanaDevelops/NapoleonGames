@@ -33,7 +33,7 @@ func request(hab: HabilityRes, coords: Vector2i, tile: TileGame) -> bool:
 	var unit := tile.get_unit()
 	
 
-	if unit == null or unit._owner != tm.get_current_user():
+	if unit == null or unit._owner != tm.get_local_user():
 		print("Acción denegada: No es el turno de esta unidad.")
 		GameManager.alert_system.show_message("Acción denegada: No es el turno de esta unidad", AlertSystem.MessageType.ERROR)
 		return false
