@@ -37,8 +37,14 @@ extends GameResource
 ## Ejércitos del usuario (Array[[ArmyRes]])
 @export var userArmys: Array[ArmyRes] = []
 
+# Evitar referencia ciclica
+@export var friends_uids : Array[int] = []
 ## Lista de amigos del usuario (Array[[UserRes]])
-@export var friends: Array[UserRes] = []
+var friends: Array[UserRes] = []
+	
+func _load_friends() -> void:
+	print("amigos para siempre")
+	friends_uids.map(func(x: int): friends.append(GameManager.get_game_resources().get_res_from_uid(x, UserRes)))
 
 func obtener_ejercito_activo() -> ArmyRes:
 	for ejercito in userArmys:

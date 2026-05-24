@@ -23,6 +23,9 @@ var boton_actualmente_resaltado: Button = null
 var boton_pestana_activa: Button = null
 
 func _ready() -> void:
+	if GameManager.match_mode == GameManager.MATCHMAKING_MODE.NET_RANDOM:
+		self._siguiente_escena()
+		
 	if boton_jugar:
 		boton_jugar.disabled = true
 		boton_jugar.pressed.connect(ir_a_siguiente)
@@ -45,6 +48,10 @@ func cargar_lista_de_oponentes() -> void:
 		
 		if UserManager.usuario_actual != null and jugador_evaluado.email == UserManager.usuario_actual.email:
 			continue
+			
+		if GameManager.match_mode == GameManager.MATCHMAKING_MODE.NET_FRIEND:
+			if not jugador_evaluado in UserManager.usuario_actual.friends:
+				continue
 			
 		var boton_jugador = Button.new()
 		var nombre := jugador_evaluado.name
@@ -111,6 +118,9 @@ func seleccionar_oponente(usuario_elegido: UserRes, boton_presionado: Button) ->
 	cargar_mazos_de_oponente(usuario_elegido)
 
 func cargar_mazos_de_oponente(oponente: UserRes) -> void:
+	if GameManager.match_mode == GameManager.MATCHMAKING_MODE.NET_FRIEND:
+		return
+	
 	for hijo in contenedor_pestanas_mazos.get_children():
 		hijo.queue_free()
 	for hijo in contenedor_cartas.get_children():
@@ -179,10 +189,14 @@ func ir_a_siguiente() -> void:
 		push_warning("No hay oponente seleccionado")
 		return
 
-	if ejercito_oponente_seleccionado == null:
+	if ejercito_oponente_seleccionado == null and GameManager.match_mode != GameManager.MATCHMAKING_MODE.NET_FRIEND:
 		push_warning("El oponente no tiene ejército seleccionado")
 		return
 
+	_siguiente_escena()	
+	
+	
+func _siguiente_escena() -> void:
 	UiManager.cambiar_a_escena("resumen", {
 		"mapa_seleccionado": mapa_seleccionado,
 		"oponente_seleccionado": oponente_seleccionado,
