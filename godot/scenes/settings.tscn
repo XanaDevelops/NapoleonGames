@@ -20,7 +20,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="Settings" type="Control" unique_id=1755555467 node_paths=PackedStringArray("mode_button", "resolution_button", "volumGeneral", "volumMusic", "volumEffects")]
+[node name="Settings" type="Control" unique_id=1755555467 node_paths=PackedStringArray("mode_button", "resolution_button", "volumGeneral", "volumMusic", "volumEffects", "fps_option", "vsync_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,6 +34,8 @@ resolution_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/Windo
 volumGeneral = NodePath("PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/GSContainer/volumGeneral")
 volumMusic = NodePath("PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/MusicContainer/volumMusic")
 volumEffects = NodePath("PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/EffectsContainer/volumEffects")
+fps_option = NodePath("PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/FpsContainer/OptionButton")
+vsync_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/VsyncContainer/CheckButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1624457434]
 layout_mode = 1
@@ -100,45 +102,53 @@ theme_override_constants/separation = 12
 layout_mode = 2
 
 [node name="Mode" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/ModeContainer" unique_id=1336327878]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_vertical = 8
 theme_override_font_sizes/font_size = 30
 text = "Pantalla"
 
 [node name="ModeButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/ModeContainer" unique_id=1660660999]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(300, 43)
 layout_mode = 2
 size_flags_horizontal = 10
+size_flags_vertical = 9
 alignment = 1
 
 [node name="ResolutionContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer" unique_id=816978543]
 layout_mode = 2
 
 [node name="Resolution" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/ResolutionContainer" unique_id=629917953]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 30
 text = "Resolución"
+vertical_alignment = 2
 
 [node name="ResolutionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/ResolutionContainer" unique_id=1402349951]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(300, 43)
 layout_mode = 2
 size_flags_horizontal = 10
+size_flags_vertical = 9
 alignment = 1
 
 [node name="GSContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer" unique_id=229898203]
 layout_mode = 2
 
 [node name="GeneralSound" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/GSContainer" unique_id=638649703]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 30
 text = "Sonido general"
+vertical_alignment = 2
 
 [node name="volumGeneral" type="HSlider" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/GSContainer" unique_id=1634976812]
-custom_minimum_size = Vector2(300, 23)
+custom_minimum_size = Vector2(300, 43)
 layout_mode = 2
 size_flags_horizontal = 10
+size_flags_vertical = 9
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_6wm04")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_r6d6q")
 max_value = 1.0
@@ -148,15 +158,18 @@ step = 0.001
 layout_mode = 2
 
 [node name="MusicSound" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/MusicContainer" unique_id=1143615553]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 30
 text = "Música"
+vertical_alignment = 2
 
 [node name="volumMusic" type="HSlider" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/MusicContainer" unique_id=738750025]
-custom_minimum_size = Vector2(300, 23)
+custom_minimum_size = Vector2(300, 43)
 layout_mode = 2
 size_flags_horizontal = 10
+size_flags_vertical = 9
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_r6d6q")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_r6d6q")
 max_value = 1.0
@@ -166,15 +179,18 @@ step = 0.001
 layout_mode = 2
 
 [node name="EffectsSounds" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/EffectsContainer" unique_id=1664338624]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 30
 text = "Efectos"
+vertical_alignment = 2
 
 [node name="volumEffects" type="HSlider" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/EffectsContainer" unique_id=705715151]
-custom_minimum_size = Vector2(300, 23)
+custom_minimum_size = Vector2(300, 43)
 layout_mode = 2
 size_flags_horizontal = 10
+size_flags_vertical = 9
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_r6d6q")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_r6d6q")
 max_value = 1.0
@@ -184,19 +200,32 @@ step = 0.001
 layout_mode = 2
 
 [node name="Fps" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/FpsContainer" unique_id=898893033]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 30
 text = "FPS"
+vertical_alignment = 2
 
-[node name="fpsSlider" type="HSlider" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/FpsContainer" unique_id=1675463867]
-custom_minimum_size = Vector2(300, 23)
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/FpsContainer" unique_id=539407179]
+custom_minimum_size = Vector2(300, 43)
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_styles/grabber_area = SubResource("StyleBoxFlat_r6d6q")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_r6d6q")
-min_value = 30.0
-max_value = 360.0
-value = 30.0
+size_flags_vertical = 9
+alignment = 1
 
-[connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/FpsContainer/fpsSlider" to="." method="_on_fps_slider_value_changed"]
+[node name="VsyncContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer" unique_id=649365726]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/VsyncContainer" unique_id=1465118458]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 30
+text = "Vsync"
+vertical_alignment = 2
+
+[node name="CheckButton" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/WindowModesContainer/VBoxContainer/VsyncContainer" unique_id=63920922]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 9

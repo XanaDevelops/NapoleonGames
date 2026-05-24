@@ -2,7 +2,7 @@ class_name mapVisualizer
 extends Node2D
 
 
-var map: MapGame 
+var map: MapGame
 var _last_hovered_tile: Vector2i = Vector2i(-999, -999)
 
 
@@ -27,7 +27,7 @@ var tileset: TileSet
 var texture_to_source_id: Dictionary = {}
 
 const TILE_SIZE_HEIGHT = 64 * 1.5
-const TILE_SIZE_WIDTH = 55 * 1.5 
+const TILE_SIZE_WIDTH = 55 * 1.5
 
 var current_mask_size: float
 var current_mask_scale_x: float
@@ -40,7 +40,9 @@ var _unit_overlays:Dictionary = {}
 
 const HIGHLIGHT_TEXTURE = "res://assets/tiles/highlights/hl_white.png"
 const OWNER_TEXTURE = "res://assets/tiles/highlights/inner_hl.png"
+const EXHAUSTED_TEXTURE= "res://assets/tiles/highlights/hl_exhausted.png"
 var _highlight_id:int = -1
+var exhausted_id:int
 const COLOR_MOVEMENT = Color(0.0, 1.0, 0.0, 0.784)
 const COLOR_SELECTED = Color.GOLDENROD
 const COLOR_HOVER = Color.DIM_GRAY
@@ -48,8 +50,8 @@ const COLOR_DEPLOYMENT_VALID = Color(0.0, 1, 0.0, 0.6)
 const COLOR_DEPLOYMENT_INVALID =Color.BROWN
 const COLOR_DEPLOYMENT_ZONE = Color.DARK_CYAN
 
-const COLOR_OWNER_P1 = Color(0.2, 0.4, 1.0, 0.6)   
-const COLOR_OWNER_P2 = Color(1.0, 0.2, 0.2, 0.6) 
+const COLOR_OWNER_P1 = Color(0.2, 0.4, 1.0, 0.6)
+const COLOR_OWNER_P2 = Color(1.0, 0.2, 0.2, 0.6)
 
 @export var camera:Camera2D
 const ZOOM_MIN = Vector2(0.3, 0.3)
@@ -64,9 +66,11 @@ func _setup_highlight_tiles() -> void:
 	var owner_tex := load(OWNER_TEXTURE) as Texture2D
 	_owner_id = add_texture_to_tileset(owner_tex)
 	
+	var exhausted_tex := load(EXHAUSTED_TEXTURE) as Texture2D
+	exhausted_id= add_texture_to_tileset(exhausted_tex)
 	tile_map_layer_owner_p1.self_modulate = COLOR_OWNER_P1
 	tile_map_layer_owner_p2.self_modulate = COLOR_OWNER_P2
-	tile_map_layer_exhausted.self_modulate =  Color.BLACK
+	tile_map_layer_exhausted.self_modulate =  Color("393c55b3")
 
 func _ready() -> void:
 	
@@ -76,9 +80,9 @@ func _ready() -> void:
 	
 	tileset = _setup_tileset()
 	for tml in [tile_map_layer_texture, tile_map_layer_units,
-				tile_map_layer_selection, tile_map_layer_highlight, 
-				tile_map_layer_deployment, tile_map_layer_hover, tile_map_layer_owner_p1, 
-				tile_map_layer_owner_p2, tile_map_layer_exhausted]:
+		tile_map_layer_selection, tile_map_layer_highlight,
+		tile_map_layer_deployment, tile_map_layer_hover, tile_map_layer_owner_p1,
+		tile_map_layer_owner_p2, tile_map_layer_exhausted]:
 		tml.tile_set = tileset
 	_setup_highlight_tiles()
 	if GameManager.turn_manager!=null:
@@ -117,7 +121,8 @@ func _connect_turn_manager() -> void:
 
 
 func _on_unit_moved(start: Vector2i, end: Vector2i) -> void:
-	plot_unit_moved(start, end)
+	await plot_unit_moved(start, end)
+	_refresh_unit_states()
 
 
 func _on_tile_draw_requested(pos: Vector2i, tile: TileGame) -> void:
@@ -151,8 +156,8 @@ func _on_movement_enabled() -> void:
 func _setup_tileset() -> TileSet:
 	var tileset = TileSet.new()
 	tileset.tile_shape = TileSet.TILE_SHAPE_HEXAGON
-	tileset.tile_layout = TileSet.TILE_LAYOUT_STACKED        
-	tileset.tile_offset_axis = TileSet.TILE_OFFSET_AXIS_HORIZONTAL  
+	tileset.tile_layout = TileSet.TILE_LAYOUT_STACKED
+	tileset.tile_offset_axis = TileSet.TILE_OFFSET_AXIS_HORIZONTAL
 	tileset.tile_size = Vector2i(TILE_SIZE_WIDTH, TILE_SIZE_HEIGHT)
 	return tileset
 	
@@ -162,7 +167,7 @@ func _setup_map(map: MapGame):
 		for x in range(map._mapRes.tamX):
 			draw_tile(x, y, map.get_tile_at(Vector2i(x, y)))
 func set_map(map: MapGame) -> void:
-	self.map = map   
+	self.map = map
 
 func remove_unit(pos:Vector2i, tile:TileGame)-> void:
 	var tile_source_id = add_texture_to_tileset(tile.get_texture2D())
@@ -258,7 +263,7 @@ func plot_unit_moved(src: Vector2i, target: Vector2i) -> void:
 		var cell_pos = tile_map_layer_texture.map_to_local(path[i])
 		var tween = create_tween()
 		tween.tween_property(sprite, "position", cell_pos, 0.10)\
-			 .set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		await tween.finished
 		tile_map_layer_deployment.erase_cell(path[i - 1])
 	
@@ -482,7 +487,7 @@ func play_vfx(target_coords: Vector2i, effect_name: StringName) -> void:
 		
 	var vfx_instance = vfx_scene.instantiate()
 	add_child(vfx_instance)
-	vfx_instance.z_index = 100 
+	vfx_instance.z_index = 100
 	
 	var local_pos = tile_map_layer_units.map_to_local(target_coords)
 	vfx_instance.position = local_pos
@@ -556,6 +561,7 @@ func center_camera(viewport_size: Vector2) -> void:
 	camera.zoom = Vector2(zoom_f, zoom_f)
 
 func _refresh_unit_states() -> void:
+	print("llamador refresh_unit_states")
 	tile_map_layer_exhausted.clear()
 	var tm = GameManager.get_turn_manager()
 	if tm == null:
@@ -566,8 +572,14 @@ func _refresh_unit_states() -> void:
 		var tile = map.get_tile_at(coords)
 		if tile.has_unit():
 			var unit = tile.get_unit()
-			# Solo afectar unidades del jugador actual
+			var overlay = _unit_overlays[coords]
 			if unit._owner == current_user:
-				var exhausted = not unit.has_pending_actions()
+				var exhausted = not  unit.has_pending_actions()
+				print("coords is exhuasted ", coords, exhausted)
 				if exhausted:
-					tile_map_layer_exhausted.set_cell(coords, _highlight_id, Vector2i.ZERO)
+					tile_map_layer_exhausted.set_cell(coords, exhausted_id, Vector2i.ZERO)
+					overlay.modulate = Color("#b8bcd6b3")
+				else:
+					overlay.modulate = Color.WHITE 
+			else:
+				overlay.modulate = Color.WHITE  

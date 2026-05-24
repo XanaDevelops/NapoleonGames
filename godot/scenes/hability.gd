@@ -15,7 +15,7 @@ func _ready() -> void:
 func paint(hab:HabilityRes) -> void:
 
 	RadiusLabel.text= str(hab.radius)
-	ObjectiveLabel.text = str(hab.objective)
+	ObjectiveLabel.text = HabilityRes.objective_text(hab.objective)
 	ManaLabel.text = str(hab.manaCost)
 	CoolDownLabel.text= str(hab.cooldown)
 	PassiveLabel.text = "SÍ" if hab.isPassive else "NO"
