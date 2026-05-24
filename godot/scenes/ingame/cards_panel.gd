@@ -75,7 +75,7 @@ func paint_unit_info(tile: TileGame) -> void:
 func clear_unit_info() -> void:
 	if UnitPanel:
 		UnitPanel.visible = false
-		pass
+		
 
 func clear() -> void:
 	if tile_info:
