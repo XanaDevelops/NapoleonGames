@@ -1,17 +1,14 @@
 [gd_scene format=3 uid="uid://x68117q4jv65"]
 
 [ext_resource type="Theme" uid="uid://dtmi252ajk7g4" path="res://assets/themes/ui/aviso_normal.tres" id="1_curg2"]
-[ext_resource type="Script" uid="uid://ciwefq2p586ts" path="res://alert_system.gd" id="2_a55yd"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ie0jf"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+[ext_resource type="Script" uid="uid://ciwefq2p586ts" path="res://scenes/alert_system.gd" id="2_a55yd"]
 
 [node name="AlertHability" type="Panel" unique_id=2142637484 node_paths=PackedStringArray("message_label")]
+z_index = 12
 custom_minimum_size = Vector2(150, 30)
 offset_right = 203.0
 offset_bottom = 30.0
 theme = ExtResource("1_curg2")
-theme_override_styles/panel = SubResource("StyleBoxFlat_ie0jf")
 script = ExtResource("2_a55yd")
 message_label = NodePath("Label")
 

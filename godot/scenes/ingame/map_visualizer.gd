@@ -168,6 +168,7 @@ func remove_unit(pos:Vector2i, tile:TileGame)-> void:
 	var tile_source_id = add_texture_to_tileset(tile.get_texture2D())
 	tile_map_layer_units.set_cell(pos, tile_source_id, Vector2i.ZERO)
 	_remove_unit_overlay(pos)
+	refresh_unit_died(pos)
 
 func draw_tile(i: int, y: int, tile: TileGame) -> void:
 	var coords = Vector2i(i, y)
@@ -469,7 +470,6 @@ func play_vfx(target_coords: Vector2i, effect_name: StringName) -> void:
 	
 	if overlay and is_instance_valid(overlay):
 		overlay.visible = false
-		print("setting univert_overlay to false", target_coords)
 	var unit_texture_resized: Texture2D
 	var source_id = tile_map_layer_units.get_cell_source_id(target_coords)
 	
@@ -491,7 +491,6 @@ func play_vfx(target_coords: Vector2i, effect_name: StringName) -> void:
 	await vfx_instance.vfx_finished
 	if overlay and is_instance_valid(overlay):
 		overlay.visible = true
-		print("setting univert_overlay to true", target_coords)
 		
 func _add_unit_overlay(coords: Vector2i, unit: UnitGame) -> void:
 	if _unit_overlays.has(coords):

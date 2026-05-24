@@ -6,32 +6,34 @@
 [ext_resource type="Texture2D" uid="uid://cqrofwn6gbo0m" path="res://assets/images/speed.png" id="3_1l5eg"]
 [ext_resource type="Material" uid="uid://b688udwg5jd6i" path="res://assets/themes/ui/unit_shader.tres" id="4_nayp3"]
 [ext_resource type="Texture2D" uid="uid://4ll3e20q0r3b" path="res://assets/images/dodge.png" id="5_igeos"]
+[ext_resource type="PackedScene" uid="uid://dau808hhekv0d" path="res://scenes/mana.tscn" id="7_1l5eg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ocp8"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="UnitInfo" type="PanelContainer" unique_id=722150641]
-custom_minimum_size = Vector2(350, 200)
+custom_minimum_size = Vector2(300, 188)
+offset_right = 300.0
+offset_bottom = 198.0
 theme = ExtResource("1_nayp3")
 theme_override_styles/panel = ExtResource("2_1l5eg")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1768652552]
 layout_mode = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 30
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_right = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=909963396]
 layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=407962681]
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1458532982]
 layout_mode = 2
-text = "⟡ Owner :"
+text = "Owner :"
 
 [node name="OwnerLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=495947669]
 layout_mode = 2
@@ -48,27 +50,26 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1653067293]
+[node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=359381101]
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_constants/separation = 35
 
-[node name="UnitHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1000477222]
+[node name="UnitHBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1906683743]
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="UnitTextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/UnitHBoxContainer" unique_id=1031025043]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-expand_mode = 3
-stretch_mode = 6
+expand_mode = 1
+stretch_mode = 5
 
 [node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/UnitHBoxContainer" unique_id=1213301532]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=208744524]
+[node name="HBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=496102431]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
 theme_override_constants/separation = 20
 
 [node name="SpeedHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2" unique_id=25463217]
@@ -76,7 +77,7 @@ layout_mode = 2
 
 [node name="SpeedTextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/SpeedHBoxContainer" unique_id=55287735]
 material = ExtResource("4_nayp3")
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 tooltip_text = "Velocidad"
 texture = ExtResource("3_1l5eg")
@@ -93,7 +94,7 @@ theme_override_constants/separation = 10
 
 [node name="DodgeTextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/DodgeHBoxContainer2" unique_id=2086488747]
 material = ExtResource("4_nayp3")
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(35, 35)
 layout_mode = 2
 tooltip_text = "Esquive"
 texture = ExtResource("5_igeos")
@@ -103,3 +104,7 @@ stretch_mode = 6
 [node name="DodgeLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/DodgeHBoxContainer2" unique_id=1954809688]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Mana" parent="MarginContainer/VBoxContainer" unique_id=1760166787 instance=ExtResource("7_1l5eg")]
+custom_minimum_size = Vector2(250, 30)
+layout_mode = 2

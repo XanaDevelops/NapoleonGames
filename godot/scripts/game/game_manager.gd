@@ -3,7 +3,7 @@ extends Node
 @export var game_res: GameResources
 @export var app_state := APP_STATE.MENU_HUB
 @export var game_config: GameConfig
-
+var alert_system:AlertSystem
 var turn_manager: TurnManager
 signal phase_changed(phase: APP_STATE)
 enum APP_STATE {
@@ -32,7 +32,9 @@ func _ready() -> void:
 		_configure_server()
 	else:
 		_configure_client()
-
+	var alert_scene = preload("res://scenes/alert_system.tscn")
+	alert_system = alert_scene.instantiate()
+	add_child(alert_system)
 func _configure_server() -> void:
 	if not Online.start_server():
 		return

@@ -26,10 +26,6 @@ var phase
 #
 func set_phase_battle() -> void:
 	phase_label.text= "FASE DE COMBATE"
-	
-
-	self.turnManager.tick_turn.connect(update_turn_info)
-
 	p1_num_cards.text= ""
 	p2_num_cards.text= ""
 	
@@ -76,6 +72,9 @@ func setup(tm: TurnManager) -> void:
 	p1_avatar.texture = p1_res.img
 	p2_name.text = p2_res.username
 	p2_avatar.texture = p2_res.img
+	if not tm.tick_turn.is_connected(update_turn_info):
+		tm.tick_turn.connect(update_turn_info)
+	update_turn_info()
 
 func set_phase_deployment() -> void:
 	phase_label.text = "FASE DE DESPLIEGUE"

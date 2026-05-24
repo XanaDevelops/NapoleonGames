@@ -20,6 +20,10 @@ func update(new_value: int) -> void:
 	else:
 		damage_bar.value = bar_value
 
+func set_value_silent(new_value: int) -> void:
+	bar_value = new_value
+	value = new_value
+	damage_bar.value = new_value
 
 func _on_timer_timeout() -> void:
 	damage_bar.value = bar_value

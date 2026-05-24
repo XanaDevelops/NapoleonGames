@@ -1,0 +1,69 @@
+[gd_resource type="Theme" format=3 uid="uid://dd3711hhdq5io"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f4mfi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_es4n0"]
+bg_color = Color(0.22352941, 0.6627451, 0.3764706, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gis3k"]
+bg_color = Color(0.5591391, 0.38470006, 0.26166388, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83j8s"]
+bg_color = Color(0.30624506, 0.40658548, 0.50723743, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6321235, 0.63212353, 0.63212323, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gjs24"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ppmf"]
+bg_color = Color(0.5591391, 0.38470006, 0.26166388, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5p8wc"]
+bg_color = Color(0.2901961, 0.18431373, 0.11372549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3p6lb"]
+bg_color = Color(0.31262195, 0.2000165, 0.12496678, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[resource]
+Button/font_sizes/font_size = 16
+Button/styles/disabled = SubResource("StyleBoxFlat_f4mfi")
+Button/styles/normal = SubResource("StyleBoxFlat_es4n0")
+Button/styles/pressed = SubResource("StyleBoxFlat_gis3k")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_83j8s")
+OptionButton/font_sizes/font_size = 16
+OptionButton/styles/disabled = SubResource("StyleBoxFlat_gjs24")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_4ppmf")
+Panel/styles/panel = SubResource("StyleBoxFlat_5p8wc")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_3p6lb")

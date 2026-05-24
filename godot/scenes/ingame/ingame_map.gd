@@ -93,9 +93,6 @@ func clear() -> void:
 	cards_panel.clear()
 
 func _setup_viewport() -> void:
-	#var container_size = map_container.size
-	#sub_viewport.size = Vector2i(container_size)
-
 	sub_viewport.transparent_bg = true
 	
 #HABILITY RELATED FUNCTIONS----------------
@@ -131,13 +128,6 @@ func _on_hab_applied(_hab: HabilityRes, _targets: Array[Vector2i]) -> void:
 	_state = UnitState.UNIT_SELECTED
 	map_visualizer.clear_highlights()
 	cards_panel.hide_confirm_dialog()
-	
-			
-	#if _selected_tile != null and _selected_tile.has_unit():
-		#cards_panel.paint_unit_info(_selected_tile)
-		#unit_info.observe(_selected_tile.get_unit())
-	
-
 
 
 
@@ -204,7 +194,7 @@ func _select_tile(coords: Vector2i, tile: TileGame) -> void:
 	if tile.has_unit():
 		_state = UnitState.UNIT_SELECTED
 		cards_panel.paint_unit_info(tile)
-		unit_info.observe(tile.get_unit())
+		#unit_info.observe(tile.get_unit())
 	else:
 		_state = UnitState.IDLE
 		cards_panel.clear_unit_info()
