@@ -15,6 +15,11 @@ const AUTH_USERS_PATH := "user://usuarios_auth.json"
 func _ready() -> void:
 	cargar_usuarios_de_prueba()
 	cargar_usuarios_autenticados()
+	
+	if not usuarios.is_empty():
+		var primer_email = usuarios.keys()[0]
+		establecer_usuario_actual(primer_email)
+		
 	usuarios_actualizados.emit()
 
 func cargar_usuarios_de_prueba() -> void:
@@ -28,10 +33,7 @@ func cargar_usuarios_de_prueba() -> void:
 			if usuario != null:
 				meter_nuevo_usuario(usuario) 
 		
-		establecer_usuario_actual(gr.users[0].email)
-		print(str(gr.users.size()) + " usuarios de prueba cargados con éxito.") 
-	else:
-		push_warning("No se encontraron usuarios de prueba en GameResources.")
+		
 
 
 func meter_nuevo_usuario(nuevo_usuario: UserRes) -> bool:
@@ -155,10 +157,10 @@ func registrar_usuario_autenticado(auth_response: Dictionary) -> void:
 
 	if usuarios.has(user.email):
 		var usuario_existente: UserRes = usuarios[user.email]
-
 		user.userArmys = usuario_existente.userArmys
 		user.availableCards = usuario_existente.availableCards
 		user.availableMaps = usuario_existente.availableMaps
+		user.img = usuario_existente.img
 
 	usuarios[user.email] = user
 	usuario_actual = user
@@ -266,6 +268,9 @@ func cargar_usuarios_autenticados() -> void:
 				
 		print("Usuario auth cargado: " + usuario.email)
 		print("Ejércitos cargados para usuario: " + str(usuario.userArmys.size()))
+		if usuarios.has(usuario.email):
+			var usuario_local_existente: UserRes = usuarios[usuario.email]
+			usuario.img = usuario_local_existente.img
 		usuarios[usuario.email] = usuario
 		
 func aplicar_cartas_demo(usuario: UserRes) -> void:
