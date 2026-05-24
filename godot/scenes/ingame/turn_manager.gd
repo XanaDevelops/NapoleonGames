@@ -45,7 +45,6 @@ func advance_turn(skip_visual: bool = false) -> void:
 	var next_user : UserGame = turn_order[turn_number % turn_order.size()]
 	print("[" + str(NetClient.id) + "]", "Turno de ", next_user.get_user_res().username)
 	tick_turn.emit()
-	#map_visualizer._refresh_unit_states()
 	unit_refresh.emit()
 	
 	if not skip_visual:
@@ -251,8 +250,7 @@ func _on_unit_movement_requested(start: Vector2i, end: Vector2i) -> bool:
 		unit.has_moved_this_turn = true
 		unit_moved.emit(start, end)
 		map_logic.move_unit(start, end)
-		#map_visualizer._refresh_unit_states()
-		unit_refresh.emit()
+		#unit_refresh.emit()
 		
 		
 	else:
