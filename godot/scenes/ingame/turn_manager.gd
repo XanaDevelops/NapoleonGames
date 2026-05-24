@@ -6,7 +6,7 @@ signal card_deployed(player: UserGame, remaining: int)
 signal deployment_phase_started(first_player_name: String)
 signal combat_phase_started(first_player_name: String)
 signal turn_changed_visual(current_icon: Texture2D, next_name: String, next_icon: Texture2D)
-
+signal inicializar_finalizacion(nombre_ganador: String)
 signal tick_turn
 signal game_end(game_id: int)
 
@@ -424,11 +424,8 @@ func _on_unit_died(unit: UnitGame, pos: Vector2i) -> void:
 		finalizar_partida(ganador.get_user_res().name)
 
 func finalizar_partida(nombre_del_vencedor: String):
-	
-	var parametros_victoria = {
-		"nombre_ganador": nombre_del_vencedor
-	}
-	
+
 	game_end.emit(_get_game_pid())
+	
 	if not GameManager.is_server:
-		UiManager.cambiar_a_escena("finalizacion", parametros_victoria)
+		inicializar_finalizacion.emit(nombre_del_vencedor)
