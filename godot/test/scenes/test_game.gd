@@ -47,6 +47,8 @@ func test_full_game_session() -> void:
 		5
 	)
 	autoqfree(get_tree().current_scene)
+	
+	await get_tree().process_frame
 	var ingame_map = get_tree().current_scene.get_node("IngameMap")
 	autoqfree(ingame_map._hab_manager)
 	

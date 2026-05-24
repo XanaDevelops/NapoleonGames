@@ -24,4 +24,5 @@ func _ready() -> void:
 
 func _on_pressed() -> void:
 	if id_escena != "":
+		GameManager.match_mode = GameManager.MATCHMAKING_MODE.JvJ
 		UiManager.cambiar_a_escena(id_escena)

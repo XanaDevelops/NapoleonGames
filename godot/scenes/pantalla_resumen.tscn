@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://dcjj17oux405n"]
 
-[ext_resource type="Script" path="res://scenes/pantalla_resumen.gd" id="1_hr74v"]
+[ext_resource type="Script" uid="uid://iqnbebxvwxy" path="res://scenes/pantalla_resumen.gd" id="1_hr74v"]
 [ext_resource type="Texture2D" uid="uid://bujp1fkbfto6" path="res://assets/sprites/ui/fondos_de_pantalla/fondo_pantalla_resumen.png" id="2_hr74v"]
 [ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="3_iu020"]
 [ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="4_tywd4"]
 [ext_resource type="Theme" uid="uid://cs2ycfq76kcvr" path="res://assets/themes/ui/estilo_botones_negacion_suave.tres" id="5_hr74v"]
 [ext_resource type="Theme" uid="uid://cuaadii4ueb8" path="res://assets/themes/ui/estilo_botones_confirmacion_suave.tres" id="6_a2pga"]
 [ext_resource type="FontFile" uid="uid://cmiuntu71oyl3" path="res://addons/gut/fonts/LobsterTwo-Bold.ttf" id="7_1ktaq"]
+[ext_resource type="Script" uid="uid://bhdfo36iey2j6" path="res://scenes/iniciar_partida.gd" id="8_a2pga"]
 
 [node name="Control" type="Control" unique_id=1668836970]
 layout_mode = 3
@@ -135,3 +136,4 @@ grow_vertical = 0
 theme = ExtResource("6_a2pga")
 text = "Iniciar Partida
 "
+script = ExtResource("8_a2pga")

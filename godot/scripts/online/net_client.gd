@@ -47,15 +47,15 @@ func manage_ids(id_assignment: IDAssignment) -> void:
 	
 ## TODO: preguntar por mapa, config, etc
 ## Pide iniciar una partida online
-func request_online_game() -> void:
-	var user := UserManager.usuario_actual
+func request_online_game(user: UserRes, army: ArmyRes, map : MapRes, friend: UserRes = null) -> void:
 	
 	## PLACEHOLDER
-	var map := GameManager.get_game_resources().maps[2]
-	var packet := OnlineMatchRequest.create(user.uid, user.obtener_ejercito_activo().uid, map.uid)
+	if map == null:
+		map = GameManager.get_game_resources().maps[2]
+	var packet := OnlineMatchRequest.create(user.uid, army.uid, map.uid, friend.uid if friend else -1)
 	packet.send(Online.server_peer)
 	
-	print("requested ", NetClient.id)
+	print("requested ", NetClient.id, "random" if not friend else "amigo")
 	
 	
 func request_randf_server() -> float:
