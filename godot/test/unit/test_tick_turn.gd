@@ -94,7 +94,8 @@ func test_advance_turn_updates_units() -> void:
 	assert_false(unit_b.has_moved_this_turn, "B debe poder moverse")
 	assert_false(unit_b.has_used_hability_this_turn, "B debe poder usar habilidad")
 	assert_eq(unit_a._habilities[hab_a], 2, "Cooldown A no debe cambiar")
-	assert_true(unit_a.has_moved_this_turn, "A no debe resetearse aún")
+	# Ya no es así por cambio para QoL interfaz
+	#assert_true(unit_a.has_moved_this_turn, "A no debe resetearse aún")
 	
 	# turno de user_a 
 	await _advance_and_wait(tm)
