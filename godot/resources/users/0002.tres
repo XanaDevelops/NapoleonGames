@@ -23,4 +23,5 @@ ExtResource("3_aidkp"): 2
 })
 availableMaps = Array[ExtResource("4_0dh4l")]([ExtResource("5_65nb2")])
 userArmys = Array[ExtResource("8_gej1n")]([ExtResource("9_cwwtm")])
+friends_uids = Array[int]([1])
 uid = 2

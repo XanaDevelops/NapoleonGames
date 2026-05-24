@@ -80,7 +80,7 @@ func save_to(path:= _path) -> int:
 
 # Carga y retorna un `GameResources` desde `path` o `null` si no existe o no es del tipo esperado.
 static func load_from(path: = _path) -> GameResources:
-	var res := ResourceLoader.load(path)
+	var res := ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE)
 	if res is GameResources:
 		res._update_cache(true)
 		return res
@@ -267,3 +267,10 @@ func del_from_cache(gameRes: GameResource) -> void:
 	if has:
 		var arr : Array = self.get(name)
 		arr.erase(gameRes)
+
+
+## MANUALMENTE LLAMAR A ESTO
+## actualiza los uid de los amigos a userRes
+func _update_friends() -> void:
+	for user in self.users:
+		user._load_friends()
