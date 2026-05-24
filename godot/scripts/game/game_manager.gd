@@ -6,10 +6,20 @@ extends Node
 var alert_system:AlertSystem
 var turn_manager: TurnManager
 signal phase_changed(phase: APP_STATE)
+
 enum APP_STATE {
 	MENU_HUB,
 	IN_GAME,
 }
+
+enum MATCHMAKING_MODE {
+	JvJ,
+	NET_RANDOM,
+	NET_FRIEND
+}
+
+# Para la UI saber que tipo de partida se quiere iniciar
+var match_mode := MATCHMAKING_MODE.JvJ
 
 ## Indica si es servidor
 var is_server := false
@@ -21,6 +31,7 @@ func _init() -> void:
 		is_server = true
 		
 	game_res = GameResources.load_from()
+	
 	#temporal
 	#self.turn_manager= TurnManager.new()
 	app_state = APP_STATE.MENU_HUB
@@ -28,6 +39,10 @@ func _init() -> void:
 	set_users()
 	
 func _ready() -> void:
+	if game_res:
+		game_res._update_friends()
+	else:
+		push_error("No se ha cargado GameResources")
 	if is_server:
 		_configure_server()
 	else:
@@ -108,8 +123,21 @@ func restart_current_game() -> void:
 	if game_config == null:
 		return
 	var mapa_original = game_config.map_res
-	start_game(game_config.user_a, game_config.user_b, mapa_original, game_config.army_a, game_config.army_b)
-	
+	if GameManager.match_mode == GameManager.MATCHMAKING_MODE.JvJ:
+		start_game(game_config.user_a, game_config.user_b, mapa_original, game_config.army_a, game_config.army_b)
+	else:
+		# Para partidas online, el usuario que solicita es el usuario local;
+		# el otro jugador en la configuración será el "friend"
+		var local_user := UserManager.usuario_actual
+		var friend_user: UserRes
+		var local_army: ArmyRes
+		if local_user == game_config.user_a:
+			friend_user = game_config.user_b
+			local_army = game_config.army_a
+		else:
+			friend_user = game_config.user_a
+			local_army = game_config.army_b
+		NetClient.request_online_game(local_user, local_army, mapa_original, friend_user)
 ## Placeholder para obtener la info de configuración de una partida[br]
 ## Como puede ser los jugadores que se enfrentan, el mapa y ejercitos 
 func get_game_config() -> GameConfig:

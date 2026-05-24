@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://oip1dp0jjnjk" path="res://scenes/enemigo_aleatorio.gd" id="6_bxgl6"]
 [ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="6_ru1hr"]
 [ext_resource type="Script" uid="uid://c4vkq2nflgjio" path="res://scenes/opciones.gd" id="6_y25s7"]
+[ext_resource type="Script" uid="uid://dq1itsmpap0pc" path="res://scenes/contra_amigo.gd" id="7_dp8qp"]
 [ext_resource type="Shader" uid="uid://chsexujh65mmi" path="res://resources/shaders/redondear_shader.gdshader" id="7_rfvtk"]
 [ext_resource type="PackedScene" uid="uid://e7aclggeurn0" path="res://scenes/settings.tscn" id="7_ru1hr"]
 [ext_resource type="PackedScene" uid="uid://cdbdwv8lb0o74" path="res://scenes/panel_usuario.tscn" id="8_bxgl6"]
@@ -175,7 +176,7 @@ separacion = 60.0
 [node name="Panel" type="Panel" parent="Panel/ContenedorDeMenu/JuegoOnline" unique_id=256015199]
 layout_mode = 0
 offset_right = 327.0
-offset_bottom = 100.0
+offset_bottom = 140.0
 theme_override_styles/panel = ExtResource("2_bxgl6")
 
 [node name="ContenedorDeOpciones" type="VBoxContainer" parent="Panel/ContenedorDeMenu/JuegoOnline/Panel" unique_id=961097025]
@@ -198,6 +199,13 @@ theme = ExtResource("3_bxgl6")
 theme_override_font_sizes/font_size = 30
 text = "Enemigo Aleatorio"
 script = ExtResource("6_2fm8f")
+
+[node name="ContraAmigo" type="Button" parent="Panel/ContenedorDeMenu/JuegoOnline/Panel/ContenedorDeOpciones" unique_id=1983209577]
+layout_mode = 2
+theme = ExtResource("3_bxgl6")
+theme_override_font_sizes/font_size = 30
+text = "Contra Amigo"
+script = ExtResource("7_dp8qp")
 
 [node name="BotonNavegacion" type="Button" parent="Panel/ContenedorDeMenu" unique_id=1002694264]
 layout_mode = 2

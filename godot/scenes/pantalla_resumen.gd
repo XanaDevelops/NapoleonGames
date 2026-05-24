@@ -44,8 +44,12 @@ func _mostrar_resumen_partida() -> void:
 	texto += "Mazo: " + (str(mazo_uno.nom) if mazo_uno else "Ninguno") + "\n\n"
 
 	texto += "[color=RED][b]JUGADOR 2 (RIVAL):[/b][/color]\n"	
-	texto += "Nombre: " + (str(jugador_dos.name) if jugador_dos else "Desconocido") + "\n"
-	texto += "Mazo: " + (str(mazo_dos.nom) if mazo_dos else "Ninguno") + "\n"
+	
+	if GameManager.match_mode != GameManager.MATCHMAKING_MODE.NET_RANDOM:
+		texto += "Nombre: " + (str(jugador_dos.name) if jugador_dos else "Desconocido") + "\n"
+		texto += "Mazo: " + (str(mazo_dos.nom) if mazo_dos else "Ninguno") + "\n"
+	else:
+		texto += "Jugador aleatorio\n"
 
 	texto += "[/center]" # Cerramos el centrado al final
 	
@@ -60,9 +64,13 @@ func _on_iniciar_pressed() -> void:
 	if mazo_dos == null and oponente_seleccionado != null:
 		mazo_dos = oponente_seleccionado.obtener_ejercito_activo()
 		
-	
-	GameManager.start_game(jugador_uno, oponente_seleccionado, mapa_seleccionado, mazo_uno, mazo_dos)
-
+	if GameManager.match_mode == GameManager.MATCHMAKING_MODE.JvJ:
+		GameManager.start_game(jugador_uno, oponente_seleccionado, mapa_seleccionado, mazo_uno, mazo_dos)
+	else:
+		NetClient.request_online_game(jugador_uno, mazo_uno, mapa_seleccionado, oponente_seleccionado)
+		boton_iniciar.disabled = true
+		# Esto puede dar problemas si el server no responde
+		boton_volver.disabled = true
 func _on_volver_pressed() -> void:
 
 	UiManager.cambiar_a_escena("oponente", {

@@ -120,7 +120,34 @@ func manage_game_request(pid: int, request: OnlineMatchRequest) -> void:
 		return
 	
 	if waiting.size() >= 1:
-		var other_pid : int = waiting.keys().pick_random()
+		var other_pid := -1
+
+		# Si el jugador busca un amigo concreto, buscar una petición recíproca
+		if request.friend_uid != -1:
+			print("[SERVER] buscando amigo")
+			for key in waiting.keys():
+				var w := waiting[key]
+				if w.user_uid == request.friend_uid and w.friend_uid == request.user_uid:
+					other_pid = key
+					break
+			if other_pid == -1:
+				# No hay petición recíproca: ponerse en espera
+				print("[SERVER] no amigo")
+				waiting.set(pid, request)
+				return
+		else:
+			print("[SERVER] buscando aleatorio")
+			# Petición abierta: emparejar con una petición abierta aleatoria
+			var candidates := []
+			for key in waiting.keys():
+				if waiting[key].friend_uid == -1:
+					candidates.append(key)
+			if candidates.size() == 0:
+				# No hay peticiones abiertas: ponerse en espera
+				print("[SERVER] no aleatorio")
+				waiting.set(pid, request)
+				return
+			other_pid = candidates.pick_random()
 		var other : OnlineMatchRequest = waiting[other_pid]
 		waiting.erase(other_pid)
 		var user_a : UserRes = gr.get_res_from_uid(request.user_uid, UserRes)
