@@ -22,7 +22,7 @@ var _owner_id:int = -1
 signal tile_clicked(coords: Vector2i, tile: TileGame)
 signal tile_hovered(coords: Vector2i)
 signal movement_requested(start_pos: Vector2i, end_pos: Vector2i)
-
+signal tile_deselect
 var tileset: TileSet
 var texture_to_source_id: Dictionary = {}
 
@@ -401,12 +401,14 @@ func _update_hover(coords: Vector2i) -> void:
 		
 func _handle_click(coords: Vector2i) -> void:
 	if not map._is_in_map_bounds(coords):
+		tile_deselect.emit()
 		_clear_selection()
 		return
 	var tile = map.get_tile_at(coords)
 	
 	if tile == null:
 		_clear_selection()
+		tile_deselect.emit()
 		return
 	
 		
@@ -419,6 +421,7 @@ func _handle_click(coords: Vector2i) -> void:
 	#deseleccionar 
 	if coords == selected_cell:
 		_clear_selection()
+		tile_deselect.emit()
 		return
 		
 	if selected_cell != Vector2i(-1, -1) and coords in current_accesible_moves:
@@ -561,7 +564,6 @@ func center_camera(viewport_size: Vector2) -> void:
 	camera.zoom = Vector2(zoom_f, zoom_f)
 
 func _refresh_unit_states() -> void:
-	print("llamador refresh_unit_states")
 	tile_map_layer_exhausted.clear()
 	var tm = GameManager.get_turn_manager()
 	if tm == null:
@@ -575,7 +577,6 @@ func _refresh_unit_states() -> void:
 			var overlay = _unit_overlays[coords]
 			if unit._owner == current_user:
 				var exhausted = not  unit.has_pending_actions()
-				print("coords is exhuasted ", coords, exhausted)
 				if exhausted:
 					tile_map_layer_exhausted.set_cell(coords, exhausted_id, Vector2i.ZERO)
 					overlay.modulate = Color("#b8bcd6b3")

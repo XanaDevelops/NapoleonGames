@@ -80,7 +80,7 @@ func _ready() -> void:
 	cards_panel.confirmed.connect(_hab_manager.confirm)
 	cards_panel.cancelled.connect(_hab_manager.cancel)
 	deployment_box.unit_selected_for_deployment.connect(_on_card_selected_in_ui)
-
+	map_visualizer.tile_deselect.connect(cards_panel.clear)
 func _on_juego_terminado(nombre_ganador: String) -> void:
 	ganador_actual = nombre_ganador
 	transition_screen.play_end_game_transition(nombre_ganador)

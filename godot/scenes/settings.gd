@@ -12,7 +12,7 @@ const FPS_OPTIONS = [30, 60, 120, 144, 240, 0]
 const WINDOW_MODE_ARRAY: Array[String]= [
 	"Pantalla completa",
 	"Modo ventana",
-	"Venta sin bordes",
+	"Ventana sin bordes",
 	"Pantalla completa sin bordes"
 ]
 

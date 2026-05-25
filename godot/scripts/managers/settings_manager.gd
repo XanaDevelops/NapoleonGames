@@ -50,11 +50,17 @@ func apply_settings():
 
 func _on_window_mode_selected(idx: int):
 	match idx:
-		0: DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-		1: DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		2:
+		0:	#pantalla completa
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+
+		1: #ventana
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+
+		2:#ventana sin bordes
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
-		3:
+		3:#pantalla completa sin bordes
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
