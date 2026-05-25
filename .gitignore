@@ -1,9 +1,15 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
-
+.env
 export/
 
 # GUT ignores
 
 godot/test/xml_out/
+
+.vscode/
+
+godot/test/res/
+godot/test/res/*.tres
+

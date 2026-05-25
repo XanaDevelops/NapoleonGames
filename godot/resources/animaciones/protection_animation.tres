@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="VFXEffectData" format=3 uid="uid://b5uvlyw0sdmxf"]
+
+[ext_resource type="Texture2D" uid="uid://c4phj1au2t4l" path="res://assets/particles/protection_particle (2).png" id="1_dglpk"]
+[ext_resource type="Script" uid="uid://coqlqo81l8ahe" path="res://scripts/resources/vfx_effect_data.gd" id="1_m4vwq"]
+[ext_resource type="Shader" uid="uid://v0bn4b6eo0xc" path="res://resources/shaders/defense_shader.gdshader" id="3_yxyyf"]
+[ext_resource type="AudioStream" uid="uid://c5ms6umjfcklv" path="res://assets/sonidos/protection_sound.mp3" id="4_we8un"]
+
+[sub_resource type="Gradient" id="Gradient_qihqu"]
+offsets = PackedFloat32Array(0, 0, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.3019608, 0.5803922, 1, 0.78431374, 0, 0.13333334, 0.6, 1)
+
+[resource]
+script = ExtResource("1_m4vwq")
+shader = ExtResource("3_yxyyf")
+core_color = Color(0.9019608, 0.96862745, 1, 1)
+mid_color = Color(0.3019608, 0.5803922, 1, 1)
+edge_color = Color(0, 0.13333334, 0.6, 1)
+wave_speed = 1.5
+wave_amplitude = 0.1
+particle_texture = ExtResource("1_dglpk")
+color_ramp = SubResource("Gradient_qihqu")
+particle_base_size = 3.0
+scale_multiplier = 2.0
+gravity = Vector3(0, 10, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+movement_spread = 360.0
+duration = 1.1
+sound_effect = ExtResource("4_we8un")
+sound_pitch_randomness = 0.15
+metadata/_custom_type_script = "uid://coqlqo81l8ahe"

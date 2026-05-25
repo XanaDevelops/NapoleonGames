@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AlterStateRes" format=3 uid="uid://cb7vlx03v0ius"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_25jcd"]
+[ext_resource type="Resource" uid="uid://dcniqxidtvgar" path="res://resources/stat_datas/0001.tres" id="2_2qhqq"]
+[ext_resource type="Resource" uid="uid://dnbyq4cqriq" path="res://resources/attack_types/0002.tres" id="3_3cmdq"]
+
+[resource]
+script = ExtResource("1_25jcd")
+value = 3.0
+stat = ExtResource("2_2qhqq")
+type = ExtResource("3_3cmdq")
+duration = 3
+uid = 1

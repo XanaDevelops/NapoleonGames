@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://cuf4b80g1meii"]
+
+[ext_resource type="Script" uid="uid://kgfk6ji3tbyg" path="res://scenes/exit_game.gd" id="2_tyqcr"]
+[ext_resource type="Texture2D" uid="uid://08npi8efy1yv" path="res://assets/images/reject.png" id="3_v4w3n"]
+[ext_resource type="Theme" uid="uid://c2s8d3cs8pjiw" path="res://assets/themes/ui/estilo_botones_confirmacion.tres" id="4_prurs"]
+[ext_resource type="Theme" uid="uid://go1hktgu7mpp" path="res://assets/themes/ui/estilo_botones_negacion.tres" id="5_2fxb1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prurs"]
+bg_color = Color(0.2901961, 0.18431373, 0.11372549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyqcr"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4w3n"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="ExitGame" type="PanelContainer" unique_id=692478301 node_paths=PackedStringArray("cancel_button", "yes_button", "no_button")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -202.0
+offset_top = -77.0
+offset_right = 202.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_prurs")
+script = ExtResource("2_tyqcr")
+cancel_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/CancelButton")
+yes_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/YesButton")
+no_button = NodePath("PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/NoButton")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1362065379]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tyqcr")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1908187392]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1297854223]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1019626222]
+z_index = 1
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_v4w3n")
+icon = ExtResource("3_v4w3n")
+flat = true
+icon_alignment = 2
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="MessageLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1518196266]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "¿Estás seguro de que quieres abandonar el juego?"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=149602509]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=1782832567]
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_prurs")
+theme_override_constants/separation = 70
+
+[node name="NoButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1942201631]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_2fxb1")
+text = "NO"
+
+[node name="YesButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1319368151]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SÍ"

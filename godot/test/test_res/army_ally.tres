@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArmyRes" format=3 uid="uid://o77yq2mq3tat"]
+
+[ext_resource type="Script" uid="uid://chjdn7qg0thht" path="res://scripts/resources/card_army_group.gd" id="1_8w2da"]
+[ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="2_c0iv1"]
+[ext_resource type="Resource" uid="uid://dsh5vsih7n1hu" path="res://test/test_res/group_ally.tres" id="2_e2qqu"]
+
+[resource]
+script = ExtResource("2_c0iv1")
+nom = &"allyArmy"
+isActive = true
+agrupations = Array[ExtResource("1_8w2da")]([ExtResource("2_e2qqu")])
+uid = 1
+metadata/_custom_type_script = "uid://q3mvbqxdhool"

@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://dd7rkqmyelbi3"]
+
+[ext_resource type="Script" uid="uid://df0juty4godvj" path="res://scripts/ui/pantalla_finalizacion.gd" id="1_ko0ix"]
+[ext_resource type="Texture2D" uid="uid://m71jo7exjp3w" path="res://assets/sprites/ui/fondos_de_pantalla/fondo de victoria.jpg" id="2_0xcpk"]
+[ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="3_gxiv4"]
+[ext_resource type="Theme" uid="uid://dj4gpr1kxgyrp" path="res://assets/themes/ui/estilo_botones.tres" id="4_31p13"]
+[ext_resource type="Script" uid="uid://bgcdmwi57at8w" path="res://scenes/boton_de_reinicio.gd" id="5_0xcpk"]
+[ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="5_5iba6"]
+[ext_resource type="FontFile" uid="uid://cmiuntu71oyl3" path="res://addons/gut/fonts/LobsterTwo-Bold.ttf" id="6_hs4sh"]
+
+[sub_resource type="FontVariation" id="FontVariation_7srnt"]
+base_font = ExtResource("6_hs4sh")
+
+[node name="Control" type="Control" unique_id=1668836970]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ko0ix")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1653817443]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_0xcpk")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Panel" type="Panel" parent="." unique_id=600929208]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -50.0
+offset_right = 300.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_gxiv4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1194733188]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -285.0
+offset_top = -135.0
+offset_right = 285.0
+offset_bottom = 135.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="BotonDeReinicio" type="Button" parent="Panel/VBoxContainer" unique_id=1529604449]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_31p13")
+theme_override_font_sizes/font_size = 24
+text = "Volver a jugar
+"
+script = ExtResource("5_0xcpk")
+
+[node name="Button2" type="Button" parent="Panel/VBoxContainer" unique_id=2044793256]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_31p13")
+theme_override_font_sizes/font_size = 24
+text = "Volver al selector de mapas
+"
+script = ExtResource("5_5iba6")
+id_escena = "mapas"
+metadata/_custom_type_script = "uid://ct2doijn7j323"
+
+[node name="Button3" type="Button" parent="Panel/VBoxContainer" unique_id=1404283543]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_31p13")
+theme_override_font_sizes/font_size = 24
+text = "Volver al menú principal"
+script = ExtResource("5_5iba6")
+id_escena = "inicio"
+metadata/_custom_type_script = "uid://ct2doijn7j323"
+
+[node name="MensajeVictoria" type="Label" parent="." unique_id=2020755664]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -239.5
+offset_right = 20.0
+offset_bottom = -216.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.83137256, 0.6862745, 0.21568628, 1)
+theme_override_fonts/font = SubResource("FontVariation_7srnt")
+theme_override_font_sizes/font_size = 150
+text = "Has Ganado"

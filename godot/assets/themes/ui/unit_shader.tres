@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b688udwg5jd6i"]
+
+[ext_resource type="Shader" path="res://scenes/unit_info.gdshader" id="1_1iiki"]
+
+[resource]
+shader = ExtResource("1_1iiki")
+shader_parameter/fill_color = Color(0.9389544, 1.6123802e-06, 1.1551381e-06, 0.6901961)
+shader_parameter/border_width = 0.03

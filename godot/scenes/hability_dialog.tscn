@@ -1,0 +1,241 @@
+[gd_scene format=3 uid="uid://dwjbsncsbda6s"]
+
+[ext_resource type="Script" uid="uid://c8rl2in8jifpj" path="res://scenes/hability_dialog.gd" id="1_pofbl"]
+[ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="1_wrv4r"]
+[ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="2_rqimb"]
+[ext_resource type="Texture2D" uid="uid://hqesp8umos15" path="res://assets/images/mana.png" id="4_apfac"]
+[ext_resource type="PackedScene" uid="uid://c5pn5hirdidsc" path="res://scenes/card_container.tscn" id="4_qhac2"]
+[ext_resource type="Texture2D" uid="uid://dxw5p04alo4ls" path="res://assets/images/radius.png" id="5_psit2"]
+[ext_resource type="Texture2D" uid="uid://beyiehho5g4kd" path="res://assets/images/hourglass.png" id="6_rqimb"]
+[ext_resource type="Shader" uid="uid://b2hlpxub5tekf" path="res://scenes/hability_dialog.gdshader" id="8_5naob"]
+[ext_resource type="Theme" uid="uid://c2s8d3cs8pjiw" path="res://assets/themes/ui/estilo_botones_confirmacion.tres" id="8_pofbl"]
+[ext_resource type="Texture2D" uid="uid://d16uvpl8ocinj" path="res://assets/particles/health-normal.png" id="9_ha4j1"]
+[ext_resource type="Theme" uid="uid://go1hktgu7mpp" path="res://assets/themes/ui/estilo_botones_negacion.tres" id="9_qhac2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bsd1g"]
+shader = ExtResource("8_5naob")
+shader_parameter/threshold = 0.2
+shader_parameter/smoothness = 0.05
+
+[node name="HabilityDialog" type="Control" unique_id=144567511 node_paths=PackedStringArray("hability_name", "cooldown_value", "cost_mana", "rang", "card1", "target_cards_container", "title", "mana_effect_container", "mana_effect", "health_effect_container", "health_effect")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pofbl")
+hability_name = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/HabilityName")
+cooldown_value = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/CoolDown/Cooldown")
+cost_mana = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/ManaCost/ManaCost")
+rang = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/Rang/Rang")
+card1 = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer4/HBoxContainer/Card1")
+target_cards_container = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer4/HBoxContainer/TargetCards")
+title = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/Label")
+mana_effect_container = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/ManaEffectContainer")
+mana_effect = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/ManaEffectContainer/ManaEffect")
+health_effect_container = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/HealthEffectContainer")
+health_effect = NodePath("PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/HealthEffectContainer/HealthEffect")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=661289918]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -309.0
+offset_right = 250.0
+offset_bottom = 309.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=309924092]
+layout_mode = 2
+
+[node name="PanelContainer4" type="PanelContainer" parent="PanelContainer/MarginContainer" unique_id=1868663108]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("1_wrv4r")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4" unique_id=1730216136]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer" unique_id=122068471]
+layout_mode = 2
+theme_override_styles/normal = ExtResource("2_rqimb")
+text = "Usar habilidad"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="PanelContainer4" type="PanelContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer" unique_id=451221211]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_rqimb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer4" unique_id=1267878912]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+
+[node name="Card1" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer4/HBoxContainer" unique_id=471647093 instance=ExtResource("4_qhac2")]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="ActorLabel" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer4/HBoxContainer/Card1" index="0" unique_id=484471168]
+text = "ATACANTE"
+
+[node name="TargetCards" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer4/HBoxContainer" unique_id=2046702159]
+layout_mode = 2
+
+[node name="HScrollBar" type="HScrollBar" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer4/HBoxContainer/TargetCards" unique_id=1573206866]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer" unique_id=1969023167]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_rqimb")
+
+[node name="HabilityContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer" unique_id=812831322]
+layout_mode = 2
+
+[node name="HabilityParams" type="VBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer" unique_id=1152026940]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HabilityName" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams" unique_id=1889539195]
+layout_mode = 2
+text = "nombre de habilida"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams" unique_id=1979586072]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ManaCost" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer" unique_id=1404144779]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/ManaCost" unique_id=1593810473]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("4_apfac")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/ManaCost" unique_id=19222395]
+layout_mode = 2
+text = "Coste mana"
+
+[node name="ManaCost" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/ManaCost" unique_id=1280954273]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Rang" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer" unique_id=1791413967]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/Rang" unique_id=1206320177]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("5_psit2")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/Rang" unique_id=1295083150]
+layout_mode = 2
+text = "Rango"
+
+[node name="Rang" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/Rang" unique_id=1726405522]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="CoolDown" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer" unique_id=1397950303]
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/CoolDown" unique_id=1369830957]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("6_rqimb")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/CoolDown" unique_id=1237468438]
+layout_mode = 2
+text = "CD"
+
+[node name="Cooldown" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer/HabilityContainer/HabilityParams/VBoxContainer/CoolDown" unique_id=2002634290]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer" unique_id=387544199]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_rqimb")
+
+[node name="Effect" type="VBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2" unique_id=33212956]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect" unique_id=1902506129]
+layout_mode = 2
+text = "EFECTO ESTIMADO"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect" unique_id=1268861649]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ManaEffectContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer" unique_id=1215847897]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/ManaEffectContainer" unique_id=1532815813]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("4_apfac")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="ManaEffect" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/ManaEffectContainer" unique_id=952585042]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="HealthEffectContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer" unique_id=1503396678]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/HealthEffectContainer" unique_id=1888270895]
+material = SubResource("ShaderMaterial_bsd1g")
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("9_ha4j1")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="HealthEffect" type="Label" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer2/Effect/HBoxContainer/HealthEffectContainer" unique_id=665356592]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="PanelContainer3" type="PanelContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer" unique_id=1995765303]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer3" unique_id=1278799954]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer3/HBoxContainer2" unique_id=1613457401]
+layout_mode = 2
+size_flags_horizontal = 6
+theme = ExtResource("8_pofbl")
+text = "CONFIRMAR"
+
+[node name="Button2" type="Button" parent="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer3/HBoxContainer2" unique_id=558838014]
+layout_mode = 2
+size_flags_horizontal = 6
+theme = ExtResource("9_qhac2")
+text = "CANCELAR"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer3/HBoxContainer2/Button" to="." method="_on_confirmed_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer3/HBoxContainer2/Button2" to="." method="_on_canceled_pressed"]
+
+[editable path="PanelContainer/MarginContainer/PanelContainer4/VBoxContainer/PanelContainer4/HBoxContainer/Card1"]

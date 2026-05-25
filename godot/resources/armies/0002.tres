@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArmyRes" format=3 uid="uid://cysh13lk4exi5"]
+
+[ext_resource type="Script" uid="uid://chjdn7qg0thht" path="res://scripts/resources/card_army_group.gd" id="1_tp3i1"]
+[ext_resource type="Resource" uid="uid://c742admoyxfg1" path="res://resources/card_army_groups/0002.tres" id="2_dik0a"]
+[ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="2_ogtmr"]
+
+[resource]
+script = ExtResource("2_ogtmr")
+nom = &"superArmy2"
+isActive = true
+agrupations = Array[ExtResource("1_tp3i1")]([ExtResource("2_dik0a")])
+backend_id = 2
+uid = 2

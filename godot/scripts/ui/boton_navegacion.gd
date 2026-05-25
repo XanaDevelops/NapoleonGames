@@ -2,8 +2,6 @@
 class_name BotonNavegacion
 extends Button
 
-signal cambio_escena_solicitado(id_escena: String)
-
 var id_escena: String = ""
 
 func _get_property_list() -> Array:
@@ -26,4 +24,5 @@ func _ready() -> void:
 
 func _on_pressed() -> void:
 	if id_escena != "":
-		cambio_escena_solicitado.emit(id_escena)
+		GameManager.match_mode = GameManager.MATCHMAKING_MODE.JvJ
+		UiManager.cambiar_a_escena(id_escena)

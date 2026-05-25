@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="MapRes" format=3 uid="uid://bmiygjij3qrnp"]
+
+[ext_resource type="Resource" uid="uid://bd8dbsu4vmaea" path="res://resources/tiles/0001.tres" id="1_2qxdn"]
+[ext_resource type="Resource" uid="uid://c8tu1geuaexqc" path="res://resources/tiles/0002.tres" id="2_5w1q5"]
+[ext_resource type="Resource" uid="uid://gifb2atr6bb0" path="res://resources/tiles/0003.tres" id="3_u2rvt"]
+[ext_resource type="Resource" uid="uid://llu7u2vcksgd" path="res://resources/tiles/0004.tres" id="4_ome67"]
+[ext_resource type="Resource" uid="uid://7kn638n3rx35" path="res://resources/tiles/0005.tres" id="5_5rwvs"]
+[ext_resource type="Resource" uid="uid://bijl0ffpvgy1l" path="res://resources/tiles/0006.tres" id="6_kmydw"]
+[ext_resource type="Resource" uid="uid://bw6d3guy0vjx0" path="res://resources/tiles/0007.tres" id="7_p40sh"]
+[ext_resource type="Resource" uid="uid://dik512fd4njjw" path="res://resources/tiles/0008.tres" id="8_bivgk"]
+[ext_resource type="Resource" uid="uid://b0ut0kkcn0o22" path="res://resources/tiles/0009.tres" id="9_mrt2k"]
+[ext_resource type="Resource" uid="uid://bdbeubq6u0x8x" path="res://resources/tiles/0010.tres" id="10_ejbds"]
+[ext_resource type="Resource" uid="uid://daefiagdwhs3n" path="res://resources/tiles/0011.tres" id="11_rxyqs"]
+[ext_resource type="Resource" uid="uid://bo8ecwu2brb0e" path="res://resources/tiles/0012.tres" id="12_kx28j"]
+[ext_resource type="Resource" uid="uid://bl15ncrwamlmw" path="res://resources/tiles/0013.tres" id="13_mqfa3"]
+[ext_resource type="Resource" uid="uid://d0wp8dmyqn45b" path="res://resources/tiles/0014.tres" id="14_620so"]
+[ext_resource type="Resource" uid="uid://dc4vn1wlcclbf" path="res://resources/tiles/0015.tres" id="15_gdilq"]
+[ext_resource type="Resource" uid="uid://dh4wgbqqa1p0f" path="res://resources/tiles/0016.tres" id="16_24lg0"]
+[ext_resource type="Resource" uid="uid://dthtlmjjxbqpg" path="res://resources/tiles/0017.tres" id="17_0fciy"]
+[ext_resource type="Resource" uid="uid://6ncffb702qlh" path="res://resources/tiles/0018.tres" id="18_3kqr7"]
+[ext_resource type="Resource" uid="uid://vm61tlsoss36" path="res://resources/tiles/0019.tres" id="19_k5c2t"]
+[ext_resource type="Resource" uid="uid://0g0ip7djmon7" path="res://resources/tiles/0020.tres" id="20_lra2c"]
+[ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="21_hoohb"]
+
+[resource]
+script = ExtResource("21_hoohb")
+name = &"test_map_01"
+tamX = 5
+tamY = 4
+mapData = Array[Array]([[ExtResource("1_2qxdn"), ExtResource("2_5w1q5"), ExtResource("3_u2rvt"), ExtResource("4_ome67"), ExtResource("5_5rwvs")], [ExtResource("6_kmydw"), ExtResource("7_p40sh"), ExtResource("8_bivgk"), ExtResource("9_mrt2k"), ExtResource("10_ejbds")], [ExtResource("11_rxyqs"), ExtResource("12_kx28j"), ExtResource("13_mqfa3"), ExtResource("14_620so"), ExtResource("15_gdilq")], [ExtResource("16_24lg0"), ExtResource("17_0fciy"), ExtResource("18_3kqr7"), ExtResource("19_k5c2t"), ExtResource("20_lra2c")]])
+uid = 1
