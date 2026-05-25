@@ -96,9 +96,9 @@ func start_game(playerA: UserRes, playerB:UserRes, map:MapRes,
 		print("    [B] ", group.cardType.name, " x", group.n)
 	game_config = GameConfig.new(playerA, playerB, map, armyA, armyB)
 	if isOnline:
-		if UserManager.usuario_actual == playerA:
+		if UserManager.usuario_actual.uid == playerA.uid:
 			game_config.user_online = GameConfig.ONLINE_USER.USER_A
-		elif UserManager.usuario_actual == playerB:
+		elif UserManager.usuario_actual.uid == playerB.uid:
 			game_config.user_online = GameConfig.ONLINE_USER.USER_B
 		elif is_server:
 			game_config.user_online = GameConfig.ONLINE_USER.SERVER

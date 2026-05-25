@@ -9,4 +9,5 @@ script = ExtResource("2_s4vix")
 nom = &"superArmy1"
 isActive = true
 agrupations = Array[ExtResource("1_vuud0")]([ExtResource("2_0q4md")])
+backend_id = 1
 uid = 1

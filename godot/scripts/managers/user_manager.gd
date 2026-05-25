@@ -192,12 +192,13 @@ func guardar_usuarios_autenticados() -> void:
 					"quantity": group.n
 				})
 
-			armies.append({
-				"backendId": army.backend_id,
-				"name": str(army.nom),
-				"isActive": army.isActive,
-				"cards": cards
-			})
+				armies.append({
+					"uid": int(army.uid),
+					"backendId": army.backend_id,
+					"name": str(army.nom),
+					"isActive": army.isActive,
+					"cards": cards
+				})
 
 		datos.append({
 			"id": usuario.uid,
@@ -228,6 +229,7 @@ func cargar_usuarios_autenticados() -> void:
 	if typeof(datos) != TYPE_ARRAY:
 		return
 
+	var gr := GameResources.load_from()
 	for item in datos:
 		var usuario := UserRes.new()
 		usuario.uid = int(item.get("id", 0))
@@ -242,10 +244,36 @@ func cargar_usuarios_autenticados() -> void:
 
 		if typeof(armies_data) == TYPE_ARRAY:
 			for army_data in armies_data:
+				var backend_id := int(army_data.get("backendId", 0))
+				var saved_uid := int(army_data.get("uid", 0))
+
+				var used_army: ArmyRes = null
+				# Intentar reutilizar un ArmyRes ya presente en GameResources por uid
+				if saved_uid > 0 and gr != null:
+					used_army = gr.get_res_from_uid(saved_uid, ArmyRes)
+
+				# Si no se encontró por uid, intentar por backend_id
+				if used_army == null and backend_id > 0 and gr != null:
+					for a in gr.armies:
+						if a != null and a.backend_id == backend_id:
+							used_army = a
+							break
+
+				if used_army != null:
+					usuario.userArmys.append(used_army)
+					print("Army reutilizado desde GameResources: " + str(used_army.nom))
+					continue
+
+				# Crear un ArmyRes nuevo y asignar uid si no estaba presente
 				var army := ArmyRes.new()
-				army.backend_id = int(army_data.get("backendId", 0))
+				army.backend_id = backend_id
 				army.nom = StringName(army_data.get("name", ""))
 				army.isActive = bool(army_data.get("isActive", false))
+				# preservar uid si estaba en el JSON, sino generar uno
+				if saved_uid > 0:
+					army.uid = saved_uid
+				else:
+					army.uid = randi_range(1, 0x7fffffff)
 
 				var cards_data = army_data.get("cards", [])
 
@@ -265,6 +293,10 @@ func cargar_usuarios_autenticados() -> void:
 				usuario.userArmys.append(army)
 				print("Army cargado desde JSON: " + str(army.nom))
 				print("Cartas del army: " + str(army.agrupations.size()))
+
+				# Registrar en GameResources para poder buscar por uid posteriormente
+				if gr != null:
+					gr.set_in_cache(army)
 				
 		print("Usuario auth cargado: " + usuario.email)
 		print("Ejércitos cargados para usuario: " + str(usuario.userArmys.size()))
