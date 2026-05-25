@@ -62,8 +62,55 @@ func on_peer_connected(peer_id: int) -> void:
 
 func on_peer_disconnected(peer_id: int) -> void:
 	peer_ids.erase(peer_id)
+	waiting.erase(peer_id)
+	randf_indexes.erase(peer_id)
+
+	var game_pid := _find_game_pid_by_peer(peer_id)
+	if game_pid != -1:
+		_handle_game_disconnect(game_pid, peer_id)
 
 	# Create IDUnassignment to broadcast to all still connected peers
+
+
+func _find_game_pid_by_peer(peer_id: int) -> int:
+	for game_pid in current_games.keys():
+		var info: _InnerGameInfo = current_games[game_pid]
+		if info.pid_a == peer_id or info.pid_b == peer_id:
+			return game_pid
+
+	return -1
+
+
+func _handle_game_disconnect(game_pid: int, disconnected_pid: int) -> void:
+	if not current_games.has(game_pid):
+		return
+
+	var info: _InnerGameInfo = current_games[game_pid]
+	var winner_pid := info.pid_a if disconnected_pid == info.pid_b else info.pid_b
+	var winner_uid := info.user_a_uid if disconnected_pid == info.pid_b else info.user_b_uid
+	var winner_name := _get_user_name_from_uid(winner_uid)
+	if Online.client_peers.has(winner_pid):
+		NetForceWinNotif.create(game_pid, winner_uid).send(Online.client_peers[winner_pid])
+
+	print("[SERVER] peer desconectado en partida ", game_pid, ", victoria para uid ", winner_uid)
+
+	if is_instance_valid(info.tm):
+		info.tm.finalizar_partida(winner_name)
+	else:
+		manage_end_game(game_pid)
+
+
+func _get_user_name_from_uid(user_uid: int) -> String:
+	var gr := GameManager.get_game_resources()
+	var user: UserRes = gr.get_res_from_uid(user_uid, UserRes)
+	if user == null:
+		return "Jugador %d" % user_uid
+
+	var display_name := user.name.strip_edges()
+	if display_name != "":
+		return display_name
+
+	return str(user.username)
 
 
 func on_server_packet(peer_id: int, data: PackedByteArray) -> void:
@@ -74,6 +121,8 @@ func on_server_packet(peer_id: int, data: PackedByteArray) -> void:
 			manage_game_request(peer_id, OnlineMatchRequest.create_from_data(data))
 		NetPacket.PACKET_TYPE.TURN_ACTION:
 			manage_turn(peer_id, TurnAction.create_from_data(data))
+		NetPacket.PACKET_TYPE.FORCE_WIN_NOTIF:
+			manage_force_win_notif(peer_id, NetForceWinNotif.create_from_data(data))
 		NetPacket.PACKET_TYPE.RANDF:
 			manage_randf(peer_id, NetRandF.create_from_data(data))
 		_:
@@ -101,6 +150,9 @@ func manage_randf(pid: int, packet: NetRandF) -> float:
 		packet.send(Online.client_peers[pid])
 	
 	return rand_val
+
+func manage_force_win_notif(_pid: int, _packet: NetForceWinNotif) -> void:
+	return
 	
 func manage_game_request(pid: int, request: OnlineMatchRequest) -> void:
 	# Por ahora esto va bien

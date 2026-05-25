@@ -73,6 +73,7 @@ func _parse_army_response(
 	http.queue_free()
 
 func _ready() -> void:
+	_SERVER = StringName(ServerConfig.get_api_base_url())
 	if _SERVER == &"http://127.0.0.1:8080":
 		print("API conectada a backend local 8080")
 

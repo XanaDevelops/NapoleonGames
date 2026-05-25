@@ -25,7 +25,7 @@ var server_peer: ENetPacketPeer
 var connection: ENetConnection
 var is_server: bool = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if connection == null: return
 
 	handle_events()
@@ -67,7 +67,7 @@ func handle_events() -> void:
 		event_type = packet_event[0]
 
 
-func start_server(ip_address:= SERVER_IP, port:= PORT) -> bool:
+func start_server(ip_address: String = ServerConfig.get_online_ip(), port: int = ServerConfig.get_online_port()) -> bool:
 	connection = ENetConnection.new()
 	var error: Error = connection.create_host_bound(ip_address, port)
 	if error:
@@ -97,7 +97,7 @@ func peer_disconnected(peer: ENetPacketPeer) -> void:
 	on_peer_disconnected.emit(peer_id)
 
 
-func start_client(ip_address: String = "127.0.0.1", port: int = 42069) -> bool:
+func start_client(ip_address: String = ServerConfig.get_online_ip(), port: int = ServerConfig.get_online_port()) -> bool:
 	connection = ENetConnection.new()
 	var error: Error = connection.create_host(1)
 	if error:
