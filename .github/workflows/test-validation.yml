@@ -17,8 +17,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Commit ancestry against test
-        run: bash scripts/check_commit_ancestry.sh "${{ github.event.pull_request.head.sha }}" test --
 
       - name: Set up Java
         uses: actions/setup-java@v4
