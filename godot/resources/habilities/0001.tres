@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://sm46hyuva36t"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_1gsoq"]
+[ext_resource type="Resource" uid="uid://8ywuxsyqh4bg" path="res://resources/attack_types/0001.tres" id="2_8ej3f"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="3_31pcr"]
+[ext_resource type="Resource" uid="uid://dcniqxidtvgar" path="res://resources/stat_datas/0001.tres" id="4_i8cog"]
+
+[resource]
+script = ExtResource("3_31pcr")
+name = &"espadazo"
+desc = "ataque corto de espada"
+value = 7.0
+stat = ExtResource("4_i8cog")
+attackType = ExtResource("2_8ej3f")
+radius = 1
+uid = 1

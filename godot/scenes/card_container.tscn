@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://c5pn5hirdidsc"]
+
+[ext_resource type="Script" uid="uid://x2pyq8qajq0r" path="res://scenes/card_container.gd" id="1_bbuo6"]
+
+[node name="CardContainer" type="VBoxContainer" unique_id=471647093 node_paths=PackedStringArray("card_name", "hp_label", "mana_label", "portrait", "actor")]
+size_flags_horizontal = 6
+theme_override_constants/separation = 16
+script = ExtResource("1_bbuo6")
+card_name = NodePath("CardName")
+hp_label = NodePath("HealthContainer/HpValue")
+mana_label = NodePath("ManaContainer/ManaValue")
+portrait = NodePath("CardTex")
+actor = NodePath("ActorLabel")
+
+[node name="ActorLabel" type="Label" parent="." unique_id=484471168]
+layout_mode = 2
+uppercase = true
+
+[node name="CardTex" type="TextureRect" parent="." unique_id=818087004]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CardName" type="Label" parent="." unique_id=832439103]
+layout_mode = 2
+
+[node name="HealthContainer" type="HBoxContainer" parent="." unique_id=187865291]
+layout_mode = 2
+
+[node name="HpTitle" type="Label" parent="HealthContainer" unique_id=1318135789]
+layout_mode = 2
+text = "HP	"
+
+[node name="HpValue" type="Label" parent="HealthContainer" unique_id=821456948]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ManaContainer" type="HBoxContainer" parent="." unique_id=2036402763]
+layout_mode = 2
+
+[node name="ManaTitle" type="Label" parent="ManaContainer" unique_id=169725033]
+layout_mode = 2
+text = "Mana"
+
+[node name="ManaValue" type="Label" parent="ManaContainer" unique_id=185142967]
+layout_mode = 2
+size_flags_horizontal = 3

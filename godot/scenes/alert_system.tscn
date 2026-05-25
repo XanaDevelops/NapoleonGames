@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://x68117q4jv65"]
+
+[ext_resource type="Theme" uid="uid://dtmi252ajk7g4" path="res://assets/themes/ui/aviso_normal.tres" id="1_curg2"]
+[ext_resource type="Script" uid="uid://ciwefq2p586ts" path="res://scenes/alert_system.gd" id="2_a55yd"]
+
+[node name="AlertHability" type="Panel" unique_id=2142637484 node_paths=PackedStringArray("message_label")]
+z_index = 12
+custom_minimum_size = Vector2(150, 30)
+offset_right = 203.0
+offset_bottom = 30.0
+theme = ExtResource("1_curg2")
+script = ExtResource("2_a55yd")
+message_label = NodePath("Label")
+
+[node name="Label" type="Label" parent="." unique_id=1408849073]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1

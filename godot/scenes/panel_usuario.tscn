@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://cdbdwv8lb0o74"]
+
+[ext_resource type="Script" uid="uid://cnl2ldkbkb056" path="res://scripts/ui/panel_usuario.gd" id="1_c817i"]
+[ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="1_orvw5"]
+[ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="2_c817i"]
+[ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="3_vp7ct"]
+[ext_resource type="Theme" uid="uid://cbgigo7o740wp" path="res://assets/themes/ui/spinner.tres" id="4_vp7ct"]
+
+[node name="PanelUsuario" type="Panel" unique_id=1116297954]
+custom_minimum_size = Vector2(250, 220)
+offset_right = 400.0
+offset_bottom = 340.0
+theme_override_styles/panel = ExtResource("1_orvw5")
+script = ExtResource("1_c817i")
+
+[node name="Panel" type="Panel" parent="." unique_id=926328050]
+custom_minimum_size = Vector2(230, 100)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -185.0
+offset_top = 20.0
+offset_right = 185.0
+offset_bottom = 220.0
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("3_vp7ct")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=173679461]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer" unique_id=291689554]
+custom_minimum_size = Vector2(210, 100)
+layout_mode = 2
+
+[node name="ContenedorUsuarios" type="VBoxContainer" parent="Panel/MarginContainer/ScrollContainer" unique_id=351266171]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=1388523622]
+custom_minimum_size = Vector2(225, 50)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -185.0
+offset_top = -86.0
+offset_right = 185.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="AñadirCuenta" type="Button" parent="VBoxContainer2" unique_id=133366195]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_vp7ct")
+text = "Añadir Cuenta"
+script = ExtResource("2_c817i")
+id_escena = "login"
+metadata/_custom_type_script = "uid://ct2doijn7j323"
+
+[node name="CrearCuenta" type="Button" parent="VBoxContainer2" unique_id=669846678]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_vp7ct")
+text = "Crear Cuenta "
+script = ExtResource("2_c817i")
+id_escena = "registro"
+metadata/_custom_type_script = "uid://ct2doijn7j323"

@@ -1,0 +1,218 @@
+[gd_scene format=3 uid="uid://cb7tokacenp4o"]
+
+[ext_resource type="Texture2D" uid="uid://dwcsqv5dddx4o" path="res://assets/sprites/ui/fondos_de_pantalla/fondoPantallaUsuario.png" id="1_e0t1c"]
+[ext_resource type="Script" uid="uid://bj52woxon6xwk" path="res://scenes/perfil.gd" id="1_qjmg8"]
+[ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="2_4v1p0"]
+[ext_resource type="Shader" uid="uid://chsexujh65mmi" path="res://resources/shaders/redondear_shader.gdshader" id="2_cqi24"]
+[ext_resource type="Texture2D" uid="uid://b62k2k47x5yle" path="res://assets/sprites/ui/iconos_de_usuario/iconoUsuario.png" id="2_e0t1c"]
+[ext_resource type="Theme" uid="uid://eeslucastnpk" path="res://assets/themes/ui/InputsUserMenu.tres" id="3_m7uid"]
+[ext_resource type="Theme" uid="uid://cttb3ckvy5c8d" path="res://assets/themes/ui/estilo_atras.tres" id="7_btoj5"]
+[ext_resource type="Script" uid="uid://ct2doijn7j323" path="res://scripts/ui/boton_navegacion.gd" id="8_cqi24"]
+[ext_resource type="Texture2D" uid="uid://d0vn3b0q2ipv3" path="res://assets/sprites/ui/iconos_de_botones/izquierda (1).png" id="8_hyisl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6imr"]
+bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
+border_width_left = 7
+border_width_top = 7
+border_width_right = 7
+border_width_bottom = 7
+border_color = Color(0.54901963, 0.42745098, 0.24313726, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+expand_margin_left = 7.0
+expand_margin_top = 7.0
+expand_margin_right = 7.0
+expand_margin_bottom = 7.0
+anti_aliasing_size = 1.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2885"]
+bg_color = Color(0.8784314, 0.8235294, 0.7372549, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.72156864, 0.5254902, 0.043137256, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hnhxw"]
+bg_color = Color(0.99215686, 0.9647059, 0.8901961, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(1, 0.84313726, 0, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(0, 0, 0, 0.5019608)
+shadow_size = 12
+shadow_offset = Vector2(4, 4)
+anti_aliasing_size = 1.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qjmg8"]
+shader = ExtResource("2_cqi24")
+shader_parameter/radius = 0.50000002375
+shader_parameter/smoothing = 0.01
+
+[node name="SceneCrearCuentaMenu" type="Control" unique_id=1059517667]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qjmg8")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=344544644]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("1_e0t1c")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Panel" type="Panel" parent="." unique_id=526040363]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_4v1p0")
+
+[node name="Label" type="Label" parent="Panel" unique_id=2120296050]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_top = 20.0
+offset_right = 120.0
+offset_bottom = 103.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "Mi Perfil"
+
+[node name="MenuUsuario" type="Button" parent="Panel" unique_id=462425525]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = 120.0
+offset_right = 50.0
+offset_bottom = 220.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_k6imr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_o2885")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hnhxw")
+
+[node name="FotoPerfil" type="TextureRect" parent="Panel/MenuUsuario" unique_id=572494925]
+unique_name_in_owner = true
+texture_filter = 1
+texture_repeat = 1
+material = SubResource("ShaderMaterial_qjmg8")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_e0t1c")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Panel/MenuUsuario" unique_id=569157510]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -74.0
+offset_top = 15.0
+offset_right = 74.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 13
+text = "Cambiar estandarte"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1899020051]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = 14.5
+offset_right = 150.0
+offset_bottom = 165.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=1236229975]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/VBoxContainer" unique_id=1471946501]
+layout_mode = 2
+text = "Nombre  público"
+
+[node name="NombreInput" type="LineEdit" parent="Panel/VBoxContainer/VBoxContainer" unique_id=1918471501]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_m7uid")
+editable = false
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=493491793]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/VBoxContainer5" unique_id=570197511]
+layout_mode = 2
+text = "Correo electronicó"
+
+[node name="EmailInput" type="LineEdit" parent="Panel/VBoxContainer/VBoxContainer5" unique_id=1001443272]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_m7uid")
+editable = false
+
+[node name="Atras" type="Button" parent="." unique_id=685946487]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 130.0
+offset_bottom = 130.0
+theme = ExtResource("7_btoj5")
+theme_override_font_sizes/font_size = 40
+text = "
+"
+icon = ExtResource("8_hyisl")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("8_cqi24")
+id_escena = "inicio"
+metadata/_custom_type_script = "uid://ct2doijn7j323"

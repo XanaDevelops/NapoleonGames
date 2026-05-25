@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AttackType" format=3 uid="uid://b6m827ish5fcb"]
+
+[ext_resource type="Script" uid="uid://bycnnamk3t4f0" path="res://scripts/resources/attack_type_res.gd" id="1_341xq"]
+
+[resource]
+script = ExtResource("1_341xq")
+name = &"lighting"
+uid = 5
+metadata/_custom_type_script = "uid://bycnnamk3t4f0"

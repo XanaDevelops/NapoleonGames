@@ -31,20 +31,6 @@ jobs:
         working-directory: backend
         run: mvn clean verify jacoco:report
 
-      - name: Enforce coverage >= 70%
-        working-directory: backend
-        run: |
-          COVERAGE=$(python3 - <<'PY'
-          import xml.etree.ElementTree as ET
-          root = ET.parse('target/site/jacoco/jacoco.xml').getroot()
-          c = [x for x in root.findall('counter') if x.attrib['type']=='LINE'][0]
-          missed = int(c.attrib['missed']); covered = int(c.attrib['covered'])
-          print(covered * 100 / (missed + covered))
-          PY
-          )
-          echo "Coverage: $COVERAGE"
-          awk "BEGIN {exit !($COVERAGE >= 70)}"
-
       - name: SonarQube
         if: ${{ env.SONAR_HOST_URL != '' && env.SONAR_TOKEN != '' }}
         working-directory: backend

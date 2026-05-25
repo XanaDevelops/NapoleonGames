@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StatData" format=3 uid="uid://brlohq4mmabn7"]
+
+[ext_resource type="Script" uid="uid://bcsdfa1f5drbr" path="res://scripts/resources/stat_res.gd" id="1_xdjc2"]
+
+[resource]
+script = ExtResource("1_xdjc2")
+name = &"hp"
+desc = "vida"
+uid = 4
+metadata/_custom_type_script = "uid://bcsdfa1f5drbr"

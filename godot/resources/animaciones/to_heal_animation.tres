@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="VFXEffectData" format=3 uid="uid://ofuibb4gefj2"]
+
+[ext_resource type="Texture2D" uid="uid://d16uvpl8ocinj" path="res://assets/particles/health-normal.png" id="1_63xfv"]
+[ext_resource type="Script" uid="uid://coqlqo81l8ahe" path="res://scripts/resources/vfx_effect_data.gd" id="2_aj00w"]
+[ext_resource type="Shader" uid="uid://kgwn5cruvps3" path="res://resources/shaders/to_heal_shader.gdshader" id="3_3xhwi"]
+[ext_resource type="AudioStream" uid="uid://d0i1blcp78qvy" path="res://assets/sonidos/Cure7.wav" id="4_63xfv"]
+
+[sub_resource type="Gradient" id="Gradient_bv54r"]
+offsets = PackedFloat32Array(0, 0, 0, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 0.8, 0.2, 0.78431374, 0.34901962, 0.26666668, 0, 0)
+
+[resource]
+script = ExtResource("2_aj00w")
+shader = ExtResource("3_3xhwi")
+mid_color = Color(1, 0.8, 0.2, 1)
+edge_color = Color(0.34901962, 0.26666668, 0, 1)
+wave_speed = 0.5
+wave_amplitude = 0.01
+wave_frequency = 2.0
+particle_texture = ExtResource("1_63xfv")
+color_ramp = SubResource("Gradient_bv54r")
+particle_base_size = 6.0
+scale_multiplier = 1.5
+gravity = Vector3(0, -140, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 90.0
+movement_spread = 90.0
+use_turbulence = true
+turbulence_strength = 1.2
+emission_position = 0
+movement_direction = 0
+duration = 2.0
+sound_effect = ExtResource("4_63xfv")
+metadata/_custom_type_script = "uid://coqlqo81l8ahe"

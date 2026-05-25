@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://did61qto33dha"]
+
+[ext_resource type="Script" uid="uid://e1mxjdbcalhf" path="res://scripts/ui/button_card.gd" id="1_e1hm3"]
+[ext_resource type="Texture2D" uid="uid://b0yy2cwl13n5o" path="res://assets/sprites/imagenes_de_cartas/esqueleto.jpg" id="2_birkm"]
+[ext_resource type="Theme" uid="uid://cx52welxfekgu" path="res://assets/themes/ui/carta_normal.tres" id="2_psgti"]
+[ext_resource type="Theme" uid="uid://dfqc8xk2sjubd" path="res://assets/themes/ui/carta_origen.tres" id="2_sofqg"]
+[ext_resource type="Theme" uid="uid://6gdutocom00" path="res://assets/themes/ui/carta_destino_normal.tres" id="4_psgti"]
+[ext_resource type="Theme" uid="uid://dmnaanofnyo81" path="res://assets/themes/ui/carta_destino_selected.tres" id="5_xou0u"]
+
+[node name="ButtonCard" type="Button" unique_id=2067365788]
+custom_minimum_size = Vector2(137, 200)
+offset_right = 137.0
+offset_bottom = 177.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_psgti")
+script = ExtResource("1_e1hm3")
+tema_por_defecto = ExtResource("2_psgti")
+tema_origen = ExtResource("2_sofqg")
+tema_disponible = ExtResource("4_psgti")
+tema_seleccionado = ExtResource("5_xou0u")
+
+[node name="ImageCard" type="TextureRect" parent="." unique_id=1703592953]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_birkm")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=889953746]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -58.5
+offset_top = -73.0
+offset_right = 58.5
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Name" type="Label" parent="VBoxContainer" unique_id=1930371124]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Esqueleto"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Peso" type="Label" parent="VBoxContainer" unique_id=1152336591]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Quantity" type="Label" parent="VBoxContainer" unique_id=1180935565]
+unique_name_in_owner = true
+layout_mode = 2
+text = "x10"
+horizontal_alignment = 1

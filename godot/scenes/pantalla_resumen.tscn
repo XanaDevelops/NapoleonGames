@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://dcjj17oux405n"]
+
+[ext_resource type="Script" uid="uid://iqnbebxvwxy" path="res://scenes/pantalla_resumen.gd" id="1_hr74v"]
+[ext_resource type="Texture2D" uid="uid://bujp1fkbfto6" path="res://assets/sprites/ui/fondos_de_pantalla/fondo_pantalla_resumen.png" id="2_hr74v"]
+[ext_resource type="StyleBox" uid="uid://cabqntxgnly00" path="res://assets/themes/ui/estilo_menu_panels.tres" id="3_iu020"]
+[ext_resource type="StyleBox" uid="uid://327a0ylywbu5" path="res://assets/themes/ui/panel_cartas.tres" id="4_tywd4"]
+[ext_resource type="Theme" uid="uid://cs2ycfq76kcvr" path="res://assets/themes/ui/estilo_botones_negacion_suave.tres" id="5_hr74v"]
+[ext_resource type="Theme" uid="uid://cuaadii4ueb8" path="res://assets/themes/ui/estilo_botones_confirmacion_suave.tres" id="6_a2pga"]
+[ext_resource type="FontFile" uid="uid://cmiuntu71oyl3" path="res://addons/gut/fonts/LobsterTwo-Bold.ttf" id="7_1ktaq"]
+[ext_resource type="Script" uid="uid://bhdfo36iey2j6" path="res://scenes/iniciar_partida.gd" id="8_a2pga"]
+
+[node name="Control" type="Control" unique_id=1668836970]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hr74v")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1653817443]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_hr74v")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Panel" type="Panel" parent="." unique_id=600929208]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -300.0
+offset_right = 350.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_iu020")
+
+[node name="TituloPanel" type="Label" parent="Panel" unique_id=1276868358]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 25.0
+offset_right = 260.0
+offset_bottom = 100.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.9019608, 0.7607843, 0.47843137, 1)
+theme_override_fonts/font = ExtResource("7_1ktaq")
+theme_override_font_sizes/font_size = 60
+text = "Detalles del Encuentro"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="Panel" unique_id=2031026132]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -325.0
+offset_top = -175.0
+offset_right = 325.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_tywd4")
+
+[node name="Panel" type="Panel" parent="Panel/Panel" unique_id=1081979703]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -150.0
+offset_right = 300.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Panel/Panel" unique_id=396991719]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/Panel/Panel/MarginContainer" unique_id=20608363]
+layout_mode = 2
+bbcode_enabled = true
+
+[node name="Vover" type="Button" parent="Panel" unique_id=859307956]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = -100.0
+offset_right = 175.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme = ExtResource("5_hr74v")
+text = "Volver"
+
+[node name="IniciarPartida" type="Button" parent="Panel" unique_id=1916938699]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -175.0
+offset_top = -100.0
+offset_right = -25.0
+offset_bottom = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("6_a2pga")
+text = "Iniciar Partida
+"
+script = ExtResource("8_a2pga")

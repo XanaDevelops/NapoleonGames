@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="HabilityRes" format=3 uid="uid://ck5bwmcsoj647"]
+
+[ext_resource type="Script" uid="uid://c6ylgfoqmjeis" path="res://scripts/resources/alter_state_res.gd" id="1_pefan"]
+[ext_resource type="Resource" uid="uid://l34xtkisb2pq" path="res://test/test_res/alter_state_kaboom.tres" id="2_scspe"]
+[ext_resource type="Script" uid="uid://eihee83yhkpg" path="res://scripts/resources/hability_res.gd" id="2_tkh66"]
+[ext_resource type="Resource" uid="uid://2u4830mftyn8" path="res://test/test_res/attack_type_physic.tres" id="3_6suub"]
+[ext_resource type="Resource" uid="uid://dmc4jstoyeoun" path="res://test/test_res/stat_attack_linear.tres" id="5_t3emc"]
+
+[resource]
+script = ExtResource("2_tkh66")
+name = &"set kaboom"
+desc = "prueba estado alterado"
+objective = 1
+stat = ExtResource("5_t3emc")
+attackType = ExtResource("3_6suub")
+cooldown = 3
+alter_states = Array[ExtResource("1_pefan")]([ExtResource("2_scspe")])
+uid = 9
+metadata/_custom_type_script = "uid://eihee83yhkpg"

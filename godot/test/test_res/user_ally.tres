@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="UserRes" format=3 uid="uid://5bxdwaoej47m"]
+
+[ext_resource type="Script" uid="uid://bf6xxxd2rqod0" path="res://scripts/resources/card_res.gd" id="1_47yuo"]
+[ext_resource type="Script" uid="uid://808yjkcnb362" path="res://scripts/resources/map_res.gd" id="2_tyjqp"]
+[ext_resource type="Script" uid="uid://ce5uvgu640fxr" path="res://scripts/resources/user_res.gd" id="3_n16je"]
+[ext_resource type="Script" uid="uid://q3mvbqxdhool" path="res://scripts/resources/army_res.gd" id="4_tscw1"]
+[ext_resource type="Resource" uid="uid://o77yq2mq3tat" path="res://test/test_res/army_ally.tres" id="5_tyjqp"]
+
+[resource]
+script = ExtResource("3_n16je")
+name = "Tenma"
+username = &"tenmak"
+email = "tenmakenzo@yahoo.jp"
+token = "123abc"
+userArmys = Array[ExtResource("4_tscw1")]([ExtResource("5_tyjqp")])
+uid = 1
+metadata/_custom_type_script = "uid://ce5uvgu640fxr"
