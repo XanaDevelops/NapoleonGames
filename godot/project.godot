@@ -23,6 +23,7 @@ buses/default_bus_layout="uid://dm0js0a37vfel"
 
 [autoload]
 
+ServerConfig="*uid://xbuh6q2ye3mm"
 Online="*uid://cuqrld13oc1aj"
 GameManager="*uid://crfipueiwb0h0"
 UiManager="*uid://c7x52jkqmybks"
