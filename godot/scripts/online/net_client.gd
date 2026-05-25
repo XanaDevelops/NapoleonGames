@@ -16,6 +16,38 @@ var connected := false
 
 func _ready() -> void:
 	Online.on_client_packet.connect(on_client_packet)
+	Online.on_connected_to_server.connect(_on_connected_to_server)
+	Online.on_disconnected_from_server.connect(_on_disconnected_from_server)
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_PREDELETE:
+		_close_active_connection()
+
+
+func _close_active_connection() -> void:
+	if Online == null:
+		return
+
+	if Online.is_server:
+		return
+
+	if Online.connection == null:
+		connected = false
+		return
+
+	if Online.server_peer != null:
+		Online.disconnect_client()
+
+	connected = false
+
+
+func _on_connected_to_server() -> void:
+	connected = true
+
+
+func _on_disconnected_from_server() -> void:
+	connected = false
 
 
 func on_client_packet(data: PackedByteArray) -> void:
@@ -31,6 +63,8 @@ func on_client_packet(data: PackedByteArray) -> void:
 			GameManager.get_turn_manager().replay_turn(TurnAction.create_from_data(data))
 		NetPacket.PACKET_TYPE.TURN_RESULT:
 			manage_turn_result(TurnNetResult.create_from_data(data))
+		NetPacket.PACKET_TYPE.FORCE_WIN_NOTIF:
+			manage_force_win_notif(NetForceWinNotif.create_from_data(data))
 		NetPacket.PACKET_TYPE.RANDF:
 			manage_randf(NetRandF.create_from_data(data))
 		_:
@@ -106,6 +140,26 @@ func enter_online_game(lobby: GameLobby) -> void:
 
 func manage_turn_result(turn: TurnNetResult) -> void:
 	server_turn_response.emit(turn.is_valid)
+
+func manage_force_win_notif(packet: NetForceWinNotif) -> void:
+	var tm := GameManager.get_turn_manager()
+	if tm == null:
+		return
+
+	var cfg := tm.get_game_config()
+	if cfg == null or cfg.game_pid != packet.game_pid:
+		return
+
+	var user: UserRes = GameManager.get_game_resources().get_res_from_uid(packet.winner_uid, UserRes)
+	if user == null:
+		tm.finalizar_partida("Jugador %d" % packet.winner_uid)
+		return
+
+	var winner_name := user.name.strip_edges()
+	if winner_name == "":
+		winner_name = str(user.username)
+
+	tm.finalizar_partida(winner_name)
 
 func manage_ping(ping : PingPacket) -> void:
 	print("["+str(id)+"] "+"PING: ", ping.message)
