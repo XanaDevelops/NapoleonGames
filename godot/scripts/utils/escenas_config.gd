@@ -27,7 +27,7 @@ const SECCIONES_POR_ESCENA: Dictionary[String, String] = {
 	"ejercitos": "ejercitos",
 	"oponente": "menus",
 	"resumen":"menus",
-	"juego": "",
+	"juego": "juego",
 	"finalizacion": "",
 	"server": ""
 }
@@ -36,7 +36,8 @@ const SECCIONES_POR_ESCENA: Dictionary[String, String] = {
 const MUSIC_SERIES_FOLDERS: Dictionary[String, String] = {
 	"menus": "res://assets/musica/menus/",
 	"areas_sociales": "res://assets/musica/areas_sociales/",
-	"ejercitos":"res://assets/musica/ejercito/"
+	"ejercitos":"res://assets/musica/ejercito/",
+	"juego":"res://assets/musica/juego/"
 }
 
 const SFX_PATHS: Dictionary[String, String] = {
